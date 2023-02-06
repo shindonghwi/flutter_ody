@@ -26,24 +26,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_native_splash: ^2.2.17
   change_app_package_name: ^1.0.0
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter packages.
 flutter:
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
@@ -79,13 +67,13 @@ flutter:
 
 flutter_native_splash:
   color: "#FFFFFF"
-  color_dark: "#000000"
-  android_gravity: "center"
-  ios_content_mode: "center"
+  color_dark: "#FFFFFF"
   image: assets/imgs/logo.png
-  fullscreen: true
-  android12:
+  image_dark: assets/imgs/logo.png
+
+  # Android 12 이상 버전에서 적용
+  android_12:
     image: assets/imgs/logo.png
-    icon_background_color: "#ffffff"
-    icon_background_color_dark: "#000000"
-    color_dark: "#042a49"
+    image_dark: assets/imgs/logo.png
+    color: "#FFFFFF"
+    color_dark: "#FFFFFF"
