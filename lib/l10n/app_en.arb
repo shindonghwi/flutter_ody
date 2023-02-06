@@ -1,6 +1,6 @@
 {
-    "appTitle": "Demo App",
+    "appTitle": "Odac",
     "@appTitle":{
-        "description": "The Current Demo Title"
+        "description": "App Title"
     }
 }
