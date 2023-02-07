@@ -11,6 +11,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Text(AppLocalizations.of(context).appTitle);
+    return Container(
+      margin: const EdgeInsets.only(top: 50),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Text(
+          AppLocalizations.of(context).appTitle,
+          style: Theme.of(context).textTheme.displayLarge,
+          maxLines: 2,
+          softWrap: false,
+        ),
+      ),
+    );
   }
 }
