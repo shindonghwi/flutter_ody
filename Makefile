@@ -16,11 +16,11 @@ run:
 	flutter clean
 	flutter pub get
 	cd ios && pod install
-	flutter run
+	flutter run --flavor dev
 
 # Release Rebuild
 run-release:
 	flutter clean
 	flutter pub get
 	cd ios && pod install
-	flutter run --release --no-sound-null-safety
+	flutter run --release --no-sound-null-safety --flavor prod

@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
 
       // app default option
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
-
       // 시스템 테마 설정 (라이트, 다크 모드)
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
@@ -33,6 +32,8 @@ class MyApp extends StatelessWidget {
       // 앱 Localization ( 영어, 한국어 지원 )
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
+
+      debugShowCheckedModeBanner: true,
 
       // screen
       home: const HomeScreen(),

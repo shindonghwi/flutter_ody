@@ -14,7 +14,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
-
   cupertino_icons: ^1.0.2 # iOS system
   kakao_flutter_sdk_user: ^1.4.0 # kakao login
 
