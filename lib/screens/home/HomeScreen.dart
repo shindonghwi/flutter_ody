@@ -22,7 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void getPackage() async {
     packageInfo = await PackageInfo.fromPlatform();
-    appName = packageInfo!.appName;
+    setState(() {
+      appName = packageInfo!.packageName;
+    });
     String packageName = packageInfo!.packageName;
     String version = packageInfo!.version;
     String buildNumber = packageInfo!.buildNumber;

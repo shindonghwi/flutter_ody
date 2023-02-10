@@ -38,8 +38,15 @@ android {
         jvmTarget = '1.8'
     }
 
+    // localization 및 flavor 별 resource 관리
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main {
+            res.srcDirs = ['src/main/res']
+            java.srcDirs += 'src/main/kotlin'
+        }
+        dev {
+            res.srcDirs = ['src/dev/res']
+        }
     }
 
     def keystoreProperties = new Properties()
@@ -93,7 +100,7 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            debuggable true
+            debuggable false
             signingConfig signingConfigs.release
         }
     }
