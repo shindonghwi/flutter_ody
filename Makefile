@@ -1,8 +1,11 @@
-# Flutter Build Simple CMD 명령어 							\
-												 			\
-	make run-splash -> 스플래시 옵션 변경 후 재설정. 			\
-	make run: 개발 버전 빌드								\
-	make run-release: 배포 버전 빌드						\
+# Flutter Build Simple CMD 명령어 									\
+												 					\
+	make run-splash -> 스플래시 옵션 변경 후 재설정. 						\
+	make run: 개발 버전 빌드											\
+	make run-release: 배포 버전 빌드									\
+	make create-apk-prod: 안드로이드 prod apk 추출						\
+	make create-apk-dev: 안드로이드 dev apk 추출						\
+	make create-aab-prod: 안드로이드 prod aad 추출						\
 
 
 
