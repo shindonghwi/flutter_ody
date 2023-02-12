@@ -57,10 +57,10 @@ android {
 
     signingConfigs {
         debug {
-            keyAlias keystoreProperties['debugKeyAlias']
-            keyPassword keystoreProperties['debugKeyPassword']
-            storeFile file(keystoreProperties['debugStoreFile'])
-            storePassword keystoreProperties['debugStorePassword']
+            keyAlias keystoreProperties['devKeyAlias']
+            keyPassword keystoreProperties['devKeyPassword']
+            storeFile file(keystoreProperties['devStoreFile'])
+            storePassword keystoreProperties['devStorePassword']
         }
 
         release {
@@ -78,11 +78,13 @@ android {
             dimension "app"
             applicationIdSuffix ".dev"
             versionNameSuffix ".dev"
+            manifestPlaceholders = [kakaoNativeAppKey: keystoreProperties['devKakaoNativeAppKey']]
         }
         prod {
             dimension "app"
             applicationIdSuffix ""
             versionNameSuffix ""
+            manifestPlaceholders = [kakaoNativeAppKey: keystoreProperties['kakaoNativeAppKey']]
         }
     }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:odac_flutter_app/screens/home/HomeScreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:odac_flutter_app/app/feature/home/HomeScreen.dart';
 import 'package:odac_flutter_app/ui/theme.dart';
 
 class OrotApp extends StatelessWidget {

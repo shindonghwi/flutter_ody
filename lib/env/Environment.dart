@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:odac_flutter_app/OrotApp.dart';
+import 'package:odac_flutter_app/app/OrotApp.dart';
 
 enum BuildType { dev, prod }
 

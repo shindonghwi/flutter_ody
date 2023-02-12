@@ -1,3 +1,10 @@
+import 'package:get_it/get_it.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:odac_flutter_app/app/di/DiModule.dart';
 import 'package:odac_flutter_app/env/Environment.dart';
 
-main() => Environment.newInstance(BuildType.dev).run();
+main() async => {
+      KakaoSdk.init(nativeAppKey: '388ad5e8072d463119af8b148ac06c75'),
+      await DiModule().init(),
+      Environment.newInstance(BuildType.dev).run(),
+    };
