@@ -1,11 +1,18 @@
 # Flutter Build Simple CMD 명령어 									\
 												 					\
-	make run-splash -> 스플래시 옵션 변경 후 재설정. 						\
-	make run: 개발 버전 빌드											\
-	make run-release: 배포 버전 빌드									\
-	make create-apk-prod: 안드로이드 prod apk 추출						\
-	make create-apk-dev: 안드로이드 dev apk 추출						\
-	make create-aab-prod: 안드로이드 prod aad 추출						\
+	# 옵션 변경									 					\
+	make run-splash -> 				스플래시 옵션 변경 후 재설정. 			\
+																	\
+	# 빌드															\
+	make run: 						개발 버전 빌드						\
+	make run-rebuild: 				개발 버전 클린 빌드					\
+	make run-prod: 					배포 버전 빌드						\
+	make run-prod-rebuild: 			배포 버전 클린 빌드					\
+																	\
+	# 배포															\
+	make create-apk-prod: 			안드로이드 prod apk 추출			\
+	make create-apk-dev: 			안드로이드 dev apk 추출				\
+	make create-aab-prod: 			안드로이드 prod aad 추출			\
 
 
 
@@ -14,20 +21,32 @@ run-splash:
 	flutter pub run flutter_native_splash:remove
 	flutter pub run flutter_native_splash:create
 
+# DebugDev Run
+run:
+	flutter run --debug --flavor dev --no-sound-null-safety -t lib/env/dev.dart
+
 # DebugDev Rebuild
-run-dev:
+run-rebuild:
 	flutter clean
 	flutter pub get
 	cd ios && pod install
 	flutter run --debug --flavor dev --no-sound-null-safety -t lib/env/dev.dart
-	#(flutter run --flavor dev) || flutter run
+
+# ProdRelease Run
+run-prod:
+	flutter run --release --flavor prod --no-sound-null-safety -t lib/env/prod.dart
 
 # ProdRelease Rebuild
-run-prod:
+run-prod-rebuild:
 	flutter clean
 	flutter pub get
 	cd ios && pod install
 	flutter run --release --flavor prod --no-sound-null-safety -t lib/env/prod.dart
+
+
+########################
+##### Distribution #####
+########################
 
 # android apk-release create
 create-apk-prod:
