@@ -10,8 +10,8 @@ final getIt = GetIt.instance;
 class DiModule {
   Future<void> init() async {
     repositoryModule();
-    UseCaseModule();
-    DataSourceModule();
+    useCaseModule();
+    dataSourceModule();
   }
 
   /** @feature: Repository DI Module 정의*/
@@ -20,12 +20,12 @@ class DiModule {
   }
 
   /** @feature: UseCase DI Module 정의*/
-  void UseCaseModule() {
+  void useCaseModule() {
     getIt.registerLazySingleton(() => KakaoLoginUseCase());
   }
 
   /** @feature: DataSource DI Module 정의*/
-  void DataSourceModule() {
+  void dataSourceModule() {
     getIt.registerLazySingleton<AuthService>(() => AuthServiceImpl());
   }
 }
