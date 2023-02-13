@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:odac_flutter_app/app/feature/home/HomeScreen.dart';
+import 'package:odac_flutter_app/app/feature/login/LoginScreen.dart';
 import 'package:odac_flutter_app/ui/theme.dart';
 
 class OrotApp extends StatelessWidget {
@@ -8,6 +8,7 @@ class OrotApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("OrotApp build");
     return MaterialApp(
       // app default option
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
@@ -23,7 +24,7 @@ class OrotApp extends StatelessWidget {
       debugShowCheckedModeBanner: true,
 
       // screen
-      home: const HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }
