@@ -2,5 +2,9 @@
     "appTitle": "Odac",
     "@appTitle":{
         "description": "App Title"
+    },
+    "appDescription": "Make your life healthier",
+    "@appDescription":{
+        "description": "App Description"
     }
 }
