@@ -23,7 +23,7 @@ class WelcomeHeightWeight extends StatelessWidget {
           color: Theme.of(context).colorScheme.background,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.only(top: 120, left: 20, right: 20),
+          padding: EdgeInsets.only(top: 120),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -48,7 +48,7 @@ class WelcomeHeightWeight extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
       ),
-      delay: 300,
+      delay: showUpDuration,
     );
   }
 
@@ -83,7 +83,7 @@ class WelcomeHeightWeight extends StatelessWidget {
           ),
         ],
       ),
-      delay: 300,
+      delay: showUpDuration,
     );
   }
 
@@ -107,7 +107,7 @@ class WelcomeHeightWeight extends StatelessWidget {
           ),
         ],
       ),
-      delay: 400,
+      delay: showUpDuration,
     );
   }
 
@@ -115,7 +115,7 @@ class WelcomeHeightWeight extends StatelessWidget {
   Widget BottomButton(BuildContext context) {
     return FillButton(
       onTap: () {
-        debugPrint("Button Clicked");
+        changePage(context, PageAction.NEXT);
       },
       child: Text(
         getApplocalizations(context)?.welcome_button_next ?? "",

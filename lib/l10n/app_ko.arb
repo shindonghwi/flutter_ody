@@ -11,5 +11,7 @@
     "welcome_text_age_unit": "세",
     "welcome_text_height_weight_input": "키와 몸무게를 입력해주세요",
     "welcome_text_height_unit": "cm",
-    "welcome_text_weight_unit": "kg"
+    "welcome_text_weight_unit": "kg",
+    "welcome_text_disease": "앓고 있는 질환이 있나요?",
+    "welcome_disease_items": "고혈압,저혈압,당뇨,심장질환,암,관절염,불면증,우울증,두통,기타"
 }

@@ -42,7 +42,7 @@ class WelcomeIntroduce extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
           ),
-          delay: 300,
+          delay: showUpDuration,
         ),
         SizedBox(height: 80),
         ShowUp(
@@ -51,7 +51,7 @@ class WelcomeIntroduce extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.w800),
           ),
-          delay: 400,
+          delay: showUpDuration,
         )
       ],
     );

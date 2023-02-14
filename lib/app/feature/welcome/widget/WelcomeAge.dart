@@ -23,7 +23,7 @@ class WelcomeAge extends StatelessWidget {
           color: Theme.of(context).colorScheme.background,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.only(top: 120, left: 20, right: 20),
+          padding: EdgeInsets.only(top: 120),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -48,7 +48,7 @@ class WelcomeAge extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
       ),
-      delay: 300,
+      delay: showUpDuration,
     );
   }
 
@@ -68,11 +68,11 @@ class WelcomeAge extends StatelessWidget {
           ),
         ],
       ),
-      delay: 400,
+      delay: showUpDuration,
     );
   }
 
-  /** 바텀 버튼 ( 다 ) */
+  /** 바텀 버튼 ( 다음 ) */
   Widget BottomButton(BuildContext context) {
     return FillButton(
       onTap: () {

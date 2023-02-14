@@ -1,15 +1,19 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+
 /**
  * @feature: 위젯이 아래에서 올라오는 애니메이션 효과를 주는 위젯
  *
  * @author: 2023/02/14 12:58 PM donghwishin
  *
  * @description{
- *
+ *    showUpDuration: 위젯이 올라오는 시간 ( 기본값 )
  * }
 */
+
+const showUpDuration = 250;
+
 class ShowUp extends StatefulWidget {
   final Widget child;
   final int delay;
