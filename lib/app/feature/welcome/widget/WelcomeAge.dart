@@ -20,9 +20,10 @@ class WelcomeAge extends StatelessWidget {
       body: WillPopScope(
         onWillPop: () async => changePage(context, PageAction.PREVIOUS),
         child: Container(
+          color: Theme.of(context).colorScheme.background,
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.7,
-          margin: EdgeInsets.only(top: 120, left: 20, right: 20),
+          height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.only(top: 120, left: 20, right: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -43,9 +44,9 @@ class WelcomeAge extends StatelessWidget {
       child: Text(
         getApplocalizations(context)?.welcome_text_age_input ?? "",
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-          color: Theme.of(context).colorScheme.onBackground,
-          fontWeight: FontWeight.w700,
-        ),
+              color: Theme.of(context).colorScheme.onBackground,
+              fontWeight: FontWeight.w700,
+            ),
       ),
       delay: 300,
     );
@@ -73,19 +74,16 @@ class WelcomeAge extends StatelessWidget {
 
   /** 바텀 버튼 ( 다 ) */
   Widget BottomButton(BuildContext context) {
-    return ShowUp(
-      child: FillButton(
-        onTap: () {
-          changePage(context, PageAction.NEXT);
-        },
-        child: Text(
-          getApplocalizations(context)?.welcome_button_next ?? "",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-        ),
+    return FillButton(
+      onTap: () {
+        changePage(context, PageAction.NEXT);
+      },
+      child: Text(
+        getApplocalizations(context)?.welcome_button_next ?? "",
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
       ),
-      delay: 300,
     );
   }
 }

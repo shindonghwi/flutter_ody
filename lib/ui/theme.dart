@@ -25,6 +25,6 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
     textTheme: odacTextTheme,
     colorScheme: odacColorLightScheme,
-    scaffoldBackgroundColor: Colors.grey[900],
+    scaffoldBackgroundColor: Colors.white,
   );
 }

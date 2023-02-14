@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odac_flutter_app/app/feature/components/common/KeepAlivePage.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeAge.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeHeightWeight.dart';
@@ -17,13 +18,19 @@ import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeIntroduce.dar
  *    3. 키, 몸무게 입력
  * }
  */
-class WelcomeScreen extends StatelessWidget {
-  PageController _controller = PageController(
-    initialPage: 0,
-    keepPage: false,
-  );
+class WelcomeScreen extends StatefulWidget {
 
   WelcomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  PageController _controller = PageController(
+    initialPage: 0,
+    keepPage: true,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +39,9 @@ class WelcomeScreen extends StatelessWidget {
         controller: _controller,
         physics: NeverScrollableScrollPhysics(),
         children: [
-          WelcomeIntroduce(changePage: changePage),
-          WelcomeAge(changePage: changePage),
-          WelcomeHeightWeight(changePage: changePage),
+          KeepAlivePage(child: WelcomeIntroduce(changePage: changePage)),
+          KeepAlivePage(child: WelcomeAge(changePage: changePage)),
+          KeepAlivePage(child: WelcomeHeightWeight(changePage: changePage)),
         ],
       ),
     );

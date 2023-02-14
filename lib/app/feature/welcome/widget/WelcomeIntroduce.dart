@@ -19,6 +19,7 @@ class WelcomeIntroduce extends StatelessWidget {
       body: WillPopScope(
         onWillPop: () async => changePage(context, PageAction.PREVIOUS),
         child: Container(
+          color: Theme.of(context).colorScheme.background,
           padding: EdgeInsets.only(left: 20, right: 20, top: 120),
           width: MediaQuery.of(context).size.width,
           child: TitleText(context),
@@ -58,17 +59,14 @@ class WelcomeIntroduce extends StatelessWidget {
 
   /** 바텀 버튼 ( 시작하기 ) */
   Widget BottomButton(BuildContext context) {
-    return ShowUp(
-      child: FillButton(
-        onTap: () async => changePage(context, PageAction.NEXT),
-        child: Text(
-          getApplocalizations(context)?.welcome_button_start ?? "",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-        ),
+    return FillButton(
+      onTap: () async => changePage(context, PageAction.NEXT),
+      child: Text(
+        getApplocalizations(context)?.welcome_button_start ?? "",
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
       ),
-      delay: 300,
     );
   }
 }
