@@ -15,7 +15,10 @@
     "welcome_button_next": "Next",
     "welcome_button_skip": "Skip",
     "welcome_text_age_input": "Enter your age",
-    "welcome_text_height_weight_input": "Enter your height and weight"
+    "welcome_text_age_unit": "age",
+    "welcome_text_height_weight_input": "Enter your height and weight",
+    "welcome_text_height_unit": "cm",
+    "welcome_text_weight_unit": "kg"
 
 
 }

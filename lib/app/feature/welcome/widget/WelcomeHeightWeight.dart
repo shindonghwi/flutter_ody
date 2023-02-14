@@ -6,13 +6,13 @@ import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/l10n/Common.dart';
 
 /**
- * @feature: 나이 입력화면
+ * @feature: 키, 몸무게 입력화면
  * @author: 2023/02/14 1:42 PM donghwishin
  */
-class WelcomeAge extends StatelessWidget {
+class WelcomeHeightWeight extends StatelessWidget {
   final Function changePage;
 
-  WelcomeAge({Key? key, required this.changePage}) : super(key: key);
+  WelcomeHeightWeight({Key? key, required this.changePage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class WelcomeAge extends StatelessWidget {
             children: [
               TitleText(context),
               SizedBox(height: 80),
-              AgePicker(context),
+              Pickers(context),
             ],
           ),
         ),
@@ -37,29 +37,68 @@ class WelcomeAge extends StatelessWidget {
     );
   }
 
-  /** 상단 텍스트 ( 질문영역 )*/
+  /** 상단 텍스트 - 키와 몸무게를 입력해주세요 */
   Widget TitleText(BuildContext context) {
     return ShowUp(
       child: Text(
-        getApplocalizations(context)?.welcome_text_age_input ?? "",
+        getApplocalizations(context)?.welcome_text_height_weight_input ?? "",
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-          color: Theme.of(context).colorScheme.onBackground,
-          fontWeight: FontWeight.w700,
-        ),
+              color: Theme.of(context).colorScheme.onBackground,
+              fontWeight: FontWeight.w700,
+            ),
       ),
       delay: 300,
     );
   }
 
-  /** 나이 선택기 위젯 */
-  Widget AgePicker(BuildContext context) {
+  /** 픽커 - 키와 몸무게 픽커 위젯 모음 */
+  Widget Pickers(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        HeightPicker(context),
+        WeightPicker(context),
+      ],
+    );
+  }
+
+  /** 키 픽커 위젯*/
+  Widget HeightPicker(BuildContext context) {
     return ShowUp(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
         children: [
-          WheelNumberPicker(initialValue: 52),
+          WheelNumberPicker(
+            initialValue: 172,
+            min: 1,
+            max: 230,
+          ),
+          SizedBox(height: 18),
           Text(
-            getApplocalizations(context)?.welcome_text_age_unit ?? "",
+            getApplocalizations(context)?.welcome_text_height_unit ?? "",
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ],
+      ),
+      delay: 300,
+    );
+  }
+
+  /** 몸무게 픽커 위젯*/
+  Widget WeightPicker(BuildContext context) {
+    return ShowUp(
+      child: Column(
+        children: [
+          WheelNumberPicker(
+            initialValue: 65,
+            min: 1,
+            max: 150,
+          ),
+          SizedBox(height: 18),
+          Text(
+            getApplocalizations(context)?.welcome_text_weight_unit ?? "",
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                   color: Theme.of(context).colorScheme.onBackground,
                   fontWeight: FontWeight.w700,
@@ -71,12 +110,12 @@ class WelcomeAge extends StatelessWidget {
     );
   }
 
-  /** 바텀 버튼 ( 다 ) */
+  /** 바텀 버튼 ( 다음 ) */
   Widget BottomButton(BuildContext context) {
     return ShowUp(
       child: FillButton(
         onTap: () {
-          changePage(context, PageAction.NEXT);
+          debugPrint("Button Clicked");
         },
         child: Text(
           getApplocalizations(context)?.welcome_button_next ?? "",
@@ -85,7 +124,7 @@ class WelcomeAge extends StatelessWidget {
               ),
         ),
       ),
-      delay: 300,
+      delay: 400,
     );
   }
 }

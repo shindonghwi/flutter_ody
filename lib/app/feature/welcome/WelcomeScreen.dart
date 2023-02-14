@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeAge.dart';
+import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeHeightWeight.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeIntroduce.dart';
 
 /**
@@ -33,6 +34,7 @@ class WelcomeScreen extends StatelessWidget {
         children: [
           WelcomeIntroduce(changePage: changePage),
           WelcomeAge(changePage: changePage),
+          WelcomeHeightWeight(changePage: changePage),
         ],
       ),
     );

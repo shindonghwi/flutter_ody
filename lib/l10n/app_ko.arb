@@ -8,5 +8,8 @@
     "welcome_button_next": "다음",
     "welcome_button_skip": "건너뛰기",
     "welcome_text_age_input": "나이를 입력해주세요",
-    "welcome_text_height_weight_input": "키와 몸무게를 입력해주세요"
+    "welcome_text_age_unit": "세",
+    "welcome_text_height_weight_input": "키와 몸무게를 입력해주세요",
+    "welcome_text_height_unit": "cm",
+    "welcome_text_weight_unit": "kg"
 }
