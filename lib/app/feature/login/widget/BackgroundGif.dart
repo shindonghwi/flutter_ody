@@ -12,6 +12,8 @@ class BackgroundGif extends StatefulWidget {
 }
 
 class _BackgroundGifState extends State<BackgroundGif> {
+
+  String backgroundGifPath = "assets/gifs/login.gif";
   double opacityLevel = 0.0;
 
   @override
@@ -30,9 +32,9 @@ class _BackgroundGifState extends State<BackgroundGif> {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: opacityLevel,
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 1),
       child: Image.asset(
-        "assets/gifs/login.gif",
+        backgroundGifPath,
         gaplessPlayback: true,
         fit: BoxFit.fill,
       ),

@@ -3,8 +3,19 @@
     "@appTitle":{
         "description": "App Title"
     },
+
     "appDescription": "Make your life healthier",
     "@appDescription":{
         "description": "App Description"
-    }
+    },
+
+    "welcome_text_greeting": "Welcome",
+    "welcome_text_greeting_description": "Odac is a health management app that helps you manage your health and fitness.",
+    "welcome_button_start": "Start",
+    "welcome_button_next": "Next",
+    "welcome_button_skip": "Skip",
+    "welcome_text_age_input": "Enter your age",
+    "welcome_text_height_weight_input": "Enter your height and weight"
+
+
 }

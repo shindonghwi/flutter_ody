@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:odac_flutter_app/app/feature/welcome/WelcomeScreen.dart';
 
 /**
  * @feature: 소셜 로그인 메뉴 위젯
@@ -12,7 +13,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
  * }
  */
 class SocialLoginMenu extends StatelessWidget {
-  const SocialLoginMenu({Key? key}) : super(key: key);
+  SocialLoginMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,9 @@ class SocialLoginMenu extends StatelessWidget {
             margin: EdgeInsets.only(top: 200),
             child: Text(
               AppLocalizations.of(context).appDescription,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
             ),
           ),
         ),
@@ -38,30 +41,58 @@ class SocialLoginMenu extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Image.asset(
-                  "assets/imgs/kakao_login.png",
-                  width: 50,
-                  height: 50,
+                SocialLoginIcon(
+                  iconPath: "assets/imgs/kakao_login.png",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                    );
+                  },
                 ),
-                Image.asset(
-                  "assets/imgs/google_login.png",
-                  width: 50,
-                  height: 50,
+                SocialLoginIcon(
+                  iconPath: "assets/imgs/google_login.png",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                    );
+                  },
                 ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  child: Image.asset(
-                    "assets/imgs/apple_login.png",
-                    width: 50,
-                    height: 50,
-                  ),
+                SocialLoginIcon(
+                  iconPath: "assets/imgs/apple_login.png",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                    );
+                  },
                 ),
               ],
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class SocialLoginIcon extends StatelessWidget {
+  final String iconPath;
+  final Function onTap;
+
+  const SocialLoginIcon({Key? key, required this.iconPath, required this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Image.asset(
+        iconPath,
+        width: 50,
+        height: 50,
+      ),
     );
   }
 }

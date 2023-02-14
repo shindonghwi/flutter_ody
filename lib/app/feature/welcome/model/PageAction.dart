@@ -1,0 +1,1 @@
+enum PageAction { PREVIOUS, NEXT }
