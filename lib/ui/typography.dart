@@ -19,70 +19,70 @@ const defaultTextStyle = TextStyle(
 TextTheme odacTextTheme = TextTheme(
   displayLarge: defaultTextStyle.copyWith(
     fontSize: 57,
-    height: 1.12,
+    height: 1,
   ),
   displayMedium: TextStyle(
     fontSize: 45,
-    height: 1.15,
+    height: 1,
   ),
   displaySmall: TextStyle(
     fontSize: 36,
-    height: 1.22,
+    height: 1,
   ),
   headlineLarge: TextStyle(
     fontSize: 32,
-    height: 1.25,
+    height: 1,
   ),
   headlineMedium: TextStyle(
     fontSize: 28,
-    height: 1.28,
+    height: 1,
   ),
   headlineSmall: TextStyle(
     fontSize: 24,
-    height: 1.33,
+    height: 1,
   ),
   titleLarge: TextStyle(
     fontSize: 22,
-    height: 1.27,
+    height: 1,
   ),
   titleMedium: TextStyle(
     fontSize: 16,
-    height: 1.5,
+    height: 1,
     letterSpacing: 0.15,
   ),
   titleSmall: TextStyle(
     fontSize: 14,
-    height: 1.42,
+    height: 1,
     letterSpacing: 0.1,
   ),
   bodyLarge: TextStyle(
     fontSize: 16,
-    height: 1.5,
+    height: 1,
     letterSpacing: 0.5,
   ),
   bodyMedium: TextStyle(
     fontSize: 14,
-    height: 1.42,
+    height: 1,
     letterSpacing: 0.25,
   ),
   bodySmall: TextStyle(
     fontSize: 12,
-    height: 1.33,
+    height: 1,
     letterSpacing: 0.4,
   ),
   labelLarge: TextStyle(
     fontSize: 14,
-    height: 1.42,
+    height: 1,
     letterSpacing: 0.1,
   ),
   labelMedium: TextStyle(
     fontSize: 12,
-    height: 1.33,
+    height: 1,
     letterSpacing: 0.5,
   ),
   labelSmall: TextStyle(
     fontSize: 11,
-    height: 1.45,
+    height: 1,
     letterSpacing: 0.5,
   ),
 );
