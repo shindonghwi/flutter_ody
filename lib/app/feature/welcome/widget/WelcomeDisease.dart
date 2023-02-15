@@ -9,55 +9,10 @@ import 'package:odac_flutter_app/l10n/Common.dart';
  * @feature: 질환 선택 화면
  * @author: 2023/02/14 1:42 PM donghwishin
  */
-class WelcomeDisease extends StatelessWidget {
+class WelcomeDisease extends ConsumerWidget {
   final Function changePage;
 
   WelcomeDisease({Key? key, required this.changePage}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async => changePage(context, PageAction.PREVIOUS),
-        child: Container(
-          color: Theme.of(context).colorScheme.background,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.only(top: 120, left: 20, right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TitleText(context),
-              SizedBox(height: 80),
-              DiseaseSelector(context),
-              SizedBox(height: 120),
-              Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      size: 16,
-                    ),
-                    SizedBox(width: 4),
-                    Text(
-                      "asdasd",
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomSheet: BottomButton(context),
-    );
-  }
 
   /** 상단 텍스트 ( 질문영역 )*/
   Widget TitleText(BuildContext context) {
@@ -104,6 +59,30 @@ class WelcomeDisease extends StatelessWidget {
               color: Theme.of(context).colorScheme.onPrimary,
             ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      body: WillPopScope(
+        onWillPop: () async => changePage(context, PageAction.PREVIOUS),
+        child: Container(
+          color: Theme.of(context).colorScheme.background,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.only(top: 120, left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TitleText(context),
+              SizedBox(height: 80),
+              DiseaseSelector(context),
+            ],
+          ),
+        ),
+      ),
+      bottomSheet: BottomButton(context),
     );
   }
 }
@@ -163,57 +142,3 @@ class _DiseaseItemState extends State<DiseaseItem> {
     );
   }
 }
-
-// class DiseaseItem extends StatefulWidget {
-//   final String diseaseName;
-//
-//   DiseaseItem({Key? key, required this.diseaseName}) : super(key: key);
-//
-//   @override
-//   State<DiseaseItem> createState() => _DiseaseItemState();
-// }
-//
-// class _DiseaseItemState extends State<DiseaseItem> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: EdgeInsets.symmetric(horizontal: 4),
-//       decoration: BoxDecoration(
-//         // color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-//         border: Border.all(
-//           color: Theme.of(context).colorScheme.primary.withOpacity(1),
-//           width: 1,
-//         ),
-//         borderRadius: BorderRadius.circular(12),
-//       ),
-//       child: Material(
-//         color: Colors.transparent,
-//         child: InkWell(
-//           onTap: () {
-//             debugPrint("onTap: ${widget.diseaseName}");
-//           },
-//           child: Container(
-//             margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-//             child: Row(
-//               mainAxisSize: MainAxisSize.min,
-//               children: [
-//                 Icon(
-//                   Icons.add,
-//                   color: Theme.of(context).colorScheme.primary,
-//                   size: 16,
-//                 ),
-//                 SizedBox(width: 4),
-//                 Text(
-//                   widget.diseaseName,
-//                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-//                         color: Theme.of(context).colorScheme.primary,
-//                       ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
