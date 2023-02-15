@@ -28,7 +28,6 @@ class WelcomeHeightWeight extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TitleText(context),
-              SizedBox(height: 80),
               Pickers(context),
             ],
           ),
@@ -54,12 +53,16 @@ class WelcomeHeightWeight extends StatelessWidget {
 
   /** 픽커 - 키와 몸무게 픽커 위젯 모음 */
   Widget Pickers(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        HeightPicker(context),
-        WeightPicker(context),
-      ],
+    return Expanded(
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            HeightPicker(context),
+            WeightPicker(context),
+          ],
+        ),
+      ),
     );
   }
 
@@ -67,6 +70,7 @@ class WelcomeHeightWeight extends StatelessWidget {
   Widget HeightPicker(BuildContext context) {
     return ShowUp(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           WheelNumberPicker(
             initialValue: 172,
@@ -91,6 +95,7 @@ class WelcomeHeightWeight extends StatelessWidget {
   Widget WeightPicker(BuildContext context) {
     return ShowUp(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           WheelNumberPicker(
             initialValue: 65,

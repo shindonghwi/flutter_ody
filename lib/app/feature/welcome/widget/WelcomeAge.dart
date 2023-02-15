@@ -28,7 +28,6 @@ class WelcomeAge extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TitleText(context),
-              SizedBox(height: 80),
               AgePicker(context),
             ],
           ),
@@ -54,21 +53,26 @@ class WelcomeAge extends StatelessWidget {
 
   /** 나이 선택기 위젯 */
   Widget AgePicker(BuildContext context) {
-    return ShowUp(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          WheelNumberPicker(initialValue: 52),
-          Text(
-            getApplocalizations(context)?.welcome_text_age_unit ?? "",
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontWeight: FontWeight.w700,
-                ),
+    return Expanded(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: ShowUp(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              WheelNumberPicker(initialValue: 52),
+              Text(
+                getApplocalizations(context)?.welcome_text_age_unit ?? "",
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+            ],
           ),
-        ],
+          delay: showUpDuration,
+        ),
       ),
-      delay: showUpDuration,
     );
   }
 

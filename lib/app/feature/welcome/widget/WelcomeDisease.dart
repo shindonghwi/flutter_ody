@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
 import 'package:odac_flutter_app/app/feature/components/common/ShowUp.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
@@ -22,7 +23,7 @@ class WelcomeDisease extends StatelessWidget {
           color: Theme.of(context).colorScheme.background,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.only(top: 120),
+          padding: EdgeInsets.only(top: 120, left: 20, right: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -162,3 +163,57 @@ class _DiseaseItemState extends State<DiseaseItem> {
     );
   }
 }
+
+// class DiseaseItem extends StatefulWidget {
+//   final String diseaseName;
+//
+//   DiseaseItem({Key? key, required this.diseaseName}) : super(key: key);
+//
+//   @override
+//   State<DiseaseItem> createState() => _DiseaseItemState();
+// }
+//
+// class _DiseaseItemState extends State<DiseaseItem> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       margin: EdgeInsets.symmetric(horizontal: 4),
+//       decoration: BoxDecoration(
+//         // color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+//         border: Border.all(
+//           color: Theme.of(context).colorScheme.primary.withOpacity(1),
+//           width: 1,
+//         ),
+//         borderRadius: BorderRadius.circular(12),
+//       ),
+//       child: Material(
+//         color: Colors.transparent,
+//         child: InkWell(
+//           onTap: () {
+//             debugPrint("onTap: ${widget.diseaseName}");
+//           },
+//           child: Container(
+//             margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+//             child: Row(
+//               mainAxisSize: MainAxisSize.min,
+//               children: [
+//                 Icon(
+//                   Icons.add,
+//                   color: Theme.of(context).colorScheme.primary,
+//                   size: 16,
+//                 ),
+//                 SizedBox(width: 4),
+//                 Text(
+//                   widget.diseaseName,
+//                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+//                         color: Theme.of(context).colorScheme.primary,
+//                       ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
