@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:odac_flutter_app/app/utils/Common.dart';
 
 /**
  * @feature: 숫자를 선택 할 수 있는 위젯 ( 휠 픽커 )
@@ -37,12 +38,11 @@ class _WheelNumberPickerState extends State<WheelNumberPicker> {
           minValue: widget.min,
           maxValue: widget.max,
           itemCount: 5,
-          selectedTextStyle: Theme.of(context)
-              .textTheme
+          selectedTextStyle: getTextTheme(context)
               .displayMedium
-              ?.copyWith(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold),
-          textStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              ?.copyWith(color: getColorScheme(context).primary, fontWeight: FontWeight.bold),
+          textStyle: getTextTheme(context).titleLarge?.copyWith(
+                color: getColorScheme(context).primary.withOpacity(0.3),
               ),
           onChanged: (value) => setState(() => _currentValue = value),
         ),

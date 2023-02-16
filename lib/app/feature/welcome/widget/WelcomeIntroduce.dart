@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
 import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
-import 'package:odac_flutter_app/l10n/Common.dart';
+import 'package:odac_flutter_app/app/utils/Common.dart';
 
 /**
  * @feature: 앱 소개화면
@@ -19,9 +19,9 @@ class WelcomeIntroduce extends StatelessWidget {
       body: WillPopScope(
         onWillPop: () async => changePage(context, PageAction.PREVIOUS),
         child: Container(
-          color: Theme.of(context).colorScheme.background,
+          color: getColorScheme(context).background,
           padding: EdgeInsets.only(left: 20, right: 20, top: 120),
-          width: MediaQuery.of(context).size.width,
+          width: getMediaQuery(context).size.width,
           child: TitleText(context),
         ),
       ),
@@ -36,9 +36,9 @@ class WelcomeIntroduce extends StatelessWidget {
       children: [
         ShowAnimation(
           child: Text(
-            getApplocalizations(context)?.welcome_text_greeting ?? "",
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
+            getApplocalizations(context).welcome_text_greeting,
+            style: getTextTheme(context).displaySmall?.copyWith(
+                  color: getColorScheme(context).onBackground,
                   fontWeight: FontWeight.w700,
                 ),
           ),
@@ -48,9 +48,11 @@ class WelcomeIntroduce extends StatelessWidget {
         SizedBox(height: 80),
         ShowAnimation(
           child: Text(
-            getApplocalizations(context)?.welcome_text_greeting_description ?? "",
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.w800),
+            getApplocalizations(context).welcome_text_greeting_description,
+            style: getTextTheme(context).titleMedium?.copyWith(
+                  color: getColorScheme(context).onBackground,
+                  fontWeight: FontWeight.w800,
+                ),
           ),
           type: ShowAnimationType.UP,
           initDelay: showDuration,
@@ -64,9 +66,9 @@ class WelcomeIntroduce extends StatelessWidget {
     return FillButton(
       onTap: () async => changePage(context, PageAction.NEXT),
       child: Text(
-        getApplocalizations(context)?.welcome_button_start ?? "",
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary,
+        getApplocalizations(context).welcome_button_start,
+        style: getTextTheme(context).titleLarge?.copyWith(
+              color: getColorScheme(context).onPrimary,
             ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odac_flutter_app/app/utils/Common.dart';
 
 class FillButton extends StatefulWidget {
   final double height;
@@ -20,17 +21,17 @@ class _FillButtonState extends State<FillButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: getMediaQuery(context).size.width,
       height: 80,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed)) {
-              return Theme.of(context).colorScheme.primary.withOpacity(0.9);
+              return getColorScheme(context).primary.withOpacity(0.9);
             } else if (states.contains(MaterialState.disabled)) {
               return Colors.grey;
             } else {
-              return Theme.of(context).colorScheme.primary;
+              return getColorScheme(context).primary;
             }
           }),
         ),

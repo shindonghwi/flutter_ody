@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:odac_flutter_app/app/feature/welcome/WelcomeScreen.dart';
+import 'package:odac_flutter_app/app/utils/Common.dart';
 
 /**
  * @feature: 소셜 로그인 메뉴 위젯
@@ -26,9 +26,9 @@ class SocialLoginMenu extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.only(top: 200),
             child: Text(
-              AppLocalizations.of(context).appDescription,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
+              getApplocalizations(context).appDescription,
+              style: getTextTheme(context).bodyLarge?.copyWith(
+                    color: getColorScheme(context).onPrimary,
                   ),
             ),
           ),
@@ -37,7 +37,7 @@ class SocialLoginMenu extends StatelessWidget {
           fit: FlexFit.tight,
           flex: 1,
           child: Container(
-            width: MediaQuery.of(context).size.width,
+            width: getMediaQuery(context).size.width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -81,8 +81,7 @@ class SocialLoginIcon extends StatelessWidget {
   final String iconPath;
   final Function onTap;
 
-  const SocialLoginIcon({Key? key, required this.iconPath, required this.onTap})
-      : super(key: key);
+  const SocialLoginIcon({Key? key, required this.iconPath, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

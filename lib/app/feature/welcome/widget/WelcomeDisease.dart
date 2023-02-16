@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
 import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
-import 'package:odac_flutter_app/l10n/Common.dart';
+import 'package:odac_flutter_app/app/utils/Common.dart';
 
 /**
  * @feature: 질환 선택 화면
@@ -18,9 +18,9 @@ class WelcomeDisease extends ConsumerWidget {
   Widget TitleText(BuildContext context) {
     return ShowAnimation(
       child: Text(
-        getApplocalizations(context)?.welcome_text_disease ?? "",
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onBackground,
+        getApplocalizations(context).welcome_text_disease,
+        style: getTextTheme(context).titleLarge?.copyWith(
+              color: getColorScheme(context).onBackground,
               fontWeight: FontWeight.w700,
             ),
       ),
@@ -31,8 +31,7 @@ class WelcomeDisease extends ConsumerWidget {
 
   /** 기본 값, 질환 목록 뷰 */
   Widget DiseaseSelector(BuildContext context) {
-    List<String> diseaseList =
-        getApplocalizations(context)?.welcome_disease_items.split(",") as List<String>;
+    List<String> diseaseList = getApplocalizations(context).welcome_disease_items.split(",");
 
     return ShowAnimation(
       child: Wrap(
@@ -56,9 +55,9 @@ class WelcomeDisease extends ConsumerWidget {
         changePage(context, PageAction.NEXT);
       },
       child: Text(
-        getApplocalizations(context)?.welcome_button_next ?? "",
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary,
+        getApplocalizations(context).welcome_button_next,
+        style: getTextTheme(context).titleLarge?.copyWith(
+              color: getColorScheme(context).onPrimary,
             ),
       ),
     );
@@ -70,9 +69,9 @@ class WelcomeDisease extends ConsumerWidget {
       body: WillPopScope(
         onWillPop: () async => changePage(context, PageAction.PREVIOUS),
         child: Container(
-          color: Theme.of(context).colorScheme.background,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          color: getColorScheme(context).background,
+          width: getMediaQuery(context).size.width,
+          height: getMediaQuery(context).size.height,
           padding: EdgeInsets.only(top: 120, left: 20, right: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,9 +103,9 @@ class _DiseaseItemState extends State<DiseaseItem> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        // color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+        // color: getColorScheme(context).primary.withOpacity(0.1),
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withOpacity(1),
+          color: getColorScheme(context).primary.withOpacity(1),
           width: 1,
         ),
         borderRadius: BorderRadius.circular(12),
@@ -126,14 +125,14 @@ class _DiseaseItemState extends State<DiseaseItem> {
               children: [
                 Icon(
                   Icons.add,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: getColorScheme(context).primary,
                   size: 16,
                 ),
                 SizedBox(width: 4),
                 Text(
                   widget.diseaseName,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
+                  style: getTextTheme(context).bodyLarge?.copyWith(
+                        color: getColorScheme(context).primary,
                       ),
                 ),
               ],

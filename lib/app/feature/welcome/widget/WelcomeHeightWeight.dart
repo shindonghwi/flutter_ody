@@ -3,7 +3,7 @@ import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
 import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/components/picker/WheelNumberPicker.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
-import 'package:odac_flutter_app/l10n/Common.dart';
+import 'package:odac_flutter_app/app/utils/Common.dart';
 
 /**
  * @feature: 키, 몸무게 입력화면
@@ -20,9 +20,9 @@ class WelcomeHeightWeight extends StatelessWidget {
       body: WillPopScope(
         onWillPop: () async => changePage(context, PageAction.PREVIOUS),
         child: Container(
-          color: Theme.of(context).colorScheme.background,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          color: getColorScheme(context).background,
+          width: getMediaQuery(context).size.width,
+          height: getMediaQuery(context).size.height,
           padding: EdgeInsets.only(top: 120),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,9 +41,9 @@ class WelcomeHeightWeight extends StatelessWidget {
   Widget TitleText(BuildContext context) {
     return ShowAnimation(
       child: Text(
-        getApplocalizations(context)?.welcome_text_height_weight_input ?? "",
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onBackground,
+        getApplocalizations(context).welcome_text_height_weight_input,
+        style: getTextTheme(context).titleLarge?.copyWith(
+              color: getColorScheme(context).onBackground,
               fontWeight: FontWeight.w700,
             ),
       ),
@@ -80,9 +80,9 @@ class WelcomeHeightWeight extends StatelessWidget {
           ),
           SizedBox(height: 18),
           Text(
-            getApplocalizations(context)?.welcome_text_height_unit ?? "",
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
+            getApplocalizations(context).welcome_text_height_unit,
+            style: getTextTheme(context).headlineLarge?.copyWith(
+                  color: getColorScheme(context).onBackground,
                   fontWeight: FontWeight.w700,
                 ),
           ),
@@ -106,9 +106,9 @@ class WelcomeHeightWeight extends StatelessWidget {
           ),
           SizedBox(height: 18),
           Text(
-            getApplocalizations(context)?.welcome_text_weight_unit ?? "",
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
+            getApplocalizations(context).welcome_text_weight_unit,
+            style: getTextTheme(context).headlineLarge?.copyWith(
+                  color: getColorScheme(context).onBackground,
                   fontWeight: FontWeight.w700,
                 ),
           ),
@@ -126,9 +126,9 @@ class WelcomeHeightWeight extends StatelessWidget {
         changePage(context, PageAction.NEXT);
       },
       child: Text(
-        getApplocalizations(context)?.welcome_button_next ?? "",
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary,
+        getApplocalizations(context).welcome_button_next,
+        style: getTextTheme(context).titleLarge?.copyWith(
+              color: getColorScheme(context).onPrimary,
             ),
       ),
     );
