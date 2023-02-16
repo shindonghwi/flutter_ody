@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
-import 'package:odac_flutter_app/app/feature/components/common/ShowUp.dart';
+import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/components/picker/WheelNumberPicker.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/l10n/Common.dart';
@@ -39,7 +39,7 @@ class WelcomeHeightWeight extends StatelessWidget {
 
   /** 상단 텍스트 - 키와 몸무게를 입력해주세요 */
   Widget TitleText(BuildContext context) {
-    return ShowUp(
+    return ShowAnimation(
       child: Text(
         getApplocalizations(context)?.welcome_text_height_weight_input ?? "",
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -47,7 +47,8 @@ class WelcomeHeightWeight extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
       ),
-      delay: showUpDuration,
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
@@ -68,7 +69,7 @@ class WelcomeHeightWeight extends StatelessWidget {
 
   /** 키 픽커 위젯*/
   Widget HeightPicker(BuildContext context) {
-    return ShowUp(
+    return ShowAnimation(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -87,13 +88,14 @@ class WelcomeHeightWeight extends StatelessWidget {
           ),
         ],
       ),
-      delay: showUpDuration,
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
   /** 몸무게 픽커 위젯*/
   Widget WeightPicker(BuildContext context) {
-    return ShowUp(
+    return ShowAnimation(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -112,7 +114,8 @@ class WelcomeHeightWeight extends StatelessWidget {
           ),
         ],
       ),
-      delay: showUpDuration,
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 

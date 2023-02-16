@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
-import 'package:odac_flutter_app/app/feature/components/common/ShowUp.dart';
+import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/components/picker/WheelNumberPicker.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/l10n/Common.dart';
@@ -39,7 +39,7 @@ class WelcomeAge extends StatelessWidget {
 
   /** 상단 텍스트 ( 질문영역 )*/
   Widget TitleText(BuildContext context) {
-    return ShowUp(
+    return ShowAnimation(
       child: Text(
         getApplocalizations(context)?.welcome_text_age_input ?? "",
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -47,7 +47,8 @@ class WelcomeAge extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
       ),
-      delay: showUpDuration,
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
@@ -56,7 +57,7 @@ class WelcomeAge extends StatelessWidget {
     return Expanded(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        child: ShowUp(
+        child: ShowAnimation(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -70,7 +71,8 @@ class WelcomeAge extends StatelessWidget {
               ),
             ],
           ),
-          delay: showUpDuration,
+          type: ShowAnimationType.UP,
+          initDelay: showDuration,
         ),
       ),
     );

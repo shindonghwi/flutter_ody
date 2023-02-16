@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
-import 'package:odac_flutter_app/app/feature/components/common/ShowUp.dart';
+import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/l10n/Common.dart';
 
@@ -34,7 +34,7 @@ class WelcomeIntroduce extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ShowUp(
+        ShowAnimation(
           child: Text(
             getApplocalizations(context)?.welcome_text_greeting ?? "",
             style: Theme.of(context).textTheme.displaySmall?.copyWith(
@@ -42,16 +42,18 @@ class WelcomeIntroduce extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
           ),
-          delay: showUpDuration,
+          type: ShowAnimationType.UP,
+          initDelay: showDuration,
         ),
         SizedBox(height: 80),
-        ShowUp(
+        ShowAnimation(
           child: Text(
             getApplocalizations(context)?.welcome_text_greeting_description ?? "",
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.w800),
           ),
-          delay: showUpDuration,
+          type: ShowAnimationType.UP,
+          initDelay: showDuration,
         )
       ],
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
-import 'package:odac_flutter_app/app/feature/components/common/ShowUp.dart';
+import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/l10n/Common.dart';
 
@@ -16,7 +16,7 @@ class WelcomeDisease extends ConsumerWidget {
 
   /** 상단 텍스트 ( 질문영역 )*/
   Widget TitleText(BuildContext context) {
-    return ShowUp(
+    return ShowAnimation(
       child: Text(
         getApplocalizations(context)?.welcome_text_disease ?? "",
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -24,7 +24,8 @@ class WelcomeDisease extends ConsumerWidget {
               fontWeight: FontWeight.w700,
             ),
       ),
-      delay: showUpDuration,
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
@@ -33,7 +34,7 @@ class WelcomeDisease extends ConsumerWidget {
     List<String> diseaseList =
         getApplocalizations(context)?.welcome_disease_items.split(",") as List<String>;
 
-    return ShowUp(
+    return ShowAnimation(
       child: Wrap(
         runSpacing: 12,
         spacing: 4, // space between items
@@ -43,7 +44,8 @@ class WelcomeDisease extends ConsumerWidget {
             )
             .toList(),
       ),
-      delay: showUpDuration,
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
