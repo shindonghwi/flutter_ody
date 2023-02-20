@@ -55,7 +55,8 @@ class WelcomeDisease extends ConsumerWidget {
 
   /** 기본 값, 질환 목록 뷰 */
   Widget DiseaseSelector(BuildContext context) {
-    List<String> diseaseList = getApplocalizations(context).welcome_disease_items.split(",");
+    List<String> diseaseList =
+        getApplocalizations(context).welcome_disease_items.split(",");
 
     return ShowAnimation(
       child: Wrap(

@@ -2,9 +2,9 @@
     "appTitle": "오디",
     "appDescription": "당신의 삶을 더 건강하게",
 
-    "welcome_text_greeting": "만성질환 관리",
-    "welcome_text_greeting_description": "만성질환!\n오디로 편하게 관리하세요!",
-    "welcome_text_nickname_input": "닉네임을 입력해주세요",
+    "welcome_text_nickname_title": "닉네임을 입력해주세요",
+    "welcome_text_gender_title": "성별을 선택해주세요",
+
     "welcome_text_age_input": "나이를 입력해주세요",
     "welcome_text_age_unit": "세",
     "welcome_text_height_weight_input": "키와 몸무게를 입력해주세요",

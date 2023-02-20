@@ -50,7 +50,7 @@ class WelcomeNickname extends StatelessWidget {
   /** 상단 텍스트 - 앱 소개 글 */
   Widget TitleText(BuildContext context) {
     return Text(
-      getApplocalizations(context).welcome_text_nickname_input,
+      getApplocalizations(context).welcome_text_nickname_title,
       style: getTextTheme(context).headlineSmall?.copyWith(
             color: getColorScheme(context).onBackground,
             fontWeight: FontWeight.w500,

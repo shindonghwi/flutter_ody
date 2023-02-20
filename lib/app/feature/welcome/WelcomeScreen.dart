@@ -3,6 +3,7 @@ import 'package:odac_flutter_app/app/feature/components/common/KeepAlivePage.dar
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeAge.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeDisease.dart';
+import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeGender.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeHeightWeight.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeNickname.dart';
 
@@ -40,6 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         physics: NeverScrollableScrollPhysics(),
         children: [
           KeepAlivePage(child: WelcomeNickname(changePage: changePage)),
+          KeepAlivePage(child: WelcomeGender(changePage: changePage)),
           KeepAlivePage(child: WelcomeAge(changePage: changePage)),
           KeepAlivePage(child: WelcomeHeightWeight(changePage: changePage)),
           KeepAlivePage(child: WelcomeDisease(changePage: changePage)),
