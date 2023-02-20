@@ -30,19 +30,19 @@ TextTheme odacTextTheme = TextTheme(
     height: 1,
   ),
   headlineLarge: TextStyle(
-    fontSize: 32,
+    fontSize: 30,
     height: 1,
   ),
   headlineMedium: TextStyle(
-    fontSize: 28,
+    fontSize: 26,
     height: 1,
   ),
   headlineSmall: TextStyle(
-    fontSize: 24,
+    fontSize: 22,
     height: 1,
   ),
   titleLarge: TextStyle(
-    fontSize: 22,
+    fontSize: 20,
     height: 1,
   ),
   titleMedium: TextStyle(
@@ -81,7 +81,7 @@ TextTheme odacTextTheme = TextTheme(
     letterSpacing: 0.5,
   ),
   labelSmall: TextStyle(
-    fontSize: 11,
+    fontSize: 8,
     height: 1,
     letterSpacing: 0.5,
   ),
