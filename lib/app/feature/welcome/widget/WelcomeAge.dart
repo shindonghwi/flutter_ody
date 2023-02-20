@@ -80,15 +80,17 @@ class WelcomeAge extends StatelessWidget {
 
   /** 바텀 버튼 ( 다음 ) */
   Widget BottomButton(BuildContext context) {
-    return FillButton(
-      onTap: () {
-        changePage(context, PageAction.NEXT);
-      },
-      child: Text(
-        getApplocalizations(context).welcome_button_next,
-        style: getTextTheme(context).titleLarge?.copyWith(
-              color: getColorScheme(context).onPrimary,
-            ),
+    return Container(
+      color: getColorScheme(context).onPrimary,
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
+      child: FillButton(
+        onTap: () async => changePage(context, PageAction.NEXT),
+        child: Text(
+          getApplocalizations(context).common_next,
+          style: getTextTheme(context).titleLarge?.copyWith(
+            color: getColorScheme(context).onPrimary,
+          ),
+        ),
       ),
     );
   }

@@ -11,9 +11,6 @@
 
     "welcome_text_greeting": "Welcome",
     "welcome_text_greeting_description": "Odac is a health management app that helps you manage your health and fitness.",
-    "welcome_button_start": "Start",
-    "welcome_button_next": "Next",
-    "welcome_button_skip": "Skip",
     "welcome_text_nickname_input": "Enter your nickname",
     "welcome_text_age_input": "Enter your age",
     "welcome_text_age_unit": "age",
@@ -23,5 +20,8 @@
     "welcome_text_disease": "Do you have any illness?",
     "welcome_disease_items": "hypertension,hypotension,diabetes mellitus,heart disease,cancer,arthritis,insomnia,depression,headache,etc",
 
-    "common_input_hint": "Please enter it"
+    "common_input_hint": "Please enter it",
+    "common_start": "Start",
+    "common_next": "Next",
+    "common_skip": "Skip"
 }

@@ -80,7 +80,7 @@ class WelcomeNickname extends StatelessWidget {
       child: FillButton(
         onTap: () async => changePage(context, PageAction.NEXT),
         child: Text(
-          getApplocalizations(context).welcome_button_start,
+          getApplocalizations(context).common_start,
           style: getTextTheme(context).titleMedium?.copyWith(
                 color: getColorScheme(context).onPrimary,
                 fontWeight: FontWeight.w600,

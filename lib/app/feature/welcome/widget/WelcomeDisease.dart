@@ -14,6 +14,30 @@ class WelcomeDisease extends ConsumerWidget {
 
   WelcomeDisease({Key? key, required this.changePage}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      body: WillPopScope(
+        onWillPop: () async => changePage(context, PageAction.PREVIOUS),
+        child: Container(
+          color: getColorScheme(context).background,
+          width: getMediaQuery(context).size.width,
+          height: getMediaQuery(context).size.height,
+          padding: EdgeInsets.only(top: 120, left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TitleText(context),
+              SizedBox(height: 80),
+              DiseaseSelector(context),
+            ],
+          ),
+        ),
+      ),
+      bottomSheet: BottomButton(context),
+    );
+  }
+
   /** 상단 텍스트 ( 질문영역 )*/
   Widget TitleText(BuildContext context) {
     return ShowAnimation(
@@ -50,40 +74,18 @@ class WelcomeDisease extends ConsumerWidget {
 
   /** 바텀 버튼 ( 다음 ) */
   Widget BottomButton(BuildContext context) {
-    return FillButton(
-      onTap: () {
-        changePage(context, PageAction.NEXT);
-      },
-      child: Text(
-        getApplocalizations(context).welcome_button_next,
-        style: getTextTheme(context).titleLarge?.copyWith(
-              color: getColorScheme(context).onPrimary,
-            ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async => changePage(context, PageAction.PREVIOUS),
-        child: Container(
-          color: getColorScheme(context).background,
-          width: getMediaQuery(context).size.width,
-          height: getMediaQuery(context).size.height,
-          padding: EdgeInsets.only(top: 120, left: 20, right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TitleText(context),
-              SizedBox(height: 80),
-              DiseaseSelector(context),
-            ],
-          ),
+    return Container(
+      color: getColorScheme(context).onPrimary,
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
+      child: FillButton(
+        onTap: () async => changePage(context, PageAction.NEXT),
+        child: Text(
+          getApplocalizations(context).common_next,
+          style: getTextTheme(context).titleLarge?.copyWith(
+                color: getColorScheme(context).onPrimary,
+              ),
         ),
       ),
-      bottomSheet: BottomButton(context),
     );
   }
 }
