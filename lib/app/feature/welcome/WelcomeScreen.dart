@@ -4,7 +4,7 @@ import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeAge.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeDisease.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeHeightWeight.dart';
-import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeIntroduce.dart';
+import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeNickname.dart';
 
 /**
  * @feature: 최초로 사용하는 사용자에게 보여지는 화면이다.
@@ -20,7 +20,6 @@ import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeIntroduce.dar
  * }
  */
 class WelcomeScreen extends StatefulWidget {
-
   WelcomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -40,7 +39,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         controller: _controller,
         physics: NeverScrollableScrollPhysics(),
         children: [
-          KeepAlivePage(child: WelcomeIntroduce(changePage: changePage)),
+          KeepAlivePage(child: WelcomeNickname(changePage: changePage)),
           KeepAlivePage(child: WelcomeAge(changePage: changePage)),
           KeepAlivePage(child: WelcomeHeightWeight(changePage: changePage)),
           KeepAlivePage(child: WelcomeDisease(changePage: changePage)),
@@ -58,14 +57,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       _controller.nextPage(duration: kTabScrollDuration, curve: Curves.ease);
       debugPrint("next");
     } else if (action == PageAction.PREVIOUS) {
-
-      if(currentPage == 0){
+      if (currentPage == 0) {
         Navigator.pop(context);
         return;
       }
 
-      _controller.previousPage(
-          duration: kTabScrollDuration, curve: Curves.ease);
+      _controller.previousPage(duration: kTabScrollDuration, curve: Curves.ease);
       debugPrint("previous");
     }
   }

@@ -21,5 +21,7 @@
     "welcome_text_height_unit": "cm",
     "welcome_text_weight_unit": "kg",
     "welcome_text_disease": "Do you have any illness?",
-    "welcome_disease_items": "hypertension,hypotension,diabetes mellitus,heart disease,cancer,arthritis,insomnia,depression,headache,etc"
+    "welcome_disease_items": "hypertension,hypotension,diabetes mellitus,heart disease,cancer,arthritis,insomnia,depression,headache,etc",
+
+    "common_input_hint": "Please enter it"
 }
