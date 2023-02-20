@@ -1,9 +1,9 @@
 {
-    "appTitle": "오닥",
+    "appTitle": "오디",
     "appDescription": "당신의 삶을 더 건강하게",
 
     "welcome_text_greeting": "만성질환 관리",
-    "welcome_text_greeting_description": "만성질환!\n오닥으로 편하게 관리하세요!",
+    "welcome_text_greeting_description": "만성질환!\n오디로 편하게 관리하세요!",
     "welcome_text_nickname_input": "닉네임을 입력해주세요",
     "welcome_text_age_input": "나이를 입력해주세요",
     "welcome_text_age_unit": "세",

@@ -1,5 +1,5 @@
 {
-    "appTitle": "Odac",
+    "appTitle": "Ody",
     "@appTitle":{
         "description": "App Title"
     },
@@ -10,7 +10,7 @@
     },
 
     "welcome_text_greeting": "Welcome",
-    "welcome_text_greeting_description": "Odac is a health management app that helps you manage your health and fitness.",
+    "welcome_text_greeting_description": "Ody is a health management app that helps you manage your health and fitness.",
     "welcome_text_nickname_input": "Enter your nickname",
     "welcome_text_age_input": "Enter your age",
     "welcome_text_age_unit": "age",
