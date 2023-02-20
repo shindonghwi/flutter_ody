@@ -8,7 +8,7 @@ class FillButton extends StatefulWidget {
 
   FillButton({
     Key? key,
-    this.height = 80.0,
+    this.height = 56.0,
     required this.child,
     required this.onTap,
   }) : super(key: key);
@@ -22,9 +22,14 @@ class _FillButtonState extends State<FillButton> {
   Widget build(BuildContext context) {
     return Container(
       width: getMediaQuery(context).size.width,
-      height: 80,
+      height: widget.height,
       child: ElevatedButton(
         style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+          ),
           backgroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed)) {
               return getColorScheme(context).primary.withOpacity(0.9);
