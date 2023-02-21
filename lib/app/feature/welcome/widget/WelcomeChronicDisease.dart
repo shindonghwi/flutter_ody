@@ -50,7 +50,7 @@ class WelcomeChronicDisease extends StatelessWidget {
   Widget TitleText(BuildContext context) {
     return ShowAnimation(
       child: Text(
-        getApplocalizations(context).welcome_text_chronic_disease,
+        getApplocalizations(context).welcome_text_chronic_disease_title,
         style: getTextTheme(context).titleLarge?.copyWith(
               color: getColorScheme(context).onBackground,
               fontWeight: FontWeight.w700,

@@ -19,8 +19,9 @@
     "welcome_text_weight_title": "Enter your weight",
     "welcome_text_weight_unit": "kg",
 
-    "welcome_text_chronic_disease": "Do you have any chronic diseases?",
-    "welcome_text_mental_disease": "Do you have any mental illness?",
+    "welcome_text_chronic_disease_title": "Do you have any chronic diseases?",
+    "welcome_text_mental_disease_title": "Do you have any mental illness?",
+    "welcome_text_mental_disease_subtitle": "The question is almost over!",
     "welcome_chronic_disease_items": "hypertension,hypotension,diabetes mellitus",
     "welcome_mental_disease_items": "depression,insomnia,dementia",
 

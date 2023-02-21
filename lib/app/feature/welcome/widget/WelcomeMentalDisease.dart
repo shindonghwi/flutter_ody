@@ -35,6 +35,7 @@ class WelcomeMentalDisease extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TitleText(context),
+                SubTitleText(context),
                 SizedBox(height: 108),
                 DiseaseSelector(),
               ],
@@ -50,7 +51,7 @@ class WelcomeMentalDisease extends StatelessWidget {
   Widget TitleText(BuildContext context) {
     return ShowAnimation(
       child: Text(
-        getApplocalizations(context).welcome_text_mental_disease,
+        getApplocalizations(context).welcome_text_mental_disease_title,
         style: getTextTheme(context).titleLarge?.copyWith(
               color: getColorScheme(context).onBackground,
               fontWeight: FontWeight.w700,
@@ -58,6 +59,24 @@ class WelcomeMentalDisease extends StatelessWidget {
       ),
       type: ShowAnimationType.UP,
       initDelay: showDuration,
+    );
+  }
+
+  /** 서브 텍스트 ( 질문영역 )*/
+  Widget SubTitleText(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: ShowAnimation(
+        child: Text(
+          getApplocalizations(context).welcome_text_mental_disease_subtitle,
+          style: getTextTheme(context).bodyMedium?.copyWith(
+                color: getColorScheme(context).outlineVariant,
+                fontWeight: FontWeight.w500,
+              ),
+        ),
+        type: ShowAnimationType.UP,
+        initDelay: showDuration,
+      ),
     );
   }
 
