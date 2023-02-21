@@ -3,10 +3,11 @@
     "appDescription": "당신의 삶을 더 건강하게",
 
     "welcome_text_nickname_title": "닉네임을 입력해주세요",
-    "welcome_text_gender_title": "성별을 선택해주세요",
-
     "welcome_text_age_input": "나이를 입력해주세요",
     "welcome_text_age_unit": "세",
+    "welcome_text_gender_title": "성별을 선택해주세요",
+    "welcome_text_birthday_title": "생년월일을 입력해주세요",
+
     "welcome_text_height_weight_input": "키와 몸무게를 입력해주세요",
     "welcome_text_height_unit": "cm",
     "welcome_text_weight_unit": "kg",
@@ -16,5 +17,9 @@
     "common_input_hint": "입력해주세요",
     "common_start": "시작하기",
     "common_next": "다음",
-    "common_skip": "건너뛰기"
+    "common_skip": "건너뛰기",
+    "common_year": "년",
+    "common_month": "월",
+    "common_day": "월"
+
 }

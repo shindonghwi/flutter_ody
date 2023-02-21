@@ -7,13 +7,13 @@ import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/app/utils/Common.dart';
 
 /**
- * @feature: 나이 입력화면
+ * @feature: 생년 월 일 입력화면
  * @author: 2023/02/14 1:42 PM donghwishin
  */
-class WelcomeAge extends StatelessWidget {
+class WelcomeBirthday extends StatelessWidget {
   final Function changePage;
 
-  WelcomeAge({Key? key, required this.changePage}) : super(key: key);
+  WelcomeBirthday({Key? key, required this.changePage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class WelcomeAge extends StatelessWidget {
             children: [
               TitleText(context),
               SizedBox(height: 70),
-              InputAge(context),
+              InputBirthDay(context),
             ],
           ),
         ),
@@ -43,7 +43,7 @@ class WelcomeAge extends StatelessWidget {
   Widget TitleText(BuildContext context) {
     return ShowAnimation(
       child: Text(
-        getApplocalizations(context).welcome_text_age_input,
+        getApplocalizations(context).welcome_text_birthday_title,
         style: getTextTheme(context).titleLarge?.copyWith(
               color: getColorScheme(context).onBackground,
               fontWeight: FontWeight.w700,
@@ -55,20 +55,15 @@ class WelcomeAge extends StatelessWidget {
   }
 
   /** 나이 입력공간 */
-  Widget InputAge(BuildContext context) {
-    return Container(
-      width: getMediaQuery(context).size.width * 0.3,
-      child: OutlineTextField(
-        maxLength: 2,
-        hintText: "52", // 나이 기본 값
-        textCallback: (value) {
-          debugPrint("value : $value");
-        },
-        keyboardType: TextInputType.number,
-        inputFormatters: [
-          FilteringTextInputFormatter.digitsOnly,
-        ],
-      ),
+  Widget InputBirthDay(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        InputContent(context, "년"),
+        InputContent(context, "월"),
+        InputContent(context, "일"),
+      ],
     );
   }
 
@@ -86,6 +81,66 @@ class WelcomeAge extends StatelessWidget {
               ),
         ),
       ),
+    );
+  }
+
+  Widget InputContent(BuildContext context, String type) {
+
+    double widthRatio = 0.2;
+    int maxLength = 4;
+    String hintText = "1987";
+    TextInputAction keyboardAction = TextInputAction.next;
+
+    switch (type) {
+      case "년":
+        break;
+      case "월":
+        widthRatio = 0.15;
+        hintText = "06";
+        maxLength = 2;
+        break;
+      case "일":
+        widthRatio = 0.15;
+        hintText = "12";
+        maxLength = 2;
+        keyboardAction = TextInputAction.done;
+        break;
+    }
+
+    return Row(
+      children: [
+        Container(
+          width: getMediaQuery(context).size.width * widthRatio,
+          child: OutlineTextField(
+            maxLength: maxLength,
+            hintText: hintText,
+            textCallback: (value) {
+              debugPrint("value : $value");
+            },
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            keyboardAction: keyboardAction,
+            actionCallback: (){
+              if (keyboardAction == TextInputAction.done){
+                FocusScope.of(context).unfocus();
+              }else{
+                FocusScope.of(context).nextFocus();
+              }
+            },
+          ),
+        ),
+        SizedBox(width: 10,),
+        Text(
+          type,
+          style: getTextTheme(context).titleLarge?.copyWith(
+                color: getColorScheme(context).onBackground,
+                fontWeight: FontWeight.w700,
+              ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }

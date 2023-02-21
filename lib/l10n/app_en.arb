@@ -11,9 +11,10 @@
 
     "welcome_text_nickname_title": "Enter your nickname",
     "welcome_text_gender_title": "Please choose your gender",
-
     "welcome_text_age_input": "Enter your age",
     "welcome_text_age_unit": "age",
+    "welcome_text_birthday_title": "Please enter your date of birth.",
+
     "welcome_text_height_weight_input": "Enter your height and weight",
     "welcome_text_height_unit": "cm",
     "welcome_text_weight_unit": "kg",
@@ -23,5 +24,9 @@
     "common_input_hint": "Please enter it",
     "common_start": "Start",
     "common_next": "Next",
-    "common_skip": "Skip"
+    "common_skip": "Skip",
+    "common_year": "year",
+    "common_month": "month",
+    "common_day": "day"
+
 }

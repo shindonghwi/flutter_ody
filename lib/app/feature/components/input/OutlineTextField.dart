@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/app/utils/Common.dart';
 
@@ -6,9 +7,11 @@ class OutlineTextField extends HookWidget {
   final labelText;
   final hintText;
   final defaultText;
+  final counterText;
   final keyboardType;
   final keyboardAction;
   final maxLength;
+  final List<TextInputFormatter>? inputFormatters;
   final Function()? actionCallback;
   final Function(String text)? textCallback;
 
@@ -16,10 +19,12 @@ class OutlineTextField extends HookWidget {
     Key? key,
     this.labelText = "",
     this.hintText = "",
+    this.counterText = "",
     this.defaultText = "",
     this.maxLength = 1000,
     this.keyboardType = TextInputType.text,
     this.keyboardAction = TextInputAction.done,
+    this.inputFormatters,
     this.actionCallback,
     this.textCallback,
   }) : super(key: key);
@@ -46,6 +51,7 @@ class OutlineTextField extends HookWidget {
             color: getColorScheme(context).onBackground,
           ),
       textAlign: TextAlign.center,
+      inputFormatters: this.inputFormatters,
       decoration: InputDecoration(
         labelText: this.labelText,
         hintText: this.hintText,
@@ -86,6 +92,7 @@ class OutlineTextField extends HookWidget {
         isDense: true,
         contentPadding: EdgeInsets.all(contentVerticalPadding),
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        counterText: this.counterText,
       ),
       textInputAction: keyboardAction,
       keyboardType: keyboardType,
