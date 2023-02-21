@@ -14,6 +14,8 @@
     "welcome_text_age_input": "Enter your age",
     "welcome_text_age_unit": "age",
     "welcome_text_birthday_title": "Please enter your date of birth.",
+    "welcome_text_height_title": "Enter your height",
+    "welcome_text_weight_title": "Enter your weight",
 
     "welcome_text_height_weight_input": "Enter your height and weight",
     "welcome_text_height_unit": "cm",

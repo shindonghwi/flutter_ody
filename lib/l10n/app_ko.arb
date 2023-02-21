@@ -7,6 +7,8 @@
     "welcome_text_age_unit": "세",
     "welcome_text_gender_title": "성별을 선택해주세요",
     "welcome_text_birthday_title": "생년월일을 입력해주세요",
+    "welcome_text_height_title": "키를 입력해주세요",
+    "welcome_text_weight_title": "몸무게를 입력해주세요",
 
     "welcome_text_height_weight_input": "키와 몸무게를 입력해주세요",
     "welcome_text_height_unit": "cm",
