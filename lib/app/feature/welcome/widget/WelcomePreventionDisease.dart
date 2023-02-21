@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:odac_flutter_app/app/feature/components/appbar/LeftIconAppBar.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
 import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
@@ -25,13 +26,24 @@ class WelcomePreventionDisease extends StatelessWidget {
             create: (_) => SelectorPreventionDiseaseProvider(context)),
       ],
       child: Scaffold(
+        backgroundColor: getColorScheme(context).background,
+        appBar: LeftIconAppBar(
+          leftIcon: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              size: 20,
+              color: getColorScheme(context).onBackground,
+            ),
+            onPressed: () async => changePage(context, PageAction.PREVIOUS),
+          ),
+        ),
         body: WillPopScope(
           onWillPop: () async => changePage(context, PageAction.PREVIOUS),
           child: Container(
             color: getColorScheme(context).background,
             width: getMediaQuery(context).size.width,
             height: getMediaQuery(context).size.height,
-            padding: EdgeInsets.only(top: 120),
+            padding: EdgeInsets.only(top: 48),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -53,9 +65,9 @@ class WelcomePreventionDisease extends StatelessWidget {
     return ShowAnimation(
       child: Text(
         getApplocalizations(context).welcome_text_prevention_disease_title,
-        style: getTextTheme(context).titleLarge?.copyWith(
+        style: getTextTheme(context).headlineMedium?.copyWith(
               color: getColorScheme(context).onBackground,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w500,
             ),
       ),
       type: ShowAnimationType.UP,

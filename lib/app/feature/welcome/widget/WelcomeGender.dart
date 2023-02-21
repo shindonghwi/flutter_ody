@@ -23,6 +23,7 @@ class WelcomeGender extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SelectorGenderProvider()),
       ],
       child: Scaffold(
+        backgroundColor: getColorScheme(context).background,
         appBar: LeftIconAppBar(
           leftIcon: IconButton(
             icon: Icon(

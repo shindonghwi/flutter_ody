@@ -32,7 +32,7 @@ class WelcomeNickname extends StatelessWidget {
         onWillPop: () async => changePage(context, PageAction.PREVIOUS),
         child: Container(
           color: getColorScheme(context).background,
-          padding: EdgeInsets.only(left: 20, right: 20, top: 48),
+          padding: EdgeInsets.only(top: 48),
           width: getMediaQuery(context).size.width,
           child: Column(
             children: [

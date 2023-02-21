@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odac_flutter_app/app/feature/components/appbar/LeftIconAppBar.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
 import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
@@ -17,13 +18,24 @@ class WelcomeEnd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: getColorScheme(context).background,
+      appBar: LeftIconAppBar(
+        leftIcon: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            size: 20,
+            color: getColorScheme(context).onBackground,
+          ),
+          onPressed: () async => changePage(context, PageAction.PREVIOUS),
+        ),
+      ),
       body: WillPopScope(
         onWillPop: () async => changePage(context, PageAction.PREVIOUS),
         child: Container(
           color: getColorScheme(context).background,
           width: getMediaQuery(context).size.width,
           height: getMediaQuery(context).size.height,
-          padding: EdgeInsets.only(top: 120),
+          padding: EdgeInsets.only(top: 48),
           child: Column(
             children: [
               TitleText(context),
@@ -44,9 +56,9 @@ class WelcomeEnd extends StatelessWidget {
       child: ShowAnimation(
         child: Text(
           getApplocalizations(context).welcome_text_end_title,
-          style: getTextTheme(context).titleLarge?.copyWith(
+          style: getTextTheme(context).headlineSmall?.copyWith(
                 color: getColorScheme(context).onBackground,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w500,
               ),
           textAlign: TextAlign.center,
         ),
