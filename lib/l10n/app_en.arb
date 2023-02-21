@@ -15,13 +15,14 @@
     "welcome_text_age_unit": "age",
     "welcome_text_birthday_title": "Please enter your date of birth.",
     "welcome_text_height_title": "Enter your height",
-    "welcome_text_weight_title": "Enter your weight",
-
-    "welcome_text_height_weight_input": "Enter your height and weight",
     "welcome_text_height_unit": "cm",
+    "welcome_text_weight_title": "Enter your weight",
     "welcome_text_weight_unit": "kg",
-    "welcome_text_disease": "Do you have any illness?",
-    "welcome_disease_items": "hypertension,hypotension,diabetes mellitus,heart disease,cancer,arthritis,insomnia,depression,headache,etc",
+
+    "welcome_text_chronic_disease": "Do you have any chronic diseases?",
+    "welcome_text_mental_disease": "Do you have any mental illness?",
+    "welcome_chronic_disease_items": "hypertension,hypotension,diabetes mellitus",
+    "welcome_mental_disease_items": "depression,insomnia,dementia",
 
     "common_input_hint": "Please enter it",
     "common_start": "Start",

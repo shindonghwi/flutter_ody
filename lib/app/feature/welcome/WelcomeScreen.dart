@@ -3,9 +3,10 @@ import 'package:odac_flutter_app/app/feature/components/common/KeepAlivePage.dar
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeAge.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeBirthday.dart';
-import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeDisease.dart';
+import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeChronicDisease.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeGender.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeHeight.dart';
+import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeMentalDisease.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeNickname.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/WelcomeWeight.dart';
 
@@ -48,7 +49,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           KeepAlivePage(child: WelcomeBirthday(changePage: changePage)),
           KeepAlivePage(child: WelcomeHeight(changePage: changePage)),
           KeepAlivePage(child: WelcomeWeight(changePage: changePage)),
-          KeepAlivePage(child: WelcomeDisease(changePage: changePage)),
+          KeepAlivePage(child: WelcomeChronicDisease(changePage: changePage)),
+          KeepAlivePage(child: WelcomeMentalDisease(changePage: changePage)),
         ],
       ),
     );

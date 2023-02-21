@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/app/feature/components/appbar/LeftIconAppBar.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
-import 'package:odac_flutter_app/app/feature/welcome/widget/provider/SelectorGenderProvider.dart';
+import 'package:odac_flutter_app/app/feature/welcome/widget/provider/gender/SelectorGenderProvider.dart';
 import 'package:odac_flutter_app/app/utils/Common.dart';
 import 'package:provider/provider.dart';
 

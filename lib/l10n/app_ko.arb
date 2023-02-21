@@ -8,13 +8,14 @@
     "welcome_text_gender_title": "성별을 선택해주세요",
     "welcome_text_birthday_title": "생년월일을 입력해주세요",
     "welcome_text_height_title": "키를 입력해주세요",
-    "welcome_text_weight_title": "몸무게를 입력해주세요",
-
-    "welcome_text_height_weight_input": "키와 몸무게를 입력해주세요",
     "welcome_text_height_unit": "cm",
+    "welcome_text_weight_title": "몸무게를 입력해주세요",
     "welcome_text_weight_unit": "kg",
-    "welcome_text_disease": "앓고 있는 질환이 있나요?",
-    "welcome_disease_items": "고혈압,저혈압,당뇨,심장질환,암,관절염,불면증,우울증,두통,기타",
+
+    "welcome_text_chronic_disease": "앓고 있는 만성질환이 있나요?",
+    "welcome_text_mental_disease": "앓고 있는 정신질환이 있나요?",
+    "welcome_chronic_disease_items": "고혈압,저혈압,당뇨병",
+    "welcome_mental_disease_items": "우울증,불면증,치매",
 
     "common_input_hint": "입력해주세요",
     "common_start": "시작하기",
