@@ -36,8 +36,8 @@ class WelcomeMentalDisease extends StatelessWidget {
               children: [
                 TitleText(context),
                 SubTitleText(context),
-                SizedBox(height: 108),
-                DiseaseSelector(),
+                SizedBox(height: 78),
+                _DiseaseSelector(),
               ],
             ),
           ),
@@ -98,8 +98,8 @@ class WelcomeMentalDisease extends StatelessWidget {
   }
 }
 
-class DiseaseSelector extends HookWidget {
-  DiseaseSelector({Key? key}) : super(key: key);
+class _DiseaseSelector extends HookWidget {
+  _DiseaseSelector({Key? key}) : super(key: key);
 
   late List<String> diseaseLists;
   late SelectorMentalDiseaseProvider _selectorMentalDiseaseProvider;
@@ -117,7 +117,7 @@ class DiseaseSelector extends HookWidget {
             physics: BouncingScrollPhysics(),
             itemCount: _selectorMentalDiseaseProvider.diseaseList.length,
             itemBuilder: (BuildContext ctx, int idx) {
-              return DiseaseItem(
+              return _DiseaseItem(
                   diseaseName: _selectorMentalDiseaseProvider
                       .diseaseList[idx].diseaseName);
             },
@@ -128,10 +128,10 @@ class DiseaseSelector extends HookWidget {
   }
 }
 
-class DiseaseItem extends HookWidget {
+class _DiseaseItem extends HookWidget {
   final diseaseName;
 
-  DiseaseItem({Key? key, this.diseaseName}) : super(key: key);
+  _DiseaseItem({Key? key, this.diseaseName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

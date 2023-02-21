@@ -3,25 +3,26 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
 import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
-import 'package:odac_flutter_app/app/feature/welcome/widget/provider/disease/SelectorChronicDiseaseProvider.dart';
+import 'package:odac_flutter_app/app/feature/welcome/widget/provider/disease/SelectorPreventionDiseaseProvider.dart';
 import 'package:odac_flutter_app/app/utils/Common.dart';
 import 'package:provider/provider.dart';
 
 /**
- * @feature: 만성질환 선택 화면
+ * @feature: 예방질환 선택 화면
  * @author: 2023/02/14 1:42 PM donghwishin
  */
-class WelcomeChronicDisease extends StatelessWidget {
+class WelcomePreventionDisease extends StatelessWidget {
   final Function changePage;
 
-  WelcomeChronicDisease({Key? key, required this.changePage}) : super(key: key);
+  WelcomePreventionDisease({Key? key, required this.changePage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (_) => SelectorChronicDiseaseProvider(context)),
+            create: (_) => SelectorPreventionDiseaseProvider(context)),
       ],
       child: Scaffold(
         body: WillPopScope(
@@ -35,7 +36,8 @@ class WelcomeChronicDisease extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TitleText(context),
-                SizedBox(height: 108),
+                SubTitleText(context),
+                SizedBox(height: 78),
                 _DiseaseSelector(),
               ],
             ),
@@ -50,7 +52,7 @@ class WelcomeChronicDisease extends StatelessWidget {
   Widget TitleText(BuildContext context) {
     return ShowAnimation(
       child: Text(
-        getApplocalizations(context).welcome_text_chronic_disease_title,
+        getApplocalizations(context).welcome_text_prevention_disease_title,
         style: getTextTheme(context).titleLarge?.copyWith(
               color: getColorScheme(context).onBackground,
               fontWeight: FontWeight.w700,
@@ -58,6 +60,24 @@ class WelcomeChronicDisease extends StatelessWidget {
       ),
       type: ShowAnimationType.UP,
       initDelay: showDuration,
+    );
+  }
+
+  /** 서브 텍스트 ( 질문영역 )*/
+  Widget SubTitleText(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: ShowAnimation(
+        child: Text(
+          getApplocalizations(context).welcome_text_prevention_disease_subtitle,
+          style: getTextTheme(context).bodyMedium?.copyWith(
+                color: getColorScheme(context).outlineVariant,
+                fontWeight: FontWeight.w500,
+              ),
+        ),
+        type: ShowAnimationType.UP,
+        initDelay: showDuration,
+      ),
     );
   }
 
@@ -83,25 +103,33 @@ class _DiseaseSelector extends HookWidget {
   _DiseaseSelector({Key? key}) : super(key: key);
 
   late List<String> diseaseLists;
-  late SelectorChronicDiseaseProvider _selectorChronicDiseaseProvider;
+  late SelectorPreventionDiseaseProvider _selectorPreventionDiseaseProvider;
 
   @override
   Widget build(BuildContext context) {
-    _selectorChronicDiseaseProvider =
-        Provider.of<SelectorChronicDiseaseProvider>(context, listen: false);
+    _selectorPreventionDiseaseProvider =
+        Provider.of<SelectorPreventionDiseaseProvider>(context, listen: false);
 
-    return Consumer<SelectorChronicDiseaseProvider>(
+    return Consumer<SelectorPreventionDiseaseProvider>(
       builder: (context, provider, child) {
         return Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.all(0),
-            physics: BouncingScrollPhysics(),
-            itemCount: _selectorChronicDiseaseProvider.diseaseList.length,
-            itemBuilder: (BuildContext ctx, int idx) {
-              return _DiseaseItem(
-                  diseaseName: _selectorChronicDiseaseProvider
-                      .diseaseList[idx].diseaseName);
-            },
+          child: Container(
+            child: GridView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              physics: BouncingScrollPhysics(),
+              itemCount: _selectorPreventionDiseaseProvider.diseaseList.length,
+              itemBuilder: (BuildContext ctx, int idx) {
+                return _DiseaseItem(
+                    diseaseName: _selectorPreventionDiseaseProvider
+                        .diseaseList[idx].diseaseName);
+              },
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: getMediaQuery(context).size.width * 0.4,
+                crossAxisSpacing: 34,
+                mainAxisSpacing: 30,
+                childAspectRatio: 3,
+              ),
+            ),
           ),
         );
       },
@@ -116,11 +144,11 @@ class _DiseaseItem extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SelectorChronicDiseaseProvider>(
+    return Consumer<SelectorPreventionDiseaseProvider>(
       builder: (context, provider, child) {
         return Container(
           height: 50,
-          margin: EdgeInsets.only(left: 70, right: 70, bottom: 30),
+          // margin: EdgeInsets.only(left: 70, right: 70, bottom: 30),
           decoration: BoxDecoration(
             border: Border.all(
               color: provider.isSelected(diseaseName)

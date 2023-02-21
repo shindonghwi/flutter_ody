@@ -11,12 +11,16 @@
     "welcome_text_height_unit": "cm",
     "welcome_text_weight_title": "몸무게를 입력해주세요",
     "welcome_text_weight_unit": "kg",
-
     "welcome_text_chronic_disease_title": "앓고 있는 만성질환이 있나요?",
+    "welcome_chronic_disease_items": "고혈압,저혈압,당뇨병",
     "welcome_text_mental_disease_title": "앓고 있는 정신질환이 있나요?",
     "welcome_text_mental_disease_subtitle": "질문이 거의 끝나가요!",
-    "welcome_chronic_disease_items": "고혈압,저혈압,당뇨병",
     "welcome_mental_disease_items": "우울증,불면증,치매",
+
+    "welcome_text_prevention_disease_title": "예방하고 싶은 질환이 있나요?",
+    "welcome_text_prevention_disease_subtitle": "마지막 질문이에요!",
+    "welcome_prevention_disease_items": "고혈압,저혈압,당뇨병,우울증,불면증,치매",
+
 
     "common_input_hint": "입력해주세요",
     "common_start": "시작하기",
