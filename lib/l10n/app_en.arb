@@ -26,6 +26,15 @@
     "welcome_text_prevention_disease_title": "Is there any disease you want to prevent?",
     "welcome_text_prevention_disease_subtitle": "This is the last question!",
     "welcome_prevention_disease_items": "hypertension,hypotension,diabetes mellitus,depression,insomnia,dementia",
+    "welcome_text_end_title": "The question is over!",
+    "welcome_text_end_subtitle": "I hope you have a healthier day using ody.\n\nI will always try to take care of ody for '{nickname}'!",
+    "@welcome_text_end_subtitle":{
+        "description": "welcome_text_end_subtitle",
+        "placeholders": {
+            "nickname": {}
+        }
+    },
+
 
     "common_input_hint": "Please enter it",
     "common_start": "Start",

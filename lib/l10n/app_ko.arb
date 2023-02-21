@@ -16,10 +16,17 @@
     "welcome_text_mental_disease_title": "앓고 있는 정신질환이 있나요?",
     "welcome_text_mental_disease_subtitle": "질문이 거의 끝나가요!",
     "welcome_mental_disease_items": "우울증,불면증,치매",
-
     "welcome_text_prevention_disease_title": "예방하고 싶은 질환이 있나요?",
     "welcome_text_prevention_disease_subtitle": "마지막 질문이에요!",
     "welcome_prevention_disease_items": "고혈압,저혈압,당뇨병,우울증,불면증,치매",
+    "welcome_text_end_title": "질문이 끝났어요!",
+    "welcome_text_end_subtitle": "앞으로 오디를 활용해서\n더 건강한 하루를 보내셨으면 좋겠어요\n\n오디도 \"{nickname}\" 님을 위해서\n항상 관리하도록 노력할게요!",
+    "@welcome_text_end_subtitle":{
+        "description": "welcome_text_end_subtitle",
+        "placeholders": {
+            "nickname": {}
+        }
+    },
 
 
     "common_input_hint": "입력해주세요",
