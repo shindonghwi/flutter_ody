@@ -68,14 +68,18 @@ class WelcomeBirthday extends StatelessWidget {
 
   /** 나이 입력공간 */
   Widget InputBirthDay(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        InputContent(context, "년"),
-        InputContent(context, "월"),
-        InputContent(context, "일"),
-      ],
+    return ShowAnimation(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InputContent(context, "년"),
+          InputContent(context, "월"),
+          InputContent(context, "일"),
+        ],
+      ),
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
@@ -97,7 +101,6 @@ class WelcomeBirthday extends StatelessWidget {
   }
 
   Widget InputContent(BuildContext context, String type) {
-
     double widthRatio = 0.2;
     int maxLength = 4;
     String hintText = "1987";
@@ -134,16 +137,18 @@ class WelcomeBirthday extends StatelessWidget {
               FilteringTextInputFormatter.digitsOnly,
             ],
             keyboardAction: keyboardAction,
-            actionCallback: (){
-              if (keyboardAction == TextInputAction.done){
+            actionCallback: () {
+              if (keyboardAction == TextInputAction.done) {
                 FocusScope.of(context).unfocus();
-              }else{
+              } else {
                 FocusScope.of(context).nextFocus();
               }
             },
           ),
         ),
-        SizedBox(width: 10,),
+        SizedBox(
+          width: 10,
+        ),
         Text(
           type,
           style: getTextTheme(context).titleLarge?.copyWith(

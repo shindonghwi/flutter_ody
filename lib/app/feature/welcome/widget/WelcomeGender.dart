@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/app/feature/components/appbar/LeftIconAppBar.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
+import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/app/feature/welcome/widget/provider/gender/SelectorGenderProvider.dart';
 import 'package:odac_flutter_app/app/utils/Common.dart';
@@ -45,8 +46,7 @@ class WelcomeGender extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TitleText(context),
-                SizedBox(height: 80),
-                GenderSelector(),
+                _GenderSelector(),
               ],
             ),
           ),
@@ -58,12 +58,16 @@ class WelcomeGender extends StatelessWidget {
 
   /** 상단 텍스트 ( 질문영역 )*/
   Widget TitleText(BuildContext context) {
-    return Text(
-      getApplocalizations(context).welcome_text_gender_title,
-      style: getTextTheme(context).headlineSmall?.copyWith(
-            color: getColorScheme(context).onBackground,
-            fontWeight: FontWeight.w500,
-          ),
+    return ShowAnimation(
+      child: Text(
+        getApplocalizations(context).welcome_text_gender_title,
+        style: getTextTheme(context).headlineSmall?.copyWith(
+              color: getColorScheme(context).onBackground,
+              fontWeight: FontWeight.w500,
+            ),
+      ),
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
@@ -86,82 +90,102 @@ class WelcomeGender extends StatelessWidget {
   }
 }
 
-class GenderSelector extends HookWidget {
-  GenderSelector({Key? key}) : super(key: key);
+class _GenderSelector extends HookWidget {
+  _GenderSelector({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<SelectorGenderProvider>(
-      builder: (context, provider, child) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GenderItem(
-              genderType: "남",
-              isSelected: context.watch<SelectorGenderProvider>().isSelected,
-            ),
-            GenderItem(
-              genderType: "여",
-              isSelected: !context.watch<SelectorGenderProvider>().isSelected,
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class GenderItem extends StatelessWidget {
-  final genderType;
-  final isSelected;
   late SelectorGenderProvider _selectorGenderProvider;
-
-  GenderItem({Key? key, this.genderType, this.isSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     _selectorGenderProvider =
         Provider.of<SelectorGenderProvider>(context, listen: false);
 
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
+    return Consumer<SelectorGenderProvider>(
+      builder: (context, provider, child) {
+        return Container(
+          margin: EdgeInsets.only(top: 80),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Flexible(
+                flex: 1,
+                child: GenderItem(
+                  genderType: "남",
+                  isSelected: _selectorGenderProvider.isSelected,
+                  change: () => _selectorGenderProvider.change(),
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: GenderItem(
+                  genderType: "여",
+                  isSelected: !_selectorGenderProvider.isSelected,
+                  change: () => _selectorGenderProvider.change(),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class GenderItem extends HookWidget {
+  final genderType;
+  final isSelected;
+  final Function()? change;
+
+  GenderItem({
+    Key? key,
+    this.genderType,
+    this.isSelected,
+    this.change,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ShowAnimation(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: this.isSelected
+                ? getColorScheme(context).primary
+                : getColorScheme(context).outlineVariant,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
           color: this.isSelected
               ? getColorScheme(context).primary
-              : getColorScheme(context).outlineVariant,
-          width: 1,
+              : getColorScheme(context).onPrimary,
         ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
-        ),
-        color: this.isSelected
-            ? getColorScheme(context).primary
-            : getColorScheme(context).onPrimary,
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            _selectorGenderProvider.change();
-          },
-          child: SizedBox(
-            width: 100,
-            height: 100,
-            child: Center(
-              widthFactor: 1.0,
-              heightFactor: 1.0,
-              child: Text(
-                this.genderType,
-                style: getTextTheme(context).headlineLarge?.copyWith(
-                      color: this.isSelected
-                          ? getColorScheme(context).background
-                          : getColorScheme(context).outlineVariant,
-                    ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () => this.change!(),
+            child: SizedBox(
+              width: 100,
+              height: 100,
+              child: Center(
+                widthFactor: 1.0,
+                heightFactor: 1.0,
+                child: Text(
+                  this.genderType,
+                  style: getTextTheme(context).headlineLarge?.copyWith(
+                        color: this.isSelected
+                            ? getColorScheme(context).background
+                            : getColorScheme(context).outlineVariant,
+                      ),
+                ),
               ),
             ),
           ),
         ),
       ),
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 }

@@ -37,6 +37,7 @@
 
 
     "common_input_hint": "Please enter it",
+    "common_nobody": "Nobody",
     "common_start": "Start",
     "common_next": "Next",
     "common_skip": "Skip",

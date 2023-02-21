@@ -68,35 +68,39 @@ class WelcomeWeight extends StatelessWidget {
 
   /** 몸무게 입력공간 */
   Widget InputWeight(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: getMediaQuery(context).size.width * 0.3,
-          child: OutlineTextField(
-            maxLength: 3,
-            hintText: "67",
-            textCallback: (value) {
-              debugPrint("value : $value");
-            },
-            keyboardType: TextInputType.number,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+    return ShowAnimation(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: getMediaQuery(context).size.width * 0.3,
+            child: OutlineTextField(
+              maxLength: 3,
+              hintText: "67",
+              textCallback: (value) {
+                debugPrint("value : $value");
+              },
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+            ),
           ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Text(
-          getApplocalizations(context).welcome_text_weight_unit,
-          style: getTextTheme(context).titleLarge?.copyWith(
-                color: getColorScheme(context).onBackground,
-                fontWeight: FontWeight.w700,
-              ),
-          textAlign: TextAlign.center,
-        ),
-      ],
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            getApplocalizations(context).welcome_text_weight_unit,
+            style: getTextTheme(context).titleLarge?.copyWith(
+                  color: getColorScheme(context).onBackground,
+                  fontWeight: FontWeight.w700,
+                ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 

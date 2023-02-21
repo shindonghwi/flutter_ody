@@ -73,19 +73,41 @@ class WelcomeChronicDisease extends StatelessWidget {
     );
   }
 
-  /** 바텀 버튼 ( 다음 ) */
+  /** 바텀 버튼  */
   Widget BottomButton(BuildContext context) {
     return Container(
       color: getColorScheme(context).onPrimary,
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
-      child: FillButton(
-        onTap: () async => changePage(context, PageAction.NEXT),
-        child: Text(
-          getApplocalizations(context).common_next,
-          style: getTextTheme(context).titleLarge?.copyWith(
-                color: getColorScheme(context).onPrimary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Flexible(
+            flex: 1,
+            child: FillButton(
+              onTap: () async => changePage(context, PageAction.NEXT),
+              backgroundColor: getColorScheme(context).outline,
+              child: Text(
+                "${getApplocalizations(context).common_nobody}!",
+                style: getTextTheme(context).titleLarge?.copyWith(
+                      color: getColorScheme(context).onPrimary,
+                    ),
               ),
-        ),
+            ),
+          ),
+          SizedBox(width: 30),
+          Flexible(
+            flex: 1,
+            child: FillButton(
+              onTap: () async => changePage(context, PageAction.NEXT),
+              child: Text(
+                getApplocalizations(context).common_next,
+                style: getTextTheme(context).titleLarge?.copyWith(
+                      color: getColorScheme(context).onPrimary,
+                    ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -130,59 +152,63 @@ class _DiseaseItem extends HookWidget {
   Widget build(BuildContext context) {
     return Consumer<SelectorChronicDiseaseProvider>(
       builder: (context, provider, child) {
-        return Container(
-          height: 50,
-          margin: EdgeInsets.only(left: 70, right: 70, bottom: 30),
-          decoration: BoxDecoration(
-            border: Border.all(
+        return ShowAnimation(
+          child: Container(
+            height: 50,
+            margin: EdgeInsets.only(left: 70, right: 70, bottom: 30),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: provider.isSelected(diseaseName)
+                    ? getColorScheme(context).primary
+                    : getColorScheme(context).outline.withOpacity(0.8),
+                width: 1,
+              ),
               color: provider.isSelected(diseaseName)
                   ? getColorScheme(context).primary
-                  : getColorScheme(context).outline.withOpacity(0.8),
-              width: 1,
+                  : getColorScheme(context).onPrimary,
+              borderRadius: BorderRadius.circular(12),
             ),
-            color: provider.isSelected(diseaseName)
-                ? getColorScheme(context).primary
-                : getColorScheme(context).onPrimary,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                provider.update(diseaseName);
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      provider.isSelected(diseaseName)
-                          ? Icons.check
-                          : Icons.add,
-                      color: provider.isSelected(diseaseName)
-                          ? getColorScheme(context).onPrimary
-                          : getColorScheme(context).outline.withOpacity(0.8),
-                      size: 16,
-                    ),
-                    SizedBox(width: 4),
-                    Text(
-                      diseaseName,
-                      style: getTextTheme(context).bodyLarge?.copyWith(
-                            color: provider.isSelected(diseaseName)
-                                ? getColorScheme(context).onPrimary
-                                : getColorScheme(context)
-                                    .outline
-                                    .withOpacity(0.8),
-                          ),
-                    ),
-                  ],
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  provider.update(diseaseName);
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        provider.isSelected(diseaseName)
+                            ? Icons.check
+                            : Icons.add,
+                        color: provider.isSelected(diseaseName)
+                            ? getColorScheme(context).onPrimary
+                            : getColorScheme(context).outline.withOpacity(0.8),
+                        size: 16,
+                      ),
+                      SizedBox(width: 4),
+                      Text(
+                        diseaseName,
+                        style: getTextTheme(context).bodyLarge?.copyWith(
+                              color: provider.isSelected(diseaseName)
+                                  ? getColorScheme(context).onPrimary
+                                  : getColorScheme(context)
+                                      .outline
+                                      .withOpacity(0.8),
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
+          type: ShowAnimationType.UP,
+          initDelay: showDuration,
         );
       },
     );

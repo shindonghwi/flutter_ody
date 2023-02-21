@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/app/feature/components/appbar/LeftIconAppBar.dart';
 import 'package:odac_flutter_app/app/feature/components/button/FillButton.dart';
+import 'package:odac_flutter_app/app/feature/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/app/feature/components/input/OutlineTextField.dart';
 import 'package:odac_flutter_app/app/feature/welcome/model/PageAction.dart';
 import 'package:odac_flutter_app/app/utils/Common.dart';
@@ -49,26 +50,34 @@ class WelcomeNickname extends StatelessWidget {
 
   /** 상단 텍스트 - 앱 소개 글 */
   Widget TitleText(BuildContext context) {
-    return Text(
-      getApplocalizations(context).welcome_text_nickname_title,
-      style: getTextTheme(context).headlineSmall?.copyWith(
-            color: getColorScheme(context).onBackground,
-            fontWeight: FontWeight.w500,
-          ),
+    return ShowAnimation(
+      child: Text(
+        getApplocalizations(context).welcome_text_nickname_title,
+        style: getTextTheme(context).headlineSmall?.copyWith(
+              color: getColorScheme(context).onBackground,
+              fontWeight: FontWeight.w500,
+            ),
+      ),
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
   /** 닉네임 입력공간 */
   Widget InputNickname(BuildContext context) {
-    return Container(
-      width: getMediaQuery(context).size.width * 0.6,
-      child: OutlineTextField(
-        maxLength: 7,
-        hintText: getApplocalizations(context).common_input_hint,
-        textCallback: (value) {
-          debugPrint("value : $value");
-        },
+    return ShowAnimation(
+      child: Container(
+        width: getMediaQuery(context).size.width * 0.6,
+        child: OutlineTextField(
+          maxLength: 7,
+          hintText: getApplocalizations(context).common_input_hint,
+          textCallback: (value) {
+            debugPrint("value : $value");
+          },
+        ),
       ),
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 

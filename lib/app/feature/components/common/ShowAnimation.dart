@@ -38,7 +38,7 @@ class _ShowAnimationState extends State<ShowAnimation> with TickerProviderStateM
     super.initState();
 
     var animOffsetValue;
-    final animDuration = 500;
+    final animDuration = 300;
     final offsetZero = 0.0;
     final offsetDistance = 0.35;
 

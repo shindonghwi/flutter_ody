@@ -51,9 +51,9 @@ class WelcomeEnd extends StatelessWidget {
 
   /** 상단 텍스트 ( 질문영역 )*/
   Widget TitleText(BuildContext context) {
-    return Container(
-      width: getMediaQuery(context).size.width,
-      child: ShowAnimation(
+    return ShowAnimation(
+      child: Container(
+        width: getMediaQuery(context).size.width,
         child: Text(
           getApplocalizations(context).welcome_text_end_title,
           style: getTextTheme(context).headlineSmall?.copyWith(
@@ -62,18 +62,18 @@ class WelcomeEnd extends StatelessWidget {
               ),
           textAlign: TextAlign.center,
         ),
-        type: ShowAnimationType.UP,
-        initDelay: showDuration,
       ),
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
   /** 서브 텍스트 ( 질문영역 )*/
   Widget SubTitleText(BuildContext context) {
-    return Container(
-      width: getMediaQuery(context).size.width,
-      margin: EdgeInsets.only(top: 48, left: 20),
-      child: ShowAnimation(
+    return ShowAnimation(
+      child: Container(
+        width: getMediaQuery(context).size.width,
+        margin: EdgeInsets.only(top: 48, left: 20),
         child: Text(
           // TODO: 사용자 이름 받아오기
           getApplocalizations(context).welcome_text_end_subtitle("운동하는다람쥐"),
@@ -83,22 +83,26 @@ class WelcomeEnd extends StatelessWidget {
               ),
           textAlign: TextAlign.start,
         ),
-        type: ShowAnimationType.UP,
-        initDelay: showDuration,
       ),
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
   /** 축하 이미지 */
   Widget CongratulationImage(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: getMediaQuery(context).size.height * 0.05),
-      child: Image.asset(
-        "assets/imgs/congratulation.png",
-        width: getMediaQuery(context).size.width * 0.9,
-        height: getMediaQuery(context).size.width * 0.9,
-        fit: BoxFit.fill,
+    return ShowAnimation(
+      child: Container(
+        margin: EdgeInsets.only(top: getMediaQuery(context).size.height * 0.05),
+        child: Image.asset(
+          "assets/imgs/congratulation.png",
+          width: getMediaQuery(context).size.width * 0.8,
+          height: getMediaQuery(context).size.width * 0.8,
+          fit: BoxFit.fill,
+        ),
       ),
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 

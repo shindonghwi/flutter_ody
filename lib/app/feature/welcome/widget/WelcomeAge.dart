@@ -68,19 +68,24 @@ class WelcomeAge extends StatelessWidget {
 
   /** 나이 입력공간 */
   Widget InputAge(BuildContext context) {
-    return Container(
-      width: getMediaQuery(context).size.width * 0.3,
-      child: OutlineTextField(
-        maxLength: 2,
-        hintText: "52", // 나이 기본 값
-        textCallback: (value) {
-          debugPrint("value : $value");
-        },
-        keyboardType: TextInputType.number,
-        inputFormatters: [
-          FilteringTextInputFormatter.digitsOnly,
-        ],
+    return ShowAnimation(
+      child: Container(
+        width: getMediaQuery(context).size.width * 0.3,
+        child: OutlineTextField(
+          maxLength: 2,
+          hintText: "52",
+          // 나이 기본 값
+          textCallback: (value) {
+            debugPrint("value : $value");
+          },
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+          ],
+        ),
       ),
+      type: ShowAnimationType.UP,
+      initDelay: showDuration,
     );
   }
 
