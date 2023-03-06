@@ -67,6 +67,7 @@ class WelcomeChronicDisease extends StatelessWidget {
               color: getColorScheme(context).onBackground,
               fontWeight: FontWeight.w500,
             ),
+        textAlign: TextAlign.center,
       ),
       type: ShowAnimationType.UP,
       initDelay: showDuration,

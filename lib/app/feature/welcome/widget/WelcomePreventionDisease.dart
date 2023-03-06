@@ -69,6 +69,7 @@ class WelcomePreventionDisease extends StatelessWidget {
               color: getColorScheme(context).onBackground,
               fontWeight: FontWeight.w500,
             ),
+        textAlign: TextAlign.center,
       ),
       type: ShowAnimationType.UP,
       initDelay: showDuration,
@@ -149,7 +150,7 @@ class _DiseaseSelector extends HookWidget {
         return Expanded(
           child: Container(
             child: GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 30),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               physics: BouncingScrollPhysics(),
               itemCount: _selectorPreventionDiseaseProvider.diseaseList.length,
               itemBuilder: (BuildContext ctx, int idx) {
@@ -218,15 +219,20 @@ class _DiseaseItem extends HookWidget {
                         size: 16,
                       ),
                       SizedBox(width: 4),
-                      Text(
-                        diseaseName,
-                        style: getTextTheme(context).bodyLarge?.copyWith(
-                              color: provider.isSelected(diseaseName)
-                                  ? getColorScheme(context).onPrimary
-                                  : getColorScheme(context)
-                                      .outline
-                                      .withOpacity(0.8),
-                            ),
+                      Expanded(
+                        child: Text(
+                          diseaseName,
+                          style: getTextTheme(context).bodyLarge?.copyWith(
+                                color: provider.isSelected(diseaseName)
+                                    ? getColorScheme(context).onPrimary
+                                    : getColorScheme(context)
+                                        .outline
+                                        .withOpacity(0.8),
+                              ),
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                        ),
                       ),
                     ],
                   ),
