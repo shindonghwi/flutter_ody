@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
  * }
  */
 const defaultTextStyle = TextStyle(
-  fontFamily: 'Sc_Dream',
+  fontFamily: 'sc_dream',
   fontWeight: FontWeight.w500,
   overflow: TextOverflow.ellipsis,
 );
@@ -19,70 +19,70 @@ const defaultTextStyle = TextStyle(
 TextTheme odacTextTheme = TextTheme(
   displayLarge: defaultTextStyle.copyWith(
     fontSize: 57,
-    height: 1,
+    height: 1.12,
   ),
-  displayMedium: TextStyle(
+  displayMedium: defaultTextStyle.copyWith(
     fontSize: 45,
-    height: 1,
+    height: 1.15,
   ),
-  displaySmall: TextStyle(
+  displaySmall: defaultTextStyle.copyWith(
     fontSize: 36,
-    height: 1,
+    height: 1.22,
   ),
-  headlineLarge: TextStyle(
+  headlineLarge:defaultTextStyle.copyWith(
     fontSize: 30,
-    height: 1,
+    height: 1.25,
   ),
-  headlineMedium: TextStyle(
+  headlineMedium: defaultTextStyle.copyWith(
     fontSize: 26,
-    height: 1,
+    height: 1.28,
   ),
-  headlineSmall: TextStyle(
+  headlineSmall: defaultTextStyle.copyWith(
     fontSize: 22,
-    height: 1,
+    height: 1.33,
   ),
-  titleLarge: TextStyle(
+  titleLarge: defaultTextStyle.copyWith(
     fontSize: 20,
-    height: 1,
+    height: 1.27,
   ),
-  titleMedium: TextStyle(
+  titleMedium: defaultTextStyle.copyWith(
     fontSize: 16,
-    height: 1,
+    height: 1.5,
     letterSpacing: 0.15,
   ),
-  titleSmall: TextStyle(
+  titleSmall: defaultTextStyle.copyWith(
     fontSize: 14,
-    height: 1,
+    height: 1.42,
     letterSpacing: 0.1,
   ),
-  bodyLarge: TextStyle(
+  bodyLarge: defaultTextStyle.copyWith(
     fontSize: 16,
-    height: 1,
+    height: 1.5,
     letterSpacing: 0.5,
   ),
-  bodyMedium: TextStyle(
+  bodyMedium: defaultTextStyle.copyWith(
     fontSize: 14,
-    height: 1,
+    height: 1.42,
     letterSpacing: 0.25,
   ),
-  bodySmall: TextStyle(
+  bodySmall: defaultTextStyle.copyWith(
     fontSize: 12,
-    height: 1,
+    height: 1.33,
     letterSpacing: 0.4,
   ),
-  labelLarge: TextStyle(
+  labelLarge: defaultTextStyle.copyWith(
     fontSize: 14,
-    height: 1,
+    height: 1.42,
     letterSpacing: 0.1,
   ),
-  labelMedium: TextStyle(
+  labelMedium: defaultTextStyle.copyWith(
     fontSize: 12,
-    height: 1,
+    height: 1.33,
     letterSpacing: 0.5,
   ),
-  labelSmall: TextStyle(
+  labelSmall: defaultTextStyle.copyWith(
     fontSize: 8,
-    height: 1,
+    height: 145,
     letterSpacing: 0.5,
   ),
 );

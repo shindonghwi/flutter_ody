@@ -40,28 +40,29 @@ flutter:
   assets:
     - assets/imgs/
     - assets/gifs/
+    - assets/fonts/
 
-fonts:
-  - family: Sc_Dream
-    fonts:
-      - asset: assets/fonts/sc_dream1.otf
-        weight: 100
-      - asset: assets/fonts/sc_dream2.otf
-        weight: 200
-      - asset: assets/fonts/sc_dream3.otf
-        weight: 300
-      - asset: assets/fonts/sc_dream4.otf
-        weight: 400
-      - asset: assets/fonts/sc_dream5.otf
-        weight: 500
-      - asset: assets/fonts/sc_dream6.otf
-        weight: 600
-      - asset: assets/fonts/sc_dream7.otf
-        weight: 700
-      - asset: assets/fonts/sc_dream8.otf
-        weight: 800
-      - asset: assets/fonts/sc_dream9.otf
-        weight: 900
+  fonts:
+    - family: sc_dream
+      fonts:
+        - asset: assets/fonts/sc_dream/sc_dream1.otf
+          weight: 100
+        - asset: assets/fonts/sc_dream/sc_dream2.otf
+          weight: 200
+        - asset: assets/fonts/sc_dream/sc_dream3.otf
+          weight: 300
+        - asset: assets/fonts/sc_dream/sc_dream4.otf
+          weight: 400
+        - asset: assets/fonts/sc_dream/sc_dream5.otf
+          weight: 500
+        - asset: assets/fonts/sc_dream/sc_dream6.otf
+          weight: 600
+        - asset: assets/fonts/sc_dream/sc_dream7.otf
+          weight: 700
+        - asset: assets/fonts/sc_dream/sc_dream8.otf
+          weight: 800
+        - asset: assets/fonts/sc_dream/sc_dream9.otf
+          weight: 900
 
 flutter_native_splash:
   image: assets/imgs/logo.png

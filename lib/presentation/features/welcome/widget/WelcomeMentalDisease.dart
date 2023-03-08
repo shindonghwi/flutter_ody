@@ -211,13 +211,18 @@ class _DiseaseItem extends HookWidget {
                         size: 16,
                       ),
                       SizedBox(width: 4),
-                      Text(
-                        diseaseName,
-                        style: getTextTheme(context).bodyLarge?.copyWith(
-                              color: provider.isSelected(diseaseName)
-                                  ? getColorScheme(context).onPrimary
-                                  : getColorScheme(context).outline.withOpacity(0.8),
-                            ),
+                      Expanded(
+                        child: Text(
+                          diseaseName,
+                          style: getTextTheme(context).bodyLarge?.copyWith(
+                                color: provider.isSelected(diseaseName)
+                                    ? getColorScheme(context).onPrimary
+                                    : getColorScheme(context).outline.withOpacity(0.8),
+                              ),
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                        ),
                       ),
                     ],
                   ),
