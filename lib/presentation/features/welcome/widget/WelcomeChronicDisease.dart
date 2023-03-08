@@ -3,9 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/LeftIconAppBar.dart';
 import 'package:odac_flutter_app/presentation/components/button/FillButton.dart';
 import 'package:odac_flutter_app/presentation/components/common/ShowAnimation.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/model/PageAction.dart';
+import 'package:odac_flutter_app/presentation/features/welcome/provider/PageViewNavigator.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/widget/provider/disease/SelectorChronicDiseaseProvider.dart';
+import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:provider/provider.dart';
 
 /**
@@ -13,9 +14,7 @@ import 'package:provider/provider.dart';
  * @author: 2023/02/14 1:42 PM donghwishin
  */
 class WelcomeChronicDisease extends StatelessWidget {
-  final Function changePage;
-
-  WelcomeChronicDisease({Key? key, required this.changePage}) : super(key: key);
+  WelcomeChronicDisease({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +32,15 @@ class WelcomeChronicDisease extends StatelessWidget {
               size: 20,
               color: getColorScheme(context).onBackground,
             ),
-            onPressed: () async => changePage(context, PageAction.PREVIOUS),
+            onPressed: () async => context
+                .read<PageViewNavigatorProvider>()
+                .changePage(context, PageAction.PREVIOUS),
           ),
         ),
         body: WillPopScope(
-          onWillPop: () async => changePage(context, PageAction.PREVIOUS),
+          onWillPop: () async => context
+              .read<PageViewNavigatorProvider>()
+              .changePage(context, PageAction.PREVIOUS),
           child: Container(
             color: getColorScheme(context).background,
             width: getMediaQuery(context).size.width,
@@ -85,7 +88,9 @@ class WelcomeChronicDisease extends StatelessWidget {
           Flexible(
             flex: 1,
             child: FillButton(
-              onTap: () async => changePage(context, PageAction.NEXT),
+              onTap: () async => context
+                  .read<PageViewNavigatorProvider>()
+                  .changePage(context, PageAction.NEXT),
               backgroundColor: getColorScheme(context).outline,
               child: Text(
                 "${getApplocalizations(context).common_nobody}!",
@@ -99,7 +104,9 @@ class WelcomeChronicDisease extends StatelessWidget {
           Flexible(
             flex: 1,
             child: FillButton(
-              onTap: () async => changePage(context, PageAction.NEXT),
+              onTap: () async => context
+                  .read<PageViewNavigatorProvider>()
+                  .changePage(context, PageAction.NEXT),
               child: Text(
                 getApplocalizations(context).common_next,
                 style: getTextTheme(context).titleLarge?.copyWith(

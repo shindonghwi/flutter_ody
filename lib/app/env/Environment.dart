@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/app/OrotApp.dart';
 
 enum BuildType { dev, prod }
@@ -23,8 +22,9 @@ class Environment {
 
   static BuildType get buildType => _instance._buildType;
 
-  static String get apiUrl =>
-      _instance._buildType == BuildType.dev ? 'https://dev url' : 'https://prod url'; // api 주소
+  static String get apiUrl => _instance._buildType == BuildType.dev
+      ? 'https://dev url'
+      : 'https://prod url'; // api 주소
 
   factory Environment.newInstance(BuildType buildType) {
     _instance = Environment._internal(buildType);
@@ -34,6 +34,6 @@ class Environment {
   bool get isDebuggable => _buildType == BuildType.dev;
 
   void run() {
-    runApp(ProviderScope(child: OrotApp()));
+    runApp(OrotApp());
   }
 }

@@ -3,7 +3,9 @@ import 'package:odac_flutter_app/presentation/components/appbar/LeftIconAppBar.d
 import 'package:odac_flutter_app/presentation/components/button/FillButton.dart';
 import 'package:odac_flutter_app/presentation/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/model/PageAction.dart';
+import 'package:odac_flutter_app/presentation/features/welcome/provider/PageViewNavigator.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:provider/provider.dart';
 
 /**
  * @feature: 질문 완료 화면
@@ -11,9 +13,7 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
  * @author: 2023/02/21 7:20 PM donghwishin
  */
 class WelcomeEnd extends StatelessWidget {
-  final Function changePage;
-
-  WelcomeEnd({Key? key, required this.changePage}) : super(key: key);
+  WelcomeEnd({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +26,15 @@ class WelcomeEnd extends StatelessWidget {
             size: 20,
             color: getColorScheme(context).onBackground,
           ),
-          onPressed: () async => changePage(context, PageAction.PREVIOUS),
+          onPressed: () async => context
+              .read<PageViewNavigatorProvider>()
+              .changePage(context, PageAction.PREVIOUS),
         ),
       ),
       body: WillPopScope(
-        onWillPop: () async => changePage(context, PageAction.PREVIOUS),
+        onWillPop: () async => context
+            .read<PageViewNavigatorProvider>()
+            .changePage(context, PageAction.PREVIOUS),
         child: Container(
           color: getColorScheme(context).background,
           width: getMediaQuery(context).size.width,
@@ -112,7 +116,9 @@ class WelcomeEnd extends StatelessWidget {
       color: getColorScheme(context).onPrimary,
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
       child: FillButton(
-        onTap: () async => changePage(context, PageAction.NEXT),
+        onTap: () async => context
+            .read<PageViewNavigatorProvider>()
+            .changePage(context, PageAction.NEXT),
         child: Text(
           "\"${getApplocalizations(context).appTitle}\" ${getApplocalizations(context).common_start}",
           style: getTextTheme(context).titleLarge?.copyWith(

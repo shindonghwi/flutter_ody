@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/presentation/components/common/KeepAlivePage.dart';
-import 'package:odac_flutter_app/presentation/features/welcome/model/PageAction.dart';
+import 'package:odac_flutter_app/presentation/features/welcome/provider/PageViewNavigator.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/widget/WelcomeAge.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/widget/WelcomeBirthday.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/widget/WelcomeChronicDisease.dart';
@@ -11,6 +12,7 @@ import 'package:odac_flutter_app/presentation/features/welcome/widget/WelcomeMen
 import 'package:odac_flutter_app/presentation/features/welcome/widget/WelcomeNickname.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/widget/WelcomePreventionDisease.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/widget/WelcomeWeight.dart';
+import 'package:provider/provider.dart';
 
 /**
  * @feature: 최초로 사용하는 사용자에게 보여지는 화면이다.
@@ -33,50 +35,44 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  PageController _controller = PageController(
-    initialPage: 0,
-    keepPage: true,
-  );
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: _controller,
-        physics: NeverScrollableScrollPhysics(),
-        children: [
-          KeepAlivePage(child: WelcomeNickname(changePage: changePage)),
-          KeepAlivePage(child: WelcomeAge(changePage: changePage)),
-          KeepAlivePage(child: WelcomeGender(changePage: changePage)),
-          KeepAlivePage(child: WelcomeBirthday(changePage: changePage)),
-          KeepAlivePage(child: WelcomeHeight(changePage: changePage)),
-          KeepAlivePage(child: WelcomeWeight(changePage: changePage)),
-          KeepAlivePage(child: WelcomeChronicDisease(changePage: changePage)),
-          KeepAlivePage(child: WelcomeMentalDisease(changePage: changePage)),
-          KeepAlivePage(child: WelcomePreventionDisease(changePage: changePage)),
-          KeepAlivePage(child: WelcomeEnd(changePage: changePage)),
-        ],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (BuildContext context) => PageViewNavigatorProvider())
+      ],
+      child: Scaffold(
+        body: PageViewWidget(),
       ),
     );
   }
+}
 
-  Future<void> changePage(BuildContext context, PageAction action) async {
-    debugPrint("$action || currentPage: ${_controller.page}");
+class PageViewWidget extends HookWidget {
+  late PageViewNavigatorProvider _PageViewNavigatorProvider;
 
-    int currentPage = _controller.page!.toInt();
+  PageViewWidget({Key? key}) : super(key: key);
 
-    if (action == PageAction.NEXT) {
-      _controller.nextPage(duration: kTabScrollDuration, curve: Curves.ease);
-      debugPrint("next");
-    } else if (action == PageAction.PREVIOUS) {
-      if (currentPage == 0) {
-        Navigator.pop(context);
-        return;
-      }
-
-      _controller.previousPage(
-          duration: kTabScrollDuration, curve: Curves.ease);
-      debugPrint("previous");
-    }
+  @override
+  Widget build(BuildContext context) {
+    _PageViewNavigatorProvider =
+        Provider.of<PageViewNavigatorProvider>(context);
+    return PageView(
+      controller: _PageViewNavigatorProvider.pageController,
+      physics: NeverScrollableScrollPhysics(),
+      children: [
+        KeepAlivePage(child: WelcomeNickname()),
+        KeepAlivePage(child: WelcomeAge()),
+        KeepAlivePage(child: WelcomeGender()),
+        KeepAlivePage(child: WelcomeBirthday()),
+        KeepAlivePage(child: WelcomeHeight()),
+        KeepAlivePage(child: WelcomeWeight()),
+        KeepAlivePage(child: WelcomeChronicDisease()),
+        KeepAlivePage(child: WelcomeMentalDisease()),
+        KeepAlivePage(child: WelcomePreventionDisease()),
+        KeepAlivePage(child: WelcomeEnd()),
+      ],
+    );
   }
 }

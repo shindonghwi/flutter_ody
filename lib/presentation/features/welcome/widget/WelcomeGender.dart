@@ -4,6 +4,7 @@ import 'package:odac_flutter_app/presentation/components/appbar/LeftIconAppBar.d
 import 'package:odac_flutter_app/presentation/components/button/FillButton.dart';
 import 'package:odac_flutter_app/presentation/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/model/PageAction.dart';
+import 'package:odac_flutter_app/presentation/features/welcome/provider/PageViewNavigator.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/widget/provider/gender/SelectorGenderProvider.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +14,7 @@ import 'package:provider/provider.dart';
  * @author: 2023/02/14 1:42 PM donghwishin
  */
 class WelcomeGender extends StatelessWidget {
-  final Function changePage;
-
-  WelcomeGender({Key? key, required this.changePage}) : super(key: key);
+  WelcomeGender({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +31,15 @@ class WelcomeGender extends StatelessWidget {
               size: 20,
               color: getColorScheme(context).onBackground,
             ),
-            onPressed: () async => changePage(context, PageAction.PREVIOUS),
+            onPressed: () => context
+                .read<PageViewNavigatorProvider>()
+                .changePage(context, PageAction.PREVIOUS),
           ),
         ),
         body: WillPopScope(
-          onWillPop: () async => changePage(context, PageAction.PREVIOUS),
+          onWillPop: () async => context
+              .read<PageViewNavigatorProvider>()
+              .changePage(context, PageAction.PREVIOUS),
           child: Container(
             padding: EdgeInsets.only(left: 20, right: 20, top: 48),
             color: getColorScheme(context).background,
@@ -78,7 +81,9 @@ class WelcomeGender extends StatelessWidget {
       color: getColorScheme(context).onPrimary,
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
       child: FillButton(
-        onTap: () async => changePage(context, PageAction.NEXT),
+        onTap: () async => context
+            .read<PageViewNavigatorProvider>()
+            .changePage(context, PageAction.NEXT),
         child: Text(
           getApplocalizations(context).common_next,
           style: getTextTheme(context).titleLarge?.copyWith(

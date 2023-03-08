@@ -5,16 +5,16 @@ import 'package:odac_flutter_app/presentation/components/button/FillButton.dart'
 import 'package:odac_flutter_app/presentation/components/common/ShowAnimation.dart';
 import 'package:odac_flutter_app/presentation/components/input/OutlineTextField.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/model/PageAction.dart';
+import 'package:odac_flutter_app/presentation/features/welcome/provider/PageViewNavigator.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:provider/provider.dart';
 
 /**
  * @feature: 나이 입력화면
  * @author: 2023/02/14 1:42 PM donghwishin
  */
 class WelcomeAge extends StatelessWidget {
-  final Function changePage;
-
-  WelcomeAge({Key? key, required this.changePage}) : super(key: key);
+  WelcomeAge({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,15 @@ class WelcomeAge extends StatelessWidget {
             size: 20,
             color: getColorScheme(context).onBackground,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context
+              .read<PageViewNavigatorProvider>()
+              .changePage(context, PageAction.PREVIOUS),
         ),
       ),
       body: WillPopScope(
-        onWillPop: () async => changePage(context, PageAction.PREVIOUS),
+        onWillPop: () async => context
+            .read<PageViewNavigatorProvider>()
+            .changePage(context, PageAction.PREVIOUS),
         child: Container(
           color: getColorScheme(context).background,
           width: getMediaQuery(context).size.width,
@@ -96,7 +100,9 @@ class WelcomeAge extends StatelessWidget {
       color: getColorScheme(context).onPrimary,
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
       child: FillButton(
-        onTap: () async => changePage(context, PageAction.NEXT),
+        onTap: () async => context
+            .read<PageViewNavigatorProvider>()
+            .changePage(context, PageAction.NEXT),
         child: Text(
           getApplocalizations(context).common_next,
           style: getTextTheme(context).titleLarge?.copyWith(
