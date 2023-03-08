@@ -1,10 +1,48 @@
 {
-    "appTitle": "Odac",
+    "appTitle": "Ody",
     "@appTitle":{
         "description": "App Title"
     },
+
     "appDescription": "Make your life healthier",
     "@appDescription":{
         "description": "App Description"
-    }
+    },
+
+    "welcome_text_nickname_title": "Enter your nickname",
+    "welcome_text_gender_title": "Please choose your gender",
+    "welcome_text_age_input": "Enter your age",
+    "welcome_text_age_unit": "age",
+    "welcome_text_birthday_title": "Please enter your date of birth.",
+    "welcome_text_height_title": "Enter your height",
+    "welcome_text_height_unit": "cm",
+    "welcome_text_weight_title": "Enter your weight",
+    "welcome_text_weight_unit": "kg",
+    "welcome_text_chronic_disease_title": "Do you have any chronic diseases?",
+    "welcome_chronic_disease_items": "hypertension,hypotension,diabetes mellitus",
+    "welcome_text_mental_disease_title": "Do you have any mental illness?",
+    "welcome_text_mental_disease_subtitle": "The question is almost over!",
+    "welcome_mental_disease_items": "depression,insomnia,dementia",
+    "welcome_text_prevention_disease_title": "Is there any disease you want to prevent?",
+    "welcome_text_prevention_disease_subtitle": "This is the last question!",
+    "welcome_prevention_disease_items": "hypertension,hypotension,diabetes\nmellitus,depression,insomnia,dementia",
+    "welcome_text_end_title": "The question is over!",
+    "welcome_text_end_subtitle": "I hope you have a healthier day using ody.\n\nI will always try to take care of ody for\n'{nickname}'!",
+    "@welcome_text_end_subtitle":{
+        "description": "welcome_text_end_subtitle",
+        "placeholders": {
+            "nickname": {}
+        }
+    },
+
+
+    "common_input_hint": "Please enter it",
+    "common_nobody": "Nobody",
+    "common_start": "Start",
+    "common_next": "Next",
+    "common_skip": "Skip",
+    "common_year": "year",
+    "common_month": "month",
+    "common_day": "day"
+
 }

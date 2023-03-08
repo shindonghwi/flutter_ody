@@ -1,9 +1,9 @@
 import 'package:get_it/get_it.dart';
-import 'package:odac_flutter_app/app/data/auth/remote/api/AuthService.dart';
-import 'package:odac_flutter_app/app/data/auth/remote/api/AuthServiceImpl.dart';
-import 'package:odac_flutter_app/app/data/auth/repository/AuthRepositoryImpl.dart';
-import 'package:odac_flutter_app/app/domain/auth/repository/AuthRepository.dart';
-import 'package:odac_flutter_app/app/domain/auth/usecase/KakaoLoginUseCase.dart';
+import 'package:odac_flutter_app/data/auth/remote/api/AuthService.dart';
+import 'package:odac_flutter_app/data/auth/remote/api/AuthServiceImpl.dart';
+import 'package:odac_flutter_app/data/auth/repository/AuthRepositoryImpl.dart';
+import 'package:odac_flutter_app/domain/auth/repository/AuthRepository.dart';
+import 'package:odac_flutter_app/domain/auth/usecase/KakaoLoginUseCase.dart';
 
 final getIt = GetIt.instance;
 
