@@ -19,8 +19,7 @@ class PageViewNavigatorProvider extends ChangeNotifier {
     int currentPage = _pageController.page!.toInt();
 
     if (action == PageAction.NEXT) {
-      _pageController.nextPage(
-          duration: kTabScrollDuration, curve: Curves.ease);
+      _pageController.nextPage(duration: kTabScrollDuration, curve: Curves.ease);
       debugPrint("next");
     } else if (action == PageAction.PREVIOUS) {
       if (currentPage == 0) {
@@ -28,8 +27,7 @@ class PageViewNavigatorProvider extends ChangeNotifier {
         return true;
       }
 
-      _pageController.previousPage(
-          duration: kTabScrollDuration, curve: Curves.ease);
+      _pageController.previousPage(duration: kTabScrollDuration, curve: Curves.ease);
       debugPrint("previous");
     }
     return true;

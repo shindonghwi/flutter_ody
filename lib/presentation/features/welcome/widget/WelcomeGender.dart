@@ -31,15 +31,13 @@ class WelcomeGender extends StatelessWidget {
               size: 20,
               color: getColorScheme(context).onBackground,
             ),
-            onPressed: () => context
-                .read<PageViewNavigatorProvider>()
-                .changePage(context, PageAction.PREVIOUS),
+            onPressed: () =>
+                context.read<PageViewNavigatorProvider>().changePage(context, PageAction.PREVIOUS),
           ),
         ),
         body: WillPopScope(
-          onWillPop: () async => context
-              .read<PageViewNavigatorProvider>()
-              .changePage(context, PageAction.PREVIOUS),
+          onWillPop: () async =>
+              context.read<PageViewNavigatorProvider>().changePage(context, PageAction.PREVIOUS),
           child: Container(
             padding: EdgeInsets.only(left: 20, right: 20, top: 48),
             color: getColorScheme(context).background,
@@ -81,9 +79,8 @@ class WelcomeGender extends StatelessWidget {
       color: getColorScheme(context).onPrimary,
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
       child: FillButton(
-        onTap: () async => context
-            .read<PageViewNavigatorProvider>()
-            .changePage(context, PageAction.NEXT),
+        onTap: () async =>
+            context.read<PageViewNavigatorProvider>().changePage(context, PageAction.NEXT),
         child: Text(
           getApplocalizations(context).common_next,
           style: getTextTheme(context).titleLarge?.copyWith(
@@ -103,8 +100,7 @@ class _GenderSelector extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    _selectorGenderProvider =
-        Provider.of<SelectorGenderProvider>(context, listen: false);
+    _selectorGenderProvider = Provider.of<SelectorGenderProvider>(context, listen: false);
 
     return Consumer<SelectorGenderProvider>(
       builder: (context, provider, child) {
@@ -163,9 +159,8 @@ class GenderItem extends HookWidget {
           borderRadius: BorderRadius.all(
             Radius.circular(20),
           ),
-          color: this.isSelected
-              ? getColorScheme(context).primary
-              : getColorScheme(context).onPrimary,
+          color:
+              this.isSelected ? getColorScheme(context).primary : getColorScheme(context).onPrimary,
         ),
         child: Material(
           color: Colors.transparent,

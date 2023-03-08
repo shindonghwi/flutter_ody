@@ -11,11 +11,10 @@ import 'typography.dart';
  * @description{
  *   Color Theme 는 System Color Theme에 따라 변경되도록 구현
  * }
-*/
+ */
 class AppTheme {
   AppTheme._();
 
-  // Light Theme
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     textTheme: odacTextTheme,
     colorScheme: odacColorLightScheme,

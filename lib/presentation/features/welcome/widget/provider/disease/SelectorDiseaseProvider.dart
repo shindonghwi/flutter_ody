@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/widget/model/SelectorDisease.dart';
 
-class SelectorDiseaseProvider extends ChangeNotifier{
-
-
+class SelectorDiseaseProvider extends ChangeNotifier {
   List<SelectorDisease> _diseaseList = [];
+
   List<SelectorDisease> get diseaseList => _diseaseList;
 
   void setDiseaseList(List<String> diseaseNameList) {
@@ -30,11 +29,10 @@ class SelectorDiseaseProvider extends ChangeNotifier{
 
   int _getFindIndex(String disease) {
     int findIndex = _diseaseList.indexWhere(
-          (element) {
+      (element) {
         return element.diseaseName == disease;
       },
     );
     return findIndex;
   }
-
 }

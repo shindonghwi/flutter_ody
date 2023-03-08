@@ -26,15 +26,13 @@ class WelcomeEnd extends StatelessWidget {
             size: 20,
             color: getColorScheme(context).onBackground,
           ),
-          onPressed: () async => context
-              .read<PageViewNavigatorProvider>()
-              .changePage(context, PageAction.PREVIOUS),
+          onPressed: () async =>
+              context.read<PageViewNavigatorProvider>().changePage(context, PageAction.PREVIOUS),
         ),
       ),
       body: WillPopScope(
-        onWillPop: () async => context
-            .read<PageViewNavigatorProvider>()
-            .changePage(context, PageAction.PREVIOUS),
+        onWillPop: () async =>
+            context.read<PageViewNavigatorProvider>().changePage(context, PageAction.PREVIOUS),
         child: Container(
           color: getColorScheme(context).background,
           width: getMediaQuery(context).size.width,
@@ -116,9 +114,8 @@ class WelcomeEnd extends StatelessWidget {
       color: getColorScheme(context).onPrimary,
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
       child: FillButton(
-        onTap: () async => context
-            .read<PageViewNavigatorProvider>()
-            .changePage(context, PageAction.NEXT),
+        onTap: () async =>
+            context.read<PageViewNavigatorProvider>().changePage(context, PageAction.NEXT),
         child: Text(
           "\"${getApplocalizations(context).appTitle}\" ${getApplocalizations(context).common_start}",
           style: getTextTheme(context).titleLarge?.copyWith(

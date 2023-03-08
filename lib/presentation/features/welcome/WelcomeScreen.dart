@@ -39,8 +39,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (BuildContext context) => PageViewNavigatorProvider())
+        ChangeNotifierProvider(create: (BuildContext context) => PageViewNavigatorProvider())
       ],
       child: Scaffold(
         body: PageViewWidget(),
@@ -56,8 +55,7 @@ class PageViewWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    _PageViewNavigatorProvider =
-        Provider.of<PageViewNavigatorProvider>(context);
+    _PageViewNavigatorProvider = Provider.of<PageViewNavigatorProvider>(context);
     return PageView(
       controller: _PageViewNavigatorProvider.pageController,
       physics: NeverScrollableScrollPhysics(),

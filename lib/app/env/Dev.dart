@@ -1,4 +1,3 @@
-import 'package:get_it/get_it.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:odac_flutter_app/app/di/DiModule.dart';
 import 'package:odac_flutter_app/app/env/Environment.dart';

@@ -8,7 +8,6 @@ class OrotApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("OrotApp build");
     return MaterialApp(
       // app default option
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,

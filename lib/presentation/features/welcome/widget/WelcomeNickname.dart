@@ -31,9 +31,8 @@ class WelcomeNickname extends HookWidget {
         ),
       ),
       body: WillPopScope(
-        onWillPop: () async => context
-            .read<PageViewNavigatorProvider>()
-            .changePage(context, PageAction.PREVIOUS),
+        onWillPop: () async =>
+            context.read<PageViewNavigatorProvider>().changePage(context, PageAction.PREVIOUS),
         child: Container(
           color: getColorScheme(context).background,
           padding: EdgeInsets.only(top: 48),
@@ -91,9 +90,8 @@ class WelcomeNickname extends HookWidget {
       color: getColorScheme(context).onPrimary,
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
       child: FillButton(
-        onTap: () async => context
-            .read<PageViewNavigatorProvider>()
-            .changePage(context, PageAction.NEXT),
+        onTap: () async =>
+            context.read<PageViewNavigatorProvider>().changePage(context, PageAction.NEXT),
         child: Text(
           getApplocalizations(context).common_start,
           style: getTextTheme(context).titleMedium?.copyWith(

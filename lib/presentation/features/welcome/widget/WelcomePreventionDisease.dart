@@ -20,8 +20,7 @@ class WelcomePreventionDisease extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (_) => SelectorPreventionDiseaseProvider(context)),
+        ChangeNotifierProvider(create: (_) => SelectorPreventionDiseaseProvider(context)),
       ],
       child: Scaffold(
         backgroundColor: getColorScheme(context).background,
@@ -32,15 +31,13 @@ class WelcomePreventionDisease extends StatelessWidget {
               size: 20,
               color: getColorScheme(context).onBackground,
             ),
-            onPressed: () async => context
-                .read<PageViewNavigatorProvider>()
-                .changePage(context, PageAction.PREVIOUS),
+            onPressed: () async =>
+                context.read<PageViewNavigatorProvider>().changePage(context, PageAction.PREVIOUS),
           ),
         ),
         body: WillPopScope(
-          onWillPop: () async => context
-              .read<PageViewNavigatorProvider>()
-              .changePage(context, PageAction.PREVIOUS),
+          onWillPop: () async =>
+              context.read<PageViewNavigatorProvider>().changePage(context, PageAction.PREVIOUS),
           child: Container(
             color: getColorScheme(context).background,
             width: getMediaQuery(context).size.width,
@@ -107,9 +104,8 @@ class WelcomePreventionDisease extends StatelessWidget {
           Flexible(
             flex: 1,
             child: FillButton(
-              onTap: () async => context
-                  .read<PageViewNavigatorProvider>()
-                  .changePage(context, PageAction.NEXT),
+              onTap: () async =>
+                  context.read<PageViewNavigatorProvider>().changePage(context, PageAction.NEXT),
               backgroundColor: getColorScheme(context).outline,
               child: Text(
                 "${getApplocalizations(context).common_nobody}!",
@@ -123,9 +119,8 @@ class WelcomePreventionDisease extends StatelessWidget {
           Flexible(
             flex: 1,
             child: FillButton(
-              onTap: () async => context
-                  .read<PageViewNavigatorProvider>()
-                  .changePage(context, PageAction.NEXT),
+              onTap: () async =>
+                  context.read<PageViewNavigatorProvider>().changePage(context, PageAction.NEXT),
               child: Text(
                 getApplocalizations(context).common_next,
                 style: getTextTheme(context).titleLarge?.copyWith(
@@ -161,8 +156,7 @@ class _DiseaseSelector extends HookWidget {
               itemCount: _selectorPreventionDiseaseProvider.diseaseList.length,
               itemBuilder: (BuildContext ctx, int idx) {
                 return _DiseaseItem(
-                    diseaseName: _selectorPreventionDiseaseProvider
-                        .diseaseList[idx].diseaseName);
+                    diseaseName: _selectorPreventionDiseaseProvider.diseaseList[idx].diseaseName);
               },
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: getMediaQuery(context).size.width * 0.4,
@@ -216,9 +210,7 @@ class _DiseaseItem extends HookWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        provider.isSelected(diseaseName)
-                            ? Icons.check
-                            : Icons.add,
+                        provider.isSelected(diseaseName) ? Icons.check : Icons.add,
                         color: provider.isSelected(diseaseName)
                             ? getColorScheme(context).onPrimary
                             : getColorScheme(context).outline.withOpacity(0.8),
@@ -231,9 +223,7 @@ class _DiseaseItem extends HookWidget {
                           style: getTextTheme(context).bodyLarge?.copyWith(
                                 color: provider.isSelected(diseaseName)
                                     ? getColorScheme(context).onPrimary
-                                    : getColorScheme(context)
-                                        .outline
-                                        .withOpacity(0.8),
+                                    : getColorScheme(context).outline.withOpacity(0.8),
                               ),
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,

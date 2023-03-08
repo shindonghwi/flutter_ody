@@ -42,7 +42,8 @@ class _ShowAnimationState extends State<ShowAnimation> with TickerProviderStateM
     final offsetZero = 0.0;
     final offsetDistance = 0.35;
 
-    _animController = AnimationController(vsync: this, duration: Duration(milliseconds: animDuration));
+    _animController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: animDuration));
     final curve = CurvedAnimation(
       curve: Curves.decelerate,
       parent: _animController,

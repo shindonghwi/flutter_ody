@@ -22,9 +22,8 @@ class Environment {
 
   static BuildType get buildType => _instance._buildType;
 
-  static String get apiUrl => _instance._buildType == BuildType.dev
-      ? 'https://dev url'
-      : 'https://prod url'; // api 주소
+  static String get apiUrl =>
+      _instance._buildType == BuildType.dev ? 'https://dev url' : 'https://prod url'; // api 주소
 
   factory Environment.newInstance(BuildType buildType) {
     _instance = Environment._internal(buildType);
