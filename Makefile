@@ -23,25 +23,25 @@ run-splash:
 
 # DebugDev Run
 run:
-	flutter run --debug --flavor dev --no-sound-null-safety -t lib/env/dev.dart
+	flutter run --debug --flavor dev --no-sound-null-safety -t lib/app/env/dev.dart
 
 # DebugDev Rebuild
 run-rebuild:
 	flutter clean
 	flutter pub get
 	cd ios && pod install
-	flutter run --debug --flavor dev --no-sound-null-safety -t lib/env/dev.dart
+	flutter run --debug --flavor dev --no-sound-null-safety -t lib/app/env/dev.dart
 
 # ProdRelease Run
 run-prod:
-	flutter run --release --flavor prod --no-sound-null-safety -t lib/env/prod.dart
+	flutter run --release --flavor prod --no-sound-null-safety -t lib/app/env/prod.dart
 
 # ProdRelease Rebuild
 run-prod-rebuild:
 	flutter clean
 	flutter pub get
 	cd ios && pod install
-	flutter run --release --flavor prod --no-sound-null-safety -t lib/env/prod.dart
+	flutter run --release --flavor prod --no-sound-null-safety -t lib/app/env/prod.dart
 
 
 ########################
@@ -50,14 +50,14 @@ run-prod-rebuild:
 
 # android apk-release create
 create-apk-prod:
-	flutter build apk --release --flavor prod --no-tree-shake-icons --no-sound-null-safety -t lib/env/prod.dart
+	flutter build apk --release --flavor prod --no-tree-shake-icons --no-sound-null-safety -t lib/app/env/prod.dart
 
 # android apk-debug create
 create-apk-dev:
-	flutter build apk --debug --flavor dev --no-tree-shake-icons --no-sound-null-safety -t lib/env/dev.dart
+	flutter build apk --debug --flavor dev --no-tree-shake-icons --no-sound-null-safety -t lib/app/env/dev.dart
 
 # android aab-prod create
 create-aab-prod:
-	flutter build appbundle --release --flavor prod --no-tree-shake-icons --no-sound-null-safety -t lib/env/prod.dart
+	flutter build appbundle --release --flavor prod --no-tree-shake-icons --no-sound-null-safety -t lib/app/env/prod.dart
 
 

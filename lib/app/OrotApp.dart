@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:odac_flutter_app/app/feature/login/LoginScreen.dart';
-import 'package:odac_flutter_app/ui/theme.dart';
+import 'package:odac_flutter_app/presentation/features/login/LoginScreen.dart';
+import 'package:odac_flutter_app/presentation/ui/theme.dart';
 
 class OrotApp extends StatelessWidget {
   const OrotApp({super.key});
