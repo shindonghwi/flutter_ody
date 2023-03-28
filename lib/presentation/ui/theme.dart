@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'color/color.dart';
-import 'typography.dart';
-
 /**
  * @feature: Theme 정의
  *
@@ -12,7 +9,7 @@ import 'typography.dart';
  *   Color Theme 는 System Color Theme에 따라 변경되도록 구현
  * }
  */
-class AppTheme{
+class AppTheme {
   AppTheme._();
 
   static final lightTheme = ThemeData(
