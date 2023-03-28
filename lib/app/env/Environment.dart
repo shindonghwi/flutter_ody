@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/app/OrotApp.dart';
 
 enum BuildType { dev, prod }
@@ -33,6 +34,6 @@ class Environment {
   bool get isDebuggable => _buildType == BuildType.dev;
 
   void run() {
-    runApp(OrotApp());
+    runApp(ProviderScope(child: OrotApp()));
   }
 }
