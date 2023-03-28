@@ -89,7 +89,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.orot.odac"
+        applicationId "com.orot.ody"
         minSdkVersion 26
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

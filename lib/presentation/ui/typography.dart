@@ -10,79 +10,171 @@ import 'package:flutter/material.dart';
  * }
  */
 const defaultTextStyle = TextStyle(
-  fontFamily: 'Sc_Dream',
-  fontWeight: FontWeight.w500,
+  fontFamily: 'Pretendard',
+  fontWeight: FontWeight.w100,
   overflow: TextOverflow.ellipsis,
+  letterSpacing: 0
 );
+
+final headline1 = defaultTextStyle.copyWith(
+  fontSize: 32,
+  fontWeight: FontWeight.w600,
+  height: 1.25
+);
+
+final headline2 = defaultTextStyle.copyWith(
+  fontSize: 28,
+  fontWeight: FontWeight.w600,
+  height: 1.28
+);
+
+final headline3 = defaultTextStyle.copyWith(
+  fontSize: 24,
+  fontWeight: FontWeight.w600,
+  height: 1.33
+);
+
+final title1 = defaultTextStyle.copyWith(
+  fontSize: 22,
+  fontWeight: FontWeight.w500,
+  height: 1.27
+);
+
+final title2 = defaultTextStyle.copyWith(
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+  height: 1.33
+);
+
+final title3 = defaultTextStyle.copyWith(
+  fontSize: 16,
+  fontWeight: FontWeight.w500,
+  height: 1.5
+);
+
+final lable1 = defaultTextStyle.copyWith(
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+  height: 1.33
+);
+
+final lable2 = defaultTextStyle.copyWith(
+  fontSize: 16,
+  fontWeight: FontWeight.w500,
+  height: 1.5
+);
+
+final lable3 = defaultTextStyle.copyWith(
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  height: 1.42
+);
+
+final body1 = defaultTextStyle.copyWith(
+  fontSize: 18,
+  fontWeight: FontWeight.w400,
+  height: 1.33
+);
+
+final body2 = defaultTextStyle.copyWith(
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
+  height: 1.5
+);
+
+final body3 = defaultTextStyle.copyWith(
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  height: 1.42
+);
+
+final caption1 = defaultTextStyle.copyWith(
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  height: 1.42
+);
+
+final caption2 = defaultTextStyle.copyWith(
+  fontSize: 12,
+  fontWeight: FontWeight.w400,
+  height: 1.33
+);
+
+final caption3 = defaultTextStyle.copyWith(
+  fontSize: 10,
+  fontWeight: FontWeight.w400,
+  height: 1.6
+);
+
 
 // Text Theme
 TextTheme odacTextTheme = TextTheme(
   displayLarge: defaultTextStyle.copyWith(
     fontSize: 57,
-    height: 1,
+    height: 1.12,
   ),
-  displayMedium: TextStyle(
+  displayMedium: defaultTextStyle.copyWith(
     fontSize: 45,
-    height: 1,
+    height: 1.15,
   ),
-  displaySmall: TextStyle(
+  displaySmall: defaultTextStyle.copyWith(
     fontSize: 36,
-    height: 1,
+    height: 1.22,
   ),
-  headlineLarge: TextStyle(
+  headlineLarge:defaultTextStyle.copyWith(
     fontSize: 30,
-    height: 1,
+    height: 1.25,
   ),
-  headlineMedium: TextStyle(
+  headlineMedium: defaultTextStyle.copyWith(
     fontSize: 26,
-    height: 1,
+    height: 1.28,
   ),
-  headlineSmall: TextStyle(
+  headlineSmall: defaultTextStyle.copyWith(
     fontSize: 22,
-    height: 1,
+    height: 1.33,
   ),
-  titleLarge: TextStyle(
+  titleLarge: defaultTextStyle.copyWith(
     fontSize: 20,
-    height: 1,
+    height: 1.27,
   ),
-  titleMedium: TextStyle(
+  titleMedium: defaultTextStyle.copyWith(
     fontSize: 16,
-    height: 1,
+    height: 1.5,
     letterSpacing: 0.15,
   ),
-  titleSmall: TextStyle(
+  titleSmall: defaultTextStyle.copyWith(
     fontSize: 14,
-    height: 1,
+    height: 1.42,
     letterSpacing: 0.1,
   ),
-  bodyLarge: TextStyle(
+  bodyLarge: defaultTextStyle.copyWith(
     fontSize: 16,
-    height: 1,
+    height: 1.5,
     letterSpacing: 0.5,
   ),
-  bodyMedium: TextStyle(
+  bodyMedium: defaultTextStyle.copyWith(
     fontSize: 14,
-    height: 1,
+    height: 1.42,
     letterSpacing: 0.25,
   ),
-  bodySmall: TextStyle(
+  bodySmall: defaultTextStyle.copyWith(
     fontSize: 12,
-    height: 1,
+    height: 1.33,
     letterSpacing: 0.4,
   ),
-  labelLarge: TextStyle(
+  labelLarge: defaultTextStyle.copyWith(
     fontSize: 14,
-    height: 1,
+    height: 1.42,
     letterSpacing: 0.1,
   ),
-  labelMedium: TextStyle(
+  labelMedium: defaultTextStyle.copyWith(
     fontSize: 12,
-    height: 1,
+    height: 1.33,
     letterSpacing: 0.5,
   ),
-  labelSmall: TextStyle(
+  labelSmall: defaultTextStyle.copyWith(
     fontSize: 8,
-    height: 1,
+    height: 145,
     letterSpacing: 0.5,
   ),
 );
