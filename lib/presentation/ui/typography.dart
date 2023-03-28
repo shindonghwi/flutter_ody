@@ -16,92 +16,80 @@ const defaultTextStyle = TextStyle(
   letterSpacing: 0
 );
 
-final headline1 = defaultTextStyle.copyWith(
-  fontSize: 32,
-  fontWeight: FontWeight.w600,
-  height: 1.25
-);
-
-final headline2 = defaultTextStyle.copyWith(
-  fontSize: 28,
-  fontWeight: FontWeight.w600,
-  height: 1.28
-);
-
-final headline3 = defaultTextStyle.copyWith(
-  fontSize: 24,
-  fontWeight: FontWeight.w600,
-  height: 1.33
-);
-
-final title1 = defaultTextStyle.copyWith(
-  fontSize: 22,
-  fontWeight: FontWeight.w500,
-  height: 1.27
-);
-
-final title2 = defaultTextStyle.copyWith(
-  fontSize: 18,
-  fontWeight: FontWeight.w500,
-  height: 1.33
-);
-
-final title3 = defaultTextStyle.copyWith(
-  fontSize: 16,
-  fontWeight: FontWeight.w500,
-  height: 1.5
-);
-
-final label1 = defaultTextStyle.copyWith(
-  fontSize: 18,
-  fontWeight: FontWeight.w500,
-  height: 1.33
-);
-
-final label2 = defaultTextStyle.copyWith(
-  fontSize: 16,
-  fontWeight: FontWeight.w500,
-  height: 1.5
-);
-
-final label3 = defaultTextStyle.copyWith(
-  fontSize: 14,
-  fontWeight: FontWeight.w500,
-  height: 1.42
-);
-
-final body1 = defaultTextStyle.copyWith(
-  fontSize: 18,
-  fontWeight: FontWeight.w400,
-  height: 1.33
-);
-
-final body2 = defaultTextStyle.copyWith(
-  fontSize: 16,
-  fontWeight: FontWeight.w400,
-  height: 1.5
-);
-
-final body3 = defaultTextStyle.copyWith(
-  fontSize: 14,
-  fontWeight: FontWeight.w400,
-  height: 1.42
-);
-
-final caption1 = defaultTextStyle.copyWith(
-  fontSize: 14,
-  fontWeight: FontWeight.w400,
-  height: 1.42
-);
-
-final caption2 = defaultTextStyle.copyWith(
-  fontSize: 12,
-  fontWeight: FontWeight.w400,
-  height: 1.33
-);
-
-final caption3 = defaultTextStyle.copyWith(
-  fontSize: 10,
-  fontWeight: FontWeight.w400,
-  height: 1.6
-);
+extension StyleText on TextTheme {
+  TextStyle get h1 => defaultTextStyle.copyWith(
+      fontSize: 32,
+      fontWeight: FontWeight.w600,
+      height: 1.25
+  );
+  TextStyle get h2 => defaultTextStyle.copyWith(
+      fontSize: 28,
+      fontWeight: FontWeight.w600,
+      height: 1.28
+  );
+  TextStyle get h3 => defaultTextStyle.copyWith(
+      fontSize: 24,
+      fontWeight: FontWeight.w600,
+      height: 1.33
+  );
+  TextStyle get t1 => defaultTextStyle.copyWith(
+      fontSize: 22,
+      fontWeight: FontWeight.w500,
+      height: 1.27
+  );
+  TextStyle get t2 => defaultTextStyle.copyWith(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      height: 1.33
+  );
+  TextStyle get t3 => defaultTextStyle.copyWith(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      height: 1.5
+  );
+  TextStyle get l1 => defaultTextStyle.copyWith(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      height: 1.33
+  );
+  TextStyle get l2 => defaultTextStyle.copyWith(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      height: 1.5
+  );
+  TextStyle get l3 => defaultTextStyle.copyWith(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      height: 1.42
+  );
+  TextStyle get b1 => defaultTextStyle.copyWith(
+      fontSize: 18,
+      fontWeight: FontWeight.w400,
+      height: 1.33
+  );
+  TextStyle get b2 => defaultTextStyle.copyWith(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      height: 1.5
+  );
+  TextStyle get b3 => defaultTextStyle.copyWith(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      height: 1.42
+  );
+  TextStyle get c1 => defaultTextStyle.copyWith(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      height: 1.42
+  );
+  TextStyle get c2 => defaultTextStyle.copyWith(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      height: 1.33
+  );
+  TextStyle get c3 => defaultTextStyle.copyWith(
+      fontSize: 10,
+      fontWeight: FontWeight.w400,
+      height: 1.6
+  );
+}
