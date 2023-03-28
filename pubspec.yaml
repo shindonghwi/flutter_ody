@@ -15,23 +15,15 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   cupertino_icons: ^1.0.2 # iOS system
-  kakao_flutter_sdk_user: ^1.2.1 # kakao login
-  package_info_plus: ^3.0.3
-  equatable: ^2.0.5
-  serializable: ^1.0.0
-  either_dart: ^0.3.0
-  get_it: ^7.2.0
   animated_text_kit: ^4.2.2
-  numberpicker: ^2.1.1
   flutter_hooks: ^0.18.6
-  provider: ^6.0.5
+  riverpod: ^2.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
   flutter_native_splash: ^2.2.17
-  change_app_package_name: ^1.0.0
 
 flutter:
   generate: true
@@ -43,25 +35,25 @@ flutter:
     - assets/fonts/
 
   fonts:
-    - family: sc_dream
+    - family: Pretendard
       fonts:
-        - asset: assets/fonts/sc_dream/sc_dream1.otf
+        - asset: assets/fonts/Pretendard-Thin.otf
           weight: 100
-        - asset: assets/fonts/sc_dream/sc_dream2.otf
+        - asset: assets/fonts/Pretendard-ExtraLight.otf
           weight: 200
-        - asset: assets/fonts/sc_dream/sc_dream3.otf
+        - asset: assets/fonts/Pretendard-Light.otf
           weight: 300
-        - asset: assets/fonts/sc_dream/sc_dream4.otf
+        - asset: assets/fonts/Pretendard-Regular.otf
           weight: 400
-        - asset: assets/fonts/sc_dream/sc_dream5.otf
+        - asset: assets/fonts/Pretendard-Medium.otf
           weight: 500
-        - asset: assets/fonts/sc_dream/sc_dream6.otf
+        - asset: assets/fonts/Pretendard-SemiBold.otf
           weight: 600
-        - asset: assets/fonts/sc_dream/sc_dream7.otf
+        - asset: assets/fonts/Pretendard-Bold.otf
           weight: 700
-        - asset: assets/fonts/sc_dream/sc_dream8.otf
+        - asset: assets/fonts/Pretendard-ExtraBold.otf
           weight: 800
-        - asset: assets/fonts/sc_dream/sc_dream9.otf
+        - asset: assets/fonts/Pretendard-Black.otf
           weight: 900
 
 flutter_native_splash:
