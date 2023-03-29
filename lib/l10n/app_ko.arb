@@ -1,6 +1,11 @@
 {
     "appTitle": "오디",
-    "appDescription": "당신의 삶을 더 건강하게",
+    "onboarding_page1_title": "쉽고 간편한 건강기록",
+    "onboarding_page1_subtitle": "오디를 활용하여\n나의 건강을 쉽고, 간편하게 기록할 수 있어요",
+    "onboarding_page2_title": "다양한 감정의 변화",
+    "onboarding_page2_subtitle": "매일의 감정을 기록해서\n나의 감정상태를 점검할 수 있어요",
+    "onboarding_page3_title": "걷기를 통해 건강해지기",
+    "onboarding_page3_subtitle": "하루의 걸음수를 자동으로 기록해서\n매일, 매주, 매달의 기록을 살펴볼 수 있어요",
 
     "welcome_text_nickname_title": "닉네임을 입력해주세요",
     "welcome_text_age_input": "나이를 입력해주세요",

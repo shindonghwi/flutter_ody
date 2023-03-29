@@ -10,6 +10,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final bool isCenterTitle;
   final String actionText;
+  final Function? actionTextCallback;
 
   const IconTitleTextAppBar({
     super.key,
@@ -17,6 +18,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
     this.title = "",
     this.isCenterTitle = true,
     this.actionText = "",
+    this.actionTextCallback = null,
   });
 
   @override
@@ -57,7 +59,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
         Align(
           alignment: Alignment.center,
           child: InkWell(
-            onTap: () {},
+            onTap: () => actionTextCallback?.call(),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 18),
               child: Text(
