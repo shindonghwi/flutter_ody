@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:odac_flutter_app/presentation/features/splash/SplashScreen.dart';
+import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/theme.dart';
 
 class OrotApp extends StatelessWidget {
@@ -11,6 +12,7 @@ class OrotApp extends StatelessWidget {
     return MaterialApp(
       // app default option
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+
       // 시스템 테마 설정 (라이트, 다크 모드)
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
@@ -22,8 +24,8 @@ class OrotApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: true,
 
-      // screen
-      home: SplashScreen(),
+      initialRoute: RoutingScreen.Splash.route,
+      routes: RoutingScreen.getAppRoutes(),
     );
   }
 }
