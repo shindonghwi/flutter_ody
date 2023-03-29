@@ -7,8 +7,8 @@ extension StyleColor on ColorScheme{
   Color get colorOnPrimary => primary100;
   Color get colorError => error40;
   Color get colorOnError => error100;
-  Color get colorBackground => neutral10;
-  Color get colorOnBackground => neutral100;
+  Color get colorBackground => neutral100;
+  Color get colorOnBackground => neutral10;
   Color get colorSurface => neutral100;
   Color get colorOnSurface => neutral10;
 
