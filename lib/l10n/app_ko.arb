@@ -9,43 +9,13 @@
 
     "login_title": "건강한 관리의 시작\n오디",
     "login_sns": "SNS 계정으로 로그인하기",
+    "login_policy_age": "만 14세 이상",
+    "login_policy_service": "오디 서비스 이용약관",
+    "login_policy_individual": "개인정보 수집 및 이용 동의",
+    "login_policy_marketing": "마케팅 정보 활용 동의",
 
     "common_skip": "건너뛰기",
-
-
-    "welcome_text_nickname_title": "닉네임을 입력해주세요",
-    "welcome_text_age_input": "나이를 입력해주세요",
-    "welcome_text_age_unit": "세",
-    "welcome_text_gender_title": "성별을 선택해주세요",
-    "welcome_text_birthday_title": "생년월일을 입력해주세요",
-    "welcome_text_height_title": "키를 입력해주세요",
-    "welcome_text_height_unit": "cm",
-    "welcome_text_weight_title": "몸무게를 입력해주세요",
-    "welcome_text_weight_unit": "kg",
-    "welcome_text_chronic_disease_title": "앓고 있는 만성질환이 있나요?",
-    "welcome_chronic_disease_items": "고혈압,저혈압,당뇨병",
-    "welcome_text_mental_disease_title": "앓고 있는 정신질환이 있나요?",
-    "welcome_text_mental_disease_subtitle": "질문이 거의 끝나가요!",
-    "welcome_mental_disease_items": "우울증,불면증,치매",
-    "welcome_text_prevention_disease_title": "예방하고 싶은 질환이 있나요?",
-    "welcome_text_prevention_disease_subtitle": "마지막 질문이에요!",
-    "welcome_prevention_disease_items": "고혈압,저혈압,당뇨병,우울증,불면증,치매",
-    "welcome_text_end_title": "질문이 끝났어요!",
-    "welcome_text_end_subtitle": "앞으로 오디를 활용해서\n더 건강한 하루를 보내셨으면 좋겠어요\n\n오디도 \"{nickname}\" 님을 위해서\n항상 관리하도록 노력할게요!",
-    "@welcome_text_end_subtitle":{
-        "description": "welcome_text_end_subtitle",
-        "placeholders": {
-            "nickname": {}
-        }
-    },
-
-
-    "common_input_hint": "입력해주세요",
-    "common_nobody": "없어요",
-    "common_start": "시작하기",
-    "common_next": "다음",
-    "common_year": "년",
-    "common_month": "월",
-    "common_day": "월"
+    "common_required": "필수",
+    "common_select": "선택"
 
 }

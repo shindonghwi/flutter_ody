@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
 import 'package:odac_flutter_app/presentation/components/button/notifier/OutlineButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
+import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class OutlineButton extends ConsumerWidget {
@@ -51,7 +52,7 @@ class OutlineButton extends ConsumerWidget {
         ),
         child: Text(
           text,
-          style: TextStyle(
+          style: getTextTheme(context).l1.copyWith(
             color: buttonState == ButtonState.Disabled
                 ? getColorScheme(context).colorText
                 : getColorScheme(context).colorPrimaryDefault,

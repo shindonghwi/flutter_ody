@@ -9,43 +9,13 @@
 
     "login_title": "건강한 관리의 시작\n오디",
     "login_sns": "SNS 계정으로 로그인하기",
+    "login_policy_age": "만 14세 이상",
+    "login_policy_service": "오디 서비스 이용약관",
+    "login_policy_individual": "개인정보 수집 및 이용 동의",
+    "login_policy_marketing": "마케팅 정보 활용 동의",
 
     "common_skip": "건너뛰기",
-
-
-    "welcome_text_nickname_title": "Enter your nickname",
-    "welcome_text_gender_title": "Please choose your gender",
-    "welcome_text_age_input": "Enter your age",
-    "welcome_text_age_unit": "age",
-    "welcome_text_birthday_title": "Please enter your date of birth.",
-    "welcome_text_height_title": "Enter your height",
-    "welcome_text_height_unit": "cm",
-    "welcome_text_weight_title": "Enter your weight",
-    "welcome_text_weight_unit": "kg",
-    "welcome_text_chronic_disease_title": "Do you have any chronic diseases?",
-    "welcome_chronic_disease_items": "hypertension,hypotension,diabetes mellitus",
-    "welcome_text_mental_disease_title": "Do you have any mental illness?",
-    "welcome_text_mental_disease_subtitle": "The question is almost over!",
-    "welcome_mental_disease_items": "depression,insomnia,dementia",
-    "welcome_text_prevention_disease_title": "Is there any disease you want to prevent?",
-    "welcome_text_prevention_disease_subtitle": "This is the last question!",
-    "welcome_prevention_disease_items": "hypertension,hypotension,diabetes\nmellitus,depression,insomnia,dementia",
-    "welcome_text_end_title": "The question is over!",
-    "welcome_text_end_subtitle": "I hope you have a healthier day using ody.\n\nI will always try to take care of ody for\n'{nickname}'!",
-    "@welcome_text_end_subtitle":{
-        "description": "welcome_text_end_subtitle",
-        "placeholders": {
-            "nickname": {}
-        }
-    },
-
-
-    "common_input_hint": "Please enter it",
-    "common_nobody": "Nobody",
-    "common_start": "Start",
-    "common_next": "Next",
-    "common_year": "year",
-    "common_month": "month",
-    "common_day": "day"
+    "common_required": "필수",
+    "common_select": "선택"
 
 }
