@@ -17,12 +17,12 @@ class LoginScreen extends HookWidget {
     final size = getMediaQuery(context).size;
 
     return Scaffold(
-      backgroundColor: getColorScheme(context).colorBackground,
+      backgroundColor: getColorScheme(context).colorUIBackground,
       body: SafeArea(
         child: Column(
           children: [
             _AppTitle(context, size),
-            _SocialIcons(context, size),
+            _SocialIconContainer(context, size),
           ],
         ),
       ),
@@ -55,7 +55,7 @@ class LoginScreen extends HookWidget {
   }
 
   /** 위젯: 소셜 아이콘 및 로그인하기 타이틀 */
-  Expanded _SocialIcons(BuildContext context, Size size) {
+  Expanded _SocialIconContainer(BuildContext context, Size size) {
     List<Pair?> socialItems = [
       Pair('assets/imgs/image_kakao.png', () => showPolicyBottomSheet(context, size, "kakao")),
       null,
@@ -70,45 +70,54 @@ class LoginScreen extends HookWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(height: 1, width: 25, color: getColorScheme(context).neutral60),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    getAppLocalizations(context).login_sns,
-                    style: getTextTheme(context).b3.copyWith(
-                          color: getColorScheme(context).neutral60,
-                        ),
-                  ),
-                ),
-                Container(height: 1, width: 25, color: getColorScheme(context).neutral60),
-              ],
-            ),
-            SizedBox(
-              height: 43,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: socialItems.map((e) {
-                if (e == null) {
-                  return SizedBox(
-                    width: 28,
-                  );
-                } else {
-                  return InkWell(
-                    onTap: e.second,
-                    child: Image.asset(
-                      e.first,
-                    ),
-                  );
-                }
-              }).toList(),
-            ),
+            _SnsLoginTitle(context),
+            _SocialIcons(socialItems),
           ],
         ),
       ),
+    );
+  }
+
+  Container _SocialIcons(List<Pair?> socialItems) {
+    return Container(
+      margin: EdgeInsets.only(top: 43),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: socialItems.map((e) {
+          if (e == null) {
+            return SizedBox(
+              width: 28,
+            );
+          } else {
+            return InkWell(
+              onTap: e.second,
+              child: Image.asset(
+                e.first,
+              ),
+            );
+          }
+        }).toList(),
+      ),
+    );
+  }
+
+  /** 위젯: SNS 계정으로 로그인하기 */
+  Row _SnsLoginTitle(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(height: 1, width: 25, color: getColorScheme(context).neutral50),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            getAppLocalizations(context).login_sns,
+            style: getTextTheme(context).b3.copyWith(
+                  color: getColorScheme(context).neutral50,
+                ),
+          ),
+        ),
+        Container(height: 1, width: 25, color: getColorScheme(context).neutral50),
+      ],
     );
   }
 
@@ -127,14 +136,14 @@ class LoginScreen extends HookWidget {
             Image.asset(
               'assets/imgs/logo_ody.png',
             ),
-            SizedBox(
-              height: 21,
-            ),
-            Text(
-              getAppLocalizations(context).login_title,
-              style: getTextTheme(context).h2.copyWith(
-                    color: getColorScheme(context).neutral10,
-                  ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              child: Text(
+                getAppLocalizations(context).login_title,
+                style: getTextTheme(context).h2.copyWith(
+                      color: getColorScheme(context).colorText,
+                    ),
+              ),
             ),
           ],
         ),

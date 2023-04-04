@@ -23,7 +23,7 @@ class SplashScreen extends HookWidget {
     useEffect(() => moveOnBoardingPage(context), []);
 
     return Scaffold(
-      backgroundColor: getColorScheme(context).colorBackground,
+      backgroundColor: getColorScheme(context).colorUIBackground,
       body: Center(
         child: Image.asset("assets/imgs/logo_ody.png"),
       ),

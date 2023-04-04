@@ -22,7 +22,7 @@ class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: getColorScheme(context).colorBackground,
+      backgroundColor: getColorScheme(context).colorUI01,
       bottomOpacity: 0.0,
       elevation: 0.0,
       automaticallyImplyLeading: false,
@@ -38,7 +38,7 @@ class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
                   colorFilter: ColorFilter.mode(
                     leadingIcon!.tint != null
                         ? leadingIcon!.tint!
-                        : getColorScheme(context).colorOnBackground,
+                        : getColorScheme(context).colorUI01,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -48,7 +48,7 @@ class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
       title: Text(
         title,
         style: getTextTheme(context).l1.copyWith(
-              color: getColorScheme(context).neutral10,
+              color: getColorScheme(context).colorText,
             ),
       ),
       centerTitle: isCenterTitle,
@@ -67,7 +67,7 @@ class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
                       colorFilter: ColorFilter.mode(
                         actionIcon!.tint != null
                             ? actionIcon!.tint!
-                            : getColorScheme(context).colorOnBackground,
+                            : getColorScheme(context).colorUI01,
                         BlendMode.srcIn,
                       ),
                     ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:odac_flutter_app/presentation/ui/colors.dart';
+import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class IndicatorDot extends HookWidget {
   final bool isSelected;
@@ -9,7 +11,7 @@ class IndicatorDot extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final dotSize = isSelected ? 15.0 : 7.0;
-    final dotColor = isSelected ? Colors.blue : Colors.grey;
+    final dotColor = isSelected ? getColorScheme(context).primary100 : getColorScheme(context).neutral30;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.0),

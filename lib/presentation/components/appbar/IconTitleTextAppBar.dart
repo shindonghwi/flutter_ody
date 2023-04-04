@@ -24,7 +24,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: getColorScheme(context).colorBackground,
+      backgroundColor: getColorScheme(context).colorUI01,
       bottomOpacity: 0.0,
       elevation: 0.0,
       leadingWidth: 56,
@@ -41,7 +41,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
                   colorFilter: ColorFilter.mode(
                     leadingIcon!.tint != null
                         ? leadingIcon!.tint!
-                        : getColorScheme(context).colorOnBackground,
+                        : getColorScheme(context).colorUI01,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -65,7 +65,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
               child: Text(
                 actionText,
                 style: getTextTheme(context).l3.copyWith(
-                      color: getColorScheme(context).neutral50,
+                      color: getColorScheme(context).neutral60,
                     ),
               ),
             ),

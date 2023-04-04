@@ -20,7 +20,7 @@ class OnBoardingScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: getColorScheme(context).colorBackground,
+      backgroundColor: getColorScheme(context).colorUI01,
       appBar: IconTitleTextAppBar(
         actionText: getAppLocalizations(context).common_skip,
         actionTextCallback: () => moveLoginPage(context),

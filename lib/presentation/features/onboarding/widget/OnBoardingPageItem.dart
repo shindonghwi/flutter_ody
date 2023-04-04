@@ -40,7 +40,7 @@ class OnBoardingPageItem extends StatelessWidget {
                   Text(
                     title,
                     style: getTextTheme(context).h2.copyWith(
-                          color: getColorScheme(context).neutral10,
+                          color: getColorScheme(context).colorText,
                         ),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
@@ -49,7 +49,7 @@ class OnBoardingPageItem extends StatelessWidget {
                   Text(
                     subTitle,
                     style: getTextTheme(context).b2.copyWith(
-                          color: getColorScheme(context).neutral60,
+                          color: getColorScheme(context).neutral50,
                         ),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
