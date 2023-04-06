@@ -5,7 +5,6 @@ class CommonBottomSheet {
     BuildContext context, {
     double borderRadius = 20.0,
     Color backgroundColor = Colors.white,
-    required double height,
     required Widget child,
   }) {
     showModalBottomSheet(
@@ -21,7 +20,6 @@ class CommonBottomSheet {
           child: child,
           borderRadius: borderRadius,
           backgroundColor: backgroundColor,
-          height: height,
         );
       },
     );
@@ -31,14 +29,12 @@ class CommonBottomSheet {
 class BottomSheetWidget extends StatelessWidget {
   final Widget child;
   final double borderRadius;
-  final double height;
   final Color backgroundColor;
 
   const BottomSheetWidget({
     super.key,
     required this.child,
     required this.borderRadius,
-    required this.height,
     required this.backgroundColor,
   });
 
@@ -46,7 +42,6 @@ class BottomSheetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: height,
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.only(

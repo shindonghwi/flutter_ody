@@ -24,7 +24,7 @@ class LoginScreen extends HookWidget {
         child: Column(
           children: [
             _AppTitle(context, size),
-            _SocialIconContainer(context, size.height),
+            _SocialIconContainer(context, size.height * 0.48),
           ],
         ),
       ),
@@ -35,15 +35,15 @@ class LoginScreen extends HookWidget {
   Expanded _SocialIconContainer(BuildContext context, double height) {
     List<Pair?> socialItems = [
       Pair('assets/imgs/image_kakao.png', () {
-        CommonBottomSheet.showBottomSheet(context, height: height, child: AgreementBottomSheet());
+        CommonBottomSheet.showBottomSheet(context, child: AgreementBottomSheet());
       }),
       null,
       Pair('assets/imgs/image_google.png', () {
-        CommonBottomSheet.showBottomSheet(context, height: height, child: AgreementBottomSheet());
+        CommonBottomSheet.showBottomSheet(context, child: AgreementBottomSheet());
       }),
       null,
       Pair('assets/imgs/image_apple.png', () {
-        CommonBottomSheet.showBottomSheet(context, height: height, child: AgreementBottomSheet());
+        CommonBottomSheet.showBottomSheet(context, child: AgreementBottomSheet());
       }),
     ];
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/button/OutlinedButton.dart';
-import 'package:odac_flutter_app/presentation/features/login/provider/AgreementProvider.dart';
 import 'package:odac_flutter_app/presentation/features/login/widget/AgreementItem.dart';
+import 'package:odac_flutter_app/presentation/features/login/widget/AllAgreementButton.dart';
+import 'package:odac_flutter_app/presentation/features/login/widget/AllConfirmButton.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
@@ -12,9 +12,6 @@ class AgreementBottomSheet extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final policyItemsState = ref.watch<List<bool>>(agreementPolicyItemProvider);
-    final policyItemsRead = ref.read(agreementPolicyItemProvider.notifier);
-
     List<Pair> policyList = [
       Pair(true, getAppLocalizations(context).login_policy_age),
       Pair(true, getAppLocalizations(context).login_policy_service),
@@ -22,43 +19,25 @@ class AgreementBottomSheet extends HookConsumerWidget {
       Pair(false, getAppLocalizations(context).login_policy_marketing),
     ];
 
-    return Container(
-      margin: const EdgeInsets.fromLTRB(45, 11, 45, 40),
-      child: Column(
-        children: [
-          // 구분선
-          _Divider(context),
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(45, 11, 45, 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 구분선
+            _Divider(context),
 
-          // 약관 전체 동의 버튼
-          _AllAgreementButton(),
+            // 약관 전체 동의 버튼
+            AllAgreementButton(),
 
-          Container(
-            margin: const EdgeInsets.only(top: 30),
-            child: Column(
-              children: policyList.asMap().entries.map((entry) {
-                int index = entry.key;
-                var e = entry.value;
-                return AgreementItem(
-                  index: index,
-                  isRequired: e.first,
-                  text: e.second,
-                );
-              }).toList(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+            // 약관 아이템
+            _PolicyItems(policyList),
 
-  /** 약관 전체 동의 버튼 */
-  Container _AllAgreementButton() {
-    return Container(
-      margin: const EdgeInsets.only(top: 31),
-      child: OutlineButton(
-        text: "오디 약관 전체 동의하기",
-        onPressed: () {},
-        outlineButtonProvider: agreementButtonProvider,
+            // 확인버튼
+            AllConfirmButton(),
+          ],
+        ),
       ),
     );
   }
@@ -74,6 +53,24 @@ class AgreementBottomSheet extends HookConsumerWidget {
           color: getColorScheme(context).neutral30,
           borderRadius: BorderRadius.circular(100),
         ),
+      ),
+    );
+  }
+
+  /** 약관 목록 */
+  Container _PolicyItems(List<Pair> policyList) {
+    return Container(
+      margin: const EdgeInsets.only(top: 30),
+      child: Column(
+        children: policyList.asMap().entries.map((entry) {
+          int index = entry.key;
+          var e = entry.value;
+          return AgreementItem(
+            index: index,
+            isRequired: e.first,
+            text: e.second,
+          );
+        }).toList(),
       ),
     );
   }

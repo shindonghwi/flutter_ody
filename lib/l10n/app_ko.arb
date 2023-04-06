@@ -16,6 +16,7 @@
 
     "common_skip": "건너뛰기",
     "common_required": "필수",
-    "common_select": "선택"
+    "common_select": "선택",
+    "common_confirm": "확인"
 
 }

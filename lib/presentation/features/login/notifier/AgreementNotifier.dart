@@ -8,9 +8,9 @@ class AgreementNotifier extends StateNotifier<List<bool>> {
     state = [...state];
   }
 
-  void allAccept() {
-    bool currentAgreement = state[0];
-    state = state.map((e) => !currentAgreement).toList();
+  void allChange() {
+    final newState = state.map((e) => !state[0]).toList();
+    state = [...newState];
   }
 
   bool isAllRequiredAccepted() => state.sublist(0, state.length - 1).every((element) => element);

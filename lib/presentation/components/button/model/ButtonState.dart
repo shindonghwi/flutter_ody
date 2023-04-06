@@ -1,5 +1,6 @@
 enum ButtonState {
   Disabled,
-  Pressed,
   Default,
+  Pressed,
+  Activated,
 }

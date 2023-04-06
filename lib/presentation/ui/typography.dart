@@ -13,7 +13,7 @@ const defaultTextStyle = TextStyle(
   fontFamily: 'Pretendard',
   fontWeight: FontWeight.w100,
   overflow: TextOverflow.ellipsis,
-  letterSpacing: 0
+  letterSpacing: 0,
 );
 
 extension StyleText on TextTheme {

@@ -1,0 +1,4 @@
+enum ButtonSizeType {
+  Normal,
+  Small,
+}
