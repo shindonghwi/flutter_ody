@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:odac_flutter_app/presentation/components/button/FillButton.dart';
-import 'package:odac_flutter_app/presentation/components/button/OutlineButton.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
@@ -20,17 +20,13 @@ class AllConfirmButton extends HookConsumerWidget {
     final isButtonActivated =
         policyItemsRead.isAllRequiredAccepted() ? ButtonState.Activated : ButtonState.Disabled;
 
-    debugPrint(isButtonActivated.toString());
-
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(top: 31),
       child: FillButton(
         text: getAppLocalizations(context).common_confirm,
         type: ButtonSizeType.Normal,
-        onPressed: () {
-          debugPrint("AllConfirmButton onPressed");
-        },
+        onPressed: () => CommonBottomSheet.close(context, closeAction: policyItemsRead.init),
         buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
           (_) => ButtonNotifier(
             state: isButtonActivated,

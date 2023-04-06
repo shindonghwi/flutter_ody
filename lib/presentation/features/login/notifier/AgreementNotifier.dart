@@ -13,6 +13,11 @@ class AgreementNotifier extends StateNotifier<List<bool>> {
     state = [...newState];
   }
 
+  void init() {
+    final newState = state.map((e) => false).toList();
+    state = [...newState];
+  }
+
   bool isAllRequiredAccepted() => state.sublist(0, state.length - 1).every((element) => element);
 
   bool isAllAccepted() => state.every((element) => element);

@@ -24,6 +24,11 @@ class CommonBottomSheet {
       },
     );
   }
+
+  static close(BuildContext context, {Function? closeAction = null}) {
+    Navigator.of(context).pop();
+    closeAction?.call();
+  }
 }
 
 class BottomSheetWidget extends StatelessWidget {
