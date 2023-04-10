@@ -7,8 +7,11 @@ import 'package:odac_flutter_app/presentation/components/button/FillButton.dart'
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:odac_flutter_app/presentation/features/login/LoginScreen.dart';
 import 'package:odac_flutter_app/presentation/features/login/provider/AgreementProvider.dart';
 import 'package:odac_flutter_app/presentation/features/login/provider/LoginLoadingProvider.dart';
+import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class AllConfirmButton extends HookConsumerWidget {
@@ -33,12 +36,18 @@ class AllConfirmButton extends HookConsumerWidget {
         type: ButtonSizeType.Normal,
         borderRadius: 100,
         onPressed: () {
-          CommonBottomSheet.close(context, closeAction: policyItemsRead.init);
 
           // TODO: 로그인 화면: 로그인 API 호출로 변경해야함.
           isLoadingRead.state = true;
           Future.delayed(Duration(seconds: 2), () {
             isLoadingRead.state = false;
+            Timer.run(() {
+              CommonBottomSheet.close(context, closeAction: policyItemsRead.init);
+              Navigator.push(
+                context,
+                nextSlideScreen(RoutingScreen.InputProfile.route),
+              );
+            });
           });
         },
         buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(

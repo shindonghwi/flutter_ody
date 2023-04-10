@@ -15,6 +15,13 @@
     "login_policy_individual": "개인정보 수집 및 이용 동의",
     "login_policy_marketing": "마케팅 정보 활용 동의",
 
+    "input_profile_gender": "성별",
+    "input_profile_birthday": "생년월일",
+    "input_profile_height": "키",
+    "input_profile_weight": "몸무게",
+    "input_profile_disease": "질환",
+
+
     "common_skip": "건너뛰기",
     "common_required": "필수",
     "common_select": "선택",

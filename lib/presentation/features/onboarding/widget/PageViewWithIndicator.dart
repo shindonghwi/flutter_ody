@@ -14,8 +14,8 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
 class PageViewWithIndicator extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var pageController = ref.watch(pageViewControllerProvider);
-    var currentPageIndex = ref.watch(currentPageIndexProvider);
+    var pageController = ref.watch(onBoardingPageViewControllerProvider);
+    var currentPageIndex = ref.watch(onBoardingCurrentPageIndexProvider);
     final List<Widget> pages = setPages();
 
     useEffect(() {
@@ -58,7 +58,8 @@ class PageViewWithIndicator extends HookConsumerWidget {
   /** 페이지 컨트롤러 리스너 셋팅 */
   void setPageControllerAddListener(PageController pageController, WidgetRef ref) {
     pageController.addListener(
-      () => ref.read(currentPageIndexProvider.notifier).state = pageController.page!.round(),
+      () => ref.read(onBoardingCurrentPageIndexProvider.notifier).state =
+          pageController.page!.round(),
     );
   }
 

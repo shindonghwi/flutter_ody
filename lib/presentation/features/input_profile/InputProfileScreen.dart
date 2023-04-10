@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageIndexProvider.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class InputProfileScreen extends HookWidget {
+class InputProfileScreen extends HookConsumerWidget {
   const InputProfileScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    List<String> titleList = [
+      getAppLocalizations(context).input_profile_gender,
+      getAppLocalizations(context).input_profile_birthday,
+      getAppLocalizations(context).input_profile_height,
+      getAppLocalizations(context).input_profile_weight,
+      getAppLocalizations(context).input_profile_disease,
+    ];
+
+    var currentPageIndex = ref.watch(inputProfileCurrentPageIndexProvider);
+    final currentPageTitle = titleList[currentPageIndex];
+
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI01,
       appBar: IconTitleIconAppBar(
@@ -18,35 +32,76 @@ class InputProfileScreen extends HookWidget {
           onPressed: () {},
           tint: getColorScheme(context).colorText,
         ),
+        title: currentPageTitle,
       ),
-      body: Column(
-        children: [
-          Container(
-            width: 10,
-            color: Colors.red,
-            height: 5,
+      body: MyPageView(totalPageCount: titleList.length),
+    );
+  }
+}
+
+class MyPageView extends HookConsumerWidget {
+  final totalPageCount;
+
+  MyPageView({
+    Key? key,
+    required this.totalPageCount,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var currentPageIndex = ref.watch(inputProfileCurrentPageIndexProvider);
+    final pageController = ref.read(inputProfilePageViewControllerProvider);
+
+    useEffect(() {
+      setPageControllerAddListener(pageController, ref);
+      return () => disposePageController(pageController);
+    }, [pageController]);
+
+    return Column(
+      children: [
+        TweenAnimationBuilder<double>(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          tween: Tween<double>(
+            begin: 0,
+            end: (currentPageIndex + 1) / totalPageCount,
           ),
-          PageView(
+          builder: (context, value, _) => Container(
+            height: 6,
+            child: LinearProgressIndicator(
+              value: value,
+              color: getColorScheme(context).primary100,
+              backgroundColor: getColorScheme(context).neutral20,
+            ),
+          ),
+        ),
+        // LinearProgressIndicator(value: currentPageIndex / 5 + 1 / 5),
+        SizedBox(height: 16),
+        Expanded(
+          child: PageView(
+            controller: pageController,
             children: [
-              Expanded(
-                child: Container(
-                  color: Colors.blue,
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.yellow,
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.green,
-                ),
-              ),
+              Container(color: Colors.red),
+              Container(color: Colors.yellow),
+              Container(color: Colors.green),
+              Container(color: Colors.orange),
+              Container(color: Colors.pink),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
+  }
+
+  /** 페이지 컨트롤러 리스너 셋팅 */
+  void setPageControllerAddListener(PageController pageController, WidgetRef ref) {
+    pageController.addListener(() {
+      ref.read(inputProfileCurrentPageIndexProvider.notifier).state = pageController.page!.round();
+    });
+  }
+
+  /** 페이지 컨트롤러 해제 */
+  void disposePageController(PageController pageController) {
+    pageController.dispose();
   }
 }
