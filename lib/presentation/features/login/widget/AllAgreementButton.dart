@@ -5,6 +5,7 @@ import 'package:odac_flutter_app/presentation/components/button/model/ButtonNoti
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
 import 'package:odac_flutter_app/presentation/features/login/provider/AgreementProvider.dart';
+import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class AllAgreementButton extends HookConsumerWidget {
   const AllAgreementButton({
@@ -22,7 +23,7 @@ class AllAgreementButton extends HookConsumerWidget {
       width: double.infinity,
       margin: const EdgeInsets.only(top: 31),
       child: OutlineButton(
-        text: "오디 약관 전체 동의하기",
+        text: getAppLocalizations(context).login_policy_all_agree,
         type: ButtonSizeType.Normal,
         onPressed: () {
           policyItemsRead.allChange();

@@ -18,7 +18,7 @@ class AllConfirmButton extends HookConsumerWidget {
     final policyItemsState = ref.watch(agreementPolicyItemProvider);
     final policyItemsRead = ref.read(agreementPolicyItemProvider.notifier);
     final isButtonActivated =
-        policyItemsRead.isAllRequiredAccepted() ? ButtonState.Activated : ButtonState.Disabled;
+    policyItemsRead.isAllRequiredAccepted() ? ButtonState.Activated : ButtonState.Disabled;
 
     return Container(
       width: double.infinity,
@@ -27,11 +27,14 @@ class AllConfirmButton extends HookConsumerWidget {
         text: getAppLocalizations(context).common_confirm,
         type: ButtonSizeType.Normal,
         borderRadius: 100,
-        onPressed: () => CommonBottomSheet.close(context, closeAction: policyItemsRead.init),
+        onPressed: () {
+          CommonBottomSheet.close(context, closeAction: policyItemsRead.init);
+        },
         buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-          (_) => ButtonNotifier(
-            state: isButtonActivated,
-          ),
+              (_) =>
+              ButtonNotifier(
+                state: isButtonActivated,
+              ),
         ),
       ),
     );
