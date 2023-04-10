@@ -21,7 +21,7 @@ class AgreementBottomSheet extends HookConsumerWidget {
 
     return SafeArea(
       child: Container(
-        margin: const EdgeInsets.fromLTRB(45, 11, 45, 40),
+        padding: const EdgeInsets.fromLTRB(45, 11, 45, 40),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

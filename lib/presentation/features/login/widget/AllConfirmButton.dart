@@ -22,10 +22,11 @@ class AllConfirmButton extends HookConsumerWidget {
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 31),
+      margin: const EdgeInsets.only(top: 21),
       child: FillButton(
         text: getAppLocalizations(context).common_confirm,
         type: ButtonSizeType.Normal,
+        borderRadius: 100,
         onPressed: () => CommonBottomSheet.close(context, closeAction: policyItemsRead.init),
         buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
           (_) => ButtonNotifier(

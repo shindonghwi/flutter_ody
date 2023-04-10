@@ -6,6 +6,7 @@ class CommonBottomSheet {
     double borderRadius = 20.0,
     Color backgroundColor = Colors.white,
     required Widget child,
+    Function? closeAction = null,
   }) {
     showModalBottomSheet(
       context: context,
@@ -22,7 +23,9 @@ class CommonBottomSheet {
           backgroundColor: backgroundColor,
         );
       },
-    );
+    ).then((value) {
+      closeAction?.call();
+    });
   }
 
   static close(BuildContext context, {Function? closeAction = null}) {

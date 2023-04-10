@@ -34,36 +34,36 @@ class FillButton extends HookConsumerWidget {
 
     return Material(
       color: Colors.transparent,
-      child: InkWell(
-        onTapDown: (_) {
-          if (buttonState == ButtonState.Disabled) return;
-          buttonRead.changeState(ButtonState.Pressed);
-        },
-        onTapUp: (_) {
-          if (buttonState == ButtonState.Disabled) return;
-
-          if (isActivated.value) {
-            buttonRead.changeState(ButtonState.Default);
-          } else {
-            buttonRead.changeState(ButtonState.Activated);
-          }
-          onPressed();
-          isActivated.value = !isActivated.value;
-        },
-        onTapCancel: () {
-          if (buttonState == ButtonState.Disabled) return;
-          buttonRead.changeState(ButtonState.Default);
-        },
-        child: Container(
-          padding: buttonPadding,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
+      child: Container(
+        padding: buttonPadding,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(borderRadius),
+          color: _getBackgroundColor(context, buttonState),
+          border: Border.all(
             color: _getBackgroundColor(context, buttonState),
-            border: Border.all(
-              color: _getBackgroundColor(context, buttonState),
-              width: 1.5,
-            )
+            width: 1.5,
           ),
+        ),
+        child: InkWell(
+          onTapDown: (_) {
+            if (buttonState == ButtonState.Disabled) return;
+            buttonRead.changeState(ButtonState.Pressed);
+          },
+          onTapUp: (_) {
+            if (buttonState == ButtonState.Disabled) return;
+
+            if (isActivated.value) {
+              buttonRead.changeState(ButtonState.Default);
+            } else {
+              buttonRead.changeState(ButtonState.Activated);
+            }
+            onPressed();
+            isActivated.value = !isActivated.value;
+          },
+          onTapCancel: () {
+            if (buttonState == ButtonState.Disabled) return;
+            buttonRead.changeState(ButtonState.Default);
+          },
           child: Text(
             text,
             style: getTextTheme(context).l1.copyWith(
