@@ -5,6 +5,7 @@ import 'package:odac_flutter_app/presentation/components/appbar/IconTitleIconApp
 import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageIndexProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/widget/gender/InputProfileGender.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
@@ -47,6 +48,18 @@ class MyPageView extends HookConsumerWidget {
     required this.totalPageCount,
   }) : super(key: key);
 
+  bool onBackPressed(PageController pageController) {
+    if (pageController.page!.round() == 0) {
+      return true;
+    } else {
+      pageController.previousPage(
+        duration: Duration(milliseconds: 250),
+        curve: Curves.easeInOut,
+      );
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var currentPageIndex = ref.watch(inputProfileCurrentPageIndexProvider);
@@ -57,39 +70,41 @@ class MyPageView extends HookConsumerWidget {
       return () => disposePageController(pageController);
     }, [pageController]);
 
-    return Column(
-      children: [
-        TweenAnimationBuilder<double>(
-          duration: const Duration(milliseconds: 250),
-          curve: Curves.easeInOut,
-          tween: Tween<double>(
-            begin: 0,
-            end: (currentPageIndex + 1) / totalPageCount,
-          ),
-          builder: (context, value, _) => Container(
-            height: 6,
-            child: LinearProgressIndicator(
-              value: value,
-              color: getColorScheme(context).primary100,
-              backgroundColor: getColorScheme(context).neutral20,
+    return WillPopScope(
+      onWillPop: () async => onBackPressed(pageController),
+      child: Column(
+        children: [
+          TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeInOut,
+            tween: Tween<double>(
+              begin: 0,
+              end: (currentPageIndex + 1) / totalPageCount,
+            ),
+            builder: (context, value, _) => Container(
+              height: 6,
+              child: LinearProgressIndicator(
+                value: value,
+                color: getColorScheme(context).primary100,
+                backgroundColor: getColorScheme(context).neutral20,
+              ),
             ),
           ),
-        ),
-        // LinearProgressIndicator(value: currentPageIndex / 5 + 1 / 5),
-        SizedBox(height: 16),
-        Expanded(
-          child: PageView(
-            controller: pageController,
-            children: [
-              Container(color: Colors.red),
-              Container(color: Colors.yellow),
-              Container(color: Colors.green),
-              Container(color: Colors.orange),
-              Container(color: Colors.pink),
-            ],
+          SizedBox(height: 16),
+          Expanded(
+            child: PageView(
+              controller: pageController,
+              children: [
+                InputProfileGender(),
+                Container(color: Colors.yellow),
+                Container(color: Colors.green),
+                Container(color: Colors.orange),
+                Container(color: Colors.pink),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSize.dart';
@@ -30,12 +29,10 @@ class FillButton extends HookConsumerWidget {
     final buttonState = ref.watch<ButtonState>(buttonProvider);
     final buttonRead = ref.read<ButtonNotifier>(buttonProvider.notifier);
     final buttonPadding = ButtonSize.getButtonPadding(type);
-    final isActivated = useState(buttonState == ButtonState.Activated ? true : false);
 
     return Material(
       color: Colors.transparent,
       child: Container(
-        padding: buttonPadding,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
           color: _getBackgroundColor(context, buttonState),
@@ -52,25 +49,27 @@ class FillButton extends HookConsumerWidget {
           onTapUp: (_) {
             if (buttonState == ButtonState.Disabled) return;
 
-            if (isActivated.value) {
+            if (buttonState == ButtonState.Activated) {
               buttonRead.changeState(ButtonState.Default);
             } else {
               buttonRead.changeState(ButtonState.Activated);
             }
             onPressed();
-            isActivated.value = !isActivated.value;
           },
           onTapCancel: () {
             if (buttonState == ButtonState.Disabled) return;
             buttonRead.changeState(ButtonState.Default);
           },
-          child: Text(
-            text,
-            style: getTextTheme(context).l1.copyWith(
-                  color: _getTextColor(context, buttonState),
-                ),
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
+          child: Padding(
+            padding: buttonPadding,
+            child: Text(
+              text,
+              style: getTextTheme(context).l1.copyWith(
+                    color: _getTextColor(context, buttonState),
+                  ),
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),
