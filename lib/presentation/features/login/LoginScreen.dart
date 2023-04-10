@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
+import 'package:odac_flutter_app/presentation/features/login/provider/LoginLoadingProvider.dart';
 import 'package:odac_flutter_app/presentation/features/login/widget/AgreementBottomSheet.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
@@ -21,13 +23,22 @@ class LoginScreen extends HookWidget {
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUIBackground,
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            _AppTitle(context, size),
-            _SocialIconContainer(context, size.height * 0.48),
+            LoginContent(context, size),
+            LoginLoading(),
           ],
         ),
       ),
+    );
+  }
+
+  Column LoginContent(BuildContext context, Size size) {
+    return Column(
+      children: [
+        _AppTitle(context, size),
+        _SocialIconContainer(context, size.height * 0.48),
+      ],
     );
   }
 
@@ -49,7 +60,7 @@ class LoginScreen extends HookWidget {
 
     return Expanded(
       child: Container(
-        margin: EdgeInsets.only(bottom: height * 0.08),
+        margin: EdgeInsets.only(bottom: height * 0.1),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -133,5 +144,21 @@ class LoginScreen extends HookWidget {
         ),
       ),
     );
+  }
+}
+
+class LoginLoading extends HookConsumerWidget {
+  const LoginLoading({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isLoading = ref.watch<bool>(loginLoadingProvider);
+
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return Container();
   }
 }
