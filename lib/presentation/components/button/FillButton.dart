@@ -79,13 +79,13 @@ class FillButton extends HookConsumerWidget {
   Color _getBackgroundColor(BuildContext context, ButtonState buttonState) {
     switch (buttonState) {
       case ButtonState.Default:
-        return getColorScheme(context).colorPrimaryDefault;
+        return getColorScheme(context).colorPrimaryFocus;
       case ButtonState.Pressed:
         return getColorScheme(context).colorPrimaryPress;
       case ButtonState.Disabled:
-        return getColorScheme(context).colorPrimaryDisable;
+        return getColorScheme(context).colorUI03;
       case ButtonState.Activated:
-        return getColorScheme(context).colorPrimaryDefault;
+        return getColorScheme(context).colorPrimaryFocus;
     }
   }
 

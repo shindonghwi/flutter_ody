@@ -5,10 +5,13 @@ extension StyleColor on ColorScheme{
 
   Color get colorUIBackground => brightness == Brightness.light ? white : black;
   Color get colorUI01 => brightness == Brightness.light ? neutral10 : neutral10;
+  Color get colorUI02 => brightness == Brightness.light ? neutral20 : neutral20;
+  Color get colorUI03 => brightness == Brightness.light ? neutral30 : neutral30;
+
   Color get colorText => brightness == Brightness.light ? neutral90 : neutral90;
-  Color get colorPrimaryDefault => brightness == Brightness.light ? primary100 : primary100;
+  Color get colorPrimaryFocus => brightness == Brightness.light ? primary100 : primary100;
   Color get colorPrimaryPress => brightness == Brightness.light ? primary50 : primary50;
-  Color get colorPrimaryDisable => brightness == Brightness.light ? neutral30 : neutral30;
+  Color get colorPrimaryDisable => brightness == Brightness.light ? neutral40 : neutral40;
   Color get colorError => brightness == Brightness.light ? error100 : error100;
   Color get colorFocus => brightness == Brightness.light ? neutral90 : neutral90;
 

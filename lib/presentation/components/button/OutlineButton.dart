@@ -79,13 +79,13 @@ class OutlineButton extends HookConsumerWidget {
   Color _getBorderColor(BuildContext context, ButtonState buttonState) {
     switch (buttonState) {
       case ButtonState.Default:
-        return getColorScheme(context).colorPrimaryDisable;
+        return getColorScheme(context).neutral30;
       case ButtonState.Pressed:
-        return getColorScheme(context).colorPrimaryDefault;
+        return getColorScheme(context).colorPrimaryFocus;
       case ButtonState.Disabled:
         return getColorScheme(context).colorPrimaryDisable;
       case ButtonState.Activated:
-        return getColorScheme(context).colorPrimaryDefault;
+        return getColorScheme(context).colorPrimaryFocus;
     }
   }
 
@@ -94,11 +94,11 @@ class OutlineButton extends HookConsumerWidget {
       case ButtonState.Default:
         return getColorScheme(context).colorUI01;
       case ButtonState.Pressed:
-        return getColorScheme(context).colorPrimaryDefault.withOpacity(0.05);
+        return getColorScheme(context).colorPrimaryFocus.withOpacity(0.05);
       case ButtonState.Disabled:
         return getColorScheme(context).colorUI01;
       case ButtonState.Activated:
-        return getColorScheme(context).colorPrimaryDefault.withOpacity(0.15);
+        return getColorScheme(context).colorPrimaryFocus.withOpacity(0.15);
     }
   }
 
@@ -107,11 +107,11 @@ class OutlineButton extends HookConsumerWidget {
       case ButtonState.Default:
         return getColorScheme(context).colorText;
       case ButtonState.Pressed:
-        return getColorScheme(context).colorPrimaryDefault;
+        return getColorScheme(context).colorPrimaryFocus;
       case ButtonState.Disabled:
-        return getColorScheme(context).colorText;
+        return getColorScheme(context).colorPrimaryDisable;
       case ButtonState.Activated:
-        return getColorScheme(context).colorPrimaryDefault;
+        return getColorScheme(context).colorPrimaryFocus;
     }
   }
 }
