@@ -61,7 +61,7 @@ class OutlineTextField extends HookWidget {
       focusNode: focusNode,
       style: getTextTheme(context).l2.copyWith(
           color: enabled
-              ? c.value
+              ? _isFocused.value
                   ? getTextColor(context, BorderType.Error)
                   : getTextColor(context, BorderType.Default)
               : getTextColor(context, BorderType.Disabled)),

@@ -17,11 +17,10 @@ class InputProfileBirthday extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSelectedMan = useState(true);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(35, 49, 35, 40),
+      padding: const EdgeInsets.fromLTRB(35, 29, 35, 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

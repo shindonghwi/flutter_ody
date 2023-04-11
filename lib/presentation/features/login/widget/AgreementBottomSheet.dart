@@ -26,7 +26,7 @@ class AgreementBottomSheet extends HookConsumerWidget {
       child: Stack(
         children: [
           Container(
-            padding: const EdgeInsets.fromLTRB(45, 11, 45, 40),
+            padding: const EdgeInsets.fromLTRB(45, 7, 45, 27),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -68,7 +68,7 @@ class AgreementBottomSheet extends HookConsumerWidget {
   /** 약관 목록 */
   Container _PolicyItems(List<Pair> policyList) {
     return Container(
-      margin: const EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 19),
       child: Column(
         children: policyList.asMap().entries.map((entry) {
           int index = entry.key;

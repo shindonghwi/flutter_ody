@@ -91,7 +91,6 @@ class MyPageView extends HookConsumerWidget {
               ),
             ),
           ),
-          SizedBox(height: 16),
           Expanded(
             child: PageView(
               controller: pageController,
