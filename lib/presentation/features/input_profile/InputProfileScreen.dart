@@ -5,6 +5,7 @@ import 'package:odac_flutter_app/presentation/components/appbar/IconTitleIconApp
 import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageIndexProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/widget/birthday/InputProfileBirthday.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/widget/gender/InputProfileGender.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -96,7 +97,7 @@ class MyPageView extends HookConsumerWidget {
               controller: pageController,
               children: [
                 InputProfileGender(),
-                Container(color: Colors.yellow),
+                InputProfileBirthday(),
                 Container(color: Colors.green),
                 Container(color: Colors.orange),
                 Container(color: Colors.pink),
