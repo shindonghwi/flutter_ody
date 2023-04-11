@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/presentation/components/textfield/model/BorderType.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class OutlineTextField extends HookWidget {
+class OutlineTextField extends HookConsumerWidget {
   final String hint;
   final double borderRadius;
   final int maxLine;
   final int limit;
   final bool enabled;
+  final ValueNotifier<String>? errorText;
+  final Function(String value)? onChanged;
   final List<TextInputFormatter> inputFormatters;
 
   const OutlineTextField({
@@ -20,12 +24,13 @@ class OutlineTextField extends HookWidget {
     this.limit = 10,
     this.maxLine = 10,
     this.enabled = true,
+    this.errorText = null,
+    this.onChanged = null,
     this.inputFormatters = const [],
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController _textEditingController = TextEditingController();
+  Widget build(BuildContext context, WidgetRef ref) {
     List<TextInputFormatter> formatters = [...inputFormatters];
     formatters.add(LengthLimitingTextInputFormatter(limit));
 
@@ -33,20 +38,24 @@ class OutlineTextField extends HookWidget {
     final _isFocused = useState(false);
     useEffect(() {
       focusNode.addListener(() => _isFocused.value = focusNode.hasFocus);
-      return focusNode.dispose; // You need this return if you have missing_return lint
     }, [focusNode]);
 
-    return TextField(
-      controller: _textEditingController,
+    return TextFormField(
       keyboardType: TextInputType.datetime,
       inputFormatters: formatters,
-      enabled: true,
+      initialValue: '',
+      maxLength: limit,
+      maxLines: maxLine,
       decoration: InputDecoration(
         filled: true,
-        fillColor: getColorScheme(context).colorUI01,
+        enabled: enabled,
+        fillColor: Theme.of(context).colorScheme.colorUI01,
+        errorMaxLines: maxLine,
+        errorText: errorText?.value.isEmpty == true ? null : errorText?.value,
         border: getBorder(context, BorderType.Default),
-        enabledBorder: getBorder(context, BorderType.Default),
+        enabledBorder: getBorder(context, BorderType.Error),
         focusedBorder: getBorder(context, BorderType.Focused),
+        focusedErrorBorder: getBorder(context, BorderType.Error),
         errorBorder: getBorder(context, BorderType.Error),
         disabledBorder: getBorder(context, BorderType.Disabled),
         contentPadding: EdgeInsets.symmetric(
@@ -58,13 +67,15 @@ class OutlineTextField extends HookWidget {
               color: getTextColor(context, BorderType.Disabled),
             ),
       ),
-      focusNode: focusNode,
       style: getTextTheme(context).l2.copyWith(
-          color: enabled
-              ? _isFocused.value
-                  ? getTextColor(context, BorderType.Error)
-                  : getTextColor(context, BorderType.Default)
-              : getTextColor(context, BorderType.Disabled)),
+          color: _isFocused.value
+              ? getTextColor(context, BorderType.Error)
+              : getTextColor(context, BorderType.Default)),
+      onChanged: (value) {
+        onChanged?.call(value);
+      },
+      onTap: () => _isFocused.value = true,
+      onFieldSubmitted: (value) => _isFocused.value = false,
     );
   }
 
@@ -105,11 +116,4 @@ class OutlineTextField extends HookWidget {
     }
     return textColor;
   }
-}
-
-enum BorderType {
-  Focused,
-  Error,
-  Default,
-  Disabled,
 }
