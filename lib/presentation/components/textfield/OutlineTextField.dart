@@ -80,7 +80,8 @@ class OutlineTextField extends HookConsumerWidget {
         focusedBorder: getBorder(context, BorderType.Focused),
         focusedErrorBorder: getBorder(context,
             fieldState.value == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
-        errorBorder: getBorder(context, BorderType.Error),
+        errorBorder:  getBorder(context,
+            fieldState.value == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
         disabledBorder: getBorder(context, BorderType.Disabled),
         contentPadding: EdgeInsets.symmetric(
           horizontal: 20,
