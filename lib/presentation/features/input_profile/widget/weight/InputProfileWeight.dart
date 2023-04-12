@@ -6,18 +6,20 @@ import 'package:odac_flutter_app/presentation/components/button/model/ButtonNoti
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/OutlineTextField.dart';
+import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:odac_flutter_app/presentation/utils/regex/DateFormatterNumber.dart';
+import 'package:odac_flutter_app/presentation/utils/regex/TypeChecker.dart';
 
 class InputProfileWeight extends HookConsumerWidget {
   InputProfileWeight({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final errorText = useState('');
+    final ValueNotifier<String?>? helpText = useState(null);
+    final ValueNotifier<TextFieldState> fieldState = useState(TextFieldState.Default);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     return Container(
@@ -29,21 +31,27 @@ class InputProfileWeight extends HookConsumerWidget {
           SizedBox(height: 30),
           OutlineTextField(
             hint: getAppLocalizations(context).input_profile_weight_hint,
-            inputFormatters: [
-              DateFormatterNumber(
-                minValue: 5,
-                maxValue: 120,
-              ),
-            ],
             onChanged: (String value) {
-              if (value.length != 1) {
-                errorText.value = "Asdasd";
-              } else {
-                errorText.value = '';
+              helpText?.value = '';
+              fieldState.value = TextFieldState.Default;
+              if (TypeChecker.isNumeric(value)) {
+                int num = int.parse(value);
+                if (num < 30 || num > 150) {
+                  helpText?.value =
+                      getAppLocalizations(context).input_profile_help_message_error_range(30, 200);
+                  fieldState.value = TextFieldState.Error;
+                } else {
+                  fieldState.value = TextFieldState.Success;
+                  helpText?.value = getAppLocalizations(context).input_profile_help_message_success;
+                }
+              } else if (value.length != 0) {
+                fieldState.value = TextFieldState.Error;
               }
             },
             limit: 3,
-            errorText: errorText,
+            maxLine: 1,
+            helpText: helpText,
+            fieldState: fieldState,
           ),
           _NextButton(context, pageController)
         ],
@@ -72,6 +80,7 @@ class InputProfileWeight extends HookConsumerWidget {
             text: getAppLocalizations(context).common_next,
             type: ButtonSizeType.Small,
             onPressed: () {
+              FocusManager.instance.primaryFocus?.unfocus();
               pageController.nextPage(
                 duration: Duration(milliseconds: 300),
                 curve: Curves.easeInOut,

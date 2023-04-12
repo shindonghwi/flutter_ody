@@ -32,6 +32,15 @@
     "input_profile_disease_item_health_manage": "건강관리",
     "input_profile_disease_item_blood_pressure": "고혈압",
     "input_profile_disease_item_glucose": "당뇨병",
+    "input_profile_help_message_success": "올바른 입력입니다 :)",
+    "input_profile_help_message_error_retry": "다시 입력해주세요 !",
+    "input_profile_help_message_error_range": "범위가 맞지 않아요 ! {minValue} ~ {maxValue} 사이로 입력해주세요",
+    "@input_profile_help_message_error_range":{
+        "placeholders": {
+            "minValue": {},
+            "maxValue": {}
+        }
+    },
 
     "common_skip": "건너뛰기",
     "common_next": "다음",

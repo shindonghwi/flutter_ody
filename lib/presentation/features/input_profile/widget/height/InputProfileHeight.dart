@@ -6,17 +6,20 @@ import 'package:odac_flutter_app/presentation/components/button/model/ButtonNoti
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/OutlineTextField.dart';
+import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:odac_flutter_app/presentation/utils/regex/DateFormatterKoreaBirthday.dart';
+import 'package:odac_flutter_app/presentation/utils/regex/TypeChecker.dart';
 
 class InputProfileHeight extends HookConsumerWidget {
   const InputProfileHeight({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ValueNotifier<String?>? helpText = useState(null);
+    final ValueNotifier<TextFieldState> fieldState = useState(TextFieldState.Default);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     return Container(
@@ -28,10 +31,29 @@ class InputProfileHeight extends HookConsumerWidget {
           SizedBox(height: 30),
           OutlineTextField(
             hint: getAppLocalizations(context).input_profile_height_hint,
-            inputFormatters: [
-              DateFormatterKoreaBirthday(),
-            ],
-            limit: 10,
+            onChanged: (String value) {
+              helpText?.value = '';
+              fieldState.value = TextFieldState.Default;
+              if (TypeChecker.isNumeric(value)) {
+                int num = int.parse(value);
+                if (num < 120 || num > 230) {
+                  fieldState.value = TextFieldState.Error;
+                  helpText?.value =
+                      getAppLocalizations(context).input_profile_help_message_error_range(120, 230);
+                } else {
+                  fieldState.value = TextFieldState.Success;
+                  helpText?.value = getAppLocalizations(context).input_profile_help_message_success;
+                }
+              } else if (value.length != 0) {
+                helpText?.value =
+                    getAppLocalizations(context).input_profile_help_message_error_retry;
+                fieldState.value = TextFieldState.Error;
+              }
+            },
+            limit: 3,
+            maxLine: 1,
+            helpText: helpText,
+            fieldState: fieldState,
           ),
           _NextButton(context, pageController)
         ],
@@ -44,8 +66,8 @@ class InputProfileHeight extends HookConsumerWidget {
     return Text(
       getAppLocalizations(context).input_profile_height_title,
       style: getTextTheme(context).h3.copyWith(
-        color: getColorScheme(context).colorText,
-      ),
+            color: getColorScheme(context).colorText,
+          ),
     );
   }
 
@@ -60,13 +82,14 @@ class InputProfileHeight extends HookConsumerWidget {
             text: getAppLocalizations(context).common_next,
             type: ButtonSizeType.Small,
             onPressed: () {
+              FocusManager.instance.primaryFocus?.unfocus();
               pageController.nextPage(
                 duration: Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
               );
             },
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-                  (_) => ButtonNotifier(
+              (_) => ButtonNotifier(
                 state: ButtonState.Default,
               ),
             ),

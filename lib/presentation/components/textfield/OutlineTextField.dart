@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/BorderType.dart';
+import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -13,7 +16,8 @@ class OutlineTextField extends HookConsumerWidget {
   final int maxLine;
   final int limit;
   final bool enabled;
-  final ValueNotifier<String>? errorText;
+  final ValueNotifier<TextFieldState> fieldState;
+  final ValueNotifier<String?>? helpText;
   final Function(String value)? onChanged;
   final List<TextInputFormatter> inputFormatters;
 
@@ -22,9 +26,10 @@ class OutlineTextField extends HookConsumerWidget {
     this.borderRadius = 8.0,
     this.hint = '',
     this.limit = 10,
-    this.maxLine = 10,
+    this.maxLine = 1,
     this.enabled = true,
-    this.errorText = null,
+    required this.fieldState,
+    this.helpText = null,
     this.onChanged = null,
     this.inputFormatters = const [],
   }) : super(key: key);
@@ -38,12 +43,15 @@ class OutlineTextField extends HookConsumerWidget {
     final _isFocused = useState(false);
     useEffect(() {
       focusNode.addListener(() => _isFocused.value = focusNode.hasFocus);
+      Timer(Duration(milliseconds: 300), () => focusNode.requestFocus());
+      return focusNode.dispose;
     }, [focusNode]);
 
     return TextFormField(
       keyboardType: TextInputType.datetime,
       inputFormatters: formatters,
       initialValue: '',
+      focusNode: focusNode,
       maxLength: limit,
       maxLines: maxLine,
       decoration: InputDecoration(
@@ -51,11 +59,21 @@ class OutlineTextField extends HookConsumerWidget {
         enabled: enabled,
         fillColor: Theme.of(context).colorScheme.colorUI01,
         errorMaxLines: maxLine,
-        errorText: errorText?.value.isEmpty == true ? null : errorText?.value,
+        errorText:
+            helpText?.value.toString().isEmpty == true || fieldState.value == TextFieldState.Default
+                ? null
+                : helpText?.value,
+        errorStyle: getTextTheme(context).c2.copyWith(
+              color: fieldState.value == TextFieldState.Error
+                  ? getColorScheme(context).colorError
+                  : getColorScheme(context).colorPrimaryFocus,
+            ),
+        counterText: "",
         border: getBorder(context, BorderType.Default),
-        enabledBorder: getBorder(context, BorderType.Error),
+        enabledBorder: getBorder(context, BorderType.Default),
         focusedBorder: getBorder(context, BorderType.Focused),
-        focusedErrorBorder: getBorder(context, BorderType.Error),
+        focusedErrorBorder: getBorder(context,
+            fieldState.value == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
         errorBorder: getBorder(context, BorderType.Error),
         disabledBorder: getBorder(context, BorderType.Disabled),
         contentPadding: EdgeInsets.symmetric(

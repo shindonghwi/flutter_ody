@@ -6,6 +6,7 @@ import 'package:odac_flutter_app/presentation/components/button/model/ButtonNoti
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/OutlineTextField.dart';
+import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
@@ -17,6 +18,8 @@ class InputProfileBirthday extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ValueNotifier<String?>? helpText = useState(null);
+    final ValueNotifier<TextFieldState> fieldState = useState(TextFieldState.Default);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     return Container(
@@ -31,7 +34,23 @@ class InputProfileBirthday extends HookConsumerWidget {
             inputFormatters: [
               DateFormatterKoreaBirthday(),
             ],
+            onChanged: (String value) {
+              helpText?.value = "";
+              if (value.length == 10) {
+                fieldState.value = TextFieldState.Success;
+                helpText?.value = getAppLocalizations(context).input_profile_help_message_success;
+              } else if (value.length == 0) {
+                fieldState.value = TextFieldState.Default;
+              } else {
+                fieldState.value = TextFieldState.Error;
+                helpText?.value =
+                    getAppLocalizations(context).input_profile_help_message_error_retry;
+              }
+            },
             limit: 10,
+            maxLine: 1,
+            helpText: helpText,
+            fieldState: fieldState,
           ),
           _NextButton(context, pageController)
         ],
@@ -60,6 +79,7 @@ class InputProfileBirthday extends HookConsumerWidget {
             text: getAppLocalizations(context).common_next,
             type: ButtonSizeType.Small,
             onPressed: () {
+              FocusManager.instance.primaryFocus?.unfocus();
               pageController.nextPage(
                 duration: Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
