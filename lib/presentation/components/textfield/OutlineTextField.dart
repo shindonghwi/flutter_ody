@@ -9,6 +9,8 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
+
+
 class OutlineTextField extends HookWidget {
   final TextEditingController controller;
   final String hint;
@@ -19,8 +21,8 @@ class OutlineTextField extends HookWidget {
   final bool autoFocus;
   final TextInputType textInputType;
   final TextInputAction textInputAction;
-  final ValueNotifier<TextFieldState> fieldState;
-  final ValueNotifier<String?>? helpText;
+  final TextFieldState fieldState;
+  final String? helpText;
   final VoidCallback? onNextAction;
   final VoidCallback? onDoneAction;
   final Function(String value)? onChanged;
@@ -75,11 +77,9 @@ class OutlineTextField extends HookWidget {
         fillColor: Theme.of(context).colorScheme.colorUI01,
         errorMaxLines: maxLine,
         errorText:
-            helpText?.value.toString().isEmpty == true || fieldState.value == TextFieldState.Default
-                ? null
-                : helpText?.value,
+            helpText?.isEmpty == true || fieldState == TextFieldState.Default ? null : helpText,
         errorStyle: getTextTheme(context).c2.copyWith(
-              color: fieldState.value == TextFieldState.Error
+              color: fieldState == TextFieldState.Error
                   ? getColorScheme(context).colorError
                   : getColorScheme(context).colorPrimaryFocus,
             ),
@@ -87,10 +87,10 @@ class OutlineTextField extends HookWidget {
         border: getBorder(context, BorderType.Default),
         enabledBorder: getBorder(context, BorderType.Default),
         focusedBorder: getBorder(context, BorderType.Focused),
-        focusedErrorBorder: getBorder(context,
-            fieldState.value == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
-        errorBorder: getBorder(context,
-            fieldState.value == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
+        focusedErrorBorder: getBorder(
+            context, fieldState == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
+        errorBorder: getBorder(
+            context, fieldState == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
         disabledBorder: getBorder(context, BorderType.Disabled),
         contentPadding: EdgeInsets.symmetric(
           horizontal: 20,

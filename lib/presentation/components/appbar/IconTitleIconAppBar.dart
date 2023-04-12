@@ -28,7 +28,7 @@ class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
       automaticallyImplyLeading: false,
       leading: leadingIcon != null
           ? InkWell(
-              onTap: () {},
+              onTap: () => leadingIcon?.onPressed.call(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SvgPicture.asset(

@@ -5,6 +5,7 @@ import 'package:odac_flutter_app/presentation/components/button/FillButton.dart'
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/provider/DiseaseListStateProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/widget/disease/DiseaseSelector.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
@@ -16,7 +17,6 @@ class InputProfileDisease extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSelectedMan = useState(true);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     return Container(
@@ -27,7 +27,7 @@ class InputProfileDisease extends HookConsumerWidget {
           _Title(context),
           SizedBox(height: 30),
           DiseaseSelector(),
-          _SkipButton(context, pageController)
+          _SkipButton(controller: pageController)
         ],
       ),
     );
@@ -54,9 +54,22 @@ class InputProfileDisease extends HookConsumerWidget {
       ],
     );
   }
+}
 
-  /** 넘어가기 버튼 */
-  Widget _SkipButton(BuildContext context, PageController pageController) {
+class _SkipButton extends HookConsumerWidget {
+  final PageController controller;
+
+  const _SkipButton({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final diseaseActiveStateList = ref.watch<List<bool>>(diseaseListStateProvider);
+    final diseaseListRead = ref.read(diseaseListStateProvider.notifier);
+
     return Expanded(
       child: Container(
         width: double.infinity,
@@ -78,14 +91,14 @@ class InputProfileDisease extends HookConsumerWidget {
                 text: getAppLocalizations(context).common_skip,
                 type: ButtonSizeType.Small,
                 onPressed: () {
-                  pageController.nextPage(
+                  controller.nextPage(
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
                 },
                 buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
                   (_) => ButtonNotifier(
-                    state: ButtonState.Default,
+                    state: diseaseListRead.hasTrue() ? ButtonState.Activated : ButtonState.Disabled,
                   ),
                 ),
               ),
