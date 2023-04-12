@@ -5,21 +5,18 @@ import 'package:odac_flutter_app/presentation/components/button/FillButton.dart'
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/components/textfield/OutlineTextField.dart';
-import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/widget/disease/DiseaseSelector.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:odac_flutter_app/presentation/utils/regex/TypeChecker.dart';
 
-class InputProfileWeight extends HookConsumerWidget {
-  InputProfileWeight({Key? key}) : super(key: key);
+class InputProfileDisease extends HookConsumerWidget {
+  const InputProfileDisease({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ValueNotifier<String?>? helpText = useState(null);
-    final ValueNotifier<TextFieldState> fieldState = useState(TextFieldState.Default);
+    final isSelectedMan = useState(true);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     return Container(
@@ -29,48 +26,37 @@ class InputProfileWeight extends HookConsumerWidget {
         children: [
           _Title(context),
           SizedBox(height: 30),
-          OutlineTextField(
-            hint: getAppLocalizations(context).input_profile_weight_hint,
-            onChanged: (String value) {
-              helpText?.value = '';
-              fieldState.value = TextFieldState.Default;
-              if (TypeChecker.isNumeric(value)) {
-                int num = int.parse(value);
-                if (num < 30 || num > 150) {
-                  helpText?.value =
-                      getAppLocalizations(context).input_profile_help_message_error_range(30, 200);
-                  fieldState.value = TextFieldState.Error;
-                } else {
-                  fieldState.value = TextFieldState.Success;
-                  helpText?.value = getAppLocalizations(context).input_profile_help_message_success;
-                }
-              } else if (value.length != 0) {
-                fieldState.value = TextFieldState.Error;
-              }
-            },
-            limit: 3,
-            maxLine: 1,
-            helpText: helpText,
-            fieldState: fieldState,
-          ),
-          _NextButton(context, pageController)
+          DiseaseSelector(),
+          _SkipButton(context, pageController)
         ],
       ),
     );
   }
 
-  /** 몸무게를 입력해주세요 */
+  /** 관심있거나 ~~ 질환이 있나요? */
   Widget _Title(BuildContext context) {
-    return Text(
-      getAppLocalizations(context).input_profile_weight_title,
-      style: getTextTheme(context).h3.copyWith(
-            color: getColorScheme(context).colorText,
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          getAppLocalizations(context).input_profile_disease_title,
+          style: getTextTheme(context).h3.copyWith(
+                color: getColorScheme(context).colorText,
+              ),
+        ),
+        SizedBox(height: 5),
+        Text(
+          getAppLocalizations(context).input_profile_disease_subtitle,
+          style: getTextTheme(context).c1.copyWith(
+                color: getColorScheme(context).neutral50,
+              ),
+        ),
+      ],
     );
   }
 
-  /** 다음 버튼 */
-  Widget _NextButton(BuildContext context, PageController pageController) {
+  /** 넘어가기 버튼 */
+  Widget _SkipButton(BuildContext context, PageController pageController) {
     return Expanded(
       child: Container(
         width: double.infinity,
@@ -79,27 +65,26 @@ class InputProfileWeight extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              getAppLocalizations(context).input_profile_weight_last_message,
+              getAppLocalizations(context).input_profile_disease_last_message,
               style: getTextTheme(context).c1.copyWith(
-                color: getColorScheme(context).neutral50,
-              ),
+                    color: getColorScheme(context).neutral50,
+                  ),
             ),
             SizedBox(height: 16),
             Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: FillButton(
-                text: getAppLocalizations(context).common_next,
+                text: getAppLocalizations(context).common_skip,
                 type: ButtonSizeType.Small,
                 onPressed: () {
-                  FocusManager.instance.primaryFocus?.unfocus();
                   pageController.nextPage(
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
                 },
                 buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-                      (_) => ButtonNotifier(
+                  (_) => ButtonNotifier(
                     state: ButtonState.Default,
                   ),
                 ),

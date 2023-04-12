@@ -6,6 +6,7 @@ import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageIndexProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/widget/birthday/InputProfileBirthday.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/widget/disease/InputProfileDisease.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/widget/gender/InputProfileGender.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/widget/height/InputProfileHeight.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/widget/weight/InputProfileWeight.dart';
@@ -96,12 +97,13 @@ class MyPageView extends HookConsumerWidget {
           Expanded(
             child: PageView(
               controller: pageController,
+              physics: BouncingScrollPhysics(),
               children: [
                 InputProfileGender(),
                 InputProfileBirthday(),
                 InputProfileHeight(),
                 InputProfileWeight(),
-                Container(color: Colors.pink),
+                InputProfileDisease(),
               ],
             ),
           ),

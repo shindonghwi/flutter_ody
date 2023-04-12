@@ -78,6 +78,7 @@ class InputProfileHeight extends HookConsumerWidget {
         alignment: Alignment.bottomCenter,
         child: Container(
           width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: FillButton(
             text: getAppLocalizations(context).common_next,
             type: ButtonSizeType.Small,
