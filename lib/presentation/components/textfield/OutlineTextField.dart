@@ -3,22 +3,26 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/BorderType.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class OutlineTextField extends HookConsumerWidget {
+class OutlineTextField extends HookWidget {
+  final TextEditingController controller;
   final String hint;
   final double borderRadius;
   final int maxLine;
   final int limit;
   final bool enabled;
   final bool autoFocus;
+  final TextInputType textInputType;
+  final TextInputAction textInputAction;
   final ValueNotifier<TextFieldState> fieldState;
   final ValueNotifier<String?>? helpText;
+  final VoidCallback? onNextAction;
+  final VoidCallback? onDoneAction;
   final Function(String value)? onChanged;
   final List<TextInputFormatter> inputFormatters;
 
@@ -30,33 +34,38 @@ class OutlineTextField extends HookConsumerWidget {
     this.maxLine = 1,
     this.enabled = true,
     this.autoFocus = false,
-    required this.fieldState,
+    this.textInputType = TextInputType.text,
+    this.textInputAction = TextInputAction.next,
     this.helpText = null,
     this.onChanged = null,
+    this.onNextAction = null,
+    this.onDoneAction = null,
     this.inputFormatters = const [],
-  }) : super(key: key);
+    required this.fieldState,
+    required this.controller,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     List<TextInputFormatter> formatters = [...inputFormatters];
     formatters.add(LengthLimitingTextInputFormatter(limit));
 
     final focusNode = useFocusNode();
     final _isFocused = useState(false);
     useEffect(() {
-      void onFocusChanged() {
-        _isFocused.value = focusNode.hasFocus;
-      }
-
+      void onFocusChanged() => _isFocused.value = focusNode.hasFocus;
       focusNode.addListener(onFocusChanged);
-      if (autoFocus) Timer(Duration(milliseconds: 300), () => focusNode.requestFocus());
+      if (autoFocus) {
+        Timer(Duration(milliseconds: 300), () => focusNode.requestFocus());
+      }
       return () => focusNode.removeListener(onFocusChanged);
     }, [focusNode]);
 
     return TextFormField(
-      keyboardType: TextInputType.datetime,
+      controller: controller,
+      keyboardType: textInputType,
+      textInputAction: textInputAction,
       inputFormatters: formatters,
-      initialValue: '',
       focusNode: focusNode,
       maxLength: limit,
       maxLines: maxLine,
@@ -80,7 +89,7 @@ class OutlineTextField extends HookConsumerWidget {
         focusedBorder: getBorder(context, BorderType.Focused),
         focusedErrorBorder: getBorder(context,
             fieldState.value == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
-        errorBorder:  getBorder(context,
+        errorBorder: getBorder(context,
             fieldState.value == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
         disabledBorder: getBorder(context, BorderType.Disabled),
         contentPadding: EdgeInsets.symmetric(
@@ -101,6 +110,18 @@ class OutlineTextField extends HookConsumerWidget {
       },
       onTap: () => _isFocused.value = true,
       onFieldSubmitted: (value) => _isFocused.value = false,
+      onEditingComplete: () {
+        switch (textInputAction) {
+          case TextInputAction.next:
+            onNextAction?.call();
+            break;
+          case TextInputAction.done:
+            onDoneAction?.call();
+            break;
+          default:
+            break;
+        }
+      },
     );
   }
 

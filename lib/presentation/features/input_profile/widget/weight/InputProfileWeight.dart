@@ -14,7 +14,8 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/regex/TypeChecker.dart';
 
 class InputProfileWeight extends HookConsumerWidget {
-  InputProfileWeight({Key? key}) : super(key: key);
+  final TextEditingController controller;
+  const InputProfileWeight({Key? key, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,6 +31,10 @@ class InputProfileWeight extends HookConsumerWidget {
           _Title(context),
           SizedBox(height: 30),
           OutlineTextField(
+            controller: controller,
+            textInputType: TextInputType.datetime,
+            textInputAction: TextInputAction.done,
+            autoFocus: true,
             hint: getAppLocalizations(context).input_profile_weight_hint,
             onChanged: (String value) {
               helpText?.value = '';
@@ -52,6 +57,13 @@ class InputProfileWeight extends HookConsumerWidget {
             maxLine: 1,
             helpText: helpText,
             fieldState: fieldState,
+            onDoneAction: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+              pageController.nextPage(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            },
           ),
           _NextButton(context, pageController)
         ],

@@ -14,7 +14,8 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/regex/TypeChecker.dart';
 
 class InputProfileHeight extends HookConsumerWidget {
-  const InputProfileHeight({Key? key}) : super(key: key);
+  final TextEditingController controller;
+  const InputProfileHeight({Key? key, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,6 +31,10 @@ class InputProfileHeight extends HookConsumerWidget {
           _Title(context),
           SizedBox(height: 30),
           OutlineTextField(
+            controller: controller,
+            textInputType: TextInputType.datetime,
+            textInputAction: TextInputAction.next,
+            autoFocus: true,
             hint: getAppLocalizations(context).input_profile_height_hint,
             onChanged: (String value) {
               helpText?.value = '';
@@ -54,6 +59,12 @@ class InputProfileHeight extends HookConsumerWidget {
             maxLine: 1,
             helpText: helpText,
             fieldState: fieldState,
+            onNextAction: () {
+              pageController.nextPage(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            },
           ),
           _NextButton(context, pageController)
         ],
@@ -83,7 +94,6 @@ class InputProfileHeight extends HookConsumerWidget {
             text: getAppLocalizations(context).common_next,
             type: ButtonSizeType.Small,
             onPressed: () {
-              FocusManager.instance.primaryFocus?.unfocus();
               pageController.nextPage(
                 duration: Duration(milliseconds: 300),
                 curve: Curves.easeInOut,

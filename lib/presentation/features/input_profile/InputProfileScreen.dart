@@ -69,6 +69,12 @@ class MyPageView extends HookConsumerWidget {
     var currentPageIndex = ref.watch(inputProfileCurrentPageIndexProvider);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
+    final textEditingControllerList = [
+      useTextEditingController(),
+      useTextEditingController(),
+      useTextEditingController(),
+    ];
+
     useEffect(() {
       setPageControllerAddListener(pageController, ref);
       return () => disposePageController(pageController);
@@ -97,12 +103,12 @@ class MyPageView extends HookConsumerWidget {
           Expanded(
             child: PageView(
               controller: pageController,
-              physics: BouncingScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               children: [
                 InputProfileGender(),
-                InputProfileBirthday(),
-                InputProfileHeight(),
-                InputProfileWeight(),
+                InputProfileBirthday(controller: textEditingControllerList[0]),
+                InputProfileHeight(controller: textEditingControllerList[1]),
+                InputProfileWeight(controller: textEditingControllerList[2]),
                 InputProfileDisease(),
               ],
             ),
@@ -124,3 +130,4 @@ class MyPageView extends HookConsumerWidget {
     pageController.dispose();
   }
 }
+
