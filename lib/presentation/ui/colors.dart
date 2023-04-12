@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 extension StyleColor on ColorScheme{
 
-  Color get colorUIBackground => brightness == Brightness.light ? white : black;
+  Color get colorUIBackground => brightness == Brightness.light ? white : white;
   Color get colorUI01 => brightness == Brightness.light ? neutral10 : neutral10;
   Color get colorUI02 => brightness == Brightness.light ? neutral20 : neutral20;
   Color get colorUI03 => brightness == Brightness.light ? neutral30 : neutral30;
