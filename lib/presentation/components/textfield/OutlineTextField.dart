@@ -16,6 +16,7 @@ class OutlineTextField extends HookConsumerWidget {
   final int maxLine;
   final int limit;
   final bool enabled;
+  final bool autoFocus;
   final ValueNotifier<TextFieldState> fieldState;
   final ValueNotifier<String?>? helpText;
   final Function(String value)? onChanged;
@@ -28,6 +29,7 @@ class OutlineTextField extends HookConsumerWidget {
     this.limit = 10,
     this.maxLine = 1,
     this.enabled = true,
+    this.autoFocus = false,
     required this.fieldState,
     this.helpText = null,
     this.onChanged = null,
@@ -42,9 +44,13 @@ class OutlineTextField extends HookConsumerWidget {
     final focusNode = useFocusNode();
     final _isFocused = useState(false);
     useEffect(() {
-      focusNode.addListener(() => _isFocused.value = focusNode.hasFocus);
-      Timer(Duration(milliseconds: 300), () => focusNode.requestFocus());
-      return focusNode.dispose;
+      void onFocusChanged() {
+        _isFocused.value = focusNode.hasFocus;
+      }
+
+      focusNode.addListener(onFocusChanged);
+      if (autoFocus) Timer(Duration(milliseconds: 300), () => focusNode.requestFocus());
+      return () => focusNode.removeListener(onFocusChanged);
     }, [focusNode]);
 
     return TextFormField(
