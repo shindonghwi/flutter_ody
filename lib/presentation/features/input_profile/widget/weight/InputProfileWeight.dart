@@ -144,6 +144,7 @@ class _NextButton extends HookWidget {
             text: getAppLocalizations(context).common_next,
             type: ButtonSizeType.Small,
             onPressed: () {
+              FocusManager.instance.primaryFocus?.unfocus();
               controller.nextPage(
                 duration: Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
