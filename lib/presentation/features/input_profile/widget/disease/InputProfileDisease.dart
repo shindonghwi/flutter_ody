@@ -5,7 +5,10 @@ import 'package:odac_flutter_app/presentation/components/button/model/ButtonNoti
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/DiseaseListStateProvider.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileBirthdayTextFieldProvider.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileHeightTextFieldProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileWeightTextFieldProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/widget/disease/DiseaseSelector.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
@@ -70,6 +73,13 @@ class _SkipButton extends HookConsumerWidget {
     final diseaseActiveStateList = ref.watch<List<bool>>(diseaseListStateProvider);
     final diseaseListRead = ref.read(diseaseListStateProvider.notifier);
 
+    /** 입력했던 데이터 초기화 */
+    initInputData(){
+      ref.read(InputProfileBirthdayTextFieldProvider.notifier).clear();
+      ref.read(InputProfileHeightTextFieldProvider.notifier).clear();
+      ref.read(InputProfileWeightTextFieldProvider.notifier).clear();
+    }
+
     return Expanded(
       child: Container(
         width: double.infinity,
@@ -91,6 +101,7 @@ class _SkipButton extends HookConsumerWidget {
                 text: getAppLocalizations(context).common_skip,
                 type: ButtonSizeType.Small,
                 onPressed: () {
+                  initInputData();
                   Navigator.pushReplacement(
                     context,
                     nextSlideScreen(RoutingScreen.Welcome.route),

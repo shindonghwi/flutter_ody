@@ -33,8 +33,13 @@ class SurveyPageView extends HookConsumerWidget {
     ];
 
     useEffect(() {
-      setPageControllerAddListener(pageController, ref);
-      return () => disposePageController(pageController);
+      final VoidCallback listener = () {
+        ref.read(inputProfileCurrentPageIndexProvider.notifier).state =
+            pageController.page!.round();
+      };
+
+      setPageControllerAddListener(pageController, listener);
+      return () => disposePageController(pageController, listener);
     }, [pageController]);
 
     return WillPopScope(
@@ -76,14 +81,10 @@ class SurveyPageView extends HookConsumerWidget {
   }
 
   /** 페이지 컨트롤러 리스너 셋팅 */
-  void setPageControllerAddListener(PageController pageController, WidgetRef ref) {
-    pageController.addListener(() {
-      ref.read(inputProfileCurrentPageIndexProvider.notifier).state = pageController.page!.round();
-    });
-  }
+  void setPageControllerAddListener(PageController pageController, VoidCallback listener) =>
+      pageController.addListener(listener);
 
   /** 페이지 컨트롤러 해제 */
-  void disposePageController(PageController pageController) {
-    pageController.dispose();
-  }
+  void disposePageController(PageController pageController, VoidCallback listener) =>
+      pageController.removeListener(listener);
 }
