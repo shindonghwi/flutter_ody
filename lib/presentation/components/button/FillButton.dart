@@ -64,7 +64,7 @@ class FillButton extends HookConsumerWidget {
             padding: buttonPadding,
             child: Text(
               text,
-              style: getTextTheme(context).l1.copyWith(
+              style: getTextTheme(context).l1b.copyWith(
                     color: _getTextColor(context, buttonState),
                   ),
               overflow: TextOverflow.ellipsis,

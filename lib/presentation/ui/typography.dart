@@ -18,16 +18,21 @@ const defaultTextStyle = TextStyle(
 
 extension StyleText on TextTheme {
   TextStyle get h1 => defaultTextStyle.copyWith(
+      fontSize: 34,
+      fontWeight: FontWeight.w700,
+      height: 1.17
+  );
+  TextStyle get h2 => defaultTextStyle.copyWith(
       fontSize: 32,
       fontWeight: FontWeight.w600,
       height: 1.25
   );
-  TextStyle get h2 => defaultTextStyle.copyWith(
+  TextStyle get h3 => defaultTextStyle.copyWith(
       fontSize: 28,
       fontWeight: FontWeight.w600,
       height: 1.28
   );
-  TextStyle get h3 => defaultTextStyle.copyWith(
+  TextStyle get h4 => defaultTextStyle.copyWith(
       fontSize: 24,
       fontWeight: FontWeight.w600,
       height: 1.33
@@ -37,12 +42,27 @@ extension StyleText on TextTheme {
       fontWeight: FontWeight.w500,
       height: 1.27
   );
+  TextStyle get t1b => defaultTextStyle.copyWith(
+      fontSize: 22,
+      fontWeight: FontWeight.w700,
+      height: 1.27
+  );
   TextStyle get t2 => defaultTextStyle.copyWith(
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+      height: 1.4
+  );
+  TextStyle get t3 => defaultTextStyle.copyWith(
       fontSize: 18,
       fontWeight: FontWeight.w500,
       height: 1.33
   );
-  TextStyle get t3 => defaultTextStyle.copyWith(
+  TextStyle get t3b => defaultTextStyle.copyWith(
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
+      height: 1.33
+  );
+  TextStyle get t4 => defaultTextStyle.copyWith(
       fontSize: 16,
       fontWeight: FontWeight.w500,
       height: 1.5
@@ -50,6 +70,11 @@ extension StyleText on TextTheme {
   TextStyle get l1 => defaultTextStyle.copyWith(
       fontSize: 18,
       fontWeight: FontWeight.w500,
+      height: 1.33
+  );
+  TextStyle get l1b => defaultTextStyle.copyWith(
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
       height: 1.33
   );
   TextStyle get l2 => defaultTextStyle.copyWith(
@@ -80,6 +105,11 @@ extension StyleText on TextTheme {
   TextStyle get c1 => defaultTextStyle.copyWith(
       fontSize: 14,
       fontWeight: FontWeight.w400,
+      height: 1.42
+  );
+  TextStyle get c1b => defaultTextStyle.copyWith(
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
       height: 1.42
   );
   TextStyle get c2 => defaultTextStyle.copyWith(
