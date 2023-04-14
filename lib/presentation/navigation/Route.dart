@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odac_flutter_app/presentation/features/home/HomeScreen.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/InputProfileScreen.dart';
 import 'package:odac_flutter_app/presentation/features/login/LoginScreen.dart';
 import 'package:odac_flutter_app/presentation/features/onboarding/OnBoardingScreen.dart';
@@ -15,7 +16,8 @@ enum RoutingScreen {
   OnBoarding(route: "/onBoarding"), // 온보딩
   Login(route: "/login"), // 로그인
   InputProfile(route: "/input_profile"), // 사용자 정보 입력
-  Welcome(route: "/welcome"); // 회원가입 완료화면
+  Welcome(route: "/welcome"), // 회원가입 완료화면
+  Home(route: "/home"); // 홈화면
 
   final String route;
 
@@ -30,6 +32,7 @@ enum RoutingScreen {
       RoutingScreen.Login.route: (context) => LoginScreen(),
       RoutingScreen.InputProfile.route: (context) => InputProfileScreen(),
       RoutingScreen.Welcome.route: (context) => WelcomeScreen(),
+      RoutingScreen.Home.route: (context) => HomeScreen(),
     };
   }
 
@@ -45,6 +48,8 @@ enum RoutingScreen {
         return InputProfileScreen();
       case "/welcome":
         return WelcomeScreen();
+      case "/home":
+        return HomeScreen();
       default:
         return LoginScreen();
     }

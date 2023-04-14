@@ -5,6 +5,8 @@ import 'package:odac_flutter_app/presentation/components/button/FillButton.dart'
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -47,7 +49,12 @@ class WelcomeScreen extends HookWidget {
                 borderRadius: 100,
                 text: getAppLocalizations(context).welcome_button,
                 type: ButtonSizeType.Normal,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    nextSlideScreen(RoutingScreen.Home.route),
+                  );
+                },
                 buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
                   (_) => ButtonNotifier(state: ButtonState.Activated),
                 ),
