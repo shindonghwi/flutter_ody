@@ -21,7 +21,7 @@ class AllAgreementButton extends HookConsumerWidget {
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 43),
+      margin: const EdgeInsets.only(top: 32),
       child: OutlineButton(
         text: getAppLocalizations(context).login_policy_all_agree,
         type: ButtonSizeType.Small,

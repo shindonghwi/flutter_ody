@@ -18,9 +18,9 @@ class FillButton extends HookConsumerWidget {
   const FillButton({
     Key? key,
     this.borderRadius = 8,
-    required this.text,
-    required this.type,
-    required this.onPressed,
+    required String this.text,
+    required ButtonSizeType this.type,
+    required VoidCallback this.onPressed,
     required this.buttonProvider,
   }) : super(key: key);
 

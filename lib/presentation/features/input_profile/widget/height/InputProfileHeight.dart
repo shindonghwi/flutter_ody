@@ -28,7 +28,7 @@ class InputProfileHeight extends HookConsumerWidget {
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(35, 29, 35, 40),
+      padding: const EdgeInsets.fromLTRB(35, 29, 35, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

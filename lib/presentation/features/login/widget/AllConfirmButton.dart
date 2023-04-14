@@ -30,7 +30,7 @@ class AllConfirmButton extends HookConsumerWidget {
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 13),
+      margin: const EdgeInsets.only(top: 31),
       child: FillButton(
         text: getAppLocalizations(context).common_confirm,
         type: ButtonSizeType.Small,
