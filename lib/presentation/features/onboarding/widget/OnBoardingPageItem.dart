@@ -18,50 +18,52 @@ class OnBoardingPageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: Column(
-          children: [
-            Flexible(
-              flex: 1,
-              fit: FlexFit.tight,
-              child: Text(
-                title,
-                style: getTextTheme(context).h2.copyWith(
-                  color: getColorScheme(context).colorText,
-                ),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: getTextTheme(context).h2.copyWith(
+              color: getColorScheme(context).colorText,
             ),
-            Flexible(
-              flex: 10,
-              fit: FlexFit.tight,
-              child: Container(
-                margin: EdgeInsets.only(top: 62),
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            Flexible(
-              flex: 2,
-              fit: FlexFit.tight,
-              child: Container(
-                margin: EdgeInsets.only(top: 46),
-                child: Text(
-                  subTitle,
-                  style: getTextTheme(context).b2.copyWith(
-                        color: getColorScheme(context).neutral50,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(top: 62),
+              child: Column(
+                children: [
+                  Flexible(
+                    flex: 78,
+                    fit: FlexFit.tight,
+                    child: Image.asset(
+                      imagePath,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Flexible(
+                    flex: 22,
+                    fit: FlexFit.tight,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          subTitle,
+                          style: getTextTheme(context).b2.copyWith(
+                            color: getColorScheme(context).neutral50,
+                          ),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

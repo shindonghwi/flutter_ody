@@ -89,7 +89,7 @@ class PageViewWithIndicator extends HookConsumerWidget {
   Widget _PageItems(BuildContext context, PageController pageController, List<Widget> pages) {
     return Container(
       width: getMediaQuery(context).size.width,
-      height: getMediaQuery(context).size.height * 0.7,
+      height: getMediaQuery(context).size.height * 0.65,
       child: WillPopScope(
         onWillPop: () async => onBackPressed.call(pageController),
         child: PageView(
@@ -103,8 +103,7 @@ class PageViewWithIndicator extends HookConsumerWidget {
 
   /** 위젯: 페이지 인디케이터 */
   Widget _Indicator(List<Widget> pages, int currentPageIndex) {
-    return Container(
-      margin: EdgeInsets.only(top: 45),
+    return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
@@ -129,8 +128,6 @@ class PageViewWithIndicator extends HookConsumerWidget {
             text: getAppLocalizations(context).common_skip,
             type: ButtonSizeType.Small,
             onPressed: () {
-              debugPrint("${pageController.page!.round()} / $length");
-
               if (pageController.page!.round() == length - 1) {
                 Navigator.pushReplacement(
                   context,
