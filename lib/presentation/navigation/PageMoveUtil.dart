@@ -14,3 +14,17 @@ PageRouteBuilder nextSlideScreen(String route) {
     },
   );
 }
+
+PageRouteBuilder nextFadeInOutScreen(String route) {
+  return PageRouteBuilder(
+    transitionDuration: Duration(milliseconds: 250),
+    pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(route),
+    reverseTransitionDuration: Duration(milliseconds: 250),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return FadeTransition(
+        opacity: animation,
+        child: child,
+      );
+    },
+  );
+}

@@ -131,7 +131,7 @@ class PageViewWithIndicator extends HookConsumerWidget {
               if (pageController.page!.round() == length - 1) {
                 Navigator.pushReplacement(
                   context,
-                  nextSlideScreen(RoutingScreen.Login.route),
+                  nextFadeInOutScreen(RoutingScreen.Login.route),
                 );
               } else {
                 pageController.nextPage(

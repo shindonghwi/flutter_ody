@@ -11,8 +11,9 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
 class InputProfileScreen extends HookConsumerWidget {
   const InputProfileScreen({Key? key}) : super(key: key);
 
-  bool onBackPressed(PageController pageController) {
+  bool onBackPressed(BuildContext context, PageController pageController) {
     if (pageController.page!.round() == 0) {
+      Navigator.of(context).pop();
       return true;
     } else {
       pageController.previousPage(
@@ -41,7 +42,7 @@ class InputProfileScreen extends HookConsumerWidget {
       appBar: IconTitleIconAppBar(
         leadingIcon: AppBarIcon(
           path: "assets/imgs/icon_back.svg",
-          onPressed: () => onBackPressed(pageController),
+          onPressed: () => onBackPressed(context, pageController),
           tint: getColorScheme(context).colorText,
         ),
         title: currentPageTitle,
@@ -49,7 +50,7 @@ class InputProfileScreen extends HookConsumerWidget {
       body: SafeArea(
         child: SurveyPageView(
           totalPageCount: titleList.length,
-          onBackPressed: () => onBackPressed(pageController),
+          onBackPressed: () => onBackPressed(context, pageController),
         ),
       ),
     );
