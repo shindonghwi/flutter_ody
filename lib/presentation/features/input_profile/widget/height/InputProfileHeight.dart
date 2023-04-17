@@ -28,7 +28,6 @@ class InputProfileHeight extends HookConsumerWidget {
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     onCheckButtonAction() {
-      debugPrint("asdasdasdsda: ${fieldStateRead.checkHeight()}");
       if (fieldStateRead.checkHeight()) {
         pageController.nextPage(
           duration: Duration(milliseconds: 300),
