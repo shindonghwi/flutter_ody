@@ -4,7 +4,7 @@ import 'package:odac_flutter_app/presentation/components/button/FillButton.dart'
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/provider/DiseaseListStateProvider.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileDiseaseListStateProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileBirthdayTextFieldProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileHeightTextFieldProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
@@ -75,6 +75,7 @@ class _SkipButton extends HookConsumerWidget {
 
     /** 입력했던 데이터 초기화 */
     initInputData(){
+      diseaseListRead.clear();
       ref.read(InputProfileBirthdayTextFieldProvider.notifier).clear();
       ref.read(InputProfileHeightTextFieldProvider.notifier).clear();
       ref.read(InputProfileWeightTextFieldProvider.notifier).clear();

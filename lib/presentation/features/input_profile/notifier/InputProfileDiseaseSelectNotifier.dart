@@ -8,5 +8,10 @@ class DiseaseSelectNotifier extends StateNotifier<List<bool>> {
     state = [...state];
   }
 
+  clear() => Future<void>.delayed(
+        Duration.zero,
+        () => state = [true, false, false],
+      );
+
   bool hasTrue() => state.any((element) => element);
 }

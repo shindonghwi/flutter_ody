@@ -27,6 +27,21 @@ class InputProfileWeight extends HookConsumerWidget {
     final fieldStateRead = ref.read(InputProfileWeightTextFieldProvider.notifier);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
+    onCheckButtonAction() {
+      if (fieldStateRead.checkWeight()) {
+        FocusManager.instance.primaryFocus?.unfocus();
+        pageController.nextPage(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        final currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      }
+    }
+
     return Container(
       padding: const EdgeInsets.fromLTRB(35, 29, 35, 30),
       child: Column(
@@ -40,10 +55,12 @@ class InputProfileWeight extends HookConsumerWidget {
             fieldStateRead: fieldStateRead,
             fieldState: fieldState.fieldState,
             pageController: pageController,
+            onCheckButtonAction: onCheckButtonAction,
           ),
           _NextButton(
             controller: pageController,
             fieldState: fieldState.fieldState,
+            onCheckButtonAction: onCheckButtonAction,
           )
         ],
       ),
@@ -69,6 +86,7 @@ class _InputTextField extends HookWidget {
     required this.fieldStateRead,
     required this.fieldState,
     required this.pageController,
+    required this.onCheckButtonAction,
   });
 
   final TextEditingController controller;
@@ -76,10 +94,10 @@ class _InputTextField extends HookWidget {
   final InputProfileWeightTextFieldNotifier fieldStateRead;
   final TextFieldState fieldState;
   final PageController pageController;
+  final VoidCallback onCheckButtonAction;
 
   @override
   Widget build(BuildContext context) {
-
     final minWeight = 30;
     final maxWeight = 200;
 
@@ -90,14 +108,15 @@ class _InputTextField extends HookWidget {
       autoFocus: true,
       hint: getAppLocalizations(context).input_profile_weight_hint,
       onChanged: (String value) {
+        fieldStateRead.updateWeight(value);
         fieldStateRead.change(fieldState: TextFieldState.Default, helpMessage: "");
         if (TypeChecker.isNumeric(value)) {
           int num = int.parse(value);
           if (num < minWeight || num > maxWeight) {
             fieldStateRead.change(
                 fieldState: TextFieldState.Error,
-                helpMessage:
-                    getAppLocalizations(context).input_profile_help_message_error_range(minWeight, maxWeight));
+                helpMessage: getAppLocalizations(context)
+                    .input_profile_help_message_error_range(minWeight, maxWeight));
           } else {
             fieldStateRead.change(
                 fieldState: TextFieldState.Success,
@@ -111,13 +130,7 @@ class _InputTextField extends HookWidget {
       maxLine: 1,
       helpText: helpText,
       fieldState: fieldState,
-      onDoneAction: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-        pageController.nextPage(
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
-      },
+      onDoneAction: () => onCheckButtonAction.call(),
     );
   }
 }
@@ -125,11 +138,13 @@ class _InputTextField extends HookWidget {
 class _NextButton extends HookWidget {
   final PageController controller;
   final TextFieldState fieldState;
+  final VoidCallback onCheckButtonAction;
 
   const _NextButton({
     super.key,
     required this.controller,
     required this.fieldState,
+    required this.onCheckButtonAction,
   });
 
   @override
@@ -143,13 +158,7 @@ class _NextButton extends HookWidget {
           child: FillButton(
             text: getAppLocalizations(context).common_next,
             type: ButtonSizeType.Small,
-            onPressed: () {
-              FocusManager.instance.primaryFocus?.unfocus();
-              controller.nextPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            },
+            onPressed: () => onCheckButtonAction.call(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
                 state: fieldState == TextFieldState.Success

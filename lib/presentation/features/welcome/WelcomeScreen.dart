@@ -18,49 +18,55 @@ class WelcomeScreen extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI01,
-      body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.fromLTRB(45, 0, 45, 25),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              getAppLocalizations(context).welcome_title("운동하는 다람쥐"),
-              style: getTextTheme(context).h4.copyWith(
-                    color: getColorScheme(context).colorText,
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.fromLTRB(45, 0, 45, 25),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 90),
+              Text(
+                getAppLocalizations(context).welcome_title("운동하는 다람쥐"),
+                style: getTextTheme(context).h3.copyWith(
+                      color: getColorScheme(context).colorText,
+                    ),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(height: 25),
+              Text(
+                getAppLocalizations(context).welcome_subtitle,
+                style: getTextTheme(context).t3.copyWith(
+                      color: getColorScheme(context).neutral60,
+                    ),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(height: 87),
+              Image.asset(
+                "assets/imgs/welcome_image.png",
+              ),
+              Expanded(child: SizedBox()),
+              Container(
+                width: double.infinity,
+                child: FillButton(
+                  borderRadius: 100,
+                  text: getAppLocalizations(context).welcome_button,
+                  type: ButtonSizeType.Normal,
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      nextSlideScreen(RoutingScreen.Home.route),
+                    );
+                  },
+                  buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
+                    (_) => ButtonNotifier(state: ButtonState.Activated),
                   ),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(height: 21),
-            Text(
-              getAppLocalizations(context).welcome_subtitle,
-              style: getTextTheme(context).t3.copyWith(
-                color: getColorScheme(context).neutral60,
-              ),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(height: 76),
-            Container(
-              width: double.infinity,
-              child: FillButton(
-                borderRadius: 100,
-                text: getAppLocalizations(context).welcome_button,
-                type: ButtonSizeType.Normal,
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    nextSlideScreen(RoutingScreen.Home.route),
-                  );
-                },
-                buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-                  (_) => ButtonNotifier(state: ButtonState.Activated),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

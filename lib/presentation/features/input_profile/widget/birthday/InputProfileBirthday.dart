@@ -27,6 +27,20 @@ class InputProfileBirthday extends HookConsumerWidget {
     final fieldStateRead = ref.read(InputProfileBirthdayTextFieldProvider.notifier);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
+    onCheckButtonAction() {
+      if (fieldStateRead.checkBirthday()) {
+        pageController.nextPage(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        final currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      }
+    }
+
     return Container(
       padding: const EdgeInsets.fromLTRB(35, 29, 35, 30),
       child: Column(
@@ -40,10 +54,12 @@ class InputProfileBirthday extends HookConsumerWidget {
             fieldStateRead: fieldStateRead,
             fieldState: fieldState.fieldState,
             pageController: pageController,
+            onCheckButtonAction: onCheckButtonAction,
           ),
           _NextButton(
             controller: pageController,
             fieldState: fieldState.fieldState,
+            onCheckButtonAction: onCheckButtonAction,
           )
         ],
       ),
@@ -69,6 +85,7 @@ class _InputTextField extends StatelessWidget {
     required this.fieldStateRead,
     required this.fieldState,
     required this.pageController,
+    required this.onCheckButtonAction,
   });
 
   final TextEditingController controller;
@@ -76,6 +93,7 @@ class _InputTextField extends StatelessWidget {
   final InputProfileBirthdayTextFieldNotifier fieldStateRead;
   final TextFieldState fieldState;
   final PageController pageController;
+  final VoidCallback onCheckButtonAction;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +107,7 @@ class _InputTextField extends StatelessWidget {
         DateFormatterKoreaBirthday(),
       ],
       onChanged: (String value) {
+        fieldStateRead.updateBirthday(value);
         fieldStateRead.change(helpMessage: "");
         if (value.length == 10) {
           fieldStateRead.change(
@@ -108,12 +127,7 @@ class _InputTextField extends StatelessWidget {
       maxLine: 1,
       helpText: helpText,
       fieldState: fieldState,
-      onNextAction: () {
-        pageController.nextPage(
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
-      },
+      onNextAction: () => onCheckButtonAction.call(),
     );
   }
 }
@@ -121,11 +135,13 @@ class _InputTextField extends StatelessWidget {
 class _NextButton extends HookWidget {
   final PageController controller;
   final TextFieldState fieldState;
+  final VoidCallback onCheckButtonAction;
 
   const _NextButton({
     super.key,
     required this.controller,
     required this.fieldState,
+    required this.onCheckButtonAction,
   });
 
   @override
@@ -139,12 +155,7 @@ class _NextButton extends HookWidget {
           child: FillButton(
             text: getAppLocalizations(context).common_next,
             type: ButtonSizeType.Small,
-            onPressed: () {
-              controller.nextPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            },
+            onPressed: () => onCheckButtonAction.call(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
                 state: fieldState == TextFieldState.Success

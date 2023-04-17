@@ -4,7 +4,7 @@ import 'package:odac_flutter_app/presentation/components/button/OutlineButton.da
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/provider/DiseaseListStateProvider.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileDiseaseListStateProvider.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class DiseaseSelector extends HookConsumerWidget {

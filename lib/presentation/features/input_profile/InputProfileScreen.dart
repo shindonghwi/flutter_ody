@@ -46,9 +46,11 @@ class InputProfileScreen extends HookConsumerWidget {
         ),
         title: currentPageTitle,
       ),
-      body: SurveyPageView(
-        totalPageCount: titleList.length,
-        onBackPressed: () => onBackPressed(pageController),
+      body: SafeArea(
+        child: SurveyPageView(
+          totalPageCount: titleList.length,
+          onBackPressed: () => onBackPressed(pageController),
+        ),
       ),
     );
   }

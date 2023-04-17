@@ -5,15 +5,24 @@ import 'package:odac_flutter_app/presentation/components/textfield/model/TextFie
 abstract class InputProfileTextFieldNotifier extends StateNotifier<TextFieldModel> {
   InputProfileTextFieldNotifier() : super(TextFieldModel(TextFieldState.Default, ''));
 
-  void change({TextFieldState? fieldState = null, String? helpMessage = null}) {
+  String content = "";
+  RegExp regex = RegExp(r'^(12[0-9]|1[3-9][0-9]|2[0-2][0-9]|230)$');
+
+  void change({
+    TextFieldState? fieldState = null,
+    String? helpMessage = null,
+  }) {
     state = TextFieldModel(
       fieldState == null ? state.fieldState : fieldState,
       helpMessage == null ? state.helpMessage : helpMessage,
     );
   }
 
-  clear() => Future<void>.delayed(
-          Duration.zero,
-          () => state = TextFieldModel(TextFieldState.Default, ''),
-        );
+  clear() {
+    content = "";
+    Future<void>.delayed(
+      Duration.zero,
+      () => state = TextFieldModel(TextFieldState.Default, ''),
+    );
+  }
 }
