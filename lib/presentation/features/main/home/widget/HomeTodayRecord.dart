@@ -56,19 +56,20 @@ class HomeTodayRecord extends StatelessWidget {
                 );
               },
               itemBuilder: (context, index) {
-                return Container(
-                  width: 180,
-                  padding: EdgeInsets.fromLTRB(18, 24, 12, 9),
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: getColorScheme(context).neutral40,
-                      width: 2,
+                return InkWell(
+                  onTap: recordList[index].third,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    width: 180,
+                    padding: EdgeInsets.fromLTRB(18, 24, 12, 9),
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: getColorScheme(context).neutral40,
+                        width: 2,
+                      ),
                     ),
-                  ),
-                  child: InkWell(
-                    onTap: recordList[index].third,
                     child: Stack(
                       children: [
                         Align(

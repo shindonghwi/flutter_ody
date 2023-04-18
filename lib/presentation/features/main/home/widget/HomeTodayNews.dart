@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class HomeTodayNews extends StatelessWidget {
+class HomeTodayNews extends HookWidget {
   const HomeTodayNews({
     super.key,
   });
@@ -57,36 +58,39 @@ class HomeTodayNews extends StatelessWidget {
             }).toList(),
           ),
 
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: (){},
-              child: Container(
-                width: double.infinity,
-                height: 140,
-                margin: EdgeInsets.only(top: 15, left: 20, right: 20),
-                padding: EdgeInsets.fromLTRB(17, 22, 12, 9),
-                decoration: BoxDecoration(
-                  color: getColorScheme(context).primary100,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Stack(
-                  children: [
-                    Text(
-                      "\"고혈압\"을 유발 할 수 있는\n피해야 할 음식 9가지",
-                      style: getTextTheme(context).l1.copyWith(
-                            color: getColorScheme(context).white,
-                          ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Image.asset(
-                        'assets/imgs/home_news_image.png',
-                        width: 130,
-                        height: 81,
+          Container(
+            width: double.infinity,
+            height: 140,
+            margin: EdgeInsets.only(top: 15, left: 20, right: 20),
+            decoration: BoxDecoration(
+              color: getColorScheme(context).primary100,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: (){},
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(17, 22, 12, 9),
+                  child: Stack(
+                    children: [
+                      Text(
+                        "\"고혈압\"을 유발 할 수 있는\n피해야 할 음식 9가지",
+                        style: getTextTheme(context).l1.copyWith(
+                              color: getColorScheme(context).white,
+                            ),
                       ),
-                    )
-                  ],
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Image.asset(
+                          'assets/imgs/home_news_image.png',
+                          width: 130,
+                          height: 81,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
