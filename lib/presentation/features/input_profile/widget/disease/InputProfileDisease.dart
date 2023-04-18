@@ -44,14 +44,14 @@ class InputProfileDisease extends HookConsumerWidget {
       children: [
         Text(
           getAppLocalizations(context).input_profile_disease_title,
-          style: getTextTheme(context).h3.copyWith(
+          style: getTextTheme(context).h3sb.copyWith(
                 color: getColorScheme(context).colorText,
               ),
         ),
         SizedBox(height: 5),
         Text(
           getAppLocalizations(context).input_profile_disease_subtitle,
-          style: getTextTheme(context).c1.copyWith(
+          style: getTextTheme(context).c1r.copyWith(
                 color: getColorScheme(context).neutral50,
               ),
         ),
@@ -90,7 +90,7 @@ class _SkipButton extends HookConsumerWidget {
           children: [
             Text(
               getAppLocalizations(context).input_profile_disease_last_message,
-              style: getTextTheme(context).c1.copyWith(
+              style: getTextTheme(context).c1r.copyWith(
                     color: getColorScheme(context).neutral50,
                   ),
             ),

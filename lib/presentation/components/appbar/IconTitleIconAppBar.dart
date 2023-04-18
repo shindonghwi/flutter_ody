@@ -47,7 +47,7 @@ class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
           : SizedBox(),
       title: Text(
         title,
-        style: getTextTheme(context).l1.copyWith(
+        style: getTextTheme(context).l1m.copyWith(
               color: getColorScheme(context).colorText,
             ),
       ),

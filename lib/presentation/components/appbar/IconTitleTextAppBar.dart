@@ -50,7 +50,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
           : SizedBox(),
       title: Text(
         title,
-        style: getTextTheme(context).l1.copyWith(
+        style: getTextTheme(context).l1m.copyWith(
               color: getColorScheme(context).neutral10,
             ),
       ),
@@ -64,7 +64,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 18),
               child: Text(
                 actionText,
-                style: getTextTheme(context).l3.copyWith(
+                style: getTextTheme(context).l3m.copyWith(
                       color: getColorScheme(context).neutral60,
                     ),
               ),

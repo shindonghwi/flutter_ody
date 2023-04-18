@@ -53,6 +53,10 @@
     "welcome_subtitle": "“오디” 와 함께 건강관리를 시작해볼까요?",
     "welcome_button": "홈으로 가기",
 
+    "main_tab_home": "홈",
+    "main_tab_news": "소식",
+    "main_tab_my": "내정보",
+
     "home_today_record_title": "오늘의 기록",
     "home_today_record_walk": "걸음수",
     "home_today_record_glucose": "혈당",

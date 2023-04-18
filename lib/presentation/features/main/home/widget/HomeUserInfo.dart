@@ -32,7 +32,7 @@ class HomeUserInfo extends StatelessWidget {
                 SizedBox(height: 5),
                 Text(
                   "오늘도 오디와 함께 건강 기록을 해볼까요?",
-                  style: getTextTheme(context).b3.copyWith(
+                  style: getTextTheme(context).b3r.copyWith(
                         color: getColorScheme(context).white,
                       ),
                   overflow: TextOverflow.ellipsis,

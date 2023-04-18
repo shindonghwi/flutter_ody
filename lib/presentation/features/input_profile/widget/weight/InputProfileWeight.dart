@@ -71,7 +71,7 @@ class InputProfileWeight extends HookConsumerWidget {
   Widget _Title(BuildContext context) {
     return Text(
       getAppLocalizations(context).input_profile_weight_title,
-      style: getTextTheme(context).h3.copyWith(
+      style: getTextTheme(context).h3sb.copyWith(
             color: getColorScheme(context).colorText,
           ),
     );

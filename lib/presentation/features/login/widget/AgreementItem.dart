@@ -54,7 +54,7 @@ class AgreementItem extends HookConsumerWidget {
                         children: [
                           Text(
                             "[${isRequired ? "${getAppLocalizations(context).common_required}" : "${getAppLocalizations(context).common_select}"}]",
-                            style: getTextTheme(context).b2.copyWith(
+                            style: getTextTheme(context).b2r.copyWith(
                                   color: isRequired
                                       ? getColorScheme(context).colorPrimaryFocus
                                       : getColorScheme(context).neutral80,
@@ -65,7 +65,7 @@ class AgreementItem extends HookConsumerWidget {
                           ),
                           Text(
                             text,
-                            style: getTextTheme(context).b2.copyWith(
+                            style: getTextTheme(context).b2r.copyWith(
                                   color: getColorScheme(context).neutral80,
                                 ),
                           )

@@ -13,9 +13,9 @@ class MainScreen extends HookWidget {
     final _currentIndex = useState(0); // Current index of the active tab
 
     List<Pair> _iconList = [
-      Pair('assets/imgs/icon_home.svg', "홈"),
-      Pair('assets/imgs/icon_news.svg', "소식"),
-      Pair('assets/imgs/icon_my.svg', "내정보"),
+      Pair('assets/imgs/icon_home.svg', getAppLocalizations(context).main_tab_home),
+      Pair('assets/imgs/icon_news.svg', getAppLocalizations(context).main_tab_news),
+      Pair('assets/imgs/icon_my.svg', getAppLocalizations(context).main_tab_my),
     ];
 
     return Scaffold(
@@ -69,7 +69,7 @@ class MainScreen extends HookWidget {
               label: data.second,
             );
           }).toList(),
-          selectedLabelStyle: getTextTheme(context).c3,
+          selectedLabelStyle: getTextTheme(context).c3r,
         ),
       ),
     );

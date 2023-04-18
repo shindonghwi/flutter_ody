@@ -49,7 +49,7 @@ class HomeTodayNews extends HookWidget {
                 ),
                 child: Text(
                   "#${data}",
-                  style: getTextTheme(context).l3.copyWith(
+                  style: getTextTheme(context).l3m.copyWith(
                         color: getColorScheme(context).primary100,
                       ),
                   overflow: TextOverflow.ellipsis,
@@ -77,7 +77,7 @@ class HomeTodayNews extends HookWidget {
                     children: [
                       Text(
                         "\"고혈압\"을 유발 할 수 있는\n피해야 할 음식 9가지",
-                        style: getTextTheme(context).l1.copyWith(
+                        style: getTextTheme(context).l1m.copyWith(
                               color: getColorScheme(context).white,
                             ),
                       ),

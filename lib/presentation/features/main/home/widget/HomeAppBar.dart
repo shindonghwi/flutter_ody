@@ -34,11 +34,9 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
         InkWell(
           onTap: () {},
           child: Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal:16),
             child: SvgPicture.asset(
               "assets/imgs/icon_alram_off.svg",
-              width: 24,
-              height: 24,
               colorFilter: ColorFilter.mode(
                 getColorScheme(context).colorUI01,
                 BlendMode.srcIn,

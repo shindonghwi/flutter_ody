@@ -99,7 +99,7 @@ class LoginScreen extends HookWidget {
           margin: EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             getAppLocalizations(context).login_sns,
-            style: getTextTheme(context).b3.copyWith(
+            style: getTextTheme(context).b3r.copyWith(
                   color: getColorScheme(context).neutral50,
                 ),
           ),
@@ -128,7 +128,7 @@ class LoginScreen extends HookWidget {
               margin: EdgeInsets.only(top: 20),
               child: Text(
                 getAppLocalizations(context).login_title,
-                style: getTextTheme(context).h2.copyWith(
+                style: getTextTheme(context).h2sb.copyWith(
                       color: getColorScheme(context).colorText,
                     ),
               ),

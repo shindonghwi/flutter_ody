@@ -78,7 +78,7 @@ class OutlineTextField extends HookWidget {
         errorMaxLines: maxLine,
         errorText:
             helpText?.isEmpty == true || fieldState == TextFieldState.Default ? null : helpText,
-        errorStyle: getTextTheme(context).c2.copyWith(
+        errorStyle: getTextTheme(context).c2r.copyWith(
               color: fieldState == TextFieldState.Error
                   ? getColorScheme(context).colorError
                   : getColorScheme(context).colorPrimaryFocus,
@@ -97,11 +97,11 @@ class OutlineTextField extends HookWidget {
           vertical: 13,
         ),
         hintText: hint,
-        hintStyle: getTextTheme(context).l2.copyWith(
+        hintStyle: getTextTheme(context).l2m.copyWith(
               color: getTextColor(context, BorderType.Disabled),
             ),
       ),
-      style: getTextTheme(context).l2.copyWith(
+      style: getTextTheme(context).l2m.copyWith(
           color: _isFocused.value
               ? getTextColor(context, BorderType.Error)
               : getTextColor(context, BorderType.Default)),
@@ -136,7 +136,7 @@ class OutlineTextField extends HookWidget {
         borderColor = getColorScheme(context).colorError;
         break;
       case BorderType.Default:
-        borderColor = getColorScheme(context).neutral30;
+        borderColor = getColorScheme(context).neutral50;
         break;
       case BorderType.Disabled:
         borderColor = getColorScheme(context).colorPrimaryDisable;
@@ -156,7 +156,7 @@ class OutlineTextField extends HookWidget {
     } else if (type == BorderType.Error) {
       textColor = getColorScheme(context).colorText;
     } else if (type == BorderType.Default) {
-      textColor = getColorScheme(context).neutral30;
+      textColor = getColorScheme(context).neutral50;
     } else if (type == BorderType.Disabled) {
       textColor = getColorScheme(context).colorPrimaryDisable;
     }

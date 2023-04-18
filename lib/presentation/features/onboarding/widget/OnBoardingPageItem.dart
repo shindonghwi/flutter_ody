@@ -22,7 +22,7 @@ class OnBoardingPageItem extends StatelessWidget {
         children: [
           Text(
             title,
-            style: getTextTheme(context).h2.copyWith(
+            style: getTextTheme(context).h2sb.copyWith(
               color: getColorScheme(context).colorText,
             ),
             textAlign: TextAlign.center,
@@ -50,7 +50,7 @@ class OnBoardingPageItem extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Text(
                           subTitle,
-                          style: getTextTheme(context).b2.copyWith(
+                          style: getTextTheme(context).b2r.copyWith(
                             color: getColorScheme(context).neutral50,
                           ),
                           textAlign: TextAlign.center,

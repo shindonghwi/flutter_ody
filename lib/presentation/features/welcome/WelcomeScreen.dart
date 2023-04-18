@@ -28,7 +28,7 @@ class WelcomeScreen extends HookWidget {
               SizedBox(height: 90),
               Text(
                 getAppLocalizations(context).welcome_title("운동하는 다람쥐"),
-                style: getTextTheme(context).h3.copyWith(
+                style: getTextTheme(context).h3sb.copyWith(
                       color: getColorScheme(context).colorText,
                     ),
                 textAlign: TextAlign.center,
@@ -37,7 +37,7 @@ class WelcomeScreen extends HookWidget {
               SizedBox(height: 25),
               Text(
                 getAppLocalizations(context).welcome_subtitle,
-                style: getTextTheme(context).t3.copyWith(
+                style: getTextTheme(context).t3m.copyWith(
                       color: getColorScheme(context).neutral60,
                     ),
                 textAlign: TextAlign.center,
