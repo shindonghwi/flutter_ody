@@ -5,7 +5,7 @@ import 'package:odac_flutter_app/presentation/components/button/FillButton.dart'
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/components/textfield/OutlineTextField.dart';
+import 'package:odac_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileWeightTextFieldNotifier.dart';
@@ -101,7 +101,7 @@ class _InputTextField extends HookWidget {
     final minWeight = 30;
     final maxWeight = 200;
 
-    return OutlineTextField(
+    return OutlineDefaultTextField(
       controller: controller,
       textInputType: TextInputType.datetime,
       textInputAction: TextInputAction.done,
@@ -119,7 +119,7 @@ class _InputTextField extends HookWidget {
                     .input_profile_help_message_error_range(minWeight, maxWeight));
           } else {
             fieldStateRead.change(
-                fieldState: TextFieldState.Success,
+                fieldState: TextFieldState.Focus,
                 helpMessage: getAppLocalizations(context).input_profile_help_message_success);
           }
         } else if (value.length != 0) {
@@ -161,7 +161,7 @@ class _NextButton extends HookWidget {
             onPressed: () => onCheckButtonAction.call(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
-                state: fieldState == TextFieldState.Success
+                state: fieldState == TextFieldState.Focus
                     ? ButtonState.Activated
                     : ButtonState.Disabled,
               ),

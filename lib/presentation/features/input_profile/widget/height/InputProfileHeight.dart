@@ -5,7 +5,7 @@ import 'package:odac_flutter_app/presentation/components/button/FillButton.dart'
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/components/textfield/OutlineTextField.dart';
+import 'package:odac_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileHeightTextFieldNotifier.dart';
@@ -100,7 +100,7 @@ class _InputTextField extends HookWidget {
     final minHeight = 120;
     final maxHeight = 230;
 
-    return OutlineTextField(
+    return OutlineDefaultTextField(
       controller: controller,
       textInputType: TextInputType.datetime,
       textInputAction: TextInputAction.next,
@@ -119,7 +119,7 @@ class _InputTextField extends HookWidget {
             );
           } else {
             fieldStateRead.change(
-              fieldState: TextFieldState.Success,
+              fieldState: TextFieldState.Focus,
               helpMessage: getAppLocalizations(context).input_profile_help_message_success,
             );
           }
@@ -165,7 +165,7 @@ class _NextButton extends HookWidget {
             onPressed: () => onCheckButtonAction.call(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
-                state: fieldState == TextFieldState.Success
+                state: fieldState == TextFieldState.Focus
                     ? ButtonState.Activated
                     : ButtonState.Disabled,
               ),

@@ -9,9 +9,7 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-
-
-class OutlineTextField extends HookWidget {
+class OutlineDefaultTextField extends HookWidget {
   final TextEditingController controller;
   final String hint;
   final double borderRadius;
@@ -23,12 +21,13 @@ class OutlineTextField extends HookWidget {
   final TextInputAction textInputAction;
   final TextFieldState fieldState;
   final String? helpText;
+  final bool showCounterText;
   final VoidCallback? onNextAction;
   final VoidCallback? onDoneAction;
   final Function(String value)? onChanged;
   final List<TextInputFormatter> inputFormatters;
 
-  const OutlineTextField({
+  const OutlineDefaultTextField({
     Key? key,
     this.borderRadius = 8.0,
     this.hint = '',
@@ -38,6 +37,7 @@ class OutlineTextField extends HookWidget {
     this.autoFocus = false,
     this.textInputType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
+    this.showCounterText = false,
     this.helpText = null,
     this.onChanged = null,
     this.onNextAction = null,
@@ -74,7 +74,7 @@ class OutlineTextField extends HookWidget {
       decoration: InputDecoration(
         filled: true,
         enabled: enabled,
-        fillColor: Theme.of(context).colorScheme.colorUI01,
+        fillColor: enabled ? getColorScheme(context).colorUI01 : getColorScheme(context).neutral30,
         errorMaxLines: maxLine,
         errorText:
             helpText?.isEmpty == true || fieldState == TextFieldState.Default ? null : helpText,
@@ -83,28 +83,35 @@ class OutlineTextField extends HookWidget {
                   ? getColorScheme(context).colorError
                   : getColorScheme(context).colorPrimaryFocus,
             ),
-        counterText: "",
-        border: getBorder(context, BorderType.Default),
-        enabledBorder: getBorder(context, BorderType.Default),
-        focusedBorder: getBorder(context, BorderType.Focused),
+        counterText: showCounterText ? null : "",
+        counterStyle: getTextTheme(context).c1r.copyWith(
+              color: fieldState == TextFieldState.Default
+                  ? getColorScheme(context).neutral50
+                  : fieldState == TextFieldState.Error
+                      ? getColorScheme(context).colorError
+                      : getColorScheme(context).colorPrimaryFocus,
+            ),
+        border: getBorder(context, TextFieldState.Default),
+        enabledBorder: getBorder(context, TextFieldState.Default),
+        focusedBorder: getBorder(context, TextFieldState.Focus),
         focusedErrorBorder: getBorder(
-            context, fieldState == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
+            context, fieldState == TextFieldState.Error ? TextFieldState.Error : TextFieldState.Focus),
         errorBorder: getBorder(
-            context, fieldState == TextFieldState.Error ? BorderType.Error : BorderType.Focused),
-        disabledBorder: getBorder(context, BorderType.Disabled),
+            context, fieldState == TextFieldState.Error ? TextFieldState.Error : TextFieldState.Focus),
+        disabledBorder: getBorder(context, TextFieldState.Disabled),
         contentPadding: EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 13,
         ),
         hintText: hint,
         hintStyle: getTextTheme(context).l2m.copyWith(
-              color: getTextColor(context, BorderType.Disabled),
+              color: getTextColor(context, TextFieldState.Disabled),
             ),
       ),
       style: getTextTheme(context).l2m.copyWith(
           color: _isFocused.value
-              ? getTextColor(context, BorderType.Error)
-              : getTextColor(context, BorderType.Default)),
+              ? getTextColor(context, TextFieldState.Error)
+              : getTextColor(context, TextFieldState.Default)),
       onChanged: (value) {
         onChanged?.call(value);
       },
@@ -125,21 +132,24 @@ class OutlineTextField extends HookWidget {
     );
   }
 
-  OutlineInputBorder getBorder(BuildContext context, BorderType type) {
+  OutlineInputBorder getBorder(BuildContext context, TextFieldState type) {
     final Color borderColor;
 
     switch (type) {
-      case BorderType.Focused:
+      case TextFieldState.Disabled:
+        borderColor = getColorScheme(context).colorPrimaryDisable;
+        break;
+      case TextFieldState.Focus:
         borderColor = getColorScheme(context).colorPrimaryFocus;
         break;
-      case BorderType.Error:
+      case TextFieldState.Error:
         borderColor = getColorScheme(context).colorError;
         break;
-      case BorderType.Default:
+      case TextFieldState.Default:
         borderColor = getColorScheme(context).neutral50;
         break;
-      case BorderType.Disabled:
-        borderColor = getColorScheme(context).colorPrimaryDisable;
+      case TextFieldState.Complete:
+        borderColor = getColorScheme(context).colorPrimaryFocus;
         break;
     }
 
@@ -149,16 +159,18 @@ class OutlineTextField extends HookWidget {
     );
   }
 
-  Color getTextColor(BuildContext context, BorderType type) {
+  Color getTextColor(BuildContext context, TextFieldState type) {
     Color textColor = getColorScheme(context).colorText;
-    if (type == BorderType.Focused) {
+    if (type == TextFieldState.Focus) {
       textColor = getColorScheme(context).colorText;
-    } else if (type == BorderType.Error) {
+    } else if (type == TextFieldState.Error) {
       textColor = getColorScheme(context).colorText;
-    } else if (type == BorderType.Default) {
+    }else if (type == TextFieldState.Default) {
       textColor = getColorScheme(context).neutral50;
-    } else if (type == BorderType.Disabled) {
+    } else if (type == TextFieldState.Disabled) {
       textColor = getColorScheme(context).colorPrimaryDisable;
+    }else if (type == TextFieldState.Complete) {
+      textColor = getColorScheme(context).neutral50;
     }
     return textColor;
   }

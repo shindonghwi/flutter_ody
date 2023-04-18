@@ -1,5 +1,7 @@
 enum TextFieldState{
+  Disabled,
   Default,
   Error,
-  Success,
+  Focus,
+  Complete,
 }
