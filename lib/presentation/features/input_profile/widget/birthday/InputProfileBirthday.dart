@@ -97,7 +97,6 @@ class _InputTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("$fieldState");
     return OutlineDefaultTextField(
       controller: controller,
       textInputType: TextInputType.datetime,

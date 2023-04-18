@@ -20,6 +20,7 @@ class HomeScreen extends HookWidget {
           backgroundColor: Colors.transparent,
           appBar: HomeAppBar(),
           body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Container(
               color: Colors.white,
               padding: EdgeInsets.only(bottom: 52),
