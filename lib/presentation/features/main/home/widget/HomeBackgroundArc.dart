@@ -10,7 +10,7 @@ class HomeBackgroundArc extends CustomPainter {
     final maxHeight = size.height;
     final maxWidth = size.width;
     final handlePointX = size.width / 2;
-    final handlePointY = maxHeight * 1.15;
+    final handlePointY = maxHeight * 1.16;
 
     final path = Path()
       ..moveTo(0, 0)

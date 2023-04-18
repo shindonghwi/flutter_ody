@@ -11,7 +11,7 @@ class HomeUserInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 19, left: 3, bottom: 25),
+      margin: EdgeInsets.only(top: 12, left: 3, bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -56,40 +56,43 @@ class HomeTodayRecord extends StatelessWidget {
                 );
               },
               itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: recordList[index].third,
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    width: 180,
-                    padding: EdgeInsets.fromLTRB(18, 24, 12, 9),
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: getColorScheme(context).neutral40,
-                        width: 2,
+                return Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: recordList[index].third,
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      width: 180,
+                      padding: EdgeInsets.fromLTRB(18, 24, 12, 9),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: getColorScheme(context).neutral40,
+                          width: 2,
+                        ),
                       ),
-                    ),
-                    child: Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            recordList[index].second,
-                            style: getTextTheme(context).t2b.copyWith(
-                                  color: getColorScheme(context).colorText,
-                                ),
-                          ), // The widget you want to place in the bottom right corner
-                        ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Image.asset(
-                            recordList[index].first,
-                            width: 63,
-                            height: 82,
-                          ), // The widget you want to place in the bottom right corner
-                        ),
-                      ],
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              recordList[index].second,
+                              style: getTextTheme(context).t2b.copyWith(
+                                    color: getColorScheme(context).colorText,
+                                  ),
+                            ), // The widget you want to place in the bottom right corner
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Image.asset(
+                              recordList[index].first,
+                              width: 63,
+                              height: 82,
+                            ), // The widget you want to place in the bottom right corner
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

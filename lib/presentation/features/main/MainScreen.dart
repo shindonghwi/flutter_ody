@@ -27,38 +27,50 @@ class MainScreen extends HookWidget {
           Center(child: Text("my"),)
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: getColorScheme(context).colorPrimaryFocus,
-        unselectedItemColor: getColorScheme(context).neutral50,
-        currentIndex: _currentIndex.value,
-        onTap: (index) {
-          _currentIndex.value = index; // Update the current index when a tab is tapped
-        },
-        items: _iconList.map((data) {
-          return BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              data.first,
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                getColorScheme(context).neutral50,
-                BlendMode.srcIn,
-              ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            top: BorderSide(
+              color: getColorScheme(context).neutral50,
+              width: 1,
             ),
-            activeIcon: SvgPicture.asset(
-              data.first,
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                getColorScheme(context).colorPrimaryFocus,
-                BlendMode.srcIn,
+          )
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          selectedItemColor: getColorScheme(context).colorPrimaryFocus,
+          unselectedItemColor: getColorScheme(context).neutral50,
+          currentIndex: _currentIndex.value,
+          onTap: (index) {
+            _currentIndex.value = index; // Update the current index when a tab is tapped
+          },
+          items: _iconList.map((data) {
+            return BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                data.first,
+                width: 24,
+                height: 24,
+                colorFilter: ColorFilter.mode(
+                  getColorScheme(context).neutral50,
+                  BlendMode.srcIn,
+                ),
               ),
-            ),
-            label: data.second,
-          );
-        }).toList(),
-        selectedLabelStyle: getTextTheme(context).c3,
+              activeIcon: SvgPicture.asset(
+                data.first,
+                width: 24,
+                height: 24,
+                colorFilter: ColorFilter.mode(
+                  getColorScheme(context).colorPrimaryFocus,
+                  BlendMode.srcIn,
+                ),
+              ),
+              label: data.second,
+            );
+          }).toList(),
+          selectedLabelStyle: getTextTheme(context).c3,
+        ),
       ),
     );
   }
