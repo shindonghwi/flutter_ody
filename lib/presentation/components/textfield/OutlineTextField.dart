@@ -145,7 +145,7 @@ class OutlineTextField extends HookWidget {
 
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(borderRadius),
-      borderSide: BorderSide(width: 1.5, color: borderColor),
+      borderSide: BorderSide(width: 2, color: borderColor),
     );
   }
 

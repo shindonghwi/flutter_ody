@@ -32,9 +32,19 @@ extension StyleText on TextTheme {
       fontWeight: FontWeight.w600,
       height: 1.28
   );
+  TextStyle get h3b => defaultTextStyle.copyWith(
+      fontSize: 28,
+      fontWeight: FontWeight.w700,
+      height: 1.28
+  );
   TextStyle get h4 => defaultTextStyle.copyWith(
       fontSize: 24,
       fontWeight: FontWeight.w600,
+      height: 1.33
+  );
+  TextStyle get h4b => defaultTextStyle.copyWith(
+      fontSize: 24,
+      fontWeight: FontWeight.w700,
       height: 1.33
   );
   TextStyle get t1 => defaultTextStyle.copyWith(
@@ -51,6 +61,11 @@ extension StyleText on TextTheme {
       fontSize: 20,
       fontWeight: FontWeight.w600,
       height: 1.4
+  );
+  TextStyle get t2b => defaultTextStyle.copyWith(
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+      height: 1.0
   );
   TextStyle get t3 => defaultTextStyle.copyWith(
       fontSize: 18,
@@ -117,9 +132,19 @@ extension StyleText on TextTheme {
       fontWeight: FontWeight.w400,
       height: 1.33
   );
+  TextStyle get c2b => defaultTextStyle.copyWith(
+      fontSize: 12,
+      fontWeight: FontWeight.w700,
+      height: 1.33
+  );
   TextStyle get c3 => defaultTextStyle.copyWith(
       fontSize: 10,
       fontWeight: FontWeight.w400,
+      height: 1.6
+  );
+  TextStyle get c3b => defaultTextStyle.copyWith(
+      fontSize: 10,
+      fontWeight: FontWeight.w700,
       height: 1.6
   );
 }

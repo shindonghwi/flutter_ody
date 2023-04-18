@@ -57,7 +57,7 @@ class WelcomeScreen extends HookWidget {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      nextSlideScreen(RoutingScreen.Home.route),
+                      nextSlideScreen(RoutingScreen.Main.route),
                     );
                   },
                   buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(

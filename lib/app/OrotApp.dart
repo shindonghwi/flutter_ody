@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:odac_flutter_app/presentation/features/splash/SplashScreen.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/theme.dart';
 
@@ -9,6 +9,13 @@ class OrotApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent, // Set the desired color
+      ),
+    );
+
     return MaterialApp(
       // app default option
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
