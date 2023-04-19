@@ -8,14 +8,14 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class OutlineButton extends HookConsumerWidget {
+class OutlineDefaultButton extends HookConsumerWidget {
   final String text;
   final double borderRadius;
   final ButtonSizeType type;
   final VoidCallback onPressed;
   final buttonProvider;
 
-  const OutlineButton({
+  const OutlineDefaultButton({
     Key? key,
     this.borderRadius = 8,
     required this.text,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/button/OutlineButton.dart';
+import 'package:odac_flutter_app/presentation/components/button/OutlineDefaultButton.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
@@ -22,7 +22,7 @@ class AllAgreementButton extends HookConsumerWidget {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(top: 32),
-      child: OutlineButton(
+      child: OutlineDefaultButton(
         text: getAppLocalizations(context).login_policy_all_agree,
         type: ButtonSizeType.Small,
         onPressed: () {
