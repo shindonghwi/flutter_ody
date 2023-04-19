@@ -95,7 +95,7 @@ extension StyleText on TextTheme {
   TextStyle get l2m => defaultTextStyle.copyWith(
       fontSize: 16,
       fontWeight: FontWeight.w500,
-      height: 1.5
+      height: 1.5,
   );
   TextStyle get l3m => defaultTextStyle.copyWith(
       fontSize: 14,

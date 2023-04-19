@@ -14,11 +14,11 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
 
   const IconTitleTextAppBar({
     super.key,
-    this.leadingIcon = null,
-    this.title = "",
-    this.isCenterTitle = true,
-    this.actionText = "",
-    this.actionTextCallback = null,
+    AppBarIcon? this.leadingIcon = null,
+    String this.title = "",
+    bool this.isCenterTitle = true,
+    String this.actionText = "",
+    Function? this.actionTextCallback = null,
   });
 
   @override
@@ -31,7 +31,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
       automaticallyImplyLeading: false,
       leading: leadingIcon != null
           ? InkWell(
-              onTap: () {},
+              onTap: () => leadingIcon?.onPressed.call(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SvgPicture.asset(
@@ -41,7 +41,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
                   colorFilter: ColorFilter.mode(
                     leadingIcon!.tint != null
                         ? leadingIcon!.tint!
-                        : getColorScheme(context).colorUI01,
+                        : getColorScheme(context).neutral100,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -51,22 +51,27 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
       title: Text(
         title,
         style: getTextTheme(context).l1m.copyWith(
-              color: getColorScheme(context).neutral10,
+              color: getColorScheme(context).colorText,
             ),
       ),
       centerTitle: isCenterTitle,
       actions: [
-        Align(
-          alignment: Alignment.center,
+        Container(
+          height: double.infinity,
           child: InkWell(
             onTap: () => actionTextCallback?.call(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 18),
-              child: Text(
-                actionText,
-                style: getTextTheme(context).l3m.copyWith(
-                      color: getColorScheme(context).neutral60,
-                    ),
+            child: Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
+                child: Text(
+                  actionText,
+                  style: getTextTheme(context).t4m.copyWith(
+                        color: getColorScheme(context).neutral70,
+                      ),
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),

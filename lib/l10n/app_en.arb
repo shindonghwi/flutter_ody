@@ -63,12 +63,26 @@
     "home_today_record_blood_pressure": "혈압",
     "home_today_news": "오늘의 소식",
 
+    "record_blood_pressure": "혈압기록",
+    "record_blood_pressure_input_title": "혈압 / 맥박",
+    "record_blood_pressure_input1_hint1": "120",
+    "record_blood_pressure_input1_hint2": "80",
+    "record_blood_pressure_input1_unit": "mmHg",
+    "record_blood_pressure_input2_hint": "70 ~ 80",
+    "record_blood_pressure_input2_unit": "분/회",
+    "record_blood_pressure_range_title": "혈압 범위",
+    "record_blood_pressure_range_figure": " 수치에 해당합니다",
+    "record_blood_pressure_range_figure_normal": "정상",
+    "record_blood_pressure_range_figure_danger": "위험",
+    "record_blood_pressure_range_figure_high_risk": "고위험",
+
     "common_skip": "넘어가기",
     "common_next": "다음",
     "common_required": "필수",
     "common_select": "선택",
     "common_confirm": "확인",
     "common_man": "남성",
-    "common_woman": "여성"
+    "common_woman": "여성",
+    "common_save": "저장"
 
 }

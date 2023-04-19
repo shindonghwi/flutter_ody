@@ -14,6 +14,7 @@ class SplashScreen extends HookWidget {
       () => Navigator.pushReplacement(
         context,
         nextSlideScreen(RoutingScreen.OnBoarding.route),
+        // nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
       ),
     );
   }

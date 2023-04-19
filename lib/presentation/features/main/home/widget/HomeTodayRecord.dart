@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -13,19 +15,30 @@ class HomeTodayRecord extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Triple> recordList = [
       Triple(
-        "assets/imgs/ody_walk.png",
+        "assets/imgs/ody_record_walk.png",
         getAppLocalizations(context).home_today_record_walk,
-        () {},
+        () {
+
+        },
       ),
       Triple(
-        "assets/imgs/ody_glucose.png",
+        "assets/imgs/ody_record_glucose.png",
         getAppLocalizations(context).home_today_record_glucose,
-        () {},
+        () {
+          Navigator.push(
+            context,
+            nextSlideScreen(RoutingScreen.RecordGlucose.route),
+          );
+        },
       ),
       Triple(
-        "assets/imgs/ody_blood_pressure.png",
+        "assets/imgs/ody_record_blood_pressure.png",
         getAppLocalizations(context).home_today_record_blood_pressure,
         () {
+          Navigator.push(
+            context,
+            nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
+          );
         },
       ),
     ];

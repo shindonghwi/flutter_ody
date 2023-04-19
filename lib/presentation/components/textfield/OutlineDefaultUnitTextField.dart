@@ -84,7 +84,7 @@ class OutlineDefaultUnitTextField extends HookWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 100,
+            width: 120,
             child: TextFormField(
               textAlign: TextAlign.center,
               controller: controller,
@@ -103,10 +103,10 @@ class OutlineDefaultUnitTextField extends HookWidget {
                 errorText: null,
                 counterText: "",
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 13,
-                ),
+                // contentPadding: EdgeInsets.symmetric(
+                //   horizontal: 40,
+                //   vertical: 13,
+                // ),
                 hintText: hint,
                 hintStyle: getTextTheme(context).t2b.copyWith(
                       color: getColorScheme(context).neutral60,
@@ -120,9 +120,10 @@ class OutlineDefaultUnitTextField extends HookWidget {
               onChanged: (value) {
                 onChanged?.call(value);
               },
-              onTap: () => _isFocused.value = true,
-              onFieldSubmitted: (value) => _isFocused.value = false,
+              // onTap: () => _isFocused.value = true,
+              // onFieldSubmitted: (value) => _isFocused.value = false,
               onEditingComplete: () {
+                _isFocused.value = false;
                 switch (textInputAction) {
                   case TextInputAction.next:
                     onNextAction?.call();
