@@ -1,8 +1,8 @@
-class Pair {
+class Pair<T, U> {
   Pair(this.first, this.second);
 
-  final dynamic first;
-  final dynamic second;
+  final T first;
+  final U second;
 
   @override
   String toString() => 'Pair[$first, $second]';

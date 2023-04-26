@@ -9,6 +9,7 @@ import 'package:odac_flutter_app/presentation/components/button/outline/OutlineR
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
 
 import '../../widget/RecordInputTextField.dart';
 
@@ -59,68 +60,66 @@ class RecordGlucoseInput extends HookWidget {
 }
 
 /** 식사 상태 선택 */
-class _SelectorMealType extends StatelessWidget {
-  const _SelectorMealType({
-    super.key,
-  });
+class _SelectorMealType extends HookWidget {
+  const _SelectorMealType({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final List<Pair<String, ValueNotifier>> buttonList = [
+      Pair(
+        getAppLocalizations(context).record_glucose_input_state_empty,
+        useState(
+          StateNotifierProvider<ButtonNotifier, ButtonState>(
+            (_) => ButtonNotifier(state: ButtonState.Default),
+          ),
+        ),
+      ),
+      Pair(
+        getAppLocalizations(context).record_glucose_input_state_before_meal,
+        useState(
+          StateNotifierProvider<ButtonNotifier, ButtonState>(
+            (_) => ButtonNotifier(state: ButtonState.Default),
+          ),
+        ),
+      ),
+      Pair(
+        getAppLocalizations(context).record_glucose_input_state_after_meal,
+        useState(
+          StateNotifierProvider<ButtonNotifier, ButtonState>(
+            (_) => ButtonNotifier(state: ButtonState.Default),
+          ),
+        ),
+      ),
+      Pair(
+        getAppLocalizations(context).record_glucose_input_state_after_exercise,
+        useState(
+          StateNotifierProvider<ButtonNotifier, ButtonState>(
+            (_) => ButtonNotifier(state: ButtonState.Default),
+          ),
+        ),
+      ),
+    ];
+
     return Container(
       width: double.infinity,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          OutlineRoundNeutralButton(
-            text: getAppLocalizations(context).record_glucose_input_state_empty,
-            onPressed: () {},
-            type: ButtonSizeType.Small,
-            buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-              (_) => ButtonNotifier(
-                state: ButtonState.Default,
-              ),
-            ),
-          ),
-          OutlineRoundNeutralButton(
-            text: getAppLocalizations(context).record_glucose_input_state_before_meal,
-            onPressed: () {},
-            type: ButtonSizeType.Small,
-            buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-              (_) => ButtonNotifier(
-                state: ButtonState.Default,
-              ),
-            ),
-          ),
-          OutlineRoundNeutralButton(
-            text: getAppLocalizations(context).record_glucose_input_state_after_meal,
-            onPressed: () {},
-            type: ButtonSizeType.Small,
-            buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-              (_) => ButtonNotifier(
-                state: ButtonState.Default,
-              ),
-            ),
-          ),
-          OutlineRoundNeutralButton(
-            text: getAppLocalizations(context).record_glucose_input_state_after_exercise,
-            onPressed: () {},
-            type: ButtonSizeType.Small,
-            buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-              (_) => ButtonNotifier(
-                state: ButtonState.Default,
-              ),
-            ),
-          ),
-        ],
-      ),
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: buttonList.map((e) {
+            return OutlineRoundNeutralButton(
+              text: e.first,
+              onPressed: () {},
+              type: ButtonSizeType.Small,
+              buttonProvider: e.second.value,
+            );
+          }).toList()),
     );
   }
 }
 
 class _InputGlucoseTextField extends StatelessWidget {
   const _InputGlucoseTextField({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

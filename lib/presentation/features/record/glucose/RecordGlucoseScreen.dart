@@ -12,6 +12,7 @@ class RecordGlucoseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI03,
       appBar: IconTitleTextAppBar(

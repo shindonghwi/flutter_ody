@@ -23,32 +23,26 @@ class RecordDateSelector extends HookWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/imgs/icon_calendar.svg',
-                      colorFilter: ColorFilter.mode(
-                        getColorScheme(context).neutral60,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    SizedBox(width: 6),
-                    Text(
-                      '2021 / 04 / 18',
-                      style: getTextTheme(context).l2m.copyWith(
-                            color: getColorScheme(context).neutral80,
-                          ),
-                    ),
-                  ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/imgs/icon_calendar.svg',
+                  colorFilter: ColorFilter.mode(
+                    getColorScheme(context).neutral60,
+                    BlendMode.srcIn,
+                  ),
                 ),
-              ),
+                SizedBox(width: 6),
+                Text(
+                  '2021 / 04 / 18',
+                  style: getTextTheme(context).l2m.copyWith(
+                        color: getColorScheme(context).neutral80,
+                      ),
+                ),
+              ],
             ),
           ),
           Material(
