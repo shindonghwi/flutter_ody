@@ -14,11 +14,11 @@ class RecordDateSelector extends HookWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 10, left: 15, right: 15),
       decoration: BoxDecoration(
         color: getColorScheme(context).white,
         borderRadius: BorderRadius.circular(5),
       ),
+      margin: EdgeInsets.only(top: 10, left: 15, right: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -15,19 +15,17 @@ class RecordBloodPressureRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: 35),
-          _HeartBeatTitle(context),
-          SizedBox(height: 12),
-          RangeResult(
-            type: RecordType.BloodPressure,
-            status: RecordRangeStatus.Normal,
-            level: 3,
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        SizedBox(height: 35),
+        _HeartBeatTitle(context),
+        SizedBox(height: 12),
+        RangeResult(
+          type: RecordType.BloodPressure,
+          status: RecordRangeStatus.Normal,
+          level: 3,
+        ),
+      ],
     );
   }
 

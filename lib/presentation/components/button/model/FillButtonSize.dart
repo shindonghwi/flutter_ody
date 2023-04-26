@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
 
-class ButtonSize {
+class FillButtonSize {
   static const double _normalHeight = 60;
-  static const double _normalPaddingVertical = 18;
-  static const double _normalPaddingHorizontal = 25;
+  static const double _normalPaddingVertical = 20;
+  static const double _normalPaddingHorizontal = 26;
 
   static const double _smallHeight = 50;
-  static const double _smallPaddingVertical = 13;
-  static const double _smallPaddingHorizontal = 25;
+  static const double _smallPaddingVertical = 15;
+  static const double _smallPaddingHorizontal = 26;
 
   /** 타입에 따른 버튼 패딩 반환 */
   static EdgeInsets getButtonPadding(ButtonSizeType type) {
@@ -17,10 +17,10 @@ class ButtonSize {
 
     switch (type) {
       case ButtonSizeType.Normal:
-        padding = ButtonSize._getNormalPadding();
+        padding = FillButtonSize._getNormalPadding();
         break;
       case ButtonSizeType.Small:
-        padding = ButtonSize._getSmallPadding();
+        padding = FillButtonSize._getSmallPadding();
         break;
     }
 
@@ -41,12 +41,12 @@ class ButtonSize {
   }
 
   static _getNormalPadding() => Pair(
-        ButtonSize._normalPaddingVertical,
-        ButtonSize._normalPaddingHorizontal,
+        FillButtonSize._normalPaddingVertical,
+        FillButtonSize._normalPaddingHorizontal,
       );
 
   static _getSmallPadding() => Pair(
-        ButtonSize._smallPaddingVertical,
-        ButtonSize._smallPaddingHorizontal,
+        FillButtonSize._smallPaddingVertical,
+        FillButtonSize._smallPaddingHorizontal,
       );
 }

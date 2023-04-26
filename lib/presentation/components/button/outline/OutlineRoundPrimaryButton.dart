@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonSize.dart';
+import 'package:odac_flutter_app/presentation/components/button/model/FillButtonSize.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:odac_flutter_app/presentation/components/button/model/OutlineButtonSize.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class OutlineDefaultButton extends HookConsumerWidget {
+class OutlineRoundPrimaryButton extends HookConsumerWidget {
   final String text;
-  final double borderRadius;
   final ButtonSizeType type;
   final VoidCallback onPressed;
   final buttonProvider;
 
-  const OutlineDefaultButton({
+  const OutlineRoundPrimaryButton({
     Key? key,
-    this.borderRadius = 8,
     required this.text,
     required this.type,
     required this.onPressed,
@@ -28,7 +28,8 @@ class OutlineDefaultButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final buttonState = ref.watch<ButtonState>(buttonProvider);
     final buttonRead = ref.read<ButtonNotifier>(buttonProvider.notifier);
-    final buttonPadding = ButtonSize.getButtonPadding(type);
+    final buttonPadding = OutlineButtonSize.getButtonPadding(type);
+    final buttonStateSave = useState(buttonState);
 
     return Material(
       color: Colors.transparent,
@@ -39,11 +40,12 @@ class OutlineDefaultButton extends HookConsumerWidget {
         },
         onTapUp: (_) {
           if (buttonState == ButtonState.Disabled) return;
-
-          if (buttonState == ButtonState.Activated) {
+          if (buttonStateSave.value == ButtonState.Activated) {
             buttonRead.changeState(ButtonState.Default);
+            buttonStateSave.value = ButtonState.Default;
           } else {
             buttonRead.changeState(ButtonState.Activated);
+            buttonStateSave.value = ButtonState.Activated;
           }
           onPressed();
         },
@@ -53,7 +55,7 @@ class OutlineDefaultButton extends HookConsumerWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(100),
             border: Border.all(
               color: _getBorderColor(context, buttonState),
               width: 1.5,

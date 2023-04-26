@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/button/OutlineDefaultButton.dart';
+import 'package:odac_flutter_app/presentation/components/button/outline/OutlineBasicPrimaryButton.dart';
+import 'package:odac_flutter_app/presentation/components/button/outline/OutlineRoundPrimaryButton.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
@@ -31,9 +32,8 @@ class DiseaseSelector extends HookConsumerWidget {
         return Container(
           width: double.infinity,
           margin: EdgeInsets.only(bottom: 20),
-          child: OutlineDefaultButton(
+          child: OutlineRoundPrimaryButton(
             text: diseaseItemList[index],
-            borderRadius: 100,
             onPressed: () => diseaseListRead.change(index),
             type: ButtonSizeType.Small,
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(

@@ -49,7 +49,7 @@ class RangeResult extends HookWidget {
                         ),
                       ),
                       TextSpan(
-                        text: getAppLocalizations(context).record_blood_pressure_range_figure,
+                        text: getAppLocalizations(context).record_range_figure,
                         style: getTextTheme(context).b3sb.copyWith(
                           color: RecordRangeStatusHelper.getSubTextColor(context, status),
                         ),
@@ -78,7 +78,7 @@ class RangeResult extends HookWidget {
                             children: [
                               Text(
                                 getAppLocalizations(context)
-                                    .record_blood_pressure_range_figure_normal,
+                                    .record_range_figure_normal,
                                 style: getTextTheme(context).c2r.copyWith(
                                   color: getColorScheme(context).neutral70,
                                 ),
@@ -86,7 +86,7 @@ class RangeResult extends HookWidget {
                               SizedBox(width: 19),
                               Text(
                                 getAppLocalizations(context)
-                                    .record_blood_pressure_range_figure_danger,
+                                    .record_range_figure_danger,
                                 style: getTextTheme(context).c2r.copyWith(
                                   color: getColorScheme(context).neutral70,
                                 ),
@@ -95,7 +95,7 @@ class RangeResult extends HookWidget {
                           ),
                           Text(
                             getAppLocalizations(context)
-                                .record_blood_pressure_range_figure_high_risk,
+                                .record_range_figure_high_risk,
                             style: getTextTheme(context).c2r.copyWith(
                               color: getColorScheme(context).neutral70,
                             ),
