@@ -13,9 +13,9 @@ class MainScreen extends HookWidget {
     final _currentIndex = useState(0); // Current index of the active tab
 
     List<Pair> _iconList = [
-      Pair('assets/imgs/icon_home.svg', getAppLocalizations(context).main_tab_home),
-      Pair('assets/imgs/icon_news.svg', getAppLocalizations(context).main_tab_news),
-      Pair('assets/imgs/icon_my.svg', getAppLocalizations(context).main_tab_my),
+      Pair('assets/imgs/icon_record.svg', getAppLocalizations(context).main_tab_home),
+      Pair('assets/imgs/icon_information.svg', getAppLocalizations(context).main_tab_news),
+      Pair('assets/imgs/icon_mypage.svg', getAppLocalizations(context).main_tab_my),
     ];
 
     return Scaffold(

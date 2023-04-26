@@ -32,7 +32,7 @@ enum RoutingScreen {
 
   static Map<String, WidgetBuilder> getAppRoutes() {
     return {
-      RoutingScreen.Splash.route: (context) => SplashScreen(),
+      RoutingScreen.Splash.route: (context) => MainScreen(),
       RoutingScreen.OnBoarding.route: (context) => OnBoardingScreen(),
       RoutingScreen.Login.route: (context) => LoginScreen(),
       RoutingScreen.InputProfile.route: (context) => InputProfileScreen(),

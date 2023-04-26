@@ -85,7 +85,7 @@ class AgreementItem extends HookConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
               child: SvgPicture.asset(
-                "assets/imgs/icon_next.svg",
+                "assets/imgs/icon_next_15.svg",
                 width: 28,
                 height: 28,
                 colorFilter: ColorFilter.mode(
