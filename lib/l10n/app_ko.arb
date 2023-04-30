@@ -58,10 +58,13 @@
     "main_tab_my": "내정보",
 
     "home_today_record_title": "오늘의 기록",
-    "home_today_record_walk": "걸음수",
+    "home_today_record_walk": "걸음 수",
     "home_today_record_glucose": "혈당",
     "home_today_record_blood_pressure": "혈압",
-    "home_today_news": "오늘의 소식",
+    "home_today_record_comment_complete": "달성했어요",
+    "home_today_record_comment_new": "새로운 기록을 달성해볼까요?",
+    "home_today_record_complete_comment_congratulation": "달성을 축하합니다!",
+    "home_today_record_prepare": "준비중이에요 :)",
 
     "record_blood_pressure": "혈압기록",
     "record_blood_pressure_input_title": "혈압 / 맥박",
