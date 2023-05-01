@@ -34,7 +34,7 @@ class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
       elevation: 0.0,
       automaticallyImplyLeading: false,
       systemOverlayStyle: SystemUiOverlayStyle.light,
-      backgroundColor: getColorScheme(context).primary100,
+      backgroundColor: getColorScheme(context).white,
       leading: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -74,7 +74,7 @@ class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
             child: SvgPicture.asset(
               "assets/imgs/icon_alrmoff.svg",
               colorFilter: ColorFilter.mode(
-                getColorScheme(context).colorUI01,
+                getColorScheme(context).neutral100,
                 BlendMode.srcIn,
               ),
             ),

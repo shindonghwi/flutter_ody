@@ -115,6 +115,7 @@ class DraggableContainer extends HookConsumerWidget {
               DimBackgroundView(
                 onBackgroundTap: () {
                   calendarHeightRead.updateHeight(minHeight);
+                  calendarFormatRead.updateFormat(CalendarFormat.week);
                   isDimOnRead.change(false);
                 },
               ),
