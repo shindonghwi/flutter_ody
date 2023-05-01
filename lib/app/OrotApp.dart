@@ -15,7 +15,7 @@ class OrotApp extends StatelessWidget {
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
     );
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
 
@@ -39,6 +39,8 @@ class OrotApp extends StatelessWidget {
 
             initialRoute: RoutingScreen.Splash.route,
             routes: RoutingScreen.getAppRoutes(),
+
+            navigatorKey: OdyGlobalVariable.naviagatorState,
           );
         }
         return Center(
@@ -47,4 +49,9 @@ class OrotApp extends StatelessWidget {
       },
     );
   }
+}
+
+class OdyGlobalVariable {
+  static final GlobalKey<NavigatorState> naviagatorState =
+  GlobalKey<NavigatorState>();
 }

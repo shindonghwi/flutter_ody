@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarFormatProvider.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarHeightProvider.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/provider/DimProvider.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/DimBackgroundView.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 /// @feature: 드래그 가능한 캘린터 뷰
 /// @author: 2023/05/01 2:05 PM donghwishin
@@ -67,49 +70,78 @@ class DraggableContainer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final isDimOnRead = ref.read(DimProvider.notifier);
-    final containerHeight = useState(initialHeight);
+    final calendarHeightRead = ref.read(CalendarHeightProvider.notifier);
+    final calendarFormatRead = ref.read(CalendarFormatProvider.notifier);
+    final turningPoint = getMediaQuery(context).size.height * 0.26;
 
-    void onVerticalDragDown(DragDownDetails details) {}
+    return HookBuilder(
+      builder: (context) {
+        void onVerticalDragDown(DragDownDetails details) {}
 
-    void onVerticalDragUpdate(DragUpdateDetails details) {
-      containerHeight.value += details.delta.dy;
-      containerHeight.value = containerHeight.value.clamp(minHeight, maxHeight);
-    }
+        void onVerticalDragUpdate(DragUpdateDetails details) {
+          calendarHeightRead.updateHeight(calendarHeightRead.getHeight() + details.delta.dy);;
+          calendarHeightRead.updateHeight(calendarHeightRead.getHeight().clamp(minHeight, maxHeight));
 
-    void onVerticalDragEnd(DragEndDetails details) {
-      double containerCurrentHeight = containerHeight.value;
-      double collapseBoundary = minHeight + ((maxHeight - minHeight) / 2);
-      bool isExpanded = containerCurrentHeight >= collapseBoundary;
+          if (calendarHeightRead.getHeight() < turningPoint) {
+            calendarFormatRead.updateFormat(CalendarFormat.week);
+          } else {
+            calendarFormatRead.updateFormat(CalendarFormat.month);
+          }
 
-      if (isExpanded) {
-        containerHeight.value = maxHeight;
-      } else {
-        containerHeight.value = minHeight;
-      }
+        }
 
-      isDimOnRead.change(isExpanded);
-    }
+        void onVerticalDragEnd(DragEndDetails details) {
+          double containerCurrentHeight = calendarHeightRead.getHeight();
+          double collapseBoundary = minHeight + ((maxHeight - minHeight) / 2);
+          bool isExpanded = containerCurrentHeight >= collapseBoundary;
 
-    return GestureDetector(
-      onVerticalDragDown: onVerticalDragDown,
-      onVerticalDragUpdate: onVerticalDragUpdate,
-      onVerticalDragEnd: onVerticalDragEnd,
-      child: Stack(
-        children: [
-          DimBackgroundView(
-            onBackgroundTap: () {
-              containerHeight.value = minHeight;
-              isDimOnRead.change(false);
-            },
+          if (isExpanded) {
+            calendarHeightRead.updateHeight(maxHeight);
+          } else {
+            calendarHeightRead.updateHeight(minHeight);
+          }
+
+          isDimOnRead.change(isExpanded);
+        }
+
+        return GestureDetector(
+          onVerticalDragDown: onVerticalDragDown,
+          onVerticalDragUpdate: onVerticalDragUpdate,
+          onVerticalDragEnd: onVerticalDragEnd,
+          child: Stack(
+            children: [
+              DimBackgroundView(
+                onBackgroundTap: () {
+                  calendarHeightRead.updateHeight(minHeight);
+                  isDimOnRead.change(false);
+                },
+              ),
+              _InnerContent(child: child),
+            ],
           ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
-            height: containerHeight.value,
-            child: child,
-          ),
-        ],
-      ),
+        );
+      },
+    );
+  }
+}
+
+class _InnerContent extends HookConsumerWidget {
+  const _InnerContent({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final containerHeight = ref.watch<double>(CalendarHeightProvider);
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 100),
+      height: containerHeight,
+      child: child,
     );
   }
 }
