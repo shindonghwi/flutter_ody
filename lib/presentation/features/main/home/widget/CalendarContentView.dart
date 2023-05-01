@@ -69,6 +69,7 @@ class CalendarContentView extends HookConsumerWidget {
           onDaySelected: (selectedDay, focusedDay) {
             _selectedDay.value = selectedDay;
             _focusedDay.value = focusedDay;
+            calendarPageRead.updatePageDatetime(selectedDay);
             calendarSelectDateRead.updateSelectedDatetime(selectedDay);
             calendarHeightRead.updateHeight(getMediaQuery(context).size.height * 0.15);
             calendarFormatRead.updateFormat(CalendarFormat.week);
