@@ -8,8 +8,8 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class TodayRecordCard extends HookWidget {
-  const TodayRecordCard({
+class CardTodayRecord extends HookWidget {
+  const CardTodayRecord({
     super.key,
   });
 

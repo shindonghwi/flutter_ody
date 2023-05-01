@@ -5,6 +5,15 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
+/**
+ * @feature: 홈 화면 앱바
+ *
+ * @author: 2023/05/01 2:04 PM donghwishin
+ *
+ * @description{
+ *   날짜 선택, actions 아이콘
+ * }
+*/
 class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
 

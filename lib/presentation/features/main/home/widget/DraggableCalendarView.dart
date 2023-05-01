@@ -3,22 +3,35 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
+/**
+ * @feature: 드래그 가능한 캘린터 뷰
+ *
+ * @author: 2023/05/01 2:05 PM donghwishin
+ *
+ * @description{
+ *
+ * }
+*/
 class DraggableCalendarView extends StatelessWidget {
-  final calendarMinHeight;
-  final calendarMaxHeight;
+  final Widget child;
+  final double calendarMinHeight;
+  final double calendarMaxHeight;
   final Function(bool) onExpandCollapse;
 
   const DraggableCalendarView({
     Key? key,
-    required this.calendarMinHeight,
-    required this.calendarMaxHeight,
-    required this.onExpandCollapse,
+    required Widget this.child,
+    required double this.calendarMinHeight,
+    required double this.calendarMaxHeight,
+    required Function(bool) this.onExpandCollapse,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DraggableContainer(
       child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(26),
         decoration: BoxDecoration(
           color: getColorScheme(context).white,
           borderRadius: BorderRadius.only(
@@ -34,6 +47,7 @@ class DraggableCalendarView extends StatelessWidget {
             ),
           ],
         ),
+        child: child,
       ),
       initialHeight: calendarMinHeight,
       minHeight: calendarMinHeight,

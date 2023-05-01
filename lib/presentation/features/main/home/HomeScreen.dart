@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/DraggableCalendarView.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/HomeAppBar.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/widget/RecordCardItems.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/widget/TodayRecordCard.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/widget/CardRecordItems.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/widget/CardTodayRecord.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
@@ -30,13 +30,13 @@ class HomeScreen extends HookWidget {
                 child: Container(
                   color: getColorScheme(context).colorUI02,
                   margin: EdgeInsets.only(top: mainContentTopMargin),
-                  child: TodayRecordCard(),
+                  child: CardTodayRecord(),
                 ),
               ),
               SliverPadding(
                 padding: const EdgeInsets.only(top: 24.0),
               ),
-              RecordCardItems(),
+              CardRecordItems(),
               SliverPadding(
                 padding: const EdgeInsets.only(bottom: 57.0),
               )
@@ -50,6 +50,11 @@ class HomeScreen extends HookWidget {
             onExpandCollapse: (bool isExpanded) {
               isCalendarExpanded.value = isExpanded;
             },
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.red,
+            ),
           ),
         ],
       ),

@@ -6,8 +6,8 @@ import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
 
-class RecordCardItems extends HookWidget {
-  const RecordCardItems({
+class CardRecordItems extends HookWidget {
+  const CardRecordItems({
     super.key,
   });
 
