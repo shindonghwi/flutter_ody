@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/widget/CustomDraggableContainer.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class DraggableCalendarView extends StatelessWidget {
   final calendarMinHeight;
   final calendarMaxHeight;
+  final Function(bool) onExpandCollapse;
 
   const DraggableCalendarView({
     Key? key,
     required this.calendarMinHeight,
     required this.calendarMaxHeight,
+    required this.onExpandCollapse,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CustomDraggableContainer(
+    return DraggableContainer(
       child: Container(
         decoration: BoxDecoration(
           color: getColorScheme(context).white,
@@ -36,10 +38,61 @@ class DraggableCalendarView extends StatelessWidget {
       initialHeight: calendarMinHeight,
       minHeight: calendarMinHeight,
       maxHeight: calendarMaxHeight,
-      onExpandCollapse: (isExpanded) {
-        debugPrint('isExpanded: $isExpanded');
-        // Handle expand/collapse state change
-      },
+      onExpandCollapse: (isExpanded) => onExpandCollapse(isExpanded),
+    );
+  }
+}
+
+/** 드래그 가능한 컨테이너 위젯 */
+class DraggableContainer extends HookWidget {
+  final double initialHeight;
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+  final Function(bool) onExpandCollapse;
+
+  DraggableContainer({
+    required this.child,
+    required this.initialHeight,
+    required this.minHeight,
+    required this.maxHeight,
+    required this.onExpandCollapse,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final _containerHeight = useState(initialHeight);
+
+    void _onVerticalDragDown(DragDownDetails details) {}
+
+    void _onVerticalDragUpdate(DragUpdateDetails details) {
+      _containerHeight.value += details.delta.dy;
+      _containerHeight.value = _containerHeight.value.clamp(minHeight, maxHeight);
+    }
+
+    void _onVerticalDragEnd(DragEndDetails details) {
+      double containerHeight = _containerHeight.value;
+      double collapseBoundary = minHeight + ((maxHeight - minHeight) / 2);
+      bool isExpanded = containerHeight >= collapseBoundary;
+
+      if (isExpanded) {
+        _containerHeight.value = maxHeight;
+      } else {
+        _containerHeight.value = minHeight;
+      }
+
+      onExpandCollapse(isExpanded);
+    }
+
+    return GestureDetector(
+      onVerticalDragDown: _onVerticalDragDown,
+      onVerticalDragUpdate: _onVerticalDragUpdate,
+      onVerticalDragEnd: _onVerticalDragEnd,
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 100),
+        height: _containerHeight.value,
+        child: child,
+      ),
     );
   }
 }

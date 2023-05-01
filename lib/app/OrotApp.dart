@@ -12,30 +12,39 @@ class OrotApp extends StatelessWidget {
     WidgetsFlutterBinding.ensureInitialized();
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
-      overlays: [SystemUiOverlay.top],
+      overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
     );
 
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //   statusBarColor: Colors.transparent,
-    // ));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
 
-    return MaterialApp(
-      // app default option
-      onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth != 0) {
+          return MaterialApp(
+            // app default option
+            onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
 
-      // 시스템 테마 설정 (라이트, 다크 모드)
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+            // 시스템 테마 설정 (라이트, 다크 모드)
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: ThemeMode.system,
 
-      // 앱 Localization ( 영어, 한국어 지원 )
-      supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+            // 앱 Localization ( 영어, 한국어 지원 )
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
 
-      debugShowCheckedModeBanner: true,
+            debugShowCheckedModeBanner: true,
 
-      initialRoute: RoutingScreen.Splash.route,
-      routes: RoutingScreen.getAppRoutes(),
+            initialRoute: RoutingScreen.Splash.route,
+            routes: RoutingScreen.getAppRoutes(),
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

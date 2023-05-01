@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/DraggableCalendarView.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/widget/HomeAppBar.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/widget/RecordCardItems.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/TodayRecordCard.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
-
-import '../../../utils/Common.dart';
-import 'widget/HomeAppBar.dart';
+import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class HomeScreen extends HookWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,29 +16,100 @@ class HomeScreen extends HookWidget {
     final mainContentTopMargin = getMediaQuery(context).size.height * 0.18;
     final calendarMaxHeight = getMediaQuery(context).size.height * 0.38;
 
+    final isCalendarExpanded = useState<bool>(false);
+
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI02,
       appBar: HomeAppBar(),
       body: Stack(
         children: [
-          SingleChildScrollView(
+          CustomScrollView(
             physics: BouncingScrollPhysics(),
-            child: Container(
-              color: getColorScheme(context).colorUI02,
-              margin: EdgeInsets.only(top: mainContentTopMargin),
-              padding: EdgeInsets.only(bottom: 57),
-              child: Column(
-                children: [
-                  TodayRecordCard(),
-                ],
+            slivers: [
+              SliverToBoxAdapter(
+                child: Container(
+                  color: getColorScheme(context).colorUI02,
+                  margin: EdgeInsets.only(top: mainContentTopMargin),
+                  child: TodayRecordCard(),
+                ),
               ),
-            ),
+              SliverPadding(
+                padding: const EdgeInsets.only(top: 24.0),
+              ),
+              RecordCardItems(),
+              SliverPadding(
+                padding: const EdgeInsets.only(bottom: 57.0),
+              )
+            ],
           ),
+          _FloatingButton(context),
+          _BackgroundView(context, isCalendarExpanded.value),
           DraggableCalendarView(
             calendarMinHeight: calendarMinHeight,
             calendarMaxHeight: calendarMaxHeight,
-          )
+            onExpandCollapse: (bool isExpanded) {
+              isCalendarExpanded.value = isExpanded;
+            },
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _BackgroundView(BuildContext context, bool isCalendarExpanded) {
+    final minAlpha = 0.0;
+    final maxAlpha = 0.3;
+    final duration = 300;
+    return TweenAnimationBuilder<double>(
+      duration: Duration(milliseconds: duration),
+      tween: Tween<double>(begin: minAlpha, end: isCalendarExpanded ? maxAlpha : minAlpha),
+      builder: (_, value, child) {
+        if (value != maxAlpha) {
+          return IgnorePointer(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: getColorScheme(context).black.withOpacity(value),
+            ),
+          );
+        } else {
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: getColorScheme(context).black.withOpacity(value),
+          );
+        }
+      },
+    );
+  }
+
+  Positioned _FloatingButton(BuildContext context) {
+    return Positioned(
+      bottom: 17,
+      right: 20,
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          color: getColorScheme(context).primary100,
+          borderRadius: BorderRadius.circular(100),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xFF8D8D8D).withOpacity(0.3),
+              spreadRadius: 0,
+              blurRadius: 5,
+              offset: Offset(2, 5), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(100),
+            child: Icon(Icons.add),
+          ),
+        ),
       ),
     );
   }

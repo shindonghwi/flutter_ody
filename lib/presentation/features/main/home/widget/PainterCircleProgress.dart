@@ -3,10 +3,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 
-class CircleProgressPainter extends CustomPainter {
+class PainterCircleProgress extends CustomPainter {
   double progress;
 
-  CircleProgressPainter({required this.progress});
+  PainterCircleProgress({required this.progress});
 
   @override
   void paint(Canvas canvas, Size size) {
