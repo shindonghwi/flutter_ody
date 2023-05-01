@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/provider/DimProvider.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/widget/DimBackgroundView.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
@@ -7,23 +10,17 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
  * @feature: 드래그 가능한 캘린터 뷰
  *
  * @author: 2023/05/01 2:05 PM donghwishin
- *
- * @description{
- *
- * }
-*/
-class DraggableCalendarView extends StatelessWidget {
+ */
+class DraggableCalendarView extends HookWidget {
   final Widget child;
   final double calendarMinHeight;
   final double calendarMaxHeight;
-  final Function(bool) onExpandCollapse;
 
   const DraggableCalendarView({
     Key? key,
     required Widget this.child,
     required double this.calendarMinHeight,
     required double this.calendarMaxHeight,
-    required Function(bool) this.onExpandCollapse,
   }) : super(key: key);
 
   @override
@@ -52,29 +49,28 @@ class DraggableCalendarView extends StatelessWidget {
       initialHeight: calendarMinHeight,
       minHeight: calendarMinHeight,
       maxHeight: calendarMaxHeight,
-      onExpandCollapse: (isExpanded) => onExpandCollapse(isExpanded),
     );
   }
 }
 
 /** 드래그 가능한 컨테이너 위젯 */
-class DraggableContainer extends HookWidget {
+class DraggableContainer extends HookConsumerWidget {
+  final Widget child;
   final double initialHeight;
   final double minHeight;
   final double maxHeight;
-  final Widget child;
-  final Function(bool) onExpandCollapse;
 
   DraggableContainer({
     required this.child,
     required this.initialHeight,
     required this.minHeight,
     required this.maxHeight,
-    required this.onExpandCollapse,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDimOn = ref.watch<bool>(DimProvider);
+    final isDimOnRead = ref.read(DimProvider.notifier);
     final _containerHeight = useState(initialHeight);
 
     void _onVerticalDragDown(DragDownDetails details) {}
@@ -95,17 +91,27 @@ class DraggableContainer extends HookWidget {
         _containerHeight.value = minHeight;
       }
 
-      onExpandCollapse(isExpanded);
+      isDimOnRead.change(isExpanded);
     }
 
     return GestureDetector(
       onVerticalDragDown: _onVerticalDragDown,
       onVerticalDragUpdate: _onVerticalDragUpdate,
       onVerticalDragEnd: _onVerticalDragEnd,
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 100),
-        height: _containerHeight.value,
-        child: child,
+      child: Stack(
+        children: [
+          DimBackgroundView(
+            onBackgroundTap: () {
+              _containerHeight.value = minHeight;
+              isDimOnRead.change(false);
+            },
+          ),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 100),
+            height: _containerHeight.value,
+            child: child,
+          ),
+        ],
       ),
     );
   }

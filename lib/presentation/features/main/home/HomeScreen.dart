@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/widget/DraggableCalendarView.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/widget/HomeAppBar.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/CardRecordItems.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/CardTodayRecord.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/widget/DraggableCalendarView.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/widget/HomeAppBar.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
@@ -15,8 +15,6 @@ class HomeScreen extends HookWidget {
     final calendarMinHeight = getMediaQuery(context).size.height * 0.15;
     final mainContentTopMargin = getMediaQuery(context).size.height * 0.18;
     final calendarMaxHeight = getMediaQuery(context).size.height * 0.38;
-
-    final isCalendarExpanded = useState<bool>(false);
 
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI02,
@@ -43,13 +41,9 @@ class HomeScreen extends HookWidget {
             ],
           ),
           _FloatingButton(context),
-          _BackgroundView(context, isCalendarExpanded.value),
           DraggableCalendarView(
             calendarMinHeight: calendarMinHeight,
             calendarMaxHeight: calendarMaxHeight,
-            onExpandCollapse: (bool isExpanded) {
-              isCalendarExpanded.value = isExpanded;
-            },
             child: Container(
               width: double.infinity,
               height: double.infinity,
@@ -58,33 +52,6 @@ class HomeScreen extends HookWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _BackgroundView(BuildContext context, bool isCalendarExpanded) {
-    final minAlpha = 0.0;
-    final maxAlpha = 0.3;
-    final duration = 300;
-    return TweenAnimationBuilder<double>(
-      duration: Duration(milliseconds: duration),
-      tween: Tween<double>(begin: minAlpha, end: isCalendarExpanded ? maxAlpha : minAlpha),
-      builder: (_, value, child) {
-        if (value != maxAlpha) {
-          return IgnorePointer(
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: getColorScheme(context).black.withOpacity(value),
-            ),
-          );
-        } else {
-          return Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: getColorScheme(context).black.withOpacity(value),
-          );
-        }
-      },
     );
   }
 
@@ -112,7 +79,10 @@ class HomeScreen extends HookWidget {
           child: InkWell(
             onTap: () {},
             borderRadius: BorderRadius.circular(100),
-            child: Icon(Icons.add),
+            child: Icon(
+              Icons.add,
+              color: getColorScheme(context).white,
+            ),
           ),
         ),
       ),
