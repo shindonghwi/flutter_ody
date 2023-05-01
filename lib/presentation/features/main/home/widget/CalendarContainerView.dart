@@ -6,11 +6,8 @@ import 'package:odac_flutter_app/presentation/features/main/home/widget/DimBackg
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-/**
- * @feature: 드래그 가능한 캘린터 뷰
- *
- * @author: 2023/05/01 2:05 PM donghwishin
- */
+/// @feature: 드래그 가능한 캘린터 뷰
+/// @author: 2023/05/01 2:05 PM donghwishin
 class CalendarContainerView extends HookWidget {
   final Widget child;
   final double calendarMinHeight;
@@ -18,9 +15,9 @@ class CalendarContainerView extends HookWidget {
 
   const CalendarContainerView({
     Key? key,
-    required Widget this.child,
-    required double this.calendarMinHeight,
-    required double this.calendarMaxHeight,
+    required this.child,
+    required this.calendarMinHeight,
+    required this.calendarMaxHeight,
   }) : super(key: key);
 
   @override
@@ -53,14 +50,15 @@ class CalendarContainerView extends HookWidget {
   }
 }
 
-/** 드래그 가능한 컨테이너 위젯 */
+/// 드래그 가능한 컨테이너 위젯
 class DraggableContainer extends HookConsumerWidget {
   final Widget child;
   final double initialHeight;
   final double minHeight;
   final double maxHeight;
 
-  DraggableContainer({
+  const DraggableContainer({
+    super.key,
     required this.child,
     required this.initialHeight,
     required this.minHeight,
@@ -70,44 +68,44 @@ class DraggableContainer extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDimOnRead = ref.read(DimProvider.notifier);
-    final _containerHeight = useState(initialHeight);
+    final containerHeight = useState(initialHeight);
 
-    void _onVerticalDragDown(DragDownDetails details) {}
+    void onVerticalDragDown(DragDownDetails details) {}
 
-    void _onVerticalDragUpdate(DragUpdateDetails details) {
-      _containerHeight.value += details.delta.dy;
-      _containerHeight.value = _containerHeight.value.clamp(minHeight, maxHeight);
+    void onVerticalDragUpdate(DragUpdateDetails details) {
+      containerHeight.value += details.delta.dy;
+      containerHeight.value = containerHeight.value.clamp(minHeight, maxHeight);
     }
 
-    void _onVerticalDragEnd(DragEndDetails details) {
-      double containerHeight = _containerHeight.value;
+    void onVerticalDragEnd(DragEndDetails details) {
+      double containerCurrentHeight = containerHeight.value;
       double collapseBoundary = minHeight + ((maxHeight - minHeight) / 2);
-      bool isExpanded = containerHeight >= collapseBoundary;
+      bool isExpanded = containerCurrentHeight >= collapseBoundary;
 
       if (isExpanded) {
-        _containerHeight.value = maxHeight;
+        containerHeight.value = maxHeight;
       } else {
-        _containerHeight.value = minHeight;
+        containerHeight.value = minHeight;
       }
 
       isDimOnRead.change(isExpanded);
     }
 
     return GestureDetector(
-      onVerticalDragDown: _onVerticalDragDown,
-      onVerticalDragUpdate: _onVerticalDragUpdate,
-      onVerticalDragEnd: _onVerticalDragEnd,
+      onVerticalDragDown: onVerticalDragDown,
+      onVerticalDragUpdate: onVerticalDragUpdate,
+      onVerticalDragEnd: onVerticalDragEnd,
       child: Stack(
         children: [
           DimBackgroundView(
             onBackgroundTap: () {
-              _containerHeight.value = minHeight;
+              containerHeight.value = minHeight;
               isDimOnRead.change(false);
             },
           ),
           AnimatedContainer(
             duration: const Duration(milliseconds: 100),
-            height: _containerHeight.value,
+            height: containerHeight.value,
             child: child,
           ),
         ],

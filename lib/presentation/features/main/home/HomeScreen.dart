@@ -45,7 +45,9 @@ class HomeScreen extends HookWidget {
           CalendarContainerView(
             calendarMinHeight: calendarMinHeight,
             calendarMaxHeight: calendarMaxHeight,
-            child: CalendarContentView(maxHeight: calendarMaxHeight),
+            child: CalendarContentView(
+              maxHeight: calendarMaxHeight,
+            ),
           ),
         ],
       ),

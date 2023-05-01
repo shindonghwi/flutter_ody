@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarProvider.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarPageProvider.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarSelectDateProvider.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -10,12 +11,15 @@ import 'package:table_calendar/table_calendar.dart';
 class CalendarContentView extends HookConsumerWidget {
   final double maxHeight;
 
-  const CalendarContentView({Key? key, required double this.maxHeight});
+  const CalendarContentView({
+    super.key,
+    required double this.maxHeight,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    final calendarRead = ref.read(CalendarProvider.notifier);
+    final calendarPageRead = ref.read(CalendarPageProvider.notifier);
+    final calendarSelectDateRead = ref.read(CalendarSelectDateProvider.notifier);
 
     final _selectedDay = useState(DateTime.now());
     final _focusedDay = useState(DateTime.now());
@@ -30,7 +34,6 @@ class CalendarContentView extends HookConsumerWidget {
     ); // 10년 후
 
     return LayoutBuilder(builder: (context, constraints) {
-
       if (constraints.minHeight < maxHeight / 3) {
         _calendarFormat.value = CalendarFormat.week;
       } else {
@@ -62,10 +65,11 @@ class CalendarContentView extends HookConsumerWidget {
         onDaySelected: (selectedDay, focusedDay) {
           _selectedDay.value = selectedDay;
           _focusedDay.value = focusedDay;
+          calendarSelectDateRead.updateSelectedDatetime(selectedDay);
         },
         onPageChanged: (focusedDay) {
           _focusedDay.value = focusedDay;
-          calendarRead.updateCurrentDate(focusedDay);
+          calendarPageRead.updatePageDatetime(focusedDay);
         },
         onFormatChanged: (format) {
           _calendarFormat.value = format;
