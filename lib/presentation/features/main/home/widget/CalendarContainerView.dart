@@ -11,12 +11,12 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
  *
  * @author: 2023/05/01 2:05 PM donghwishin
  */
-class DraggableCalendarView extends HookWidget {
+class CalendarContainerView extends HookWidget {
   final Widget child;
   final double calendarMinHeight;
   final double calendarMaxHeight;
 
-  const DraggableCalendarView({
+  const CalendarContainerView({
     Key? key,
     required Widget this.child,
     required double this.calendarMinHeight,
@@ -26,29 +26,29 @@ class DraggableCalendarView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return DraggableContainer(
+      initialHeight: calendarMinHeight,
+      minHeight: calendarMinHeight,
+      maxHeight: calendarMaxHeight,
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(26),
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
         decoration: BoxDecoration(
           color: getColorScheme(context).white,
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(20),
             bottomRight: Radius.circular(20),
           ),
           boxShadow: [
             BoxShadow(
-              color: Color(0xFF8D8D8D).withOpacity(0.1),
+              color: const Color(0xFF8D8D8D).withOpacity(0.1),
               spreadRadius: 0,
               blurRadius: 5,
-              offset: Offset(2, 2), // changes position of shadow
+              offset: const Offset(2, 2), // changes position of shadow
             ),
           ],
         ),
         child: child,
       ),
-      initialHeight: calendarMinHeight,
-      minHeight: calendarMinHeight,
-      maxHeight: calendarMaxHeight,
     );
   }
 }
@@ -69,7 +69,6 @@ class DraggableContainer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDimOn = ref.watch<bool>(DimProvider);
     final isDimOnRead = ref.read(DimProvider.notifier);
     final _containerHeight = useState(initialHeight);
 
@@ -107,7 +106,7 @@ class DraggableContainer extends HookConsumerWidget {
             },
           ),
           AnimatedContainer(
-            duration: Duration(milliseconds: 100),
+            duration: const Duration(milliseconds: 100),
             height: _containerHeight.value,
             child: child,
           ),

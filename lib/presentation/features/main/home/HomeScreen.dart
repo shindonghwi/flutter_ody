@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/widget/CalendarContainerView.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/widget/CalendarContentView.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/CardRecordItems.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/CardTodayRecord.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/widget/DraggableCalendarView.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/HomeAppBar.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -18,44 +19,40 @@ class HomeScreen extends HookWidget {
 
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI02,
-      appBar: HomeAppBar(),
+      appBar: const HomeAppBar(),
       body: Stack(
         children: [
           CustomScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
                 child: Container(
                   color: getColorScheme(context).colorUI02,
                   margin: EdgeInsets.only(top: mainContentTopMargin),
-                  child: CardTodayRecord(),
+                  child: const CardTodayRecord(),
                 ),
               ),
-              SliverPadding(
-                padding: const EdgeInsets.only(top: 24.0),
+              const SliverPadding(
+                padding: EdgeInsets.only(top: 24.0),
               ),
-              CardRecordItems(),
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 57.0),
+              const CardRecordItems(),
+              const SliverPadding(
+                padding: EdgeInsets.only(bottom: 57.0),
               )
             ],
           ),
-          _FloatingButton(context),
-          DraggableCalendarView(
+          floatingButton(context),
+          CalendarContainerView(
             calendarMinHeight: calendarMinHeight,
             calendarMaxHeight: calendarMaxHeight,
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Colors.red,
-            ),
+            child: CalendarContentView(maxHeight: calendarMaxHeight),
           ),
         ],
       ),
     );
   }
 
-  Positioned _FloatingButton(BuildContext context) {
+  Positioned floatingButton(BuildContext context) {
     return Positioned(
       bottom: 17,
       right: 20,
@@ -67,10 +64,10 @@ class HomeScreen extends HookWidget {
           borderRadius: BorderRadius.circular(100),
           boxShadow: [
             BoxShadow(
-              color: Color(0xFF8D8D8D).withOpacity(0.3),
+              color: const Color(0xFF8D8D8D).withOpacity(0.3),
               spreadRadius: 0,
               blurRadius: 5,
-              offset: Offset(2, 5), // changes position of shadow
+              offset: const Offset(2, 5), // changes position of shadow
             ),
           ],
         ),

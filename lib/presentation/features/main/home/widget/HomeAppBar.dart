@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarProvider.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -14,14 +16,15 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
  *   날짜 선택, actions 아이콘
  * }
 */
-class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
+class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
 
   @override
   Size get preferredSize => Size(double.infinity, 56);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedDatetime = ref.watch<DateTime>(CalendarProvider);
     return AppBar(
       leadingWidth: 150,
       toolbarHeight: 56,
@@ -38,7 +41,7 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
             children: [
               SizedBox(width: 20),
               Text(
-                "4월",
+                "${selectedDatetime.month}월",
                 style: getTextTheme(context).t1b.copyWith(
                       color: getColorScheme(context).neutral100,
                     ),
