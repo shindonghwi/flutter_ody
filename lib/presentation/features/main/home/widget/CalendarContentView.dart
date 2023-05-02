@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarFormatProvider.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarHeightProvider.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarPageProvider.dart';
@@ -70,13 +71,13 @@ class CalendarContentView extends HookConsumerWidget {
                   return isSameDay(_selectedDay.value, day);
                 },
                 onDaySelected: (selectedDay, focusedDay) {
+                  isDimOnRead.change(false);
                   _selectedDay.value = selectedDay;
                   _focusedDay.value = focusedDay;
                   calendarPageRead.updatePageDatetime(selectedDay);
                   calendarSelectDateRead.updateSelectedDatetime(selectedDay);
-                  calendarHeightRead.updateHeight(getMediaQuery(context).size.height * 0.15);
+                  calendarHeightRead.updateHeight(CalendarSize.minHeight(context));
                   calendarFormatRead.updateFormat(CalendarFormat.week);
-                  isDimOnRead.change(false);
                 },
                 onPageChanged: (focusedDay) {
                   _focusedDay.value = focusedDay;
@@ -113,16 +114,19 @@ class CalendarContentView extends HookConsumerWidget {
                     );
                   },
                   todayBuilder: (context, day, focusedDay) {
+                    debugPrint("today: ${DateTime.now()} | todayBuilder day :${day} focusedDay :${focusedDay}");
+
                     return Center(
                       child: Text(
                         day.day.toString(),
                         style: getTextTheme(context).c2b.copyWith(
-                              color: getColorScheme(context).colorText,
+                              color: getColorScheme(context).colorText.withOpacity(day.month == focusedDay.month ? 1 : 0.3),
                             ),
                       ),
                     );
                   },
                   defaultBuilder: (context, day, focusedDay) {
+                    debugPrint("defaultBuilder day :${day.day} focusedDay :${focusedDay.day}");
                     return Center(
                       child: Text(
                         day.day.toString(),
@@ -133,6 +137,8 @@ class CalendarContentView extends HookConsumerWidget {
                     );
                   },
                   outsideBuilder: (context, day, focusedDay) {
+                    debugPrint("outsideBuilder day :${day.day} focusedDay :${focusedDay.day}");
+                    // return Container();
                     return Center(
                       child: Text(
                         day.day.toString(),

@@ -67,15 +67,37 @@ class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
         ),
       ),
       actions: [
-        InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SvgPicture.asset(
-              "assets/imgs/icon_alrmoff.svg",
-              colorFilter: ColorFilter.mode(
-                getColorScheme(context).neutral100,
-                BlendMode.srcIn,
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: SvgPicture.asset(
+                "assets/imgs/icon_setting.svg",
+                colorFilter: ColorFilter.mode(
+                  getColorScheme(context).neutral100,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(right: 20),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: SvgPicture.asset(
+                  "assets/imgs/icon_alrmoff.svg",
+                  colorFilter: ColorFilter.mode(
+                    getColorScheme(context).neutral100,
+                    BlendMode.srcIn,
+                  ),
+                ),
               ),
             ),
           ),

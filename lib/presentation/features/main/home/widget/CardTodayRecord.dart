@@ -18,58 +18,36 @@ class CardTodayRecord extends HookWidget {
     return Container(
       width: double.infinity,
       height: 120,
-      margin: EdgeInsets.symmetric(horizontal: 24),
-      padding: EdgeInsets.fromLTRB(24, 20, 8, 20),
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.fromLTRB(24, 20, 8, 20),
       decoration: BoxDecoration(
         color: getColorScheme(context).neutral50,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Color(0xFF8D8D8D).withOpacity(0.1),
+            color: const Color(0xFF8D8D8D).withOpacity(0.1),
             spreadRadius: 0,
             blurRadius: 5,
-            offset: Offset(2, 2), // changes position of shadow
+            offset: const Offset(2, 2), // changes position of shadow
           ),
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _PercentageCircleProgressBar(context), // 원형 프로그래스바
-          _RecordInfo(context), // 오늘의 기록 정보
-          _SeeMoreIcon(context), // 더보기 아이콘
-        ],
-      ),
-    );
-  }
-
-  Align _SeeMoreIcon(BuildContext context) {
-    return Align(
-      alignment: Alignment.topRight,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.only(left: 4, bottom: 4),
-            child: SvgPicture.asset(
-              "assets/imgs/icon_calendar.svg",
-              colorFilter: ColorFilter.mode(
-                getColorScheme(context).white,
-                BlendMode.srcIn,
-              ),
-              width: 24,
-              height: 24,
+          Expanded(
+            child: Center(
+              child: _RecordInfo(context),
             ),
-          ),
-        ),
+          ), // 오늘의 기록 정보
+        ],
       ),
     );
   }
 
   Column _RecordInfo(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -87,8 +65,8 @@ class CardTodayRecord extends HookWidget {
                       color: getColorScheme(context).white,
                     ),
               ),
-              WidgetSpan(
-                child: SizedBox(width: 5),
+              const WidgetSpan(
+                child: SizedBox(width: 8),
               ),
               TextSpan(
                 text: "달성했어요",
@@ -98,7 +76,7 @@ class CardTodayRecord extends HookWidget {
               ),
             ],
           ),
-          textAlign: TextAlign.center,
+          // textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
         ),
         Text(
@@ -111,8 +89,8 @@ class CardTodayRecord extends HookWidget {
     );
   }
 
-  Container _PercentageCircleProgressBar(BuildContext context) {
-    return Container(
+  Widget _PercentageCircleProgressBar(BuildContext context) {
+    return SizedBox(
       width: 70,
       height: 70,
       child: Stack(
@@ -120,10 +98,10 @@ class CardTodayRecord extends HookWidget {
           Transform.rotate(
             angle: math.pi * 7 / 6,
             child: CustomPaint(
-              child: Container(),
               painter: PainterCircleProgress(
                 progress: 1,
               ),
+              child: Container(),
             ),
           ),
           Align(
