@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarFormatProvider.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarHeightProvider.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/provider/DimProvider.dart';
@@ -31,7 +32,7 @@ class CalendarContainerView extends HookWidget {
       maxHeight: calendarMaxHeight,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
         decoration: BoxDecoration(
           color: getColorScheme(context).white,
           borderRadius: const BorderRadius.only(
@@ -74,7 +75,7 @@ class DraggableContainer extends HookConsumerWidget {
     final isDimOnRead = ref.read(DimProvider.notifier);
     final calendarHeightRead = ref.read(CalendarHeightProvider.notifier);
     final calendarFormatRead = ref.read(CalendarFormatProvider.notifier);
-    final turningPoint = getMediaQuery(context).size.height * 0.26;
+    final turningPoint = CalendarSize.turningHeight(context);
 
     return HookBuilder(
       builder: (context) {

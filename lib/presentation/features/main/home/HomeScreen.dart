@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/CalendarContainerView.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/CalendarContentView.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/CardRecordItems.dart';
@@ -13,9 +14,7 @@ class HomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final calendarMinHeight = getMediaQuery(context).size.height * 0.15;
-    final mainContentTopMargin = getMediaQuery(context).size.height * 0.18;
-    final calendarMaxHeight = getMediaQuery(context).size.height * 0.38;
+    final mainContentTopMargin = getMediaQuery(context).size.height * 0.19;
 
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI02,
@@ -43,10 +42,10 @@ class HomeScreen extends HookWidget {
           ),
           floatingButton(context),
           CalendarContainerView(
-            calendarMinHeight: calendarMinHeight,
-            calendarMaxHeight: calendarMaxHeight,
+            calendarMinHeight: CalendarSize.minHeight(context),
+            calendarMaxHeight: CalendarSize.maxHeight(context),
             child: CalendarContentView(
-              maxHeight: calendarMaxHeight,
+              maxHeight: CalendarSize.maxHeight(context),
             ),
           ),
         ],
