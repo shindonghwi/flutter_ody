@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/app/OrotApp.dart';
+import 'package:odac_flutter_app/presentation/ui/theme.dart';
 
 enum BuildType { dev, prod }
 
@@ -17,7 +19,7 @@ class Environment {
   const Environment._internal(this._buildType);
 
   final BuildType _buildType;
-  static Environment _instance = Environment._internal(BuildType.dev);
+  static Environment _instance = const Environment._internal(BuildType.dev);
 
   static Environment get instance => _instance;
 
@@ -34,6 +36,19 @@ class Environment {
   bool get isDebuggable => _buildType == BuildType.dev;
 
   void run() {
-    runApp(ProviderScope(child: OrotApp()));
+
+    WidgetsFlutterBinding.ensureInitialized();
+
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
+    );
+
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
+
+    runApp(const ProviderScope(child: OrotApp()));
+
   }
 }

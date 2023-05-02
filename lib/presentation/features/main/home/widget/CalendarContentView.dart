@@ -114,8 +114,6 @@ class CalendarContentView extends HookConsumerWidget {
                     );
                   },
                   todayBuilder: (context, day, focusedDay) {
-                    debugPrint("today: ${DateTime.now()} | todayBuilder day :${day} focusedDay :${focusedDay}");
-
                     return Center(
                       child: Text(
                         day.day.toString(),
@@ -126,7 +124,6 @@ class CalendarContentView extends HookConsumerWidget {
                     );
                   },
                   defaultBuilder: (context, day, focusedDay) {
-                    debugPrint("defaultBuilder day :${day.day} focusedDay :${focusedDay.day}");
                     return Center(
                       child: Text(
                         day.day.toString(),
@@ -137,8 +134,6 @@ class CalendarContentView extends HookConsumerWidget {
                     );
                   },
                   outsideBuilder: (context, day, focusedDay) {
-                    debugPrint("outsideBuilder day :${day.day} focusedDay :${focusedDay.day}");
-                    // return Container();
                     return Center(
                       child: Text(
                         day.day.toString(),

@@ -9,16 +9,6 @@ class OrotApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsFlutterBinding.ensureInitialized();
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual,
-      overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
-    );
-
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-    ));
-
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth != 0) {
@@ -43,7 +33,7 @@ class OrotApp extends StatelessWidget {
             navigatorKey: OdyGlobalVariable.naviagatorState,
           );
         }
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       },

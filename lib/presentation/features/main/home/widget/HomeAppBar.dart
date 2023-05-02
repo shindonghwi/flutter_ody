@@ -33,7 +33,6 @@ class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
       bottomOpacity: 0.0,
       elevation: 0.0,
       automaticallyImplyLeading: false,
-      systemOverlayStyle: SystemUiOverlayStyle.light,
       backgroundColor: getColorScheme(context).white,
       leading: Material(
         color: Colors.transparent,
