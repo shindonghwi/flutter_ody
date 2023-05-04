@@ -61,7 +61,6 @@ class CalendarContentView extends HookConsumerWidget {
                 // 애니메이션 제거
                 pageAnimationEnabled: false,
 
-                rowHeight: 48,
                 daysOfWeekHeight: 42,
                 firstDay: _firstDay,
                 lastDay: _lastDay,

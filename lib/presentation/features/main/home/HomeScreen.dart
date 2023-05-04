@@ -14,8 +14,6 @@ class HomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainContentTopMargin = getMediaQuery(context).size.height * 0.19;
-
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI02,
       appBar: const HomeAppBar(),
@@ -27,7 +25,7 @@ class HomeScreen extends HookWidget {
               SliverToBoxAdapter(
                 child: Container(
                   color: getColorScheme(context).colorUI02,
-                  margin: EdgeInsets.only(top: mainContentTopMargin),
+                  margin: EdgeInsets.only(top: CalendarSize.underMargin(context)),
                   child: const CardTodayRecord(),
                 ),
               ),
