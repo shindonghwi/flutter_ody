@@ -1,29 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/model/RecordItemState.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarSelectDateProvider.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:odac_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
 
-class CardRecordItems extends HookWidget {
+class CardRecordItems extends HookConsumerWidget {
   const CardRecordItems({
     super.key,
   });
 
-  void movePage(BuildContext context, String title) {
+  void movePage(BuildContext context, String title, bool selectDateIsToday) {
     if (title == getAppLocalizations(context).home_today_record_walk) {
     } else if (title == getAppLocalizations(context).home_today_record_blood_pressure) {
-      Navigator.push(context, nextSlideScreen(RoutingScreen.RecordBloodPressure.route));
+      Navigator.push(
+        context,
+        nextSlideScreen(
+          selectDateIsToday
+              ? RoutingScreen.RecordBloodPressure.route
+              : RoutingScreen.RecordedListBloodPressure.route,
+        ),
+      );
     } else if (title == getAppLocalizations(context).home_today_record_glucose) {
       Navigator.push(context, nextSlideScreen(RoutingScreen.RecordGlucose.route));
     } else {}
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final calendarSelectedDate = ref.watch<DateTime>(CalendarSelectDateProvider);
+
     final recordItemState = [
       useState<RecordItemState>(
         RecordItemState(
@@ -116,7 +128,8 @@ class CardRecordItems extends HookWidget {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () => movePage(context, title),
+                    onTap: () => movePage(
+                        context, title, DateChecker.isDateToday(calendarSelectedDate)),
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
                       height: double.infinity,
