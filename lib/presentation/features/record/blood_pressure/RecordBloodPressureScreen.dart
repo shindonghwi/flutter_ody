@@ -25,9 +25,9 @@ class RecordBloodPressureScreen extends HookWidget {
         actionTextCallback: () {},
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
-          children: [
+          children: const [
             RecordDateSelector(),
             RecordBloodPressure(),
           ],

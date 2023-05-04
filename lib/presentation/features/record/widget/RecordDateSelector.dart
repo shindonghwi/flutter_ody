@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:odac_flutter_app/presentation/utils/date/DateTransfer.dart';
 
 class RecordDateSelector extends HookWidget {
   const RecordDateSelector({
@@ -12,13 +13,30 @@ class RecordDateSelector extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedTime = useState<String>(
+      DateTransfer.dateTimeToAmPmTime(DateTime.now()),
+    );
+
+    // 시간을 선택하는 픽커
+    Future<void> showTimeSelectPicker() async {
+      final TimeOfDay? result = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+      if (result != null) {
+        selectedTime.value = DateTransfer.dateTimeToAmPmTime(
+          DateTime.now().copyWith(hour: result.hour, minute: result.minute),
+        );
+      }
+    }
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         color: getColorScheme(context).white,
         borderRadius: BorderRadius.circular(5),
       ),
-      margin: EdgeInsets.only(top: 10, left: 15, right: 15),
+      margin: const EdgeInsets.only(top: 10, left: 15, right: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,9 +53,9 @@ class RecordDateSelector extends HookWidget {
                     BlendMode.srcIn,
                   ),
                 ),
-                SizedBox(width: 6),
+                const SizedBox(width: 6),
                 Text(
-                  '2021 / 04 / 18',
+                  DateTransfer.dateTimeToYearMonthDay(DateTime.now()),
                   style: getTextTheme(context).l2m.copyWith(
                         color: getColorScheme(context).neutral80,
                       ),
@@ -48,9 +66,10 @@ class RecordDateSelector extends HookWidget {
           Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {},
+              onTap: () => showTimeSelectPicker(),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -61,9 +80,9 @@ class RecordDateSelector extends HookWidget {
                         BlendMode.srcIn,
                       ),
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
-                      '오전 10 : 55',
+                      selectedTime.value,
                       style: getTextTheme(context).l2m.copyWith(
                             color: getColorScheme(context).neutral80,
                           ),
