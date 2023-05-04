@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/model/RecordItemState.dart';
+import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -10,6 +12,15 @@ class CardRecordItems extends HookWidget {
   const CardRecordItems({
     super.key,
   });
+
+  void movePage(BuildContext context, String title) {
+    if (title == getAppLocalizations(context).home_today_record_walk) {
+    } else if (title == getAppLocalizations(context).home_today_record_blood_pressure) {
+      Navigator.push(context, nextSlideScreen(RoutingScreen.RecordBloodPressure.route));
+    } else if (title == getAppLocalizations(context).home_today_record_glucose) {
+      Navigator.push(context, nextSlideScreen(RoutingScreen.RecordGlucose.route));
+    } else {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +80,7 @@ class CardRecordItems extends HookWidget {
     ];
 
     return SliverGrid(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 1.0,
         mainAxisSpacing: 17.0,
@@ -95,21 +106,21 @@ class CardRecordItems extends HookWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF8D8D8D).withOpacity(0.1),
+                      color: const Color(0xFF8D8D8D).withOpacity(0.1),
                       spreadRadius: 0,
                       blurRadius: 5,
-                      offset: Offset(2, 2), // changes position of shadow
+                      offset: const Offset(2, 2), // changes position of shadow
                     ),
                   ],
                 ),
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () => movePage(context, title),
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
                       height: double.infinity,
-                      padding: EdgeInsets.fromLTRB(15, 23, 10, 8),
+                      padding: const EdgeInsets.fromLTRB(15, 23, 10, 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -121,7 +132,7 @@ class CardRecordItems extends HookWidget {
                                       : getColorScheme(context).neutral70,
                                 ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 17,
                           ),
                           isEmotionType(context, title)
@@ -142,7 +153,7 @@ class CardRecordItems extends HookWidget {
                                               ),
                                           textAlign: TextAlign.center,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 8,
                                         ),
                                         Text(
@@ -155,7 +166,7 @@ class CardRecordItems extends HookWidget {
                                     );
                                   }).toList(),
                                 ),
-                          Expanded(child: SizedBox()),
+                          const Expanded(child: SizedBox()),
                           Align(
                             alignment: Alignment.bottomRight,
                             child: Image.asset(
@@ -171,12 +182,14 @@ class CardRecordItems extends HookWidget {
                 ),
               ),
               if (isEmotionType(context, title))
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: getColorScheme(context).colorUI04.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(20),
+                IgnorePointer(
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      color: getColorScheme(context).colorUI04.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   ),
                 )
             ],

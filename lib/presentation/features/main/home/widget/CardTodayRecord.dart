@@ -21,7 +21,7 @@ class CardTodayRecord extends HookWidget {
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.fromLTRB(24, 20, 8, 20),
       decoration: BoxDecoration(
-        color: getColorScheme(context).neutral50,
+        color: getColorScheme(context).primary100,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
