@@ -5,6 +5,7 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/date/DateTransfer.dart';
+import 'package:odac_flutter_app/presentation/utils/picker/TimePicker.dart';
 
 class RecordDateSelector extends HookWidget {
   const RecordDateSelector({
@@ -18,11 +19,8 @@ class RecordDateSelector extends HookWidget {
     );
 
     // 시간을 선택하는 픽커
-    Future<void> showTimeSelectPicker() async {
-      final TimeOfDay? result = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-      );
+    showTimeSelectPicker() async {
+      final result = await TimePicker.show(context);
       if (result != null) {
         selectedTime.value = DateTransfer.dateTimeToAmPmTime(
           DateTime.now().copyWith(hour: result.hour, minute: result.minute),
@@ -68,8 +66,7 @@ class RecordDateSelector extends HookWidget {
             child: InkWell(
               onTap: () => showTimeSelectPicker(),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
