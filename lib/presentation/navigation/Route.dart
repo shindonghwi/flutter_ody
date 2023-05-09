@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:odac_flutter_app/presentation/features/edit/my_height/EditMyHeightScreen.dart';
+import 'package:odac_flutter_app/presentation/features/edit/my_info/EditMyInfoScreen.dart';
+import 'package:odac_flutter_app/presentation/features/edit/my_nickname/EditMyNicknameScreen.dart';
+import 'package:odac_flutter_app/presentation/features/edit/my_weight/EditMyWeightScreen.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/InputProfileScreen.dart';
 import 'package:odac_flutter_app/presentation/features/list/blood_pressure/RecordedListBloodPressureScreen.dart';
 import 'package:odac_flutter_app/presentation/features/list/glucose/RecordedListGlucoseScreen.dart';
@@ -26,7 +30,11 @@ enum RoutingScreen {
   RecordBloodPressure(route: "/record/blood_pressure"), // 혈압 기록
   RecordGlucose(route: "/record/glucose"), // 혈당 기록
   RecordedListBloodPressure(route: "/list/blood_pressure"), // 혈압 기록 목록
-  RecordedListGlucose(route: "/list/glucose"); // 혈당 기록 목록
+  RecordedListGlucose(route: "/list/glucose"), // 혈당 기록 목록
+  EditMyInfo(route: "/edit/my_info"), // 내 정보 수정
+  EditMyNickname(route: "/edit/my_nickname"), // 닉네임 수정
+  EditMyHeight(route: "/edit/my_height"), // 키 수정
+  EditMyWeight(route: "/edit/my_weight"); // 몸무게 수정
 
   final String route;
 
@@ -44,8 +52,12 @@ enum RoutingScreen {
       RoutingScreen.Main.route: (context) => MainScreen(),
       RoutingScreen.RecordBloodPressure.route: (context) => const RecordBloodPressureScreen(),
       RoutingScreen.RecordGlucose.route: (context) => const RecordGlucoseScreen(),
-      RoutingScreen.RecordedListBloodPressure.route: (context) => RecordedListBloodPressureScreen(),
-      RoutingScreen.RecordedListGlucose.route: (context) => RecordedListGlucoseScreen(),
+      RoutingScreen.RecordedListBloodPressure.route: (context) => const RecordedListBloodPressureScreen(),
+      RoutingScreen.RecordedListGlucose.route: (context) => const RecordedListGlucoseScreen(),
+      RoutingScreen.EditMyInfo.route: (context) => const EditMyInfoScreen(),
+      RoutingScreen.EditMyNickname.route: (context) => const EditMyNicknameScreen(),
+      RoutingScreen.EditMyHeight.route: (context) => const EditMyHeightScreen(),
+      RoutingScreen.EditMyWeight.route: (context) => const EditMyWeightScreen(),
     };
   }
 
@@ -71,6 +83,14 @@ enum RoutingScreen {
         return const RecordedListBloodPressureScreen();
       case "/list/glucose":
         return const RecordedListGlucoseScreen();
+      case "/edit/my_info":
+        return const EditMyInfoScreen();
+      case "/edit/my_nickname":
+        return const EditMyNicknameScreen();
+      case "/edit/my_height":
+        return const EditMyHeightScreen();
+      case "/edit/my_weight":
+        return const EditMyWeightScreen();
       default:
         return const LoginScreen();
     }
