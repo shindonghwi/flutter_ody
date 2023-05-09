@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
+import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -16,17 +18,33 @@ class EditMyInfoScreen extends HookWidget {
       Triple(
         getAppLocalizations(context).edit_my_info_title_nickname,
         "운동하는 다람쥐",
-        () {},
+        () {
+          Navigator.pushNamed(
+            context,
+            RoutingScreen.EditMyNickname.route,
+            arguments: "운동하는 다람쥐"
+          );
+        },
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_height,
         "178 cm",
-        () {},
+        () {
+          Navigator.push(
+            context,
+            nextSlideScreen(RoutingScreen.EditMyHeight.route),
+          );
+        },
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_weight,
         "64 kg",
-        () {},
+        () {
+          Navigator.push(
+            context,
+            nextSlideScreen(RoutingScreen.EditMyWeight.route),
+          );
+        },
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_email,
@@ -55,6 +73,7 @@ class EditMyInfoScreen extends HookWidget {
             final action = e.third;
 
             return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 24),
