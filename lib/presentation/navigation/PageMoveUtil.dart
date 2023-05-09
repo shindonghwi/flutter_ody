@@ -3,12 +3,12 @@ import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 
 PageRouteBuilder nextSlideScreen(String route) {
   return PageRouteBuilder(
-    transitionDuration: Duration(milliseconds: 250),
+    transitionDuration: const Duration(milliseconds: 250),
     pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(route),
-    reverseTransitionDuration: Duration(milliseconds: 250),
+    reverseTransitionDuration: const Duration(milliseconds: 250),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return SlideTransition(
-        position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+        position: Tween(begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0)).animate(animation),
         child: child,
       );
     },
@@ -17,9 +17,9 @@ PageRouteBuilder nextSlideScreen(String route) {
 
 PageRouteBuilder nextFadeInOutScreen(String route) {
   return PageRouteBuilder(
-    transitionDuration: Duration(milliseconds: 250),
+    transitionDuration: const Duration(milliseconds: 250),
     pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(route),
-    reverseTransitionDuration: Duration(milliseconds: 250),
+    reverseTransitionDuration: const Duration(milliseconds: 250),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return FadeTransition(
         opacity: animation,
