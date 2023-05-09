@@ -16,7 +16,7 @@ class MyAlarmSetting extends HookWidget {
     List<Triple> reportItems = [
       Triple(
         "assets/imgs/icon_pill.png",
-        "약 알림 설정",
+        getAppLocalizations(context).my_item_subtitle_pill,
         () {},
       ),
     ];
@@ -28,7 +28,7 @@ class MyAlarmSetting extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "알림 설정",
+            getAppLocalizations(context).my_item_title_alarm,
             style: getTextTheme(context).t2b.copyWith(
                   color: getColorScheme(context).colorText,
                 ),

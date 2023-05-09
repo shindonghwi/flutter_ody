@@ -16,12 +16,12 @@ class MyReport extends HookWidget {
     List<Triple> reportItems = [
       Triple(
         "assets/imgs/icon_weekly_report.png",
-        "주간 보고서",
+        getAppLocalizations(context).my_item_subtitle_weekly_report,
         () {},
       ),
       Triple(
         "assets/imgs/icon_monthly_report.png",
-        "월간 보고서",
+        getAppLocalizations(context).my_item_subtitle_monthly_report,
         () {},
       ),
     ];
@@ -33,7 +33,7 @@ class MyReport extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "보고서",
+            getAppLocalizations(context).my_item_title_report,
             style: getTextTheme(context).t2b.copyWith(
                   color: getColorScheme(context).colorText,
                 ),

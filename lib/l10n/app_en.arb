@@ -57,6 +57,12 @@
     "main_tab_news": "소식",
     "main_tab_my": "내 정보",
 
+    "my_item_title_report": "보고서",
+    "my_item_subtitle_weekly_report": "주간 보고서",
+    "my_item_subtitle_monthly_report": "월간 보고서",
+    "my_item_title_alarm": "알림 설정",
+    "my_item_subtitle_pill": "약 알림 설정",
+
     "home_today_record_title": "오늘의 기록",
     "home_today_record_walk": "걸음 수",
     "home_today_record_walk_unit": "걸음",
@@ -102,6 +108,15 @@
     "record_range_figure_danger": "위험",
     "record_range_figure_high_risk": "고위험",
 
+    "edit_my_info_title_nickname": "닉네임",
+    "edit_my_info_title_height": "키",
+    "edit_my_info_title_weight": "몸무게",
+    "edit_my_info_title_email": "계정",
+
+    "edit_my_nickname_title": "닉네임 수정",
+    "edit_my_height_title": "키 수정",
+    "edit_my_weight_title": "몸무게 수정",
+
     "common_skip": "넘어가기",
     "common_next": "다음",
     "common_required": "필수",
@@ -109,6 +124,7 @@
     "common_confirm": "확인",
     "common_man": "남성",
     "common_woman": "여성",
-    "common_save": "저장"
+    "common_save": "저장",
+    "common_complete": "완료"
 
 }
