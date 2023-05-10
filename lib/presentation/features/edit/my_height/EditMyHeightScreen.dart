@@ -38,7 +38,7 @@ class EditMyHeightScreen extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                getAppLocalizations(context).edit_my_info_title_nickname,
+                getAppLocalizations(context).edit_my_info_title_height,
                 style: getTextTheme(context).c2r.copyWith(
                       color: getColorScheme(context).colorText,
                     ),

@@ -37,7 +37,7 @@ class EditMyWeightScreen extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                getAppLocalizations(context).edit_my_info_title_nickname,
+                getAppLocalizations(context).edit_my_info_title_weight,
                 style: getTextTheme(context).c2r.copyWith(
                       color: getColorScheme(context).colorText,
                     ),
