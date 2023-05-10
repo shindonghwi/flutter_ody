@@ -83,7 +83,12 @@ class MyUserInfo extends HookWidget {
         child: Align(
           alignment: Alignment.centerRight,
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                nextSlideScreen(RoutingScreen.Setting.route),
+              );
+            },
             child: Padding(
               padding: const EdgeInsets.all(6.0),
               child: SvgPicture.asset(
