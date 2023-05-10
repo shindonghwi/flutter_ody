@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -86,7 +88,12 @@ class SettingEtc extends HookWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            nextSlideScreen(RoutingScreen.Withdrawal.route),
+          );
+        },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
@@ -104,7 +111,12 @@ class SettingEtc extends HookWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            nextSlideScreen(RoutingScreen.Withdrawal.route),
+          );
+        },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
