@@ -60,7 +60,7 @@ class MyAlarmSetting extends HookWidget {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: SvgPicture.asset(
-                            "assets/imgs/icon_next_1_5.svg",
+                            "assets/imgs/icon_next_1_5_large.svg",
                             width: 24,
                             height: 24,
                             colorFilter: ColorFilter.mode(

@@ -30,37 +30,37 @@ class FillButton extends HookConsumerWidget {
     final buttonRead = ref.read<ButtonNotifier>(buttonProvider.notifier);
     final buttonPadding = FillButtonSize.getButtonPadding(type);
 
-    return Container(
-      decoration: BoxDecoration(
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
         borderRadius: BorderRadius.circular(borderRadius),
-        color: _getBackgroundColor(context, buttonState),
-        border: Border.all(
-          color: _getBackgroundColor(context, buttonState),
-          width: 1.5,
-        ),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(borderRadius),
-          onTapDown: (_) {
-            if (buttonState == ButtonState.Disabled) return;
-            buttonRead.changeState(ButtonState.Pressed);
-          },
-          onTapUp: (_) {
-            if (buttonState == ButtonState.Disabled) return;
+        onTapDown: (_) {
+          if (buttonState == ButtonState.Disabled) return;
+          buttonRead.changeState(ButtonState.Pressed);
+        },
+        onTapUp: (_) {
+          if (buttonState == ButtonState.Disabled) return;
 
-            if (buttonState == ButtonState.Activated) {
-              buttonRead.changeState(ButtonState.Default);
-            } else {
-              buttonRead.changeState(ButtonState.Activated);
-            }
-            onPressed();
-          },
-          onTapCancel: () {
-            if (buttonState == ButtonState.Disabled) return;
+          if (buttonState == ButtonState.Activated) {
             buttonRead.changeState(ButtonState.Default);
-          },
+          } else {
+            buttonRead.changeState(ButtonState.Activated);
+          }
+          onPressed();
+        },
+        onTapCancel: () {
+          if (buttonState == ButtonState.Disabled) return;
+          buttonRead.changeState(ButtonState.Default);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius),
+            color: _getBackgroundColor(context, buttonState),
+            border: Border.all(
+              color: _getBackgroundColor(context, buttonState),
+              width: 1.5,
+            ),
+          ),
           child: Padding(
             padding: buttonPadding,
             child: Text(

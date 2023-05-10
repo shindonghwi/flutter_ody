@@ -5,13 +5,13 @@ import 'package:odac_flutter_app/presentation/components/checkbox/model/CheckBox
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class BasicCheckBox extends HookWidget {
+class BasicBorderCheckBox extends HookWidget {
   final bool isChecked;
   final CheckBoxSize size;
   final CheckBoxType type;
   final Function(bool) onChange;
 
-  const BasicCheckBox({
+  const BasicBorderCheckBox({
     Key? key,
     required this.isChecked,
     required this.size,

@@ -141,6 +141,14 @@
     "withdrawal_policy_agree": "안내사항 확인 후 탈퇴에 동의합니다.",
     "withdrawal_do": "탈퇴하기",
 
+    "withdrawal_reason_description": "오디를 탈퇴하게 된 이유가 있으신가요?\n탈퇴사유를 알려주시면 의견을 적극 반영하겠습니다",
+    "withdrawal_reason_sub_description": "중복 선택이 가능합니다",
+    "withdrawal_reason_1": "서비스를 자주 사용하지 않아요",
+    "withdrawal_reason_2": "서비스가 불편해요",
+    "withdrawal_reason_3": "앱이 불편해요",
+    "withdrawal_reason_4": "디자인이 복잡해요",
+    "withdrawal_reason_5": "기타",
+
     "common_skip": "넘어가기",
     "common_next": "다음",
     "common_required": "필수",

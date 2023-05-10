@@ -7,9 +7,11 @@ import 'package:odac_flutter_app/presentation/components/button/fill/FillButton.
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/components/checkbox/checkbox/BasicCheckBox.dart';
+import 'package:odac_flutter_app/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:odac_flutter_app/presentation/components/checkbox/model/CheckBoxSize.dart';
 import 'package:odac_flutter_app/presentation/components/checkbox/model/CheckBoxType.dart';
+import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -49,7 +51,7 @@ class WithdrawalScreen extends HookWidget {
           onPressed: () => Navigator.of(context).pop(),
           tint: getColorScheme(context).black,
         ),
-        title: getAppLocalizations(context).setting_title,
+        title: getAppLocalizations(context).withdrawal_title,
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(16, 32, 24, 40),
@@ -71,7 +73,12 @@ class WithdrawalScreen extends HookWidget {
                 child: FillButton(
                   text: getAppLocalizations(context).common_next,
                   type: ButtonSizeType.Small,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      nextSlideScreen(RoutingScreen.WithdrawalReason.route),
+                    );
+                  },
                   buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
                     (_) => ButtonNotifier(
                       state: buttonState.value == ButtonState.Activated
@@ -185,7 +192,7 @@ class WithdrawalScreen extends HookWidget {
               SizedBox(
                 width: 32,
                 height: 32,
-                child: BasicCheckBox(
+                child: BasicBorderCheckBox(
                   isChecked: _isChecked.value,
                   size: CheckBoxSize.Normal,
                   type: CheckBoxType.Circle,

@@ -60,7 +60,7 @@ class MyUserInfo extends HookWidget {
               Container(
                 margin: const EdgeInsets.only(left: 4),
                 child: SvgPicture.asset(
-                  "assets/imgs/icon_next_1_5.svg",
+                  "assets/imgs/icon_next_1_5_large.svg",
                   width: 24,
                   height: 24,
                   colorFilter: ColorFilter.mode(

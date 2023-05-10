@@ -14,6 +14,7 @@ import 'package:odac_flutter_app/presentation/features/record/glucose/RecordGluc
 import 'package:odac_flutter_app/presentation/features/setting/SettingScreen.dart';
 import 'package:odac_flutter_app/presentation/features/splash/SplashScreen.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/WelcomeScreen.dart';
+import 'package:odac_flutter_app/presentation/features/withdrawal/WithdrawalReasonScreen.dart';
 import 'package:odac_flutter_app/presentation/features/withdrawal/WithdrawalScreen.dart';
 import 'package:odac_flutter_app/presentation/features/withdrawal/WithdrawalScreen.dart';
 import 'package:odac_flutter_app/presentation/features/withdrawal/WithdrawalScreen.dart';
@@ -37,7 +38,8 @@ enum RoutingScreen {
   EditMyHeight(route: "/edit/my_height"), // 키 수정
   EditMyWeight(route: "/edit/my_weight"), // 몸무게 수정
   Setting(route: "/setting"), // 설정화면
-  Withdrawal(route: "/withdrawal"); // 회원탈퇴
+  Withdrawal(route: "/withdrawal"), // 회원탈퇴
+  WithdrawalReason(route: "/withdrawal/reason"); // 회원탈퇴 사유
 
   final String route;
 
@@ -63,6 +65,7 @@ enum RoutingScreen {
       RoutingScreen.EditMyWeight.route: (context) => const EditMyWeightScreen(),
       RoutingScreen.Setting.route: (context) => const SettingScreen(),
       RoutingScreen.Withdrawal.route: (context) => const WithdrawalScreen(),
+      RoutingScreen.WithdrawalReason.route: (context) => const WithdrawalReasonScreen(),
     };
   }
 
@@ -100,6 +103,8 @@ enum RoutingScreen {
         return const SettingScreen();
       case "/withdrawal":
         return const WithdrawalScreen();
+      case "/withdrawal/reason":
+        return const WithdrawalReasonScreen();
       default:
         return const LoginScreen();
     }
