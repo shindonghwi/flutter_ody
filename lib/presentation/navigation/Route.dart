@@ -49,8 +49,8 @@ enum RoutingScreen {
 
   static Map<String, WidgetBuilder> getAppRoutes() {
     return {
-      RoutingScreen.Splash.route: (context) => MainScreen(),
-      RoutingScreen.OnBoarding.route: (context) => const OnBoardingScreen(),
+      RoutingScreen.Splash.route: (context) => SplashScreen(),
+      RoutingScreen.OnBoarding.route: (context) => OnBoardingScreen(),
       RoutingScreen.Login.route: (context) => const LoginScreen(),
       RoutingScreen.InputProfile.route: (context) => const InputProfileScreen(),
       RoutingScreen.Welcome.route: (context) => const WelcomeScreen(),
@@ -74,7 +74,7 @@ enum RoutingScreen {
       case "/splash":
         return SplashScreen();
       case "/onBoarding":
-        return const OnBoardingScreen();
+        return OnBoardingScreen();
       case "/login":
         return const LoginScreen();
       case "/input_profile":

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/app/OrotApp.dart';
+import 'package:odac_flutter_app/di/locator.dart';
 import 'package:odac_flutter_app/presentation/ui/theme.dart';
 
 enum BuildType { dev, prod }
@@ -47,6 +48,8 @@ class Environment {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
+
+    initServiceLocator();
 
     runApp(const ProviderScope(child: OrotApp()));
 
