@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/app/OrotApp.dart';
 import 'package:odac_flutter_app/domain/usecases/app/GetAppPolicyUpdateUseCase.dart';
 import 'package:odac_flutter_app/presentation/components/button/fill/FillButton.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
@@ -23,20 +25,39 @@ class PopUpAppPolicy extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _appTitle(context),
-          const SizedBox(height: 23),
-          const _PolicyAllCheck(),
-          _divider(context),
-          const SizedBox(height: 16),
-          const _PolicyItems(),
-          const SizedBox(height: 16),
-          ContinueButton()
-        ],
+    DateTime? lastPressedAt;
+    return WillPopScope(
+      onWillPop: () async {
+        final now = DateTime.now();
+        if (lastPressedAt == null ||
+            now.difference(lastPressedAt!) > const Duration(seconds: 2)) {
+          lastPressedAt = now;
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('한번 더 누르면 종료됩니다'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+          return false;
+        }
+        SystemNavigator.pop();
+        return true;
+      },
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _appTitle(context),
+            const SizedBox(height: 23),
+            const _PolicyAllCheck(),
+            _divider(context),
+            const SizedBox(height: 16),
+            const _PolicyItems(),
+            const SizedBox(height: 16),
+            ContinueButton()
+          ],
+        ),
       ),
     );
   }
@@ -149,18 +170,20 @@ class _PolicyItems extends HookConsumerWidget {
                 ),
                 Text(
                   item.first,
-                  style: getTextTheme(context)
-                      .b3r
-                      .copyWith(color: getColorScheme(context).colorText, height: 1),
+                  style: getTextTheme(context).b3r.copyWith(
+                        color: getColorScheme(context).colorText,
+                        height: 1,
+                      ),
                 ),
                 const SizedBox(
                   width: 8,
                 ),
                 Text(
                   "[${item.second ? getAppLocalizations(context).common_required : getAppLocalizations(context).common_select}]",
-                  style: getTextTheme(context)
-                      .b3r
-                      .copyWith(color: getColorScheme(context).primary100, height: 1),
+                  style: getTextTheme(context).b3r.copyWith(
+                        color: getColorScheme(context).primary100,
+                        height: 1,
+                      ),
                 ),
                 SvgPicture.asset(
                   "assets/imgs/icon_next_1_small.svg",
@@ -180,11 +203,11 @@ class _PolicyItems extends HookConsumerWidget {
 
 class ContinueButton extends HookConsumerWidget {
   ContinueButton({Key? key}) : super(key: key);
-  final GetAppPolicyUpdateUseCase _getAppPolicyUpdateUseCase = GetIt.instance<GetAppPolicyUpdateUseCase>();
+  final GetAppPolicyUpdateUseCase _getAppPolicyUpdateUseCase =
+      GetIt.instance<GetAppPolicyUpdateUseCase>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final policyItemsState = ref.watch<List<bool>>(termsAppPolicyProvider);
     final policyItemsRead = ref.read(termsAppPolicyProvider.notifier);
 
