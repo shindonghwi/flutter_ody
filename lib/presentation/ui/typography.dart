@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
  */
 const defaultTextStyle = TextStyle(
   fontFamily: 'AppleSDGothicNeo',
-  fontWeight: FontWeight.w100,
   overflow: TextOverflow.ellipsis,
   letterSpacing: 0,
   height: 1
