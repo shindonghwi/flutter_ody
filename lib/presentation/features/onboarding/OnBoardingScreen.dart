@@ -9,16 +9,13 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class OnBoardingScreen extends HookWidget {
-  OnBoardingScreen({Key? key}) : super(key: key);
-
-  final GetAppPolicyUpdateUseCase _getAppPolicyUpdateUseCase =
-      GetIt.instance<GetAppPolicyUpdateUseCase>();
+  const OnBoardingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
     useEffect(() {
-      PopupUtil.showAppPolicy();
+      PopupUtil.showAppPolicy(backgroundTouchCloseFlag: false);
       return null;
     },[]);
 

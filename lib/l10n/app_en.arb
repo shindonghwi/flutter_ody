@@ -149,6 +149,12 @@
     "withdrawal_reason_4": "디자인이 복잡해요",
     "withdrawal_reason_5": "기타",
 
+    "popup_app_policy_title" : "사용 약관",
+    "popup_app_policy_all_grant" : "모두 동의하기",
+    "popup_app_policy_age_14" : "만 14세 이상",
+    "popup_app_policy_service" : "오디 서비스 이용 약관",
+    "popup_app_policy_individual" : "개인정보 수집 및 이용동의",
+
     "common_skip": "넘어가기",
     "common_next": "다음",
     "common_required": "필수",
@@ -157,6 +163,9 @@
     "common_man": "남성",
     "common_woman": "여성",
     "common_save": "저장",
-    "common_complete": "완료"
+    "common_complete": "완료",
+    "common_require": "필수",
+    "common_select": "선택",
+    "common_continue": "계속"
 
 }
