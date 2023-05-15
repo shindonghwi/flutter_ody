@@ -13,7 +13,7 @@ extension StyleColor on ColorScheme{
   Color get colorPrimaryFocus => brightness == Brightness.light ? primary100 : primary100;
   Color get colorPrimaryPress => brightness == Brightness.light ? primary50 : primary50;
   Color get colorPrimaryDisable => brightness == Brightness.light ? neutral40 : neutral40;
-  Color get colorError => brightness == Brightness.light ? error100 : error100;
+  Color get colorError => brightness == Brightness.light ? error80 : error80;
 
 
 
