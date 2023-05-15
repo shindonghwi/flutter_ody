@@ -6,7 +6,7 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
 class IndicatorDot extends HookWidget {
   final bool isSelected;
 
-  IndicatorDot({this.isSelected = false});
+  const IndicatorDot({super.key, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +14,9 @@ class IndicatorDot extends HookWidget {
     final dotColor = isSelected ? getColorScheme(context).primary100 : getColorScheme(context).neutral30;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         width: dotSize,
         height: 7.0,
         decoration: BoxDecoration(

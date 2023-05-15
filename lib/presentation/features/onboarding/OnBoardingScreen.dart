@@ -16,10 +16,14 @@ class OnBoardingScreen extends HookWidget {
     }, []);
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: getColorScheme(context).colorUI01,
+        elevation: 0,
+      ),
       backgroundColor: getColorScheme(context).colorUI01,
       body: SafeArea(
         child: Stack(
-          children: [
+          children: const [
             PageViewWithIndicator(),
           ],
         ),

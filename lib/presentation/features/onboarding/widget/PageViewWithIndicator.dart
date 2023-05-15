@@ -18,12 +18,14 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
  * @author: 2023/03/29 4:44 PM donghwishin
  */
 class PageViewWithIndicator extends HookConsumerWidget {
+  const PageViewWithIndicator({super.key});
+
   bool onBackPressed(PageController pageController) {
     if (pageController.page!.round() == 0) {
       return true;
     } else {
       pageController.previousPage(
-        duration: Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 250),
         curve: Curves.easeInOut,
       );
       return false;
@@ -42,39 +44,37 @@ class PageViewWithIndicator extends HookConsumerWidget {
     }, [pageController]);
 
     return Container(
-      margin: EdgeInsets.only(top: 69, bottom: 30),
+      margin: const EdgeInsets.only(top: 8, bottom: 24),
       child: Column(
         children: [
-          _PageItems(context, pageController, pages),
-          _Indicator(pages, currentPageIndex),
-          _NextButton(context, pageController, pages.length),
+          _pageItems(context, pageController, pages),
+          const SizedBox(height: 0),
+          _indicator(pages, currentPageIndex),
+          _nextButton(context, pageController, pages.length),
         ],
       ),
     );
   }
 
-  /** 페이지 컨트롤러 아이템 셋팅 */
+  /// 페이지 컨트롤러 아이템 셋팅
   List<OnBoardingPageItem> setPages() {
     return [
       OnBoardingPageItem(
         imagePath: "assets/imgs/onboarding_1.png",
         title: getAppLocalizations(useContext()).onboarding_page1_title,
-        subTitle: getAppLocalizations(useContext()).onboarding_page1_subtitle,
       ),
       OnBoardingPageItem(
-        imagePath: "assets/imgs/onboarding_1.png",
+        imagePath: "assets/imgs/onboarding_2.png",
         title: getAppLocalizations(useContext()).onboarding_page2_title,
-        subTitle: getAppLocalizations(useContext()).onboarding_page2_subtitle,
       ),
       OnBoardingPageItem(
-        imagePath: "assets/imgs/onboarding_1.png",
+        imagePath: "assets/imgs/onboarding_3.png",
         title: getAppLocalizations(useContext()).onboarding_page3_title,
-        subTitle: getAppLocalizations(useContext()).onboarding_page3_subtitle,
       ),
     ];
   }
 
-  /** 페이지 컨트롤러 리스너 셋팅 */
+  /// 페이지 컨트롤러 리스너 셋팅
   void setPageControllerAddListener(PageController pageController, WidgetRef ref) {
     pageController.addListener(
       () => ref.read(onBoardingCurrentPageIndexProvider.notifier).state =
@@ -82,18 +82,18 @@ class PageViewWithIndicator extends HookConsumerWidget {
     );
   }
 
-  /** 페이지 컨트롤러 해제 */
+  /// 페이지 컨트롤러 해제
   void disposePageController(PageController pageController) => pageController.dispose();
 
-  /** 위젯: 페이지 뷰 아이템 */
-  Widget _PageItems(BuildContext context, PageController pageController, List<Widget> pages) {
-    return Container(
+  /// 위젯: 페이지 뷰 아이템
+  Widget _pageItems(BuildContext context, PageController pageController, List<Widget> pages) {
+    return SizedBox(
       width: getMediaQuery(context).size.width,
       height: getMediaQuery(context).size.height * 0.65,
       child: WillPopScope(
         onWillPop: () async => onBackPressed.call(pageController),
         child: PageView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           controller: pageController,
           children: pages,
         ),
@@ -101,32 +101,31 @@ class PageViewWithIndicator extends HookConsumerWidget {
     );
   }
 
-  /** 위젯: 페이지 인디케이터 */
-  Widget _Indicator(List<Widget> pages, int currentPageIndex) {
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          pages.length,
-          (index) => IndicatorDot(
-            isSelected: index == currentPageIndex,
-          ),
+  /// 위젯: 페이지 인디케이터
+  Widget _indicator(List<Widget> pages, int currentPageIndex) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        pages.length,
+        (index) => IndicatorDot(
+          isSelected: index == currentPageIndex,
         ),
       ),
     );
   }
 
-  /** 다음버튼 */
-  Expanded _NextButton(BuildContext context, PageController pageController, int length) {
+  /// 다음버튼
+  Expanded _nextButton(BuildContext context, PageController pageController, int length) {
     return Expanded(
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
           width: double.infinity,
-          margin: EdgeInsets.symmetric(horizontal: 45),
+          margin: const EdgeInsets.symmetric(horizontal: 45),
           child: FillButton(
-            text: getAppLocalizations(context).common_skip,
-            type: ButtonSizeType.Small,
+            text: "${getAppLocalizations(context).common_signup} / ${getAppLocalizations(context).common_signin}",
+            type: ButtonSizeType.Normal,
             onPressed: () {
               if (pageController.page!.round() == length - 1) {
                 Navigator.pushReplacement(
@@ -135,7 +134,7 @@ class PageViewWithIndicator extends HookConsumerWidget {
                 );
               } else {
                 pageController.nextPage(
-                  duration: Duration(milliseconds: 250),
+                  duration: const Duration(milliseconds: 250),
                   curve: Curves.easeInOut,
                 );
               }
