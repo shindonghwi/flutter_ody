@@ -28,6 +28,7 @@ class OutlineBasicPrimaryButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final buttonState = ref.watch<ButtonState>(buttonProvider);
     final buttonRead = ref.read<ButtonNotifier>(buttonProvider.notifier);
+    final buttonHeight = OutlineButtonSize.getButtonHeight(type);
     final buttonPadding = OutlineButtonSize.getButtonPadding(type);
     final buttonStateSave = useState(buttonState);
 
@@ -56,6 +57,7 @@ class OutlineBasicPrimaryButton extends HookConsumerWidget {
           buttonRead.changeState(ButtonState.Default);
         },
         child: Container(
+          height: buttonHeight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
@@ -66,13 +68,15 @@ class OutlineBasicPrimaryButton extends HookConsumerWidget {
           ),
           child: Padding(
             padding: buttonPadding,
-            child: Text(
-              text,
-              style: getTextTheme(context).l1m.copyWith(
-                    color: _getTextColor(context, buttonState),
-                  ),
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
+            child: Center(
+              child: Text(
+                text,
+                style: getTextTheme(context).l1m.copyWith(
+                      color: _getTextColor(context, buttonState),
+                    ),
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),

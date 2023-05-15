@@ -13,10 +13,10 @@ class BasicBorderCheckBox extends HookWidget {
 
   const BasicBorderCheckBox({
     Key? key,
-    required this.isChecked,
-    required this.size,
-    required this.type,
-    required this.onChange,
+    required bool this.isChecked,
+    required CheckBoxSize this.size,
+    required CheckBoxType this.type,
+    required Function(bool) this.onChange,
   }) : super(key: key);
 
   @override
