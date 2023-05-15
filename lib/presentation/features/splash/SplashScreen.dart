@@ -14,6 +14,8 @@ class SplashScreen extends HookWidget {
 
   final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase = GetIt.instance<GetAppPolicyCheckUseCase>();
 
+  SplashScreen({super.key});
+
   moveOnBoardingPage(BuildContext context) {
     Timer(
       const Duration(milliseconds: 1000),
@@ -29,7 +31,7 @@ class SplashScreen extends HookWidget {
       const Duration(milliseconds: 1000),
       () => Navigator.pushReplacement(
         context,
-        nextSlideScreen(RoutingScreen.Main.route),
+        nextSlideScreen(RoutingScreen.Login.route),
       ),
     );
   }

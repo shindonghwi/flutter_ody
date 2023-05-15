@@ -6,11 +6,11 @@
 
     "login_title": "건강한 관리의 시작\n오디",
     "login_sns": "SNS 계정으로 로그인하기",
-    "login_policy_all_agree": "오디 약관 전체 동의하기",
-    "login_policy_age": "만 14세 이상",
-    "login_policy_service": "오디 서비스 이용약관",
-    "login_policy_individual": "개인정보 수집 및 이용 동의",
-    "login_policy_marketing": "마케팅 정보 활용 동의",
+    "login_signup_description1": "계속하면 당사의",
+    "login_signup_description2": "서비스 약관",
+    "login_signup_description3": "에 동의하고,",
+    "login_signup_description4": " 개인정보 처리방침",
+    "login_signup_description5": "을 읽어\n당사의 데이터 수집, 사용, 공유 방법을 확인 하였음을 동의하는 것으로 간주합니다.",
 
     "input_profile_gender": "성별",
     "input_profile_birthday": "생년월일",

@@ -157,6 +157,11 @@ extension StyleText on TextTheme {
       fontWeight: FontWeight.w400,
       // height: 1.6
   );
+  TextStyle get c3m => defaultTextStyle.copyWith(
+      fontSize: 10,
+      fontWeight: FontWeight.w500,
+      // height: 1.6
+  );
   TextStyle get c3b => defaultTextStyle.copyWith(
       fontSize: 10,
       fontWeight: FontWeight.w700,

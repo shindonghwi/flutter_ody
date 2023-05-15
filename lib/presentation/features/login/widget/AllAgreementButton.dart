@@ -23,7 +23,7 @@ class AllAgreementButton extends HookConsumerWidget {
       width: double.infinity,
       margin: const EdgeInsets.only(top: 32),
       child: OutlineBasicPrimaryButton(
-        text: getAppLocalizations(context).login_policy_all_agree,
+        text: getAppLocalizations(context).common_select,
         type: ButtonSizeType.Small,
         onPressed: () {
           policyItemsRead.allChange();

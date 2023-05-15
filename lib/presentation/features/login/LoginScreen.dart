@@ -7,10 +7,8 @@ import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
 
-/**
- * @feature:  로그인 화면
- * @author: 2023/03/29 6:59 PM donghwishin
- */
+/// @feature:  로그인 화면
+/// @author: 2023/03/29 6:59 PM donghwishin
 class LoginScreen extends HookWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -21,59 +19,89 @@ class LoginScreen extends HookWidget {
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUIBackground,
       body: SafeArea(
-        child: LoginContent(context, size),
+        child: loginContent(context, size),
       ),
     );
   }
 
-  Column LoginContent(BuildContext context, Size size) {
+  Column loginContent(BuildContext context, Size size) {
     return Column(
       children: [
         _AppTitle(context, size),
-        _SocialIconContainer(context, size.height * 0.48),
+        _socialIconContainer(context, size.height * 0.48),
       ],
     );
   }
 
-  /** 위젯: 소셜 아이콘 및 로그인하기 타이틀 */
-  Expanded _SocialIconContainer(BuildContext context, double height) {
+  /// 위젯: 소셜 아이콘 및 로그인하기 타이틀
+  Expanded _socialIconContainer(BuildContext context, double height) {
     List<Pair?> socialItems = [
       Pair('assets/imgs/image_kakao.png', () {
-        CommonBottomSheet.showBottomSheet(context, child: AgreementBottomSheet());
+        CommonBottomSheet.showBottomSheet(context, child: const AgreementBottomSheet());
       }),
       null,
       Pair('assets/imgs/image_google.png', () {
-        CommonBottomSheet.showBottomSheet(context, child: AgreementBottomSheet());
+        CommonBottomSheet.showBottomSheet(context, child: const AgreementBottomSheet());
       }),
       null,
       Pair('assets/imgs/image_apple.png', () {
-        CommonBottomSheet.showBottomSheet(context, child: AgreementBottomSheet());
+        CommonBottomSheet.showBottomSheet(context, child: const AgreementBottomSheet());
       }),
     ];
 
+    final List<String> termList = [
+      getAppLocalizations(context).login_signup_description1,
+      getAppLocalizations(context).login_signup_description2,
+      getAppLocalizations(context).login_signup_description3,
+      getAppLocalizations(context).login_signup_description4,
+      getAppLocalizations(context).login_signup_description5,
+    ];
+
     return Expanded(
-      child: Container(
-        margin: EdgeInsets.only(bottom: height * 0.1),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            _SnsLoginTitle(context),
-            _SocialIcons(socialItems),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          _snsLoginTitle(context),
+          _socialIcons(socialItems),
+          _termText(termList, context)
+        ],
       ),
     );
   }
 
-  /** 소셜 아이콘 목록: 카카오, 구글, 애플 */
-  Container _SocialIcons(List<Pair?> socialItems) {
+  Widget _termText(List<String> termList, BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 43),
+      margin: const EdgeInsets.only(top: 48, bottom: 40),
+      child: RichText(
+        text: TextSpan(
+            children: termList.asMap().entries.map((e) {
+          int index = e.key;
+          String term = e.value;
+          return TextSpan(
+            text: term,
+            style: getTextTheme(context).c3m.copyWith(
+                  color: index % 2 != 0
+                      ? getColorScheme(context).neutral80
+                      : getColorScheme(context).neutral60,
+                  height: 1.1,
+                ),
+          );
+        }).toList()),
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  /// 소셜 아이콘 목록: 카카오, 구글, 애플
+  Container _socialIcons(List<Pair?> socialItems) {
+    return Container(
+      margin: const EdgeInsets.only(top: 32),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: socialItems.map((e) {
           if (e == null) {
-            return SizedBox(
+            return const SizedBox(
               width: 28,
             );
           } else {
@@ -89,33 +117,35 @@ class LoginScreen extends HookWidget {
     );
   }
 
-  /** 위젯: SNS 계정으로 로그인하기 */
-  Row _SnsLoginTitle(BuildContext context) {
+  /// 위젯: SNS 계정으로 로그인하기
+  Row _snsLoginTitle(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(height: 1, width: 25, color: getColorScheme(context).neutral50),
+        Container(height: 1.5, width: 20, color: getColorScheme(context).neutral60),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             getAppLocalizations(context).login_sns,
             style: getTextTheme(context).b3r.copyWith(
-                  color: getColorScheme(context).neutral50,
+                  color: getColorScheme(context).neutral60,
                 ),
+            textAlign: TextAlign.center,
           ),
         ),
-        Container(height: 1, width: 25, color: getColorScheme(context).neutral50),
+        Container(height: 1.5, width: 20, color: getColorScheme(context).neutral60),
       ],
     );
   }
 
-  /** 위젯: 앱 로고 및 타이틀*/
+  /// 위젯: 앱 로고 및 타이틀
   Align _AppTitle(BuildContext context, Size size) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
         margin: EdgeInsets.only(
-          left: 47,
+          left: 48,
           top: size.height * 0.17,
         ),
         child: Column(
@@ -125,11 +155,12 @@ class LoginScreen extends HookWidget {
               'assets/imgs/logo_ody.png',
             ),
             Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 24),
               child: Text(
                 getAppLocalizations(context).login_title,
                 style: getTextTheme(context).h2sb.copyWith(
                       color: getColorScheme(context).colorText,
+                      height: 1.25,
                     ),
               ),
             ),

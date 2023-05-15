@@ -16,10 +16,10 @@ class AgreementBottomSheet extends HookConsumerWidget {
     final isLoading = ref.watch<bool>(loginLoadingProvider);
 
     List<Pair> policyList = [
-      Pair(true, getAppLocalizations(context).login_policy_age),
-      Pair(true, getAppLocalizations(context).login_policy_service),
-      Pair(true, getAppLocalizations(context).login_policy_individual),
-      Pair(false, getAppLocalizations(context).login_policy_marketing),
+      Pair(true, getAppLocalizations(context).common_required),
+      Pair(true, getAppLocalizations(context).common_required),
+      Pair(true, getAppLocalizations(context).common_required),
+      Pair(false, getAppLocalizations(context).common_required),
     ];
 
     return SafeArea(
