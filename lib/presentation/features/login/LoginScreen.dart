@@ -145,7 +145,7 @@ class LoginScreen extends HookWidget {
       child: Container(
         margin: EdgeInsets.only(
           left: 48,
-          top: size.height * 0.17,
+          top: size.height * 0.075,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
