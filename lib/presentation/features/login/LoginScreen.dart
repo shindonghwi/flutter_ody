@@ -104,10 +104,17 @@ class LoginScreen extends HookWidget {
               width: 28,
             );
           } else {
-            return InkWell(
-              onTap: e.second,
-              child: Image.asset(
-                e.first,
+            return Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(100),
+                onTap: e.second,
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Image.asset(
+                    e.first,
+                  ),
+                ),
               ),
             );
           }
