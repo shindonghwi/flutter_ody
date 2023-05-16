@@ -3,16 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
-import 'package:odac_flutter_app/domain/usecases/app/GetAppPolicyCheckUseCase.dart';
-import 'package:odac_flutter_app/domain/usecases/app/GetAppPolicyUpdateUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class SplashScreen extends HookWidget {
-
-  final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase = GetIt.instance<GetAppPolicyCheckUseCase>();
+  final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =
+      GetIt.instance<GetAppPolicyCheckUseCase>();
 
   SplashScreen({super.key});
 
@@ -38,16 +37,15 @@ class SplashScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-
     useEffect(() {
       _getAppPolicyCheckUseCase.call().then((value) {
-        if (value){
+        if (value.status == 200 && value.data == true) {
           moveMainPage(context);
-        }else{
+        } else {
           moveOnBoardingPage(context);
         }
       });
-    },[]);
+    }, []);
 
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUIBackground,
