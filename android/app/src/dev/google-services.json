@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "933417784482",
+    "project_id": "ody-dev-9e028",
+    "storage_bucket": "ody-dev-9e028.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933417784482:android:a67ac0fba1cecf5b4633fb",
+        "android_client_info": {
+          "package_name": "com.orot.ody.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "933417784482-v7cam62i97jd0lu0r602ug7tk83ksr3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrVYxyXv-LHyjVTUbgWSen1EBTNMfleXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "933417784482-v7cam62i97jd0lu0r602ug7tk83ksr3s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

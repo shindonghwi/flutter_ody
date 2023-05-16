@@ -38,8 +38,6 @@ class Environment {
 
   void run() {
 
-    WidgetsFlutterBinding.ensureInitialized();
-
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
