@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -9,6 +11,9 @@ import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
 /// @author: 2023/03/29 6:59 PM donghwishin
 class LoginScreen extends HookWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  PostGoogleSignInUseCase get _postGoogleSIgnInUseCase =>
+      GetIt.instance<PostGoogleSignInUseCase>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +43,13 @@ class LoginScreen extends HookWidget {
   /// 위젯: 소셜 아이콘 및 로그인하기 타이틀
   Expanded _socialIconContainer(BuildContext context, double height) {
     List<Pair?> socialItems = [
-      Pair('assets/imgs/image_kakao.png', () {
-      }),
+      Pair('assets/imgs/image_kakao.png', () {}),
       null,
       Pair('assets/imgs/image_google.png', () {
+        _postGoogleSIgnInUseCase.call();
       }),
       null,
-      Pair('assets/imgs/image_apple.png', () {
-      }),
+      Pair('assets/imgs/image_apple.png', () {}),
     ];
 
     final List<String> termList = [
@@ -73,19 +77,22 @@ class LoginScreen extends HookWidget {
       margin: const EdgeInsets.only(top: 48, bottom: 40),
       child: RichText(
         text: TextSpan(
-            children: termList.asMap().entries.map((e) {
-          int index = e.key;
-          String term = e.value;
-          return TextSpan(
-            text: term,
-            style: getTextTheme(context).c3m.copyWith(
+            children: termList
+                .asMap()
+                .entries
+                .map((e) {
+              int index = e.key;
+              String term = e.value;
+              return TextSpan(
+                text: term,
+                style: getTextTheme(context).c3m.copyWith(
                   color: index % 2 != 0
                       ? getColorScheme(context).neutral80
                       : getColorScheme(context).neutral60,
                   height: 1.1,
                 ),
-          );
-        }).toList()),
+              );
+            }).toList()),
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
       ),
@@ -135,8 +142,8 @@ class LoginScreen extends HookWidget {
           child: Text(
             getAppLocalizations(context).login_sns,
             style: getTextTheme(context).b3r.copyWith(
-                  color: getColorScheme(context).neutral60,
-                ),
+              color: getColorScheme(context).neutral60,
+            ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -165,9 +172,9 @@ class LoginScreen extends HookWidget {
               child: Text(
                 getAppLocalizations(context).login_title,
                 style: getTextTheme(context).h2sb.copyWith(
-                      color: getColorScheme(context).colorText,
-                      height: 1.25,
-                    ),
+                  color: getColorScheme(context).colorText,
+                  height: 1.25,
+                ),
               ),
             ),
           ],

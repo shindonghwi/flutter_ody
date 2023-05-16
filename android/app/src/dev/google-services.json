@@ -29,6 +29,13 @@
             {
               "client_id": "933417784482-v7cam62i97jd0lu0r602ug7tk83ksr3s.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "933417784482-uerfp5g9o7mbpuqni0ojf7le3gllr5v7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.orot.ody.dev"
+              }
             }
           ]
         }
