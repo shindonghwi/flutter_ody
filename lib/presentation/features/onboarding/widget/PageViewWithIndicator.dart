@@ -127,17 +127,10 @@ class PageViewWithIndicator extends HookConsumerWidget {
             text: "${getAppLocalizations(context).common_signup} / ${getAppLocalizations(context).common_signin}",
             type: ButtonSizeType.Normal,
             onPressed: () {
-              if (pageController.page!.round() == length - 1) {
-                Navigator.pushReplacement(
-                  context,
-                  nextFadeInOutScreen(RoutingScreen.Login.route),
-                );
-              } else {
-                pageController.nextPage(
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeInOut,
-                );
-              }
+              Navigator.pushReplacement(
+                context,
+                nextFadeInOutScreen(RoutingScreen.Login.route),
+              );
             },
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
