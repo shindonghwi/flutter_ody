@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
-import 'package:odac_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:odac_flutter_app/presentation/features/login/notifier/LoginUiStateNotifier.dart';
-import 'package:odac_flutter_app/presentation/features/login/provider/LoginUiStateProvider.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -27,15 +24,20 @@ class LoginContent extends HookConsumerWidget {
   }
 
   /// 위젯: 소셜 아이콘 및 로그인하기 타이틀
-  Expanded _socialIconContainer(BuildContext context, double height, LoginUiStateNotifier uiStateProvider) {
+  Expanded _socialIconContainer(
+      BuildContext context, double height, LoginUiStateNotifier uiStateProvider) {
     List<Pair?> socialItems = [
-      Pair('assets/imgs/image_kakao.png', () {}),
+      Pair('assets/imgs/image_kakao.png', () {
+        uiStateProvider.doLogin(LoginPlatform.Kakao);
+      }),
       null,
       Pair('assets/imgs/image_google.png', () {
         uiStateProvider.doLogin(LoginPlatform.Google);
       }),
       null,
-      Pair('assets/imgs/image_apple.png', () {}),
+      Pair('assets/imgs/image_apple.png', () {
+        uiStateProvider.doLogin(LoginPlatform.Apple);
+      }),
     ];
 
     final List<String> termList = [
