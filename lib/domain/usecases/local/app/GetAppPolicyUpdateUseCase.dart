@@ -7,7 +7,7 @@ class GetAppPolicyUpdateUseCase {
 
   final LocalAppRepository _localAppRepository = GetIt.instance<LocalAppRepository>();
 
-  Future<ApiResponse<bool>> change(bool isAgree) async {
+  Future<void> change(bool isAgree) async {
     return await _localAppRepository.setHasAgreedToPolicy(isAgree);
   }
 }

@@ -8,7 +8,7 @@ import 'package:odac_flutter_app/domain/repositories/remote/auth/RemoteAuthRepos
 import 'package:odac_flutter_app/domain/usecases/local/app/GetAccessTokenUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyUpdateUseCase.dart';
-import 'package:odac_flutter_app/domain/usecases/local/app/PostSaveAccessTokenUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/local/app/PostSaveSocialTokenUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -32,7 +32,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostGoogleSignInUseCase>(() => PostGoogleSignInUseCase());
   GetIt.instance.registerLazySingleton<PostSocialLoginInUseCase>(() => PostSocialLoginInUseCase());
   GetIt.instance.registerLazySingleton<GetAccessTokenUseCase>(() => GetAccessTokenUseCase());
-  GetIt.instance.registerLazySingleton<PostSaveAccessTokenUseCase>(() => PostSaveAccessTokenUseCase());
+  GetIt.instance.registerLazySingleton<PostSaveSocialTokenUseCase>(() => PostSaveSocialTokenUseCase());
 
   /// -------
   /// repository

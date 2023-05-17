@@ -14,7 +14,7 @@ class PostSocialLoginInUseCase {
   Future<ApiResponse<ResponseSocialLoginModel>> call({
     required LoginPlatform platform,
     required String accessToken,
-    required String deviceToken,
+    String deviceToken = "",
   }) async {
 
     final res = await _remoteAuthRepository.postSocialLogin(

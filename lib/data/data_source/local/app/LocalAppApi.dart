@@ -1,84 +1,42 @@
-import 'package:get_it/get_it.dart';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/data/data_source/local/SharedKey.dart';
-import 'package:odac_flutter_app/data/models/ApiResponse.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
+import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalAppApi {
   LocalAppApi();
 
   final String appUsePolicyKey = SharedKeyHelper.fromString(SharedKey.APP_USE_POLICY);
-  final String apiAccessToken = SharedKeyHelper.fromString(SharedKey.ACCESS_TOKEN);
+  final String socialAccessToken = SharedKeyHelper.fromString(SharedKey.SOCIAL_ACCESS_TOKEN);
 
-  AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
-
-  Future<ApiResponse<bool>> hasAgreedToPolicy() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      return ApiResponse(
-        status: 200,
-        message: _getAppLocalization.get().message_save_success,
-        data: prefs.getBool(appUsePolicyKey) ?? false,
-      );
-    } catch (e) {
-      return ApiResponse(
-        status: 200,
-        message: e.toString(),
-        data: false,
-      );
-    }
+  Future<bool> hasAgreedToPolicy() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(appUsePolicyKey) ?? false;
   }
 
-  Future<ApiResponse<bool>> setHasAgreedToPolicy(bool value) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(appUsePolicyKey, value);
-      return ApiResponse(
-        status: 200,
-        message: _getAppLocalization.get().message_save_success,
-        data: true,
-      );
-    } catch (e) {
-      return ApiResponse(
-        status: 200,
-        message: e.toString(),
-        data: false,
-      );
-    }
+  Future<void> setHasAgreedToPolicy(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(appUsePolicyKey, value);
   }
 
-  Future<ApiResponse<bool>> saveAccessToken(String? token) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(apiAccessToken, token != null ? token.toString() : "");
-      return ApiResponse(
-        status: 200,
-        message: _getAppLocalization.get().message_save_success,
-        data: true,
-      );
-    } catch (e) {
-      return ApiResponse(
-        status: 200,
-        message: e.toString(),
-        data: false,
-      );
-    }
+  Future<void> saveSocialAccessToken(LoginPlatform platform, String? token) async {
+    final prefs = await SharedPreferences.getInstance();
+    final SocialLoginModel model = SocialLoginModel(platform, token ?? "");
+    await prefs.setString(socialAccessToken, jsonEncode(model.toJson()));
   }
 
-  Future<ApiResponse<String>> getAccessToken() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      return ApiResponse(
-        status: 200,
-        message: _getAppLocalization.get().message_save_success,
-        data: prefs.getString(apiAccessToken),
-      );
-    } catch (e) {
-      return ApiResponse(
-        status: 200,
-        message: e.toString(),
-        data: null,
-      );
+  Future<SocialLoginModel?> getAccessToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String socialJsonData = prefs.getString(socialAccessToken) ?? "";
+
+    if (socialJsonData.isNotEmpty){
+      final model = SocialLoginModel.fromJson(jsonDecode(socialJsonData));
+      return SocialLoginModel(model.loginPlatform, model.accessToken);
+    }else{
+      return null;
     }
   }
 }

@@ -16,6 +16,7 @@ class Service {
     required String languageCode,
     required String countryCode,
     required String timeZone,
+    String token = "",
     String clientId = "ody-android",
   }) {
     headers = {
@@ -23,7 +24,16 @@ class Service {
       'Accept-Language': '$languageCode-$countryCode',
       'Application-Client-ID': clientId,
       'Application-Time-Zone': timeZone,
+      'Authorization': token,
     };
+    debugPrint('setHeader: $headers');
+  }
+
+  static addHeader({
+    required String key,
+    required String value,
+  }) {
+    headers[key] = value;
     debugPrint('setHeader: $headers');
   }
 

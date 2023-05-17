@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
-import 'package:odac_flutter_app/domain/usecases/local/app/PostSaveAccessTokenUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/local/app/PostSaveSocialTokenUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:odac_flutter_app/presentation/models/UiState.dart';
@@ -8,7 +8,7 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:riverpod/riverpod.dart';
 
 final loginUiStateProvider = StateNotifierProvider<LoginUiStateNotifier, UIState>(
-      (_) => LoginUiStateNotifier(),
+  (_) => LoginUiStateNotifier(),
 );
 
 class LoginUiStateNotifier extends StateNotifier<UIState> {
@@ -20,8 +20,8 @@ class LoginUiStateNotifier extends StateNotifier<UIState> {
   PostSocialLoginInUseCase get postSocialLoginInUseCase =>
       GetIt.instance<PostSocialLoginInUseCase>();
 
-  PostSaveAccessTokenUseCase get postSaveAccessTokenUseCase =>
-      GetIt.instance<PostSaveAccessTokenUseCase>();
+  PostSaveSocialTokenUseCase get postSaveSocialAccessTokenUseCase =>
+      GetIt.instance<PostSaveSocialTokenUseCase>();
 
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
@@ -35,19 +35,21 @@ class LoginUiStateNotifier extends StateNotifier<UIState> {
         if (googleLoginResult.status == 200) {
           // 소셜 회원가입 / 로그인 요청
           final googleAccessToken = googleLoginResult.data?.accessToken;
+
+          // 소셜 토큰 정보 저장
+          await postSaveSocialAccessTokenUseCase.call(platform, googleAccessToken);
+
           final res = await postSocialLoginInUseCase.call(
             platform: platform,
             accessToken: googleAccessToken ?? "",
             deviceToken: "",
           );
 
-          // 로그인 성공
           if (res.status == 200) {
-            await postSaveAccessTokenUseCase.call(res.data?.accessToken);
+            // 로그인 성공
             state = Success(res.data?.accessToken);
-          }
-          // 로그인 실패
-          else {
+          } else {
+            // 로그인 실패
             state = Failure(res.message);
           }
         }
@@ -57,19 +59,13 @@ class LoginUiStateNotifier extends StateNotifier<UIState> {
         }
         break;
       case LoginPlatform.Kakao:
-        state = Failure(_getAppLocalization
-            .get()
-            .message_not_support_platform);
+        state = Failure(_getAppLocalization.get().message_not_support_platform);
         break;
       case LoginPlatform.Apple:
-        state = Failure(_getAppLocalization
-            .get()
-            .message_not_support_platform);
+        state = Failure(_getAppLocalization.get().message_not_support_platform);
         break;
       default:
-        state = Failure(_getAppLocalization
-            .get()
-            .message_not_support_platform);
+        state = Failure(_getAppLocalization.get().message_not_support_platform);
         break;
     }
   }
