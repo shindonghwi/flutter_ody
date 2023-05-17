@@ -16,11 +16,19 @@ class PostSocialLoginInUseCase {
     required String accessToken,
     required String deviceToken,
   }) async {
-    return await _remoteAuthRepository.postSocialLogin(
-        requestSocialLoginModel: RequestSocialLoginModel(
-      type: LoginPlatformHelper.fromString(platform),
-      accessToken: accessToken,
-      deviceToken: deviceToken,
-    ));
+
+    final res = await _remoteAuthRepository.postSocialLogin(
+      requestSocialLoginModel: RequestSocialLoginModel(
+        type: LoginPlatformHelper.fromString(platform),
+        accessToken: accessToken,
+        deviceToken: deviceToken,
+      ),
+    );
+
+    if (res.data?.accessToken != null) {
+
+    }
+
+    return res;
   }
 }

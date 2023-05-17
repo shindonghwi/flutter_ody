@@ -8,6 +8,7 @@ class LocalAppApi {
   LocalAppApi();
 
   final String appUsePolicyKey = SharedKeyHelper.fromString(SharedKey.APP_USE_POLICY);
+  final String apiAccessToken = SharedKeyHelper.fromString(SharedKey.ACCESS_TOKEN);
 
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
@@ -42,6 +43,41 @@ class LocalAppApi {
         status: 200,
         message: e.toString(),
         data: false,
+      );
+    }
+  }
+
+  Future<ApiResponse<bool>> saveAccessToken(String? token) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(apiAccessToken, token != null ? token.toString() : "");
+      return ApiResponse(
+        status: 200,
+        message: _getAppLocalization.get().message_save_success,
+        data: true,
+      );
+    } catch (e) {
+      return ApiResponse(
+        status: 200,
+        message: e.toString(),
+        data: false,
+      );
+    }
+  }
+
+  Future<ApiResponse<String>> getAccessToken() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return ApiResponse(
+        status: 200,
+        message: _getAppLocalization.get().message_save_success,
+        data: prefs.getString(apiAccessToken),
+      );
+    } catch (e) {
+      return ApiResponse(
+        status: 200,
+        message: e.toString(),
+        data: null,
       );
     }
   }
