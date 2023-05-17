@@ -1,6 +1,7 @@
-import 'package:odac_flutter_app/data/data_source/local/constant.dart';
-import 'package:odac_flutter_app/data/models/LocalMessage.dart';
+import 'package:get_it/get_it.dart';
+import 'package:odac_flutter_app/data/data_source/local/SharedKey.dart';
 import 'package:odac_flutter_app/data/models/ApiResponse.dart';
+import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalAppApi {
@@ -8,12 +9,14 @@ class LocalAppApi {
 
   final String appUsePolicyKey = SharedKeyHelper.fromString(SharedKey.APP_USE_POLICY);
 
+  AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
+
   Future<ApiResponse<bool>> hasAgreedToPolicy() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       return ApiResponse(
         status: 200,
-        message: LocalMessage.localSaveFailMessage,
+        message: _getAppLocalization.get().message_save_success,
         data: prefs.getBool(appUsePolicyKey) ?? false,
       );
     } catch (e) {
@@ -31,13 +34,13 @@ class LocalAppApi {
       await prefs.setBool(appUsePolicyKey, value);
       return ApiResponse(
         status: 200,
-        message: "",
+        message: _getAppLocalization.get().message_save_success,
         data: true,
       );
     } catch (e) {
       return ApiResponse(
         status: 200,
-        message: LocalMessage.localSaveFailMessage,
+        message: e.toString(),
         data: false,
       );
     }

@@ -152,6 +152,11 @@
     "popup_app_policy_service" : "오디 서비스 이용 약관",
     "popup_app_policy_individual" : "개인정보 수집 및 이용동의",
 
+
+    "message_save_success": "저장에 성공하였습니다",
+    "message_save_fail": "저장에 실패하였습니다",
+    "message_not_support_platform": "지원하지 않는 플랫폼입니다",
+
     "common_skip": "넘어가기",
     "common_next": "다음",
     "common_required": "필수",

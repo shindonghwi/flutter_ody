@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:odac_flutter_app/app/OrotApp.dart';
 import 'package:odac_flutter_app/presentation/ui/theme.dart';
 
 AppLocalizations getAppLocalizations(BuildContext context) {
@@ -18,4 +19,17 @@ ColorScheme getColorScheme(BuildContext context) {
 
 MediaQueryData getMediaQuery(BuildContext context) {
   return MediaQuery.of(context);
+}
+
+///
+///
+/// domain, data layer 에서 di 사용하기 위해서 생성한 클래스
+
+class AppLocalization {
+  AppLocalization();
+
+  AppLocalizations get() {
+    final context = OdyGlobalVariable.naviagatorState.currentContext as BuildContext;
+    return getAppLocalizations(context);
+  }
 }
