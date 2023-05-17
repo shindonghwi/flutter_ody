@@ -30,6 +30,7 @@ run-rebuild:
 	flutter clean
 	flutter pub get
 	cd ios && pod install
+	flutter pub run build_runner build --delete-conflicting-outputs
 	flutter run --debug --flavor dev --no-sound-null-safety -t lib/app/env/dev.dart
 
 # ProdRelease Run
@@ -41,6 +42,7 @@ run-prod-rebuild:
 	flutter clean
 	flutter pub get
 	cd ios && pod install
+	flutter pub run build_runner build --delete-conflicting-outputs
 	flutter run --release --flavor prod --no-sound-null-safety -t lib/app/env/prod.dart
 
 

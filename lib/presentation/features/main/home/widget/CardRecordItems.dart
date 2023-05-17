@@ -54,13 +54,13 @@ class CardRecordItems extends HookConsumerWidget {
           title: getAppLocalizations(context).home_today_record_blood_pressure,
           contents: [
             Pair(
-              "120 - 80",
+              "오늘은 어떠세요?",
               getAppLocalizations(context).home_today_record_blood_pressure_unit1,
             ),
-            Pair(
-              "75",
-              getAppLocalizations(context).home_today_record_blood_pressure_unit2,
-            ),
+            // Pair(
+            //   "75",
+            //   getAppLocalizations(context).home_today_record_blood_pressure_unit2,
+            // ),
           ],
           imagePath: 'assets/imgs/ody_record_blood_pressure.png',
         ),

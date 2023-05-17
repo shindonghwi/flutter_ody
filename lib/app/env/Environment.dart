@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/app/OrotApp.dart';
+import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/di/locator.dart';
 import 'package:odac_flutter_app/presentation/ui/theme.dart';
 
@@ -27,7 +29,10 @@ class Environment {
   static BuildType get buildType => _instance._buildType;
 
   static String get apiUrl =>
-      _instance._buildType == BuildType.dev ? 'https://dev url' : 'https://prod url'; // api 주소
+      _instance._buildType == BuildType.dev ? 'https://dev-appapi.ody.life' : 'https://dev-appapi.ody.life'; // api 주소
+
+  static String get apiVersion =>
+      _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
 
   factory Environment.newInstance(BuildType buildType) {
     _instance = Environment._internal(buildType);
@@ -36,8 +41,7 @@ class Environment {
 
   bool get isDebuggable => _buildType == BuildType.dev;
 
-  void run() {
-
+  void run() async{
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
