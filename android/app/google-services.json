@@ -7,30 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1043075265104:android:0aea78f8010f380e7c9755",
+        "mobilesdk_app_id": "1:1043075265104:android:a8023df24843a6747c9755",
         "android_client_info": {
           "package_name": "com.orot.ody"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1043075265104-4hp6gce4v2nbmlmtplfmqgld965hegib.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDtvilA9ol5UQMh9XUcKx8XcCMPayeiabE"
+          "current_key": "AIzaSyD2uUOk3AjztpjiLJocZzzVPet6GPBC0Og"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1043075265104-4hp6gce4v2nbmlmtplfmqgld965hegib.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

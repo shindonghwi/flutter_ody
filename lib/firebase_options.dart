@@ -50,21 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDtvilA9ol5UQMh9XUcKx8XcCMPayeiabE',
-    appId: '1:1043075265104:android:0aea78f8010f380e7c9755',
+    apiKey: 'AIzaSyD2uUOk3AjztpjiLJocZzzVPet6GPBC0Og',
+    appId: '1:1043075265104:android:a8023df24843a6747c9755',
     messagingSenderId: '1043075265104',
     projectId: 'orotcode-ody',
     storageBucket: 'orotcode-ody.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBeILMVDPjzZFmoqdN0MF4yAnGJHZmzAYc',
-    appId: '1:1043075265104:ios:3ae3169f5d3b4d4a7c9755',
+    apiKey: 'AIzaSyDsi99ageV5KdlGkmdu_KOK6WCgkdET9QY',
+    appId: '1:1043075265104:ios:017f72103eb702677c9755',
     messagingSenderId: '1043075265104',
     projectId: 'orotcode-ody',
     storageBucket: 'orotcode-ody.appspot.com',
-    androidClientId: '1043075265104-eonpduejlrgo16duu4iqk2t1l0qa2bh5.apps.googleusercontent.com',
-    iosClientId: '1043075265104-bsqjvi62gdg9bp9bp8c7qhr3j7bajcpn.apps.googleusercontent.com',
+    iosClientId: '1043075265104-eh61eveicb593umgq5daetoo90qmdg2a.apps.googleusercontent.com',
     iosBundleId: 'com.orot.ody',
   );
 }

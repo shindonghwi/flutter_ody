@@ -1,7 +1,7 @@
 class ApiResponse<T> {
   final int status;
   final String message;
-  final T data;
+  final T? data;
 
   ApiResponse({
     required this.status,
@@ -9,7 +9,10 @@ class ApiResponse<T> {
     required this.data,
   });
 
-  factory ApiResponse.fromJson(Map<String, dynamic> json, T Function(dynamic) fromJsonT) {
+  factory ApiResponse.fromJson(
+      Map<String, dynamic> json,
+      T Function(dynamic) fromJsonT,
+      ) {
     return ApiResponse(
       status: json['status'] as int,
       message: json['message'] as String,
