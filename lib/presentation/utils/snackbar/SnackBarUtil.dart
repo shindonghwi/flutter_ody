@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
+import 'package:odac_flutter_app/presentation/ui/theme.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
@@ -11,7 +12,9 @@ class SnackBarUtil {
         content: Text(
           message,
           style: getTextTheme(context).b2r.copyWith(
-                color: getColorScheme(context).white,
+                color: ThemeMode.system == ThemeMode.dark
+                    ? AppTheme.darkTheme.colorScheme.white
+                    : AppTheme.lightTheme.colorScheme.black,
               ),
         ),
       ),

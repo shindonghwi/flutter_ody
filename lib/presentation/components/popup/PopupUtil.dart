@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/app/OrotApp.dart';
 import 'package:odac_flutter_app/presentation/components/popup/widget/PopupAppPolicy.dart';
+import 'package:odac_flutter_app/presentation/ui/colors.dart';
+import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class PopupUtil {
   static void showAppPolicy({required bool backgroundTouchCloseFlag}) {
@@ -18,12 +20,13 @@ class PopupUtil {
                 scale: value,
                 child: Opacity(
                   opacity: value,
-                  child: const AlertDialog(
+                  child: AlertDialog(
                     contentPadding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
-                    content: PopUpAppPolicy(),
+                    content: const PopUpAppPolicy(),
+                    backgroundColor: getColorScheme(context).white,
                   ),
                 ),
               );
