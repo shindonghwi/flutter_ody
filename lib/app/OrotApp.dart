@@ -1,8 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/theme.dart';
+
+final googleSignIn = GoogleSignIn(
+  scopes: ['email', 'profile'],
+);
+
+final firebaseAuth = FirebaseAuth.instance;
 
 class OrotApp extends StatelessWidget {
   const OrotApp({super.key});
@@ -42,6 +49,5 @@ class OrotApp extends StatelessWidget {
 }
 
 class OdyGlobalVariable {
-  static final GlobalKey<NavigatorState> naviagatorState =
-  GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> naviagatorState = GlobalKey<NavigatorState>();
 }

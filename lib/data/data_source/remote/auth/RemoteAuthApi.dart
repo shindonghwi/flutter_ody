@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:odac_flutter_app/app/OrotApp.dart';
 import 'package:odac_flutter_app/app/env/Environment.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/data/models/ApiResponse.dart';
@@ -21,12 +22,7 @@ class RemoteAuthApi {
 
   Future<ApiResponse<SocialLoginModel>> doGoogleLogin() async {
     // 구글 로그인 후 유저정보를 받아온다.
-    final GoogleSignInAccount? googleUser = await GoogleSignIn(
-      scopes: [
-        'email',
-        'profile',
-      ],
-    ).signIn();
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
     if (googleUser == null) {
       return ApiResponse<SocialLoginModel>(
@@ -44,7 +40,7 @@ class RemoteAuthApi {
 
       // 위에서 가져온 Credential 정보로 Firebase에 사용자 인증을한다.
       final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+          await firebaseAuth.signInWithCredential(credential);
       final User? user = userCredential.user;
 
       if (user != null) {

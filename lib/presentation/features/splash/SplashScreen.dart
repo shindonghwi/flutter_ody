@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:odac_flutter_app/app/OrotApp.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
@@ -44,7 +45,7 @@ class SplashScreen extends HookWidget {
 
   /// 소셜 로그인 정보를 확인한다.
   Future<SocialLoginModel?> checkFirebaseUserSocialInfo() async{
-    User? user = FirebaseAuth.instance.currentUser;
+    User? user = firebaseAuth.currentUser;
 
     if (user != null) {
       List<UserInfo>? providers = user.providerData;
