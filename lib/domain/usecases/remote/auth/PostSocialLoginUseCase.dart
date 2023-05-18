@@ -25,10 +25,6 @@ class PostSocialLoginInUseCase {
       ),
     );
 
-    if (res.data?.accessToken != null) {
-
-    }
-
     return res;
   }
 }

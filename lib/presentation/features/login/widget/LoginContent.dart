@@ -25,7 +25,10 @@ class LoginContent extends HookConsumerWidget {
 
   /// 위젯: 소셜 아이콘 및 로그인하기 타이틀
   Expanded _socialIconContainer(
-      BuildContext context, double height, LoginUiStateNotifier uiStateProvider) {
+    BuildContext context,
+    double height,
+    LoginUiStateNotifier uiStateProvider,
+  ) {
     List<Pair?> socialItems = [
       Pair('assets/imgs/image_kakao.png', () {
         uiStateProvider.doLogin(LoginPlatform.Kakao);

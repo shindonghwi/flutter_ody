@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:odac_flutter_app/app/OrotApp.dart';
-import 'package:odac_flutter_app/app/env/Environment.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/data/models/ApiResponse.dart';
 import 'package:odac_flutter_app/data/models/auth/RequestSocialLoginModel.dart';
@@ -17,8 +16,6 @@ class RemoteAuthApi {
   RemoteAuthApi();
 
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
-
-  final socialLoginUrl = '${Environment.apiUrl}/${Environment.apiVersion}/social_login';
 
   Future<ApiResponse<SocialLoginModel>> doGoogleLogin() async {
     // 구글 로그인 후 유저정보를 받아온다.

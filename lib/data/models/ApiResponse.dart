@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class ApiResponse<T> {
   final int status;
   final String message;
@@ -13,19 +15,28 @@ class ApiResponse<T> {
     Map<String, dynamic>? json,
     T Function(dynamic) fromJsonT,
   ) {
-    try{
-      return ApiResponse(
+    try {
+      debugPrint('ApiResponse.fromJson: ${ApiResponse(
         status: json!['status'] as int,
         message: json['message'] as String,
         data: fromJsonT(json['data']),
-      );
-    }catch(e){
+      )}');
       return ApiResponse(
+        status: json['status'] as int,
+        message: json['message'] as String,
+        data: fromJsonT(json['data']),
+      );
+    } catch (e) {
+      debugPrint('ApiResponse.fromJson: ${ApiResponse(
         status: json!['status'] as int,
+        message: json['message'] as String,
+        data: null,
+      )}');
+      return ApiResponse(
+        status: json['status'] as int,
         message: json['message'] as String,
         data: null,
       );
     }
-
   }
 }

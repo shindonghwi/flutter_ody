@@ -21,6 +21,7 @@ class LoginScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch<UIState<String?>>(loginUiStateProvider);
+    final loginProvider = ref.read(loginUiStateProvider.notifier);
 
     movePage(RoutingScreen screen) async {
       Navigator.pushReplacement(
@@ -33,20 +34,15 @@ class LoginScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         state.when(
           success: (event) async {
-            final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
-            final languageCode = WidgetsBinding.instance.window.locale.languageCode;
-            final countryCode =
-                WidgetsBinding.instance.window.locale.countryCode.toString();
-
-            Service.setHeader(
-              languageCode: languageCode,
-              countryCode: countryCode,
-              timeZone: timeZone,
-              token: event.value ?? "",
+            movePage(
+              loginProvider.isProfileEmpty
+                  ? RoutingScreen.InputProfile
+                  : RoutingScreen.Main,
             );
-            movePage(RoutingScreen.Main);
           },
-          failure: (event) => SnackBarUtil.show(context, event.errorMessage),
+          failure: (event) {
+            SnackBarUtil.show(context, event.errorMessage);
+          },
         );
       });
     }, [state]);

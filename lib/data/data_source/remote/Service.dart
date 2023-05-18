@@ -10,6 +10,8 @@ class Service {
     'Accept-Language': 'ko-KR',
     'Application-Client-ID': 'ody-android',
     'Application-Time-Zone': 'ody-android',
+    'Accept': '*/*',
+    'Connection': 'keep-alive',
   };
 
   static setHeader({
@@ -24,7 +26,7 @@ class Service {
       'Accept-Language': '$languageCode-$countryCode',
       'Application-Client-ID': clientId,
       'Application-Time-Zone': timeZone,
-      'Authorization': token,
+      'Authorization': 'Bearer $token',
     };
     debugPrint('setHeader: $headers');
   }
@@ -39,28 +41,30 @@ class Service {
 
   static Future<Response> getApi({
     required ServiceType type,
-    required String endPoint,
-    Map<String, String>? headers,
+    required String? endPoint,
   }) async {
-    final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}/$endPoint');
+    final url = Uri.parse(
+        '$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
     debugPrint('\nrequest Url: $url');
     debugPrint('request header: $headers\n');
 
-    final res = await http.post(
+    final res = await http.get(
       url,
       headers: headers,
     );
     debugPrint('\http response statusCode: ${res.statusCode}');
+    debugPrint('\http response method: ${res.request?.method.toString()}');
     debugPrint('\http response body: ${res.body}');
     return res;
   }
 
   static Future<Response> postApi({
     required ServiceType type,
-    required String endPoint,
+    required String? endPoint,
     String jsonBody = "",
   }) async {
-    final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}/$endPoint');
+    final url = Uri.parse(
+        '$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
     debugPrint('\nrequest Url: $url');
     debugPrint('request header: $headers');
     debugPrint('request body: $jsonBody\n', wrapWidth: 2048);

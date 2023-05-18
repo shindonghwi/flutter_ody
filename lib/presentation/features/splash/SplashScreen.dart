@@ -6,17 +6,18 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 import 'package:odac_flutter_app/app/OrotApp.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:http/http.dart' as http;
 
 class SplashScreen extends HookWidget {
   final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =
@@ -24,6 +25,8 @@ class SplashScreen extends HookWidget {
 
   final PostSocialLoginInUseCase _postSocialLoginInUseCase =
       GetIt.instance<PostSocialLoginInUseCase>();
+
+  GetMeInfoUseCase get getMeInfoUseCase => GetIt.instance<GetMeInfoUseCase>();
 
   SplashScreen({super.key});
 
@@ -44,7 +47,7 @@ class SplashScreen extends HookWidget {
   }
 
   /// 소셜 로그인 정보를 확인한다.
-  Future<SocialLoginModel?> checkFirebaseUserSocialInfo() async{
+  Future<SocialLoginModel?> checkFirebaseUserSocialInfo() async {
     User? user = firebaseAuth.currentUser;
 
     if (user != null) {
@@ -89,6 +92,19 @@ class SplashScreen extends HookWidget {
       );
     }
 
+    setServiceHeader(String? token) async {
+      final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+      final languageCode = WidgetsBinding.instance.window.locale.languageCode;
+      final countryCode = WidgetsBinding.instance.window.locale.countryCode.toString();
+
+      Service.setHeader(
+        languageCode: languageCode,
+        countryCode: countryCode,
+        timeZone: timeZone,
+        token: token ?? "",
+      );
+    }
+
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
@@ -112,11 +128,20 @@ class SplashScreen extends HookWidget {
               );
 
               if (res.status == 200) {
-                Service.addHeader(
-                  key: "Authorization",
-                  value: res.data?.accessToken ?? "",
-                );
-                movePage(RoutingScreen.Main);
+                // 내 정보 요청
+                await setServiceHeader(res.data?.accessToken);
+                await getMeInfoUseCase.call().then((value) {
+                  if (value.status == 200) {
+                    if(value.data?.profile.toJson().values.every((value) => value == 0) == true){
+                      movePage(RoutingScreen.InputProfile);
+                    }else{
+                      // 여기서 사용자 정보 저장하고 메인으로 넘어가야함.
+                      movePage(RoutingScreen.Main);
+                    }
+                  } else {
+                    movePage(RoutingScreen.Login);
+                  }
+                });
               } else {
                 movePage(RoutingScreen.Login);
               }
