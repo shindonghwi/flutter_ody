@@ -34,10 +34,10 @@ class CardTodayRecord extends HookWidget {
       ),
       child: Row(
         children: [
-          _PercentageCircleProgressBar(context), // 원형 프로그래스바
+          _percentageCircleProgressBar(context), // 원형 프로그래스바
           Expanded(
             child: Center(
-              child: _RecordInfo(context),
+              child: _recordInfo(context),
             ),
           ), // 오늘의 기록 정보
         ],
@@ -45,7 +45,7 @@ class CardTodayRecord extends HookWidget {
     );
   }
 
-  Column _RecordInfo(BuildContext context) {
+  Column _recordInfo(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,6 @@ class CardTodayRecord extends HookWidget {
               ),
             ],
           ),
-          // textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
         ),
         Text(
@@ -89,7 +88,7 @@ class CardTodayRecord extends HookWidget {
     );
   }
 
-  Widget _PercentageCircleProgressBar(BuildContext context) {
+  Widget _percentageCircleProgressBar(BuildContext context) {
     return SizedBox(
       width: 70,
       height: 70,

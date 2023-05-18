@@ -2,11 +2,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-/**
- * @feature: 아래가 비어있는 원형 프로그래스바
- *
- * @author: 2023/05/01 2:04 PM donghwishin
-*/
+/// @feature: 아래가 비어있는 원형 프로그래스바
+///
+/// @author: 2023/05/01 2:04 PM donghwishin
 class PainterCircleProgress extends CustomPainter {
   double progress;
 

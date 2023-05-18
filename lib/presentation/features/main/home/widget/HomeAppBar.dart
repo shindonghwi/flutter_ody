@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarPageProvider.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-/**
- * @feature: 홈 화면 앱바
- *
- * @author: 2023/05/01 2:04 PM donghwishin
- *
- * @description{
- *   날짜 선택, actions 아이콘
- * }
- */
+/// @feature: 홈 화면 앱바
+///
+/// @author: 2023/05/01 2:04 PM donghwishin
+///
+/// @description{
+///   날짜 선택, actions 아이콘
+/// }
 class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
 
@@ -24,7 +22,7 @@ class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentPageDatetime = ref.watch<DateTime>(CalendarPageProvider);
+    final currentPageDatetime = ref.watch<DateTime>(calendarPageProvider);
 
     return AppBar(
       leadingWidth: 180,
@@ -70,7 +68,7 @@ class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: (){},
+              onTap: () {},
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SvgPicture.asset(
@@ -83,7 +81,7 @@ class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
               ),
             ),
           ),
-        ) ,
+        ),
         Container(
           margin: const EdgeInsets.only(right: 12),
           child: Padding(
@@ -91,7 +89,7 @@ class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: (){},
+                onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(

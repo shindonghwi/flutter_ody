@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/model/RecordItemState.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarSelectDateProvider.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
@@ -34,15 +34,15 @@ class CardRecordItems extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final calendarSelectedDate = ref.watch<DateTime>(CalendarSelectDateProvider);
-
+    final calendarSelectedDate = ref.watch<DateTime>(calendarSelectDateProvider);
+    debugPrint("calendarSelectedDate: $calendarSelectedDate");
     final recordItemState = [
       useState<RecordItemState>(
         RecordItemState(
           title: getAppLocalizations(context).home_today_record_walk,
           contents: [
             Pair(
-              "3,685",
+              "0",
               getAppLocalizations(context).home_today_record_walk_unit,
             ),
           ],
@@ -95,7 +95,7 @@ class CardRecordItems extends HookConsumerWidget {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 1.0,
-        mainAxisSpacing: 17.0,
+        mainAxisSpacing: 16.0,
         crossAxisSpacing: 20.0,
       ),
       delegate: SliverChildBuilderDelegate(
@@ -146,7 +146,7 @@ class CardRecordItems extends HookConsumerWidget {
                                 ),
                           ),
                           const SizedBox(
-                            height: 17,
+                            height: 16,
                           ),
                           isEmotionType(context, title)
                               ? Text(
@@ -202,6 +202,9 @@ class CardRecordItems extends HookConsumerWidget {
                     decoration: BoxDecoration(
                       color: getColorScheme(context).colorUI04.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: getColorScheme(context).colorUI04.withOpacity(0.5),
+                      ),
                     ),
                   ),
                 )

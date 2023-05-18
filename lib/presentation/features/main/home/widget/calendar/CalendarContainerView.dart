@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarFormatProvider.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/provider/CalendarHeightProvider.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/provider/DimProvider.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/notifier/CalendarFormatNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/notifier/CalendarHeightNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/main/home/notifier/DimNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/main/home/widget/DimBackgroundView.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -71,10 +71,9 @@ class DraggableContainer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    final isDimOnRead = ref.read(DimProvider.notifier);
-    final calendarHeightRead = ref.read(CalendarHeightProvider.notifier);
-    final calendarFormatRead = ref.read(CalendarFormatProvider.notifier);
+    final isDimOnRead = ref.read(dimProvider.notifier);
+    final calendarHeightRead = ref.read(calendarHeightProvider.notifier);
+    final calendarFormatRead = ref.read(calendarFormatProvider.notifier);
     final turningPoint = CalendarSize.turningHeight(context);
 
     return HookBuilder(
@@ -82,15 +81,17 @@ class DraggableContainer extends HookConsumerWidget {
         void onVerticalDragDown(DragDownDetails details) {}
 
         void onVerticalDragUpdate(DragUpdateDetails details) {
-          calendarHeightRead.updateHeight(calendarHeightRead.getHeight() + details.delta.dy);;
-          calendarHeightRead.updateHeight(calendarHeightRead.getHeight().clamp(minHeight, maxHeight));
+          calendarHeightRead
+              .updateHeight(calendarHeightRead.getHeight() + details.delta.dy);
+          ;
+          calendarHeightRead
+              .updateHeight(calendarHeightRead.getHeight().clamp(minHeight, maxHeight));
 
           if (calendarHeightRead.getHeight() < turningPoint) {
             calendarFormatRead.updateFormat(CalendarFormat.week);
           } else {
             calendarFormatRead.updateFormat(CalendarFormat.month);
           }
-
         }
 
         void onVerticalDragEnd(DragEndDetails details) {
@@ -139,7 +140,7 @@ class _InnerContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final containerHeight = ref.watch<double>(CalendarHeightProvider);
+    final containerHeight = ref.watch<double>(calendarHeightProvider);
     return AnimatedContainer(
       duration: const Duration(milliseconds: 100),
       height: containerHeight,
