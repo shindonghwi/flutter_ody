@@ -10,6 +10,7 @@ import 'package:odac_flutter_app/data/models/auth/ResponseSocialLoginModel.dart'
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RemoteAuthApi {
   RemoteAuthApi();
@@ -28,16 +29,34 @@ class RemoteAuthApi {
         data: null,
       );
     } else {
-      return await googleUser.authentication.then((value) {
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        return await googleUser.authentication.then((value) {
+          return ApiResponse<SocialLoginModel>(
+            status: 200,
+            message: _getAppLocalization.get().message_api_success,
+            data: SocialLoginModel(
+              LoginPlatform.Google,
+              value.idToken,
+            ),
+          );
+        });
+      } else {
         return ApiResponse<SocialLoginModel>(
-          status: 200,
-          message: _getAppLocalization.get().message_api_success,
-          data: SocialLoginModel(
-            LoginPlatform.Google,
-            value.idToken,
-          ),
+          status: 404,
+          message: _getAppLocalization.get().message_not_found_user,
+          data: null,
         );
-      });
+      }
     }
   }
 

@@ -1,13 +1,17 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
+import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/local/app/PostSaveSocialTokenUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:odac_flutter_app/presentation/features/splash/notifier/SocialAccessTokenCheckNotifier.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
@@ -15,7 +19,21 @@ import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class SplashScreen extends HookConsumerWidget {
+// final googleSignIn = GoogleSignIn(
+//   scopes: [
+//     'email',
+//     'profile',
+//   ],
+// );
+
+final firebaseAuth = FirebaseAuth.instance;
+
+class SplashScreen extends HookWidget {
+  SocialLoginModel? socialInfo;
+
+  final PostSaveSocialTokenUseCase _postSaveSocialTokenUseCase =
+      GetIt.instance<PostSaveSocialTokenUseCase>();
+
   final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =
       GetIt.instance<GetAppPolicyCheckUseCase>();
 
@@ -24,31 +42,48 @@ class SplashScreen extends HookConsumerWidget {
 
   SplashScreen({super.key});
 
-  moveOnBoardingPage(BuildContext context) {
-    Timer(
-      const Duration(milliseconds: 1000),
-      () => Navigator.pushReplacement(
-        context,
-        nextSlideScreen(RoutingScreen.OnBoarding.route),
-      ),
-    );
+  /// 소셜 로그인 정보를 확인한다.
+  checkFirebaseUserSocialInfo(User? user) {
+    if (user != null) {
+      user.getIdToken().then((token) {
+        List<UserInfo>? providers = user.providerData;
+        for (UserInfo provider in providers) {
+          LoginPlatform platform = getLoginPlatform(provider.providerId);
+          socialInfo = SocialLoginModel(platform, token);
+        }
+      });
+    } else {
+      socialInfo = null;
+    }
   }
 
-  moveMainPage(BuildContext context) {
-    Timer(
-      const Duration(milliseconds: 1000),
-      () => Navigator.pushReplacement(
-        context,
-        nextSlideScreen(RoutingScreen.Login.route),
-      ),
-    );
+  /// 로그인 플랫폼을 구분한다.
+  LoginPlatform getLoginPlatform(String platform) {
+    if (platform.contains("google")) {
+      return LoginPlatform.Google;
+    } else if (platform.contains("kakao")) {
+      return LoginPlatform.Kakao;
+    } else if (platform.contains("apple")) {
+      return LoginPlatform.Apple;
+    } else {
+      return LoginPlatform.None;
+    }
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final currentContext = context;
-    final socialAccessTokenProvider = ref.read(socialAccessTokenCheckProvider.notifier);
-    SocialLoginModel? socialInfo;
+
+    movePage(RoutingScreen screen) async {
+      Navigator.pushReplacement(
+        currentContext,
+        nextSlideScreen(screen.route),
+      );
+    }
+
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      checkFirebaseUserSocialInfo(user);
+    });
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -60,35 +95,29 @@ class SplashScreen extends HookConsumerWidget {
           countryCode: countryCode,
           timeZone: timeZone,
         );
-        socialInfo = await socialAccessTokenProvider.hasAccessToken();
 
         _getAppPolicyCheckUseCase.call().then((granted) async {
           if (granted) {
             if (socialInfo == null) {
-              moveOnBoardingPage(context);
+              movePage(RoutingScreen.Login);
             } else {
-
-              // 로그인 요청
               final res = await _postSocialLoginInUseCase.call(
                 platform: socialInfo!.loginPlatform,
                 accessToken: socialInfo?.accessToken ?? "",
               );
 
               if (res.status == 200) {
-                Service.addHeader(key: "Authorization", value: res.data?.accessToken ?? "");
-                Navigator.pushReplacement(
-                  currentContext,
-                  nextSlideScreen(RoutingScreen.Main.route),
+                Service.addHeader(
+                  key: "Authorization",
+                  value: res.data?.accessToken ?? "",
                 );
-              }else{
-                Navigator.pushReplacement(
-                  currentContext,
-                  nextSlideScreen(RoutingScreen.Login.route),
-                );
+                movePage(RoutingScreen.Main);
+              } else {
+                movePage(RoutingScreen.Login);
               }
             }
           } else {
-            moveOnBoardingPage(context);
+            movePage(RoutingScreen.OnBoarding);
           }
         });
       });
