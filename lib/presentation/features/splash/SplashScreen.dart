@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
@@ -12,12 +15,9 @@ import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
-
-final firebaseAuth = FirebaseAuth.instance;
+import 'package:http/http.dart' as http;
 
 class SplashScreen extends HookWidget {
-  SocialLoginModel? socialInfo;
-
   final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =
       GetIt.instance<GetAppPolicyCheckUseCase>();
 
@@ -26,28 +26,50 @@ class SplashScreen extends HookWidget {
 
   SplashScreen({super.key});
 
-  /// 소셜 로그인 정보를 확인한다.
-  checkFirebaseUserSocialInfo(User? user) {
-    if (user != null) {
-      user.getIdToken().then((token) {
-        List<UserInfo>? providers = user.providerData;
-        for (UserInfo provider in providers) {
-          LoginPlatform platform = getLoginPlatform(provider.providerId);
-          socialInfo = SocialLoginModel(platform, token);
-        }
-      });
-    } else {
-      socialInfo = null;
+  Future<String?> getSocialAccessToken(String platform) async {
+    final String platformName = platform.toLowerCase();
+    if (platformName.contains("google")) {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signInSilently();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        return googleAuth.idToken;
+      }
+    } else if (platformName.contains("kakao")) {
+      return null;
+    } else if (platformName.contains("apple")) {
+      return null;
     }
+    return null;
+  }
+
+  /// 소셜 로그인 정보를 확인한다.
+  Future<SocialLoginModel?> checkFirebaseUserSocialInfo() async{
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      List<UserInfo>? providers = user.providerData;
+      for (UserInfo provider in providers) {
+        LoginPlatform platform = getLoginPlatform(provider.providerId);
+        String? accessToken = await getSocialAccessToken(platform.name);
+        debugPrint("accessToken: $accessToken");
+        if (accessToken != null) {
+          return SocialLoginModel(platform, accessToken);
+        }
+      }
+    }
+
+    return null;
   }
 
   /// 로그인 플랫폼을 구분한다.
   LoginPlatform getLoginPlatform(String platform) {
-    if (platform.contains("google")) {
+    final String platformName = platform.toLowerCase();
+
+    if (platformName.contains("google")) {
       return LoginPlatform.Google;
-    } else if (platform.contains("kakao")) {
+    } else if (platformName.contains("kakao")) {
       return LoginPlatform.Kakao;
-    } else if (platform.contains("apple")) {
+    } else if (platformName.contains("apple")) {
       return LoginPlatform.Apple;
     } else {
       return LoginPlatform.None;
@@ -56,6 +78,7 @@ class SplashScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    SocialLoginModel? socialInfo;
     final currentContext = context;
 
     movePage(RoutingScreen screen) async {
@@ -64,10 +87,6 @@ class SplashScreen extends HookWidget {
         nextSlideScreen(screen.route),
       );
     }
-
-    FirebaseAuth.instance.authStateChanges().listen((user) {
-      checkFirebaseUserSocialInfo(user);
-    });
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -82,6 +101,7 @@ class SplashScreen extends HookWidget {
 
         _getAppPolicyCheckUseCase.call().then((granted) async {
           if (granted) {
+            socialInfo = await checkFirebaseUserSocialInfo();
             if (socialInfo == null) {
               movePage(RoutingScreen.Login);
             } else {

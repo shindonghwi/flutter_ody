@@ -20,23 +20,23 @@ class Loading<T> extends UIState<T> {}
 class Idle<T> extends UIState<T> {}
 
 class SealedResult<T> {
-  R when<R>({
-    required R Function(Success<T>) success,
-    required R Function(Failure<T>) failure,
-    required R Function(Loading<T>) loading,
-    required R Function(Idle<T>) idle,
+  R? when<R>({
+    R Function(Success<T>)? success,
+    R Function(Failure<T>)? failure,
+    R Function(Loading<T>)? loading,
+    R Function(Idle<T>)? idle,
   }) {
     if (this is Success<T>) {
-      return success(this as Success<T>);
+      return success?.call(this as Success<T>);
     }
     if (this is Failure<T>) {
-      return failure(this as Failure<T>);
+      return failure?.call(this as Failure<T>);
     }
     if (this is Loading<T>) {
-      return loading(this as Loading<T>);
+      return loading?.call(this as Loading<T>);
     }
     if (this is Idle<T>) {
-      return idle(this as Idle<T>);
+      return idle?.call(this as Idle<T>);
     }
     throw Exception('Should never get here');
   }

@@ -34,7 +34,7 @@ class Service {
     required String value,
   }) {
     headers[key] = value;
-    debugPrint('setHeader: $headers');
+    debugPrint('addHeader: $headers');
   }
 
   static Future<Response> getApi({

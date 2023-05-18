@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
-import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
+import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:odac_flutter_app/presentation/features/login/notifier/LoginUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/login/widget/LoginContent.dart';
@@ -19,23 +18,36 @@ import 'package:odac_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 class LoginScreen extends HookConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch<UIState>(loginUiStateProvider);
+    final state = ref.watch<UIState<String?>>(loginUiStateProvider);
+
+    movePage(RoutingScreen screen) async {
+      Navigator.pushReplacement(
+        context,
+        nextFadeInOutScreen(screen.route),
+      );
+    }
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (state is Failure) {
-          SnackBarUtil.show(context, state.errorMessage);
-        }
-        if (state is Success) {
-          Navigator.pushReplacement(
-            context,
-            nextFadeInOutScreen(RoutingScreen.Main.route),
-          );
-        }
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        state.when(
+          success: (event) async {
+            final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+            final languageCode = WidgetsBinding.instance.window.locale.languageCode;
+            final countryCode =
+                WidgetsBinding.instance.window.locale.countryCode.toString();
+
+            Service.setHeader(
+              languageCode: languageCode,
+              countryCode: countryCode,
+              timeZone: timeZone,
+              token: event.value ?? "",
+            );
+            movePage(RoutingScreen.Main);
+          },
+          failure: (event) => SnackBarUtil.show(context, event.errorMessage),
+        );
       });
     }, [state]);
 
