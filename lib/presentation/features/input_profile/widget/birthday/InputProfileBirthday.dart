@@ -5,21 +5,87 @@ import 'package:odac_flutter_app/presentation/components/button/fill/FillButton.
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputBirthdayUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileBirthdayTextFieldNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileBirthdayTextFieldProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
+import 'package:odac_flutter_app/presentation/models/UiState.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/regex/DateFormatterKoreaBirthday.dart';
+import 'package:odac_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class InputProfileBirthday extends HookConsumerWidget {
   final TextEditingController controller;
 
   const InputProfileBirthday({Key? key, required this.controller}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(inputBirthdayUiStateProvider);
+    final stateProvider = ref.read(inputBirthdayUiStateProvider.notifier);
+    final pageController = ref.read(inputProfilePageViewControllerProvider);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        state.when(
+          success: (event) async {
+            pageController.nextPage(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+            stateProvider.resetState();
+          },
+          failure: (event) {
+            SnackBarUtil.show(context, event.errorMessage);
+          },
+        );
+      });
+    }, [state]);
+
+    return Stack(
+      children: [
+        Container(
+          padding: const EdgeInsets.fromLTRB(35, 40, 35, 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _title(context),
+              const SizedBox(height: 24),
+              _InputTextField(controller: controller),
+              const _NextButton(),
+            ],
+          ),
+        ),
+        if (state is Loading) const CircleLoading()
+      ],
+    );
+  }
+
+  /// 생년월일을 선택해주세요
+  Widget _title(BuildContext context) {
+    return Text(
+      getAppLocalizations(context).input_profile_birthday_title,
+      style: getTextTheme(context).h4sb.copyWith(
+            color: getColorScheme(context).colorText,
+          ),
+    );
+  }
+}
+
+class _InputTextField extends HookConsumerWidget {
+  final TextEditingController controller;
+
+  const _InputTextField({
+    super.key,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +96,7 @@ class InputProfileBirthday extends HookConsumerWidget {
     onCheckButtonAction() {
       if (fieldStateRead.checkBirthday()) {
         pageController.nextPage(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
       } else {
@@ -41,62 +107,6 @@ class InputProfileBirthday extends HookConsumerWidget {
       }
     }
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(35, 29, 35, 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _Title(context),
-          SizedBox(height: 30),
-          _InputTextField(
-            controller: controller,
-            helpText: fieldState.helpMessage,
-            fieldStateRead: fieldStateRead,
-            fieldState: fieldState.fieldState,
-            pageController: pageController,
-            onCheckButtonAction: onCheckButtonAction,
-          ),
-          _NextButton(
-            controller: pageController,
-            fieldState: fieldState.fieldState,
-            onCheckButtonAction: onCheckButtonAction,
-          )
-        ],
-      ),
-    );
-  }
-
-  /** 생년월일을 선택해주세요 */
-  Widget _Title(BuildContext context) {
-    return Text(
-      getAppLocalizations(context).input_profile_birthday_title,
-      style: getTextTheme(context).h3sb.copyWith(
-            color: getColorScheme(context).colorText,
-          ),
-    );
-  }
-}
-
-class _InputTextField extends StatelessWidget {
-  const _InputTextField({
-    super.key,
-    required this.controller,
-    required this.helpText,
-    required this.fieldStateRead,
-    required this.fieldState,
-    required this.pageController,
-    required this.onCheckButtonAction,
-  });
-
-  final TextEditingController controller;
-  final String? helpText;
-  final InputProfileBirthdayTextFieldNotifier fieldStateRead;
-  final TextFieldState fieldState;
-  final PageController pageController;
-  final VoidCallback onCheckButtonAction;
-
-  @override
-  Widget build(BuildContext context) {
     return OutlineDefaultTextField(
       controller: controller,
       textInputType: TextInputType.datetime,
@@ -114,38 +124,47 @@ class _InputTextField extends StatelessWidget {
             fieldState: TextFieldState.Focus,
             helpMessage: getAppLocalizations(context).input_profile_help_message_success,
           );
-        } else if (value.length == 0) {
+        } else if (value.isEmpty) {
           fieldStateRead.change(fieldState: TextFieldState.Default);
         } else {
           fieldStateRead.change(
             fieldState: TextFieldState.Error,
-            helpMessage: getAppLocalizations(context).input_profile_help_message_error_retry,
+            helpMessage:
+                getAppLocalizations(context).input_profile_help_message_error_retry,
           );
         }
       },
       limit: 10,
       maxLine: 1,
-      helpText: helpText,
-      fieldState: fieldState,
+      helpText: fieldState.helpMessage,
+      fieldState: fieldState.fieldState,
       onNextAction: () => onCheckButtonAction.call(),
     );
   }
 }
 
-class _NextButton extends HookWidget {
-  final PageController controller;
-  final TextFieldState fieldState;
-  final VoidCallback onCheckButtonAction;
-
+class _NextButton extends HookConsumerWidget {
   const _NextButton({
     super.key,
-    required this.controller,
-    required this.fieldState,
-    required this.onCheckButtonAction,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final fieldState = ref.watch<TextFieldModel>(InputProfileBirthdayTextFieldProvider);
+    final stateProvider = ref.read(inputBirthdayUiStateProvider.notifier);
+    final fieldStateRead = ref.read(InputProfileBirthdayTextFieldProvider.notifier);
+
+    onCheckButtonAction() {
+      if (fieldStateRead.checkBirthday()) {
+        stateProvider.patchBirthday(fieldStateRead.content.replaceAll("/", "-"));
+      } else {
+        final currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      }
+    }
+
     return Expanded(
       child: Align(
         alignment: Alignment.bottomCenter,
@@ -158,7 +177,7 @@ class _NextButton extends HookWidget {
             onPressed: () => onCheckButtonAction.call(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
-                state: fieldState == TextFieldState.Focus
+                state: fieldState.fieldState == TextFieldState.Focus
                     ? ButtonState.Activated
                     : ButtonState.Disabled,
               ),

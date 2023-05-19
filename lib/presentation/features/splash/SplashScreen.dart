@@ -102,9 +102,9 @@ class SplashScreen extends HookWidget {
 
     return profileData["gender"] != null &&
         profileData["birthday"] != null &&
-        (profileData["height"] as double?) != null &&
+        (profileData["height"] as int?) != null &&
         profileData["height"] != 0 &&
-        (profileData["weight"] as double?) != null &&
+        (profileData["weight"] as int?) != null &&
         profileData["weight"] != 0;
   }
 

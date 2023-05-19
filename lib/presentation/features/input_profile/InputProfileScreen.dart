@@ -17,7 +17,7 @@ class InputProfileScreen extends HookConsumerWidget {
       return true;
     } else {
       pageController.previousPage(
-        duration: Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 250),
         curve: Curves.easeInOut,
       );
       return false;
