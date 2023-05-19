@@ -9,7 +9,7 @@ import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.d
 import 'package:odac_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileBirthdayTextFieldNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/textfield/InputProfileBirthdayTextFieldNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/notifier/ui/InputBirthdayUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/models/UiState.dart';

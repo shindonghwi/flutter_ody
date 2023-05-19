@@ -4,9 +4,9 @@ import 'package:odac_flutter_app/presentation/components/button/fill/FillButton.
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileBirthdayTextFieldNotifier.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileHeightTextFieldNotifier.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileWeightTextFieldNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/textfield/InputProfileBirthdayTextFieldNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/textfield/InputProfileHeightTextFieldNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/textfield/InputProfileWeightTextFieldNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileDiseaseListStateProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/widget/disease/DiseaseSelector.dart';
