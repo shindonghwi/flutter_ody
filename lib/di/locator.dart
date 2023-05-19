@@ -13,6 +13,11 @@ import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyUpdateUse
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeBirthdayUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeDiseasesUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeGenderUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeHeightUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeWeightUseCase.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 final serviceLocator = GetIt.instance;
@@ -34,6 +39,11 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostGoogleSignInUseCase>(() => PostGoogleSignInUseCase());
   GetIt.instance.registerLazySingleton<PostSocialLoginInUseCase>(() => PostSocialLoginInUseCase());
   GetIt.instance.registerLazySingleton<GetMeInfoUseCase>(() => GetMeInfoUseCase());
+  GetIt.instance.registerLazySingleton<PatchMeGenderUseCase>(() => PatchMeGenderUseCase());
+  GetIt.instance.registerLazySingleton<PatchMeBirthdayUseCase>(() => PatchMeBirthdayUseCase());
+  GetIt.instance.registerLazySingleton<PatchMeHeightUseCase>(() => PatchMeHeightUseCase());
+  GetIt.instance.registerLazySingleton<PatchMeWeightUseCase>(() => PatchMeWeightUseCase());
+  GetIt.instance.registerLazySingleton<PatchMeDiseasesUseCase>(() => PatchMeDiseasesUseCase());
 
   /// -------
   /// repository

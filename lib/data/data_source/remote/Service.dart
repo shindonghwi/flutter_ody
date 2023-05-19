@@ -78,6 +78,28 @@ class Service {
     debugPrint('\http response body: ${res.body}');
     return res;
   }
+
+  static Future<Response> patchApi({
+    required ServiceType type,
+    required String? endPoint,
+    String jsonBody = "",
+  }) async {
+    final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+    debugPrint('\nrequest Url: $url');
+    debugPrint('request header: $headers');
+    debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
+
+    final res = await http.patch(
+      url,
+      headers: headers,
+      body: jsonBody,
+    );
+    debugPrint('\http response statusCode: ${res.statusCode}');
+    debugPrint('\http response method: ${res.request?.method.toString()}');
+    debugPrint('\http response body: ${res.body}');
+    return res;
+  }
+
 }
 
 enum ServiceType {

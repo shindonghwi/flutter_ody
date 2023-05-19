@@ -6,8 +6,8 @@ part 'ResponseMeInfoProfileModel.g.dart';
 class ResponseMeInfoProfileModel {
   final String? gender;
   final String? birthday;
-  final double? height;
-  final double? weight;
+  final int? height;
+  final int? weight;
   final List<String>? diseases;
 
   ResponseMeInfoProfileModel({

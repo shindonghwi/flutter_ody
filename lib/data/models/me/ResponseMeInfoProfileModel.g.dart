@@ -14,8 +14,8 @@ ResponseMeInfoProfileModel _$ResponseMeInfoProfileModelFromJson(
       diseases: (json['diseases'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      height: (json['height'] as num).toDouble(),
-      weight: (json['weight'] as num).toDouble(),
+      height: (json['height'] as num).toInt(),
+      weight: (json['weight'] as num).toInt(),
     );
 
 Map<String, dynamic> _$ResponseMeInfoProfileModelToJson(
