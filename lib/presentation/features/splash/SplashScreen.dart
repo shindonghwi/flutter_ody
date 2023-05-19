@@ -9,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:odac_flutter_app/app/OrotApp.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
+import 'package:odac_flutter_app/data/models/me/ResponseMeInfoProfileModel.dart';
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
@@ -80,6 +81,33 @@ class SplashScreen extends HookWidget {
     }
   }
 
+  setServiceHeader(String? token) async {
+    final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    final languageCode = WidgetsBinding.instance.window.locale.languageCode;
+    final countryCode = WidgetsBinding.instance.window.locale.countryCode.toString();
+
+    Service.setHeader(
+      languageCode: languageCode,
+      countryCode: countryCode,
+      timeZone: timeZone,
+      token: token ?? "",
+    );
+  }
+
+  /// 회원가입 완료 여부 체크
+  bool checkSignUpComplete(ResponseMeInfoProfileModel? profile) {
+    if (profile == null) return false;
+
+    final profileData = profile.toJson();
+
+    return profileData["gender"] != null &&
+        profileData["birthday"] != null &&
+        (profileData["height"] as double?) != null &&
+        profileData["height"] != 0 &&
+        (profileData["weight"] as double?) != null &&
+        profileData["weight"] != 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     SocialLoginModel? socialInfo;
@@ -89,19 +117,6 @@ class SplashScreen extends HookWidget {
       Navigator.pushReplacement(
         currentContext,
         nextSlideScreen(screen.route),
-      );
-    }
-
-    setServiceHeader(String? token) async {
-      final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
-      final languageCode = WidgetsBinding.instance.window.locale.languageCode;
-      final countryCode = WidgetsBinding.instance.window.locale.countryCode.toString();
-
-      Service.setHeader(
-        languageCode: languageCode,
-        countryCode: countryCode,
-        timeZone: timeZone,
-        token: token ?? "",
       );
     }
 
@@ -132,11 +147,11 @@ class SplashScreen extends HookWidget {
                 await setServiceHeader(res.data?.accessToken);
                 await getMeInfoUseCase.call().then((value) {
                   if (value.status == 200) {
-                    if(value.data?.profile.toJson().values.every((value) => value == 0) == true){
-                      movePage(RoutingScreen.InputProfile);
-                    }else{
+                    if (checkSignUpComplete(value.data?.profile)) {
                       // 여기서 사용자 정보 저장하고 메인으로 넘어가야함.
                       movePage(RoutingScreen.Main);
+                    } else {
+                      movePage(RoutingScreen.InputProfile);
                     }
                   } else {
                     movePage(RoutingScreen.Login);

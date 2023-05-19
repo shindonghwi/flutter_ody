@@ -4,12 +4,18 @@ part 'ResponseMeInfoProfileModel.g.dart';
 
 @JsonSerializable()
 class ResponseMeInfoProfileModel {
-  final double height;
-  final double weight;
+  final String? gender;
+  final String? birthday;
+  final double? height;
+  final double? weight;
+  final List<String>? diseases;
 
   ResponseMeInfoProfileModel({
+    required this.gender,
+    required this.birthday,
     required this.height,
     required this.weight,
+    required this.diseases,
   });
 
   factory ResponseMeInfoProfileModel.fromJson(Map<String, dynamic> json) => _$ResponseMeInfoProfileModelFromJson(json);

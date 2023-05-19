@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
+import 'package:odac_flutter_app/data/models/me/ResponseMeInfoProfileModel.dart';
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
@@ -10,7 +11,8 @@ import 'package:odac_flutter_app/presentation/models/UiState.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:riverpod/riverpod.dart';
 
-final loginUiStateProvider = StateNotifierProvider<LoginUiStateNotifier, UIState<String?>>(
+final loginUiStateProvider =
+    StateNotifierProvider<LoginUiStateNotifier, UIState<String?>>(
   (_) => LoginUiStateNotifier(),
 );
 
@@ -23,14 +25,13 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
   PostSocialLoginInUseCase get postSocialLoginInUseCase =>
       GetIt.instance<PostSocialLoginInUseCase>();
 
-  GetMeInfoUseCase get getMeInfoUseCase =>
-      GetIt.instance<GetMeInfoUseCase>();
+  GetMeInfoUseCase get getMeInfoUseCase => GetIt.instance<GetMeInfoUseCase>();
 
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
   bool isProfileEmpty = true;
 
-  setServiceHeader(String? token) async{
+  setServiceHeader(String? token) async {
     final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
     final languageCode = WidgetsBinding.instance.window.locale.languageCode;
     final countryCode = WidgetsBinding.instance.window.locale.countryCode.toString();
@@ -41,6 +42,20 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
       timeZone: timeZone,
       token: token ?? "",
     );
+  }
+
+  /// 회원가입 완료 여부 체크
+  bool checkSignUpComplete(ResponseMeInfoProfileModel? profile) {
+    if (profile == null) return false;
+
+    final profileData = profile.toJson();
+
+    return profileData["gender"] != null &&
+        profileData["birthday"] != null &&
+        (profileData["height"] as double?) != null &&
+        profileData["height"] != 0 &&
+        (profileData["weight"] as double?) != null &&
+        profileData["weight"] != 0;
   }
 
   void doLogin(LoginPlatform platform) async {
@@ -59,12 +74,11 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
           );
 
           if (res.status == 200) {
-
             // 내 정보 요청
             await setServiceHeader(res.data?.accessToken);
             await getMeInfoUseCase.call().then((value) {
               if (value.status == 200) {
-                isProfileEmpty = value.data?.profile.toJson().values.every((value) => value == 0) == true;
+                isProfileEmpty = checkSignUpComplete(value.data?.profile);
               }
             });
             // 로그인 성공
