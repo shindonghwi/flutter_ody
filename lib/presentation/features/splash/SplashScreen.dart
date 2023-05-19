@@ -93,7 +93,7 @@ class SplashScreen extends HookWidget {
   }
 
   /// 회원가입 완료 여부 체크
-  int getSignUpProceedPage(ResponseMeInfoProfileModel? profile) {
+  int getSignUpProceedPage(ResponseProfileModel? profile) {
     if (profile == null) return 0;
 
     final profileData = profile.toJson();

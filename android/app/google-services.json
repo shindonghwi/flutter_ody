@@ -12,7 +12,20 @@
           "package_name": "com.orot.ody"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1043075265104-bvl0i1h5094n2c3q2u8ne9kjnsg2mcdo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orot.ody",
+            "certificate_hash": "97aae50d3d91f0ef7c2e54a2e64e2d4d55f6f128"
+          }
+        },
+        {
+          "client_id": "1043075265104-5q93dg6vcl2ursb0d77pdimle1cs8m3o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD2uUOk3AjztpjiLJocZzzVPet6GPBC0Og"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1043075265104-5q93dg6vcl2ursb0d77pdimle1cs8m3o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1043075265104-eh61eveicb593umgq5daetoo90qmdg2a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.orot.ody"
+              }
+            }
+          ]
         }
       }
     }
