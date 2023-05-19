@@ -9,11 +9,13 @@ import 'package:odac_flutter_app/presentation/components/textfield/OutlineDefaul
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/notifier/textfield/InputProfileWeightTextFieldNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/ui/InputWeightUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/regex/TypeChecker.dart';
+import 'package:odac_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class InputProfileWeight extends HookConsumerWidget {
   final TextEditingController controller;
@@ -22,17 +24,72 @@ class InputProfileWeight extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final uiState = ref.watch(inputWeightUiStateProvider);
+    final weightUiStateProvider = ref.read(inputWeightUiStateProvider.notifier);
+    final pageController = ref.read(inputProfilePageViewControllerProvider);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        uiState.when(
+          success: (event) async {
+            pageController.nextPage(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+            weightUiStateProvider.resetState();
+          },
+          failure: (event) {
+            SnackBarUtil.show(context, event.errorMessage);
+          },
+        );
+      });
+    }, [uiState]);
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(35, 29, 35, 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _title(context),
+          const SizedBox(height: 24),
+          _InputTextField(controller: controller),
+          const _NextButton()
+        ],
+      ),
+    );
+  }
+
+  /// 몸무게를 입력해주세요
+  Widget _title(BuildContext context) {
+    return Text(
+      getAppLocalizations(context).input_profile_weight_title,
+      style: getTextTheme(context).h4sb.copyWith(
+            color: getColorScheme(context).colorText,
+          ),
+    );
+  }
+}
+
+class _InputTextField extends HookConsumerWidget {
+  const _InputTextField({
+    super.key,
+    required this.controller,
+  });
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final fieldState = ref.watch<TextFieldModel>(inputProfileWeightTextFieldProvider);
     final fieldStateRead = ref.read(inputProfileWeightTextFieldProvider.notifier);
-    final pageController = ref.read(inputProfilePageViewControllerProvider);
+    final weightUiStateProvider = ref.read(inputWeightUiStateProvider.notifier);
+
+    const minWeight = 30;
+    const maxWeight = 200;
 
     onCheckButtonAction() {
       if (fieldStateRead.checkWeight()) {
-        FocusManager.instance.primaryFocus?.unfocus();
-        pageController.nextPage(
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
+        weightUiStateProvider.patchWeight(int.parse(fieldStateRead.content));
       } else {
         final currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
@@ -40,65 +97,6 @@ class InputProfileWeight extends HookConsumerWidget {
         }
       }
     }
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(35, 29, 35, 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _Title(context),
-          SizedBox(height: 30),
-          _InputTextField(
-            controller: controller,
-            helpText: fieldState.helpMessage,
-            fieldStateRead: fieldStateRead,
-            fieldState: fieldState.fieldState,
-            pageController: pageController,
-            onCheckButtonAction: onCheckButtonAction,
-          ),
-          _NextButton(
-            controller: pageController,
-            fieldState: fieldState.fieldState,
-            onCheckButtonAction: onCheckButtonAction,
-          )
-        ],
-      ),
-    );
-  }
-
-  /** 몸무게를 입력해주세요 */
-  Widget _Title(BuildContext context) {
-    return Text(
-      getAppLocalizations(context).input_profile_weight_title,
-      style: getTextTheme(context).h3sb.copyWith(
-            color: getColorScheme(context).colorText,
-          ),
-    );
-  }
-}
-
-class _InputTextField extends HookWidget {
-  const _InputTextField({
-    super.key,
-    required this.controller,
-    required this.helpText,
-    required this.fieldStateRead,
-    required this.fieldState,
-    required this.pageController,
-    required this.onCheckButtonAction,
-  });
-
-  final TextEditingController controller;
-  final String? helpText;
-  final InputProfileWeightTextFieldNotifier fieldStateRead;
-  final TextFieldState fieldState;
-  final PageController pageController;
-  final VoidCallback onCheckButtonAction;
-
-  @override
-  Widget build(BuildContext context) {
-    final minWeight = 30;
-    final maxWeight = 200;
 
     return OutlineDefaultTextField(
       controller: controller,
@@ -122,33 +120,41 @@ class _InputTextField extends HookWidget {
                 helpMessage:
                     getAppLocalizations(context).input_profile_help_message_success);
           }
-        } else if (value.length != 0) {
+        } else if (value.isNotEmpty) {
           fieldStateRead.change(fieldState: TextFieldState.Error);
         }
       },
       limit: 3,
       maxLine: 1,
-      helpText: helpText,
-      fieldState: fieldState,
+      helpText: fieldState.helpMessage,
+      fieldState: fieldState.fieldState,
       onDoneAction: () => onCheckButtonAction.call(),
     );
   }
 }
 
-class _NextButton extends HookWidget {
-  final PageController controller;
-  final TextFieldState fieldState;
-  final VoidCallback onCheckButtonAction;
-
+class _NextButton extends HookConsumerWidget {
   const _NextButton({
     super.key,
-    required this.controller,
-    required this.fieldState,
-    required this.onCheckButtonAction,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final fieldState = ref.watch<TextFieldModel>(inputProfileWeightTextFieldProvider);
+    final fieldStateRead = ref.read(inputProfileWeightTextFieldProvider.notifier);
+    final weightUiStateProvider = ref.read(inputWeightUiStateProvider.notifier);
+
+    onCheckButtonAction() {
+      if (fieldStateRead.checkWeight()) {
+        weightUiStateProvider.patchWeight(int.parse(fieldStateRead.content));
+      } else {
+        final currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      }
+    }
+
     return Expanded(
       child: Align(
         alignment: Alignment.bottomCenter,
@@ -161,7 +167,7 @@ class _NextButton extends HookWidget {
             onPressed: () => onCheckButtonAction.call(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
-                state: fieldState == TextFieldState.Focus
+                state: fieldState.fieldState == TextFieldState.Focus
                     ? ButtonState.Activated
                     : ButtonState.Disabled,
               ),
