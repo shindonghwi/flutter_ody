@@ -7,6 +7,7 @@ import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
+import 'package:odac_flutter_app/presentation/features/constant/constants.dart';
 import 'package:odac_flutter_app/presentation/models/UiState.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:riverpod/riverpod.dart';
@@ -29,7 +30,7 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
-  bool isProfileEmpty = true;
+  int currentProceedPage = 0;
 
   setServiceHeader(String? token) async {
     final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
@@ -45,17 +46,16 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
   }
 
   /// 회원가입 완료 여부 체크
-  bool checkSignUpComplete(ResponseMeInfoProfileModel? profile) {
-    if (profile == null) return false;
+  int getSignUpProceedPage(ResponseMeInfoProfileModel? profile) {
+    if (profile == null) return 0;
 
     final profileData = profile.toJson();
+    if (profileData["gender"] == null) return 0;
+    if (profileData["birthday"] == null) return 1;
+    if ((profileData["height"] as int?) == null || profileData["height"] == 0) return 2;
+    if ((profileData["weight"] as int?) == null || profileData["weight"] == 0) return 3;
 
-    return profileData["gender"] != null &&
-        profileData["birthday"] != null &&
-        (profileData["height"] as double?) != null &&
-        profileData["height"] != 0 &&
-        (profileData["weight"] as double?) != null &&
-        profileData["weight"] != 0;
+    return SIGN_UP_PROCEED_COMPLETE;
   }
 
   void doLogin(LoginPlatform platform) async {
@@ -78,7 +78,7 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
             await setServiceHeader(res.data?.accessToken);
             await getMeInfoUseCase.call().then((value) {
               if (value.status == 200) {
-                isProfileEmpty = checkSignUpComplete(value.data?.profile);
+                currentProceedPage = getSignUpProceedPage(value.data?.profile);
               }
             });
             // 로그인 성공

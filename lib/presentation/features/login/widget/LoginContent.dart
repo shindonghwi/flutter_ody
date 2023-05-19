@@ -17,7 +17,7 @@ class LoginContent extends HookConsumerWidget {
 
     return Column(
       children: [
-        _AppTitle(context, size),
+        _appTitle(context, size),
         _socialIconContainer(context, size.height * 0.48, uiStateProvider),
       ],
     );
@@ -141,7 +141,7 @@ class LoginContent extends HookConsumerWidget {
   }
 
   /// 위젯: 앱 로고 및 타이틀
-  Align _AppTitle(BuildContext context, Size size) {
+  Align _appTitle(BuildContext context, Size size) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(

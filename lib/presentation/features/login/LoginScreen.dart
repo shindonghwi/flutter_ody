@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:odac_flutter_app/presentation/features/constant/constants.dart';
 import 'package:odac_flutter_app/presentation/features/login/notifier/LoginUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/login/widget/LoginContent.dart';
 import 'package:odac_flutter_app/presentation/models/UiState.dart';
@@ -23,7 +22,7 @@ class LoginScreen extends HookConsumerWidget {
     final state = ref.watch<UIState<String?>>(loginUiStateProvider);
     final loginProvider = ref.read(loginUiStateProvider.notifier);
 
-    movePage(RoutingScreen screen) async {
+    movePage(RoutingScreen screen, {int initPageNumber = 0}) async {
       Navigator.pushReplacement(
         context,
         nextFadeInOutScreen(screen.route),
@@ -34,11 +33,13 @@ class LoginScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         state.when(
           success: (event) async {
-            movePage(
-              loginProvider.isProfileEmpty
-                  ? RoutingScreen.InputProfile
-                  : RoutingScreen.Main,
-            );
+            if (loginProvider.currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
+              // 여기서 사용자 정보 저장하고 메인으로 넘어가야함.
+              movePage(RoutingScreen.Main);
+            } else {
+              movePage(RoutingScreen.InputProfile,
+                  initPageNumber: loginProvider.currentProceedPage);
+            }
           },
           failure: (event) {
             SnackBarUtil.show(context, event.errorMessage);
