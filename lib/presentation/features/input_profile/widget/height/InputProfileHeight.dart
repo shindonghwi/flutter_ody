@@ -166,10 +166,10 @@ class _NextButton extends HookConsumerWidget {
         alignment: Alignment.bottomCenter,
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           child: FillButton(
             text: getAppLocalizations(context).common_next,
-            type: ButtonSizeType.Small,
+            type: ButtonSizeType.Normal,
             onPressed: () => onCheckButtonAction.call(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(

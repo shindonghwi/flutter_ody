@@ -1,17 +1,21 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/domain/models/me/DiseaseType.dart';
 
-class DiseaseSelectNotifier extends StateNotifier<List<bool>> {
-  DiseaseSelectNotifier() : super([true, false, false]);
+final diseaseListStateProvider =
+    StateNotifierProvider<DiseaseSelectNotifier, List<DiseaseType>>(
+  (_) => DiseaseSelectNotifier(),
+);
 
-  void change(int index) {
-    state[index] = !state[index];
-    state = [...state];
+class DiseaseSelectNotifier extends StateNotifier<List<DiseaseType>> {
+  DiseaseSelectNotifier() : super([DiseaseType.HealthCare]);
+
+  void click(DiseaseType type) {
+    if (state.contains(type)) {
+      state.remove(type);
+      state = [...state];
+    } else {
+      state.add(type);
+      state = [...state];
+    }
   }
-
-  clear() => Future<void>.delayed(
-        Duration.zero,
-        () => state = [true, false, false],
-      );
-
-  bool hasTrue() => state.any((element) => element);
 }

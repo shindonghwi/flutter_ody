@@ -145,13 +145,13 @@ class SplashScreen extends HookWidget {
                 await getMeInfoUseCase.call().then((value) {
                   if (value.status == 200) {
                     final currentProceedPage = getSignUpProceedPage(value.data?.profile);
-                    debugPrint("currentProceedPage: $currentProceedPage");
                     if (currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
-                      // 여기서 사용자 정보 저장하고 메인으로 넘어가야함.
                       movePage(RoutingScreen.Main);
                     } else {
-                      movePage(RoutingScreen.InputProfile,
-                          initPageNumber: currentProceedPage);
+                      movePage(
+                        RoutingScreen.InputProfile,
+                        initPageNumber: currentProceedPage,
+                      );
                     }
                   } else {
                     movePage(RoutingScreen.Login);

@@ -153,8 +153,8 @@ class RemoteMeApi {
       type: ServiceType.Me,
       endPoint: 'preventive/disease',
       jsonBody: jsonEncode(
-        <String, List<DiseaseType>>{
-          "diseases": diseases,
+        <String, List<String>>{
+          "diseases": diseases.map((disease) => DiseaseTypeHelper.fromString(disease)).toList(),
         },
       ),
     );

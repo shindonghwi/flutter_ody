@@ -34,7 +34,6 @@ class LoginScreen extends HookConsumerWidget {
         state.when(
           success: (event) async {
             if (loginProvider.currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
-              // 여기서 사용자 정보 저장하고 메인으로 넘어가야함.
               movePage(RoutingScreen.Main);
             } else {
               movePage(RoutingScreen.InputProfile,

@@ -27,6 +27,7 @@
     "input_profile_weight_last_message": "다음이 마지막 질문이에요 !",
     "input_profile_disease_title": "관심있거나 예방하고 싶은\n질환이 있나요?",
     "input_profile_disease_subtitle": "( 선택한 질환의 정보를 받아볼 수 있어요 )",
+    "input_profile_disease_next_last_message": "다음이 마지막 질문이에요 :)",
     "input_profile_disease_last_message": "마지막 질문 입니다 :)",
     "input_profile_disease_item_health_manage": "건강관리",
     "input_profile_disease_item_blood_pressure": "고혈압",
@@ -41,7 +42,7 @@
         }
     },
 
-    "welcome_title": "{nickname} 님\n회원가입을 환영합니다",
+    "welcome_title": "{nickname} 님\n회원가입을 축하합니다!",
     "@welcome_title":{
         "placeholders": {
             "nickname": {}

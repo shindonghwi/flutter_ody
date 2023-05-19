@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/button/outline/OutlineBasicPrimaryButton.dart';
-import 'package:odac_flutter_app/presentation/components/button/outline/OutlineRoundPrimaryButton.dart';
+import 'package:odac_flutter_app/domain/models/me/DiseaseType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileDiseaseListStateProvider.dart';
+import 'package:odac_flutter_app/presentation/components/button/outline/OutlineRoundPrimaryButton.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileDiseaseSelectNotifier.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class DiseaseSelector extends HookConsumerWidget {
@@ -15,30 +15,41 @@ class DiseaseSelector extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final diseaseItemList = [
-      getAppLocalizations(context).input_profile_disease_item_health_manage,
-      getAppLocalizations(context).input_profile_disease_item_blood_pressure,
-      getAppLocalizations(context).input_profile_disease_item_glucose,
+    final List<DiseaseType> diseaseItemList = [
+      DiseaseType.HealthCare,
+      DiseaseType.Hypertension,
+      DiseaseType.DiabetesMellitus,
     ];
 
-    final diseaseActiveStateList = ref.watch<List<bool>>(diseaseListStateProvider);
+    final diseaseActiveStateList = ref.watch<List<DiseaseType>>(diseaseListStateProvider);
     final diseaseListRead = ref.read(diseaseListStateProvider.notifier);
+
+    String getDiseaseName(DiseaseType type) {
+      switch (type) {
+        case DiseaseType.HealthCare:
+          return getAppLocalizations(context).input_profile_disease_item_health_manage;
+        case DiseaseType.Hypertension:
+          return getAppLocalizations(context).input_profile_disease_item_blood_pressure;
+        case DiseaseType.DiabetesMellitus:
+          return getAppLocalizations(context).input_profile_disease_item_glucose;
+      }
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: diseaseActiveStateList.asMap().entries.map((entry) {
-        int index = entry.key;
-        var e = entry.value;
+      children: diseaseItemList.map((type) {
         return Container(
           width: double.infinity,
-          margin: EdgeInsets.only(bottom: 20),
+          margin: const EdgeInsets.only(bottom: 16),
           child: OutlineRoundPrimaryButton(
-            text: diseaseItemList[index],
-            onPressed: () => diseaseListRead.change(index),
-            type: ButtonSizeType.Small,
+            text: getDiseaseName(type),
+            onPressed: () => diseaseListRead.click(type),
+            type: ButtonSizeType.Normal,
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
-                state: e ? ButtonState.Activated : ButtonState.Default,
+                state: diseaseActiveStateList.contains(type)
+                    ? ButtonState.Activated
+                    : ButtonState.Default,
               ),
             ),
           ),

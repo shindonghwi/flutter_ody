@@ -156,23 +156,36 @@ class _NextButton extends HookConsumerWidget {
     }
 
     return Expanded(
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: FillButton(
-            text: getAppLocalizations(context).common_next,
-            type: ButtonSizeType.Small,
-            onPressed: () => onCheckButtonAction.call(),
-            buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-              (_) => ButtonNotifier(
-                state: fieldState.fieldState == TextFieldState.Focus
-                    ? ButtonState.Activated
-                    : ButtonState.Disabled,
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              getAppLocalizations(context).input_profile_disease_next_last_message,
+              style: getTextTheme(context).c1r.copyWith(
+                color: getColorScheme(context).neutral60,
               ),
             ),
-          ),
+            const SizedBox(height: 24),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: FillButton(
+                text: getAppLocalizations(context).common_next,
+                type: ButtonSizeType.Normal,
+                onPressed: () => onCheckButtonAction.call(),
+                buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
+                      (_) => ButtonNotifier(
+                    state: fieldState.fieldState == TextFieldState.Focus
+                        ? ButtonState.Activated
+                        : ButtonState.Disabled,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

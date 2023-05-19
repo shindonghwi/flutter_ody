@@ -5,6 +5,7 @@ import 'package:odac_flutter_app/presentation/components/button/fill/FillButton.
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:odac_flutter_app/presentation/features/cache/UserCache.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
@@ -21,35 +22,45 @@ class WelcomeScreen extends HookWidget {
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(45, 0, 45, 25),
+          padding: const EdgeInsets.only(bottom: 29),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 90),
-              Text(
-                getAppLocalizations(context).welcome_title("운동하는 다람쥐"),
-                style: getTextTheme(context).h3sb.copyWith(
-                      color: getColorScheme(context).colorText,
-                    ),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
+              const SizedBox(height: 80),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Text(
+                  getAppLocalizations(context).welcome_title("${userCache.userInfo?.nick}"),
+                  style: getTextTheme(context).h3b.copyWith(
+                        color: getColorScheme(context).colorText,
+                        height: 1.28,
+                      ),
+                  maxLines: 3,
+                  textAlign: TextAlign.center,
+                ),
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 32),
               Text(
                 getAppLocalizations(context).welcome_subtitle,
                 style: getTextTheme(context).t3m.copyWith(
-                      color: getColorScheme(context).neutral60,
+                      color: getColorScheme(context).neutral70,
                     ),
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 87),
-              Image.asset(
-                "assets/imgs/welcome_image.png",
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 65),
+                  child: Center(
+                    child: Image.asset(
+                      "assets/imgs/welcome_image.png",
+                    ),
+                  ),
+                ),
               ),
-              Expanded(child: SizedBox()),
               Container(
                 width: double.infinity,
+                margin: const EdgeInsets.symmetric(horizontal: 40),
                 child: FillButton(
                   borderRadius: 100,
                   text: getAppLocalizations(context).welcome_button,

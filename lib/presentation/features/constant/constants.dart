@@ -1,1 +1,1 @@
-const SIGN_UP_PROCEED_COMPLETE = 1000;
+const SIGN_UP_PROCEED_COMPLETE = 1000; // 회원가입 완료 - INPUT PROFILE 화면에서 사용자가 모든 정보를 기입했을때.

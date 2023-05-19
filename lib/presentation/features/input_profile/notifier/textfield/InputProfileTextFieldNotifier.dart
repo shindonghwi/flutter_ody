@@ -17,12 +17,4 @@ abstract class InputProfileTextFieldNotifier extends StateNotifier<TextFieldMode
       helpMessage ?? state.helpMessage,
     );
   }
-
-  clear() {
-    content = "";
-    Future<void>.delayed(
-      Duration.zero,
-      () => state = TextFieldModel(TextFieldState.Default, ''),
-    );
-  }
 }
