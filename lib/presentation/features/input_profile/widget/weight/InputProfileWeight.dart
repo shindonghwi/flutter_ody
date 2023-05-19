@@ -10,7 +10,6 @@ import 'package:odac_flutter_app/presentation/components/textfield/model/TextFie
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileWeightTextFieldNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileWeightTextFieldProvider.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -23,8 +22,8 @@ class InputProfileWeight extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final fieldState = ref.watch<TextFieldModel>(InputProfileWeightTextFieldProvider);
-    final fieldStateRead = ref.read(InputProfileWeightTextFieldProvider.notifier);
+    final fieldState = ref.watch<TextFieldModel>(inputProfileWeightTextFieldProvider);
+    final fieldStateRead = ref.read(inputProfileWeightTextFieldProvider.notifier);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     onCheckButtonAction() {
@@ -120,7 +119,8 @@ class _InputTextField extends HookWidget {
           } else {
             fieldStateRead.change(
                 fieldState: TextFieldState.Focus,
-                helpMessage: getAppLocalizations(context).input_profile_help_message_success);
+                helpMessage:
+                    getAppLocalizations(context).input_profile_help_message_success);
           }
         } else if (value.length != 0) {
           fieldStateRead.change(fieldState: TextFieldState.Error);
