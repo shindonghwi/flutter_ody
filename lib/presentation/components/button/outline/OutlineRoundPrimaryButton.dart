@@ -35,6 +35,7 @@ class OutlineRoundPrimaryButton extends HookConsumerWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
+        borderRadius: BorderRadius.circular(100),
         onTapDown: (_) {
           if (buttonState == ButtonState.Disabled) return;
           buttonRead.changeState(ButtonState.Pressed);

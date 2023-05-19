@@ -4,16 +4,16 @@ import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
 
 class OutlineButtonSize {
   static const double _largeHeight = 60;
-  static const double _largePaddingHorizontal = 44;
+  static const double _largePaddingHorizontal = 50;
 
-  static const double _normalHeight = 55;
-  static const double _normalPaddingHorizontal = 44;
+  static const double _normalHeight = 50;
+  static const double _normalPaddingHorizontal = 50;
 
-  static const double _smallHeight = 45;
-  static const double _smallPaddingHorizontal = 50;
+  static const double _smallHeight = 40;
+  static const double _smallPaddingHorizontal = 55;
 
-  static const double _xsmallHeight = 40;
-  static const double _xsmallPaddingHorizontal = 56;
+  static const double _xsmallHeight = 35;
+  static const double _xsmallPaddingHorizontal = 40;
 
   /** 타입에 따른 버튼 패딩 반환 */
   static EdgeInsets getButtonPadding(ButtonSizeType type) {

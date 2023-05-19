@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/button/outline/OutlineBasicPrimaryButton.dart';
 import 'package:odac_flutter_app/presentation/components/button/outline/OutlineRoundPrimaryButton.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
@@ -31,7 +30,7 @@ class GenderSelector extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
         ),
         Expanded(

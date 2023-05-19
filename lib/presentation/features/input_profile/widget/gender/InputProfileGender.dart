@@ -20,31 +20,31 @@ class InputProfileGender extends HookConsumerWidget {
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(35, 29, 35, 30),
+      padding: const EdgeInsets.fromLTRB(35, 40, 35, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Title(context),
-          SizedBox(height: 30),
+          _title(context),
+          const SizedBox(height: 24),
           GenderSelector(isSelectedMan: isSelectedMan),
-          _NextButton(context, pageController)
+          _nextButton(context, pageController)
         ],
       ),
     );
   }
 
-  /** 성별을 선택해주세요 */
-  Widget _Title(BuildContext context) {
+  /// 성별을 선택해주세요
+  Widget _title(BuildContext context) {
     return Text(
       getAppLocalizations(context).input_profile_gender_title,
-      style: getTextTheme(context).h3sb.copyWith(
+      style: getTextTheme(context).h4sb.copyWith(
             color: getColorScheme(context).colorText,
           ),
     );
   }
 
-  /** 다음 버튼 */
-  Expanded _NextButton(BuildContext context, PageController pageController) {
+  /// 다음 버튼
+  Expanded _nextButton(BuildContext context, PageController pageController) {
     return Expanded(
       child: Align(
         alignment: Alignment.bottomCenter,
@@ -53,10 +53,10 @@ class InputProfileGender extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: FillButton(
             text: getAppLocalizations(context).common_next,
-            type: ButtonSizeType.Small,
+            type: ButtonSizeType.Normal,
             onPressed: () {
               pageController.nextPage(
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
               );
             },
