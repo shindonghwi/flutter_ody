@@ -37,7 +37,7 @@ class InputProfileDisease extends HookConsumerWidget {
     );
   }
 
-  /** 관심있거나 ~~ 질환이 있나요? */
+  /// 관심있거나 ~~ 질환이 있나요?
   Widget _Title(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,11 +73,11 @@ class _SkipButton extends HookConsumerWidget {
     final diseaseActiveStateList = ref.watch<List<bool>>(diseaseListStateProvider);
     final diseaseListRead = ref.read(diseaseListStateProvider.notifier);
 
-    /** 입력했던 데이터 초기화 */
-    initInputData(){
+    /// 입력했던 데이터 초기화
+    initInputData() {
       diseaseListRead.clear();
-      ref.read(InputProfileBirthdayTextFieldProvider.notifier).clear();
-      ref.read(InputProfileHeightTextFieldProvider.notifier).clear();
+      ref.read(inputProfileBirthdayTextFieldProvider.notifier).clear();
+      ref.read(inputProfileHeightTextFieldProvider.notifier).clear();
       ref.read(InputProfileWeightTextFieldProvider.notifier).clear();
     }
 
@@ -110,7 +110,9 @@ class _SkipButton extends HookConsumerWidget {
                 },
                 buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
                   (_) => ButtonNotifier(
-                    state: diseaseListRead.hasTrue() ? ButtonState.Activated : ButtonState.Disabled,
+                    state: diseaseListRead.hasTrue()
+                        ? ButtonState.Activated
+                        : ButtonState.Disabled,
                   ),
                 ),
               ),

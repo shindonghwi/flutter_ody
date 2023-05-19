@@ -10,25 +10,25 @@ import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseC
 import 'package:odac_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeBirthdayUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeGenderUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeHeightUseCase.dart';
 import 'package:odac_flutter_app/presentation/models/UiState.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:riverpod/riverpod.dart';
 
-final inputProfileUiStateProvider =
-    StateNotifierProvider<InputProfileUiStateNotifier, UIState<String>>(
-  (_) => InputProfileUiStateNotifier(),
+final inputHeightUiStateProvider =
+    StateNotifierProvider<InputHeightUiStateNotifier, UIState<String>>(
+  (_) => InputHeightUiStateNotifier(),
 );
 
-class InputProfileUiStateNotifier extends StateNotifier<UIState<String>> {
-  InputProfileUiStateNotifier() : super(Idle<String>());
+class InputHeightUiStateNotifier extends StateNotifier<UIState<String>> {
+  InputHeightUiStateNotifier() : super(Idle<String>());
 
-  PatchMeBirthdayUseCase get _patchMeBirthdayUseCase =>
-      GetIt.instance<PatchMeBirthdayUseCase>();
+  PatchMeHeightUseCase get _patchMeHeightUseCase =>
+      GetIt.instance<PatchMeHeightUseCase>();
 
-  void patchBirthday(String birthday) {
-
+  void patchHeight(int height) {
     state = Loading();
-    _patchMeBirthdayUseCase.call(birthday: birthday).then((value) {
+    _patchMeHeightUseCase.call(height: height).then((value) {
       if (value.status == 200) {
         state = Success("");
       } else {

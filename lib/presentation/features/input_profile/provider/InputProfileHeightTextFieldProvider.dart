@@ -3,7 +3,7 @@ import 'package:odac_flutter_app/presentation/components/textfield/model/TextFie
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileHeightTextFieldNotifier.dart';
 
-final InputProfileHeightTextFieldProvider =
+final inputProfileHeightTextFieldProvider =
     StateNotifierProvider<InputProfileHeightTextFieldNotifier, TextFieldModel>(
   (_) => InputProfileHeightTextFieldNotifier(),
 );

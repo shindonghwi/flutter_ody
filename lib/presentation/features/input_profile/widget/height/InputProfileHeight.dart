@@ -9,12 +9,14 @@ import 'package:odac_flutter_app/presentation/components/textfield/OutlineDefaul
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileHeightTextFieldNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/ui/InputHeightUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileHeightTextFieldProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/regex/TypeChecker.dart';
+import 'package:odac_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class InputProfileHeight extends HookConsumerWidget {
   final TextEditingController controller;
@@ -23,16 +25,71 @@ class InputProfileHeight extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final fieldState = ref.watch<TextFieldModel>(InputProfileHeightTextFieldProvider);
-    final fieldStateRead = ref.read(InputProfileHeightTextFieldProvider.notifier);
+    final uiState = ref.watch(inputHeightUiStateProvider);
+    final heightUiStateProvider = ref.read(inputHeightUiStateProvider.notifier);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        uiState.when(
+          success: (event) async {
+            pageController.nextPage(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+            heightUiStateProvider.resetState();
+          },
+          failure: (event) {
+            SnackBarUtil.show(context, event.errorMessage);
+          },
+        );
+      });
+    }, [uiState]);
+    return Container(
+      padding: const EdgeInsets.fromLTRB(35, 40, 35, 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _title(context),
+          const SizedBox(height: 24),
+          _InputTextField(controller: controller),
+          const _NextButton()
+        ],
+      ),
+    );
+  }
+
+  /// 키를 입력해주세요
+  Widget _title(BuildContext context) {
+    return Text(
+      getAppLocalizations(context).input_profile_height_title,
+      style: getTextTheme(context).h4sb.copyWith(
+            color: getColorScheme(context).colorText,
+          ),
+    );
+  }
+}
+
+class _InputTextField extends HookConsumerWidget {
+  const _InputTextField({
+    super.key,
+    required this.controller,
+  });
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final fieldState = ref.watch<TextFieldModel>(inputProfileHeightTextFieldProvider);
+    final fieldStateRead = ref.read(inputProfileHeightTextFieldProvider.notifier);
+    final heightUiStateProvider = ref.read(inputHeightUiStateProvider.notifier);
+
+    const minHeight = 120;
+    const maxHeight = 230;
 
     onCheckButtonAction() {
       if (fieldStateRead.checkHeight()) {
-        pageController.nextPage(
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
+        heightUiStateProvider.patchHeight(int.parse(fieldStateRead.content));
       } else {
         final currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
@@ -40,65 +97,6 @@ class InputProfileHeight extends HookConsumerWidget {
         }
       }
     }
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(35, 29, 35, 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _Title(context),
-          SizedBox(height: 30),
-          _InputTextField(
-            controller: controller,
-            helpText: fieldState.helpMessage,
-            fieldStateRead: fieldStateRead,
-            fieldState: fieldState.fieldState,
-            pageController: pageController,
-            onCheckButtonAction: onCheckButtonAction,
-          ),
-          _NextButton(
-            controller: pageController,
-            fieldState: fieldState.fieldState,
-            onCheckButtonAction: onCheckButtonAction,
-          )
-        ],
-      ),
-    );
-  }
-
-  /** 키를 입력해주세요 */
-  Widget _Title(BuildContext context) {
-    return Text(
-      getAppLocalizations(context).input_profile_height_title,
-      style: getTextTheme(context).h3sb.copyWith(
-            color: getColorScheme(context).colorText,
-          ),
-    );
-  }
-}
-
-class _InputTextField extends HookWidget {
-  const _InputTextField({
-    super.key,
-    required this.controller,
-    required this.helpText,
-    required this.fieldStateRead,
-    required this.fieldState,
-    required this.pageController,
-    required this.onCheckButtonAction,
-  });
-
-  final TextEditingController controller;
-  final String? helpText;
-  final InputProfileHeightTextFieldNotifier fieldStateRead;
-  final TextFieldState fieldState;
-  final PageController pageController;
-  final VoidCallback onCheckButtonAction;
-
-  @override
-  Widget build(BuildContext context) {
-    final minHeight = 120;
-    final maxHeight = 230;
 
     return OutlineDefaultTextField(
       controller: controller,
@@ -120,39 +118,49 @@ class _InputTextField extends HookWidget {
           } else {
             fieldStateRead.change(
               fieldState: TextFieldState.Focus,
-              helpMessage: getAppLocalizations(context).input_profile_help_message_success,
+              helpMessage:
+                  getAppLocalizations(context).input_profile_help_message_success,
             );
           }
-        } else if (value.length != 0) {
+        } else if (value.isNotEmpty) {
           fieldStateRead.change(
             fieldState: TextFieldState.Error,
-            helpMessage: getAppLocalizations(context).input_profile_help_message_error_retry,
+            helpMessage:
+                getAppLocalizations(context).input_profile_help_message_error_retry,
           );
         }
       },
       limit: 3,
       maxLine: 1,
-      helpText: helpText,
-      fieldState: fieldState,
+      helpText: fieldState.helpMessage,
+      fieldState: fieldState.fieldState,
       onNextAction: () => onCheckButtonAction.call(),
     );
   }
 }
 
-class _NextButton extends HookWidget {
-  final PageController controller;
-  final TextFieldState fieldState;
-  final VoidCallback onCheckButtonAction;
-
+class _NextButton extends HookConsumerWidget {
   const _NextButton({
     super.key,
-    required this.controller,
-    required this.fieldState,
-    required this.onCheckButtonAction,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final fieldState = ref.watch<TextFieldModel>(inputProfileHeightTextFieldProvider);
+    final fieldStateRead = ref.read(inputProfileHeightTextFieldProvider.notifier);
+    final heightUiStateProvider = ref.read(inputHeightUiStateProvider.notifier);
+
+    onCheckButtonAction() {
+      if (fieldStateRead.checkHeight()) {
+        heightUiStateProvider.patchHeight(int.parse(fieldStateRead.content));
+      } else {
+        final currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      }
+    }
+
     return Expanded(
       child: Align(
         alignment: Alignment.bottomCenter,
@@ -165,7 +173,7 @@ class _NextButton extends HookWidget {
             onPressed: () => onCheckButtonAction.call(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
-                state: fieldState == TextFieldState.Focus
+                state: fieldState.fieldState == TextFieldState.Focus
                     ? ButtonState.Activated
                     : ButtonState.Disabled,
               ),

@@ -7,7 +7,7 @@ import 'package:odac_flutter_app/presentation/components/button/model/ButtonNoti
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
 import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputGenderUiStateNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/ui/InputGenderUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/widget/gender/GenderSelector.dart';
 import 'package:odac_flutter_app/presentation/models/UiState.dart';

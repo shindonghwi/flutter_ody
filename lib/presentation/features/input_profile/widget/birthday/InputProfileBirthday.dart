@@ -9,9 +9,7 @@ import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.d
 import 'package:odac_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputBirthdayUiStateNotifier.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileBirthdayTextFieldNotifier.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileUiStateNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/input_profile/notifier/ui/InputBirthdayUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfileBirthdayTextFieldProvider.dart';
 import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:odac_flutter_app/presentation/models/UiState.dart';
@@ -28,26 +26,26 @@ class InputProfileBirthday extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(inputBirthdayUiStateProvider);
-    final stateProvider = ref.read(inputBirthdayUiStateProvider.notifier);
+    final uiState = ref.watch(inputBirthdayUiStateProvider);
+    final birthdayUiStateProvider = ref.read(inputBirthdayUiStateProvider.notifier);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        state.when(
+        uiState.when(
           success: (event) async {
             pageController.nextPage(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
             );
-            stateProvider.resetState();
+            birthdayUiStateProvider.resetState();
           },
           failure: (event) {
             SnackBarUtil.show(context, event.errorMessage);
           },
         );
       });
-    }, [state]);
+    }, [uiState]);
 
     return Stack(
       children: [
@@ -63,7 +61,7 @@ class InputProfileBirthday extends HookConsumerWidget {
             ],
           ),
         ),
-        if (state is Loading) const CircleLoading()
+        if (uiState is Loading) const CircleLoading()
       ],
     );
   }
@@ -89,16 +87,13 @@ class _InputTextField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final fieldState = ref.watch<TextFieldModel>(InputProfileBirthdayTextFieldProvider);
-    final fieldStateRead = ref.read(InputProfileBirthdayTextFieldProvider.notifier);
-    final pageController = ref.read(inputProfilePageViewControllerProvider);
+    final fieldState = ref.watch<TextFieldModel>(inputProfileBirthdayTextFieldProvider);
+    final fieldStateRead = ref.read(inputProfileBirthdayTextFieldProvider.notifier);
+    final birthdayUiStateProvider = ref.read(inputBirthdayUiStateProvider.notifier);
 
     onCheckButtonAction() {
       if (fieldStateRead.checkBirthday()) {
-        pageController.nextPage(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
+        birthdayUiStateProvider.patchBirthday(fieldStateRead.content.replaceAll("/", "-"));
       } else {
         final currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
@@ -150,13 +145,14 @@ class _NextButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final fieldState = ref.watch<TextFieldModel>(InputProfileBirthdayTextFieldProvider);
-    final stateProvider = ref.read(inputBirthdayUiStateProvider.notifier);
-    final fieldStateRead = ref.read(InputProfileBirthdayTextFieldProvider.notifier);
+    final fieldState = ref.watch<TextFieldModel>(inputProfileBirthdayTextFieldProvider);
+    final fieldStateRead = ref.read(inputProfileBirthdayTextFieldProvider.notifier);
+    final birthdayUiStateProvider = ref.read(inputBirthdayUiStateProvider.notifier);
 
     onCheckButtonAction() {
       if (fieldStateRead.checkBirthday()) {
-        stateProvider.patchBirthday(fieldStateRead.content.replaceAll("/", "-"));
+        birthdayUiStateProvider
+            .patchBirthday(fieldStateRead.content.replaceAll("/", "-"));
       } else {
         final currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
