@@ -50,15 +50,18 @@ enum RoutingScreen {
   static Map<String, WidgetBuilder> getAppRoutes() {
     return {
       RoutingScreen.Splash.route: (context) => SplashScreen(),
-      RoutingScreen.OnBoarding.route: (context) => OnBoardingScreen(),
+      RoutingScreen.OnBoarding.route: (context) => const OnBoardingScreen(),
       RoutingScreen.Login.route: (context) => const LoginScreen(),
       RoutingScreen.InputProfile.route: (context) => const InputProfileScreen(),
       RoutingScreen.Welcome.route: (context) => const WelcomeScreen(),
       RoutingScreen.Main.route: (context) => MainScreen(),
-      RoutingScreen.RecordBloodPressure.route: (context) => const RecordBloodPressureScreen(),
+      RoutingScreen.RecordBloodPressure.route: (context) =>
+          const RecordBloodPressureScreen(),
       RoutingScreen.RecordGlucose.route: (context) => const RecordGlucoseScreen(),
-      RoutingScreen.RecordedListBloodPressure.route: (context) => const RecordedListBloodPressureScreen(),
-      RoutingScreen.RecordedListGlucose.route: (context) => const RecordedListGlucoseScreen(),
+      RoutingScreen.RecordedListBloodPressure.route: (context) =>
+          const RecordedListBloodPressureScreen(),
+      RoutingScreen.RecordedListGlucose.route: (context) =>
+          const RecordedListGlucoseScreen(),
       RoutingScreen.EditMyInfo.route: (context) => const EditMyInfoScreen(),
       RoutingScreen.EditMyNickname.route: (context) => const EditMyNicknameScreen(),
       RoutingScreen.EditMyHeight.route: (context) => const EditMyHeightScreen(),
@@ -69,16 +72,18 @@ enum RoutingScreen {
     };
   }
 
-  static getScreen(String route) {
+  static getScreen(String route, {dynamic parameter}) {
+    debugPrint("getScreen : parameter: $parameter");
     switch (route) {
       case "/splash":
         return SplashScreen();
       case "/onBoarding":
-        return OnBoardingScreen();
+        return const OnBoardingScreen();
       case "/login":
         return const LoginScreen();
       case "/input_profile":
-        return const InputProfileScreen();
+        int initPageNumber = parameter ?? 0;
+        return InputProfileScreen(initPageNumber: initPageNumber);
       case "/welcome":
         return const WelcomeScreen();
       case "/main":

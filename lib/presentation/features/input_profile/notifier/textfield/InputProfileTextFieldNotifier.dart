@@ -9,12 +9,12 @@ abstract class InputProfileTextFieldNotifier extends StateNotifier<TextFieldMode
   RegExp regex = RegExp(r'^(12[0-9]|1[3-9][0-9]|2[0-2][0-9]|230)$');
 
   void change({
-    TextFieldState? fieldState = null,
-    String? helpMessage = null,
+    TextFieldState? fieldState,
+    String? helpMessage,
   }) {
     state = TextFieldModel(
-      fieldState == null ? state.fieldState : fieldState,
-      helpMessage == null ? state.helpMessage : helpMessage,
+      fieldState ?? state.fieldState,
+      helpMessage ?? state.helpMessage,
     );
   }
 

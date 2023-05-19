@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
@@ -9,7 +10,12 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class InputProfileScreen extends HookConsumerWidget {
-  const InputProfileScreen({Key? key}) : super(key: key);
+  final int initPageNumber;
+
+  const InputProfileScreen({
+    Key? key,
+    this.initPageNumber = 0,
+  }) : super(key: key);
 
   bool onBackPressed(BuildContext context, PageController pageController) {
     if (pageController.page!.round() == 0) {
@@ -36,6 +42,12 @@ class InputProfileScreen extends HookConsumerWidget {
     var currentPageIndex = ref.watch(inputProfileCurrentPageIndexProvider);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
     final currentPageTitle = titleList[currentPageIndex];
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        pageController.jumpToPage(initPageNumber);
+      });
+    }, []);
 
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI01,

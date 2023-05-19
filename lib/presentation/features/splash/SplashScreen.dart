@@ -29,6 +29,8 @@ class SplashScreen extends HookWidget {
 
   GetMeInfoUseCase get getMeInfoUseCase => GetIt.instance<GetMeInfoUseCase>();
 
+  final SIGN_UP_PROCEED_COMPLETE = 1000; // 회원가입 완료
+
   SplashScreen({super.key});
 
   Future<String?> getSocialAccessToken(String platform) async {
@@ -95,17 +97,16 @@ class SplashScreen extends HookWidget {
   }
 
   /// 회원가입 완료 여부 체크
-  bool checkSignUpComplete(ResponseMeInfoProfileModel? profile) {
-    if (profile == null) return false;
+  int getSignUpProceedPage(ResponseMeInfoProfileModel? profile) {
+    if (profile == null) return 0;
 
     final profileData = profile.toJson();
+    if (profileData["gender"] == null) return 0;
+    if (profileData["birthday"] == null) return 1;
+    if ((profileData["height"] as int?) == null || profileData["height"] == 0) return 2;
+    if ((profileData["weight"] as int?) == null || profileData["weight"] == 0) return 3;
 
-    return profileData["gender"] != null &&
-        profileData["birthday"] != null &&
-        (profileData["height"] as int?) != null &&
-        profileData["height"] != 0 &&
-        (profileData["weight"] as int?) != null &&
-        profileData["weight"] != 0;
+    return SIGN_UP_PROCEED_COMPLETE;
   }
 
   @override
@@ -113,10 +114,10 @@ class SplashScreen extends HookWidget {
     SocialLoginModel? socialInfo;
     final currentContext = context;
 
-    movePage(RoutingScreen screen) async {
+    movePage(RoutingScreen screen, {int initPageNumber = 0}) async {
       Navigator.pushReplacement(
         currentContext,
-        nextSlideScreen(screen.route),
+        nextSlideScreen(screen.route, parameter: initPageNumber),
       );
     }
 
@@ -147,11 +148,13 @@ class SplashScreen extends HookWidget {
                 await setServiceHeader(res.data?.accessToken);
                 await getMeInfoUseCase.call().then((value) {
                   if (value.status == 200) {
-                    if (checkSignUpComplete(value.data?.profile)) {
+                    final currentProceedPage = getSignUpProceedPage(value.data?.profile);
+                    debugPrint("currentProceedPage: $currentProceedPage");
+                    if (currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
                       // 여기서 사용자 정보 저장하고 메인으로 넘어가야함.
                       movePage(RoutingScreen.Main);
                     } else {
-                      movePage(RoutingScreen.InputProfile);
+                      movePage(RoutingScreen.InputProfile, initPageNumber: currentProceedPage);
                     }
                   } else {
                     movePage(RoutingScreen.Login);
