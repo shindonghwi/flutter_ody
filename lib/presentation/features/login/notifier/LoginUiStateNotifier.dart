@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
-import 'package:odac_flutter_app/data/models/me/ResponseMeInfoProfileModel.dart';
+import 'package:odac_flutter_app/data/models/me/ResponseProfileModel.dart';
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';

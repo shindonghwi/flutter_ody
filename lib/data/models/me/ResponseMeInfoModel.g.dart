@@ -10,7 +10,7 @@ ResponseMeInfoModel _$ResponseMeInfoModelFromJson(Map<String, dynamic> json) =>
     ResponseMeInfoModel(
       email: json['email'] as String,
       nick: json['nick'] as String,
-      profile: ResponseMeInfoProfileModel.fromJson(
+      profile: ResponseProfileModel.fromJson(
           json['profile'] as Map<String, dynamic>),
     );
 

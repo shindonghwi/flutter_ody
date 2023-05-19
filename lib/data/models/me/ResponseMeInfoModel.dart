@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:odac_flutter_app/data/models/me/ResponseMeInfoProfileModel.dart';
+import 'package:odac_flutter_app/data/models/me/ResponseProfileModel.dart';
 
 part 'ResponseMeInfoModel.g.dart';
 
@@ -7,7 +7,7 @@ part 'ResponseMeInfoModel.g.dart';
 class ResponseMeInfoModel {
   final String email;
   final String nick;
-  final ResponseMeInfoProfileModel profile;
+  final ResponseProfileModel profile;
 
   ResponseMeInfoModel({
     required this.email,
@@ -15,7 +15,8 @@ class ResponseMeInfoModel {
     required this.profile,
   });
 
-  factory ResponseMeInfoModel.fromJson(Map<String, dynamic> json) => _$ResponseMeInfoModelFromJson(json);
+  factory ResponseMeInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$ResponseMeInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponseMeInfoModelToJson(this);
 }

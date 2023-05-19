@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:odac_flutter_app/app/OrotApp.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
-import 'package:odac_flutter_app/data/models/me/ResponseMeInfoProfileModel.dart';
+import 'package:odac_flutter_app/data/models/me/ResponseProfileModel.dart';
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
