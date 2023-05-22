@@ -1,12 +1,15 @@
 import 'package:get_it/get_it.dart';
 import 'package:odac_flutter_app/data/data_source/local/app/LocalAppApi.dart';
 import 'package:odac_flutter_app/data/data_source/remote/auth/RemoteAuthApi.dart';
+import 'package:odac_flutter_app/data/data_source/remote/bio/RemoteBioApi.dart';
 import 'package:odac_flutter_app/data/data_source/remote/me/RemoteMeApi.dart';
 import 'package:odac_flutter_app/data/repositories/local/app/LocalAppRepositoryImpl.dart';
 import 'package:odac_flutter_app/data/repositories/remote/auth/RemoteAuthRepositoryImpl.dart';
+import 'package:odac_flutter_app/data/repositories/remote/bio/RemoteBioRepositoryImpl.dart';
 import 'package:odac_flutter_app/data/repositories/remote/me/RemoteMeRepositoryImpl.dart';
 import 'package:odac_flutter_app/domain/repositories/local/app/LocalAppRepository.dart';
 import 'package:odac_flutter_app/domain/repositories/remote/auth/RemoteAuthRepository.dart';
+import 'package:odac_flutter_app/domain/repositories/remote/bio/RemoteBioRepository.dart';
 import 'package:odac_flutter_app/domain/repositories/remote/me/RemoteMeRepository.dart';
 import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyUpdateUseCase.dart';
@@ -51,6 +54,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<LocalAppRepository>(() => LocalAppRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteAuthRepository>(() => RemoteAuthRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteMeRepository>(() => RemoteMeRepositoryImpl());
+  GetIt.instance.registerLazySingleton<RemoteBioRepository>(() => RemoteBioRepositoryImpl());
 
   /// -------
   /// api
@@ -58,4 +62,5 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<LocalAppApi>(() => LocalAppApi());
   GetIt.instance.registerLazySingleton<RemoteAuthApi>(() => RemoteAuthApi());
   GetIt.instance.registerLazySingleton<RemoteMeApi>(() => RemoteMeApi());
+  GetIt.instance.registerLazySingleton<RemoteBioApi>(() => RemoteBioApi());
 }
