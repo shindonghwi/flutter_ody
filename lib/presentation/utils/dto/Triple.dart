@@ -1,9 +1,9 @@
-class Triple {
+class Triple<T, U, K> {
   Triple(this.first, this.second, this.third);
 
-  final dynamic first;
-  final dynamic second;
-  final dynamic third;
+  final T first;
+  final U second;
+  final K third;
 
   @override
   String toString() => 'Triple[$first, $second, $third]';

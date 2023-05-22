@@ -15,16 +15,25 @@ class RangeResult extends HookWidget {
 
   const RangeResult({
     super.key,
-    required RecordType this.type,
-    required RecordRangeStatus this.status,
-    required int this.level,
+    required this.type,
+    required this.status,
+    required this.level,
   });
-
-
 
   @override
   Widget build(BuildContext context) {
     final colorList = RecordRangeStatusHelper.getDividerColorList(context, status);
+
+    final AnimationController _controller = useAnimationController(
+      duration: Duration(milliseconds: 1000),
+    );
+
+    useEffect(() {
+      _controller.forward();
+      return () {
+        _controller.dispose();
+      };
+    }, []);
 
     return Container(
       width: double.infinity,

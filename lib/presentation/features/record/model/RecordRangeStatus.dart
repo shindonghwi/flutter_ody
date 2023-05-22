@@ -4,19 +4,23 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 enum RecordRangeStatus {
-  Default,
-  Normal,
-  Danger,
+  LowBp, // 저혈압
+  HighBp, // 고혈압
+  Normal, // 정상
+  Danger, // 위험
+  None, // --
 }
 
 class RecordRangeStatusHelper {
   static const Map<RecordRangeStatus, String> _stringToEnum = {
-    RecordRangeStatus.Default: "기본",
+    RecordRangeStatus.LowBp: "저혈압",
+    RecordRangeStatus.HighBp: "고혈압",
     RecordRangeStatus.Normal: "정상",
-    RecordRangeStatus.Danger: "위험"
+    RecordRangeStatus.Danger: "위험",
+    RecordRangeStatus.None: "정상"
   };
 
-  static String fromString(RecordRangeStatus status) => _stringToEnum[status] ?? "기본";
+  static String fromString(RecordRangeStatus status) => _stringToEnum[status] ?? "정상";
 
   static Color getStatusColor(
     BuildContext context,
@@ -25,6 +29,8 @@ class RecordRangeStatusHelper {
     switch (status) {
       case RecordRangeStatus.Normal:
         return getColorScheme(context).primary100;
+      case RecordRangeStatus.LowBp:
+      case RecordRangeStatus.HighBp:
       case RecordRangeStatus.Danger:
         return getColorScheme(context).error100;
       default:
@@ -36,9 +42,9 @@ class RecordRangeStatusHelper {
     BuildContext context,
     RecordRangeStatus status,
   ) {
-    if(status == RecordRangeStatus.Default){
+    if (status == RecordRangeStatus.None) {
       return getColorScheme(context).neutral50;
-    }else{
+    } else {
       return getColorScheme(context).colorText;
     }
   }
@@ -56,6 +62,8 @@ class RecordRangeStatusHelper {
           getColorScheme(context).primary80,
           getColorScheme(context).primary100,
         ];
+      case RecordRangeStatus.LowBp:
+      case RecordRangeStatus.HighBp:
       case RecordRangeStatus.Danger:
         return [
           getColorScheme(context).error20,
@@ -83,6 +91,8 @@ class RecordRangeStatusHelper {
       switch (status) {
         case RecordRangeStatus.Normal:
           return "assets/imgs/ody_bp_result_normal.png";
+        case RecordRangeStatus.LowBp:
+        case RecordRangeStatus.HighBp:
         case RecordRangeStatus.Danger:
           return "assets/imgs/ody_bp_result_danger.png";
         default:
@@ -92,6 +102,8 @@ class RecordRangeStatusHelper {
       switch (status) {
         case RecordRangeStatus.Normal:
           return "assets/imgs/ody_glucose_result_normal.png";
+        case RecordRangeStatus.LowBp:
+        case RecordRangeStatus.HighBp:
         case RecordRangeStatus.Danger:
           return "assets/imgs/ody_glucose_result_danger.png";
         default:
