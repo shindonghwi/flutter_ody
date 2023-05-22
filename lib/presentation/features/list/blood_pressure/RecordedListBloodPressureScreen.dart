@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:odac_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
+import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
+import 'package:odac_flutter_app/presentation/components/empty/EmptyView.dart';
+import 'package:odac_flutter_app/presentation/navigation/Route.dart';
+import 'package:odac_flutter_app/presentation/ui/colors.dart';
+import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class RecordedListBloodPressureScreen extends StatelessWidget {
   const RecordedListBloodPressureScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('혈압기록 리스트 화면'),
+    return Scaffold(
+      appBar: IconTitleTextAppBar(
+        leadingIcon: AppBarIcon(
+          path: 'assets/imgs/icon_back.svg',
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: getAppLocalizations(context).list_record_blood_pressure_title,
+      ),
+      backgroundColor: getColorScheme(context).colorUI01,
+      body: const Center(
+        child: EmptyView(
+          screen: RoutingScreen.RecordedListBloodPressure,
+        ),
+      ),
     );
   }
 }

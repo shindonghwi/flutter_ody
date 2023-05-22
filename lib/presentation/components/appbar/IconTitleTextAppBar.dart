@@ -47,7 +47,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
                 ),
               ),
             )
-          : SizedBox(),
+          : const SizedBox(),
       title: Text(
         title,
         style: getTextTheme(context).l1m.copyWith(
@@ -56,7 +56,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
       ),
       centerTitle: isCenterTitle,
       actions: [
-        Container(
+        SizedBox(
           height: double.infinity,
           child: InkWell(
             onTap: () => actionTextCallback?.call(),

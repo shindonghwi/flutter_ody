@@ -147,6 +147,9 @@
     "withdrawal_reason_4": "디자인이 복잡해요",
     "withdrawal_reason_5": "기타",
 
+    "list_record_blood_pressure_title": "혈압 기록",
+
+
     "popup_app_policy_title" : "사용 약관",
     "popup_app_policy_all_grant" : "모두 동의하기",
     "popup_app_policy_age_14" : "만 14세 이상",
@@ -160,6 +163,14 @@
     "message_not_found_user": "사용자 정보를 찾을 수 없습니다",
     "message_server_error_5xx": "서버 오류가 발생했습니다\n잠시 후에 다시 시도해주세요",
     "message_api_success": "success",
+
+    "empty_record": "아직 작성한 기록이 없어요\n기록을 통해 건강한 생활을 시작해보아요 :)",
+    "empty_report": "분석할 내역이 없어요\n기록을 통해 건강한 생활을 시작해보아요 :)",
+    "empty_alarm": "아직 알림이 없어요",
+    "empty_button_alarm_add": "알림 추가하기",
+    "empty_button_record": "기록 시작하기",
+    "empty_button_go_home": "홈으로 가기",
+
 
     "common_skip": "넘어가기",
     "common_next": "다음",

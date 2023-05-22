@@ -8,7 +8,6 @@ import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:odac_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
 
 class CardRecordItems extends HookConsumerWidget {
@@ -16,16 +15,13 @@ class CardRecordItems extends HookConsumerWidget {
     super.key,
   });
 
-  void movePage(BuildContext context, String title, bool selectDateIsToday) {
+  void movePage(BuildContext context, String title) {
     if (title == getAppLocalizations(context).home_today_record_walk) {
+      // 걸음수 화면
     } else if (title == getAppLocalizations(context).home_today_record_blood_pressure) {
       Navigator.push(
         context,
-        nextSlideScreen(
-          selectDateIsToday
-              ? RoutingScreen.RecordBloodPressure.route
-              : RoutingScreen.RecordedListBloodPressure.route,
-        ),
+        nextSlideScreen(RoutingScreen.RecordedListBloodPressure.route),
       );
     } else if (title == getAppLocalizations(context).home_today_record_glucose) {
       Navigator.push(context, nextSlideScreen(RoutingScreen.RecordGlucose.route));
@@ -34,8 +30,6 @@ class CardRecordItems extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final calendarSelectedDate = ref.watch<DateTime>(calendarSelectDateProvider);
-    debugPrint("calendarSelectedDate: $calendarSelectedDate");
     final recordItemState = [
       useState<RecordItemState>(
         RecordItemState(
@@ -57,10 +51,6 @@ class CardRecordItems extends HookConsumerWidget {
               "오늘은 어떠세요?",
               getAppLocalizations(context).home_today_record_blood_pressure_unit1,
             ),
-            // Pair(
-            //   "75",
-            //   getAppLocalizations(context).home_today_record_blood_pressure_unit2,
-            // ),
           ],
           imagePath: 'assets/imgs/ody_record_blood_pressure.png',
         ),
@@ -128,8 +118,7 @@ class CardRecordItems extends HookConsumerWidget {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () => movePage(
-                        context, title, DateChecker.isDateToday(calendarSelectedDate)),
+                    onTap: () => movePage(context, title),
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
                       height: double.infinity,
