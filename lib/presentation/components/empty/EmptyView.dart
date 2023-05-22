@@ -8,8 +8,13 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class EmptyView extends HookWidget {
   final RoutingScreen screen;
+  final VoidCallback? onPressed;
 
-  const EmptyView({Key? key, required this.screen}) : super(key: key);
+  const EmptyView({
+    Key? key,
+    required this.screen,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class EmptyView extends HookWidget {
     String? getEmptyMessage() {
       if (screen == RoutingScreen.RecordedListBloodPressure) {
         return getAppLocalizations(context).empty_record;
-      }else if (screen == RoutingScreen.RecordedListGlucose) {
+      } else if (screen == RoutingScreen.RecordedListGlucose) {
         return getAppLocalizations(context).empty_record;
       }
       return null;
@@ -34,7 +39,7 @@ class EmptyView extends HookWidget {
     String? getButtonText() {
       if (screen == RoutingScreen.RecordedListBloodPressure) {
         return getAppLocalizations(context).empty_button_record;
-      }else if (screen == RoutingScreen.RecordedListGlucose) {
+      } else if (screen == RoutingScreen.RecordedListGlucose) {
         return getAppLocalizations(context).empty_button_record;
       }
       return null;
@@ -77,7 +82,7 @@ class EmptyView extends HookWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: () {},
+                onTap: () => onPressed?.call(),
                 borderRadius: BorderRadius.circular(100),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 9),
