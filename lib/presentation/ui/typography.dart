@@ -75,7 +75,7 @@ extension StyleText on TextTheme {
   TextStyle get t3sb => defaultTextStyle.copyWith(
       fontSize: 18,
       fontWeight: FontWeight.w600,
-      height: 1.33
+      // height: 1.33
   );
   TextStyle get t4m => defaultTextStyle.copyWith(
       fontSize: 16,

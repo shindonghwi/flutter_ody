@@ -10,6 +10,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final bool isCenterTitle;
   final String actionText;
+  final Color? actionTextColor;
   final Function? actionTextCallback;
 
   const IconTitleTextAppBar({
@@ -18,6 +19,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
     String this.title = "",
     bool this.isCenterTitle = true,
     String this.actionText = "",
+    Color? this.actionTextColor = null,
     Function? this.actionTextCallback = null,
   });
 
@@ -67,7 +69,7 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
                 child: Text(
                   actionText,
                   style: getTextTheme(context).t4m.copyWith(
-                        color: getColorScheme(context).neutral70,
+                        color: actionTextColor ?? getColorScheme(context).neutral70,
                       ),
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
@@ -81,5 +83,5 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size(double.infinity, 56);
+  Size get preferredSize => const Size(double.infinity, 56);
 }

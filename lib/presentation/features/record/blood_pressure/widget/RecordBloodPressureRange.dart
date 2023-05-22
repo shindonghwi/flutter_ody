@@ -17,20 +17,20 @@ class RecordBloodPressureRange extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 35),
-        _HeartBeatTitle(context),
-        SizedBox(height: 12),
-        RangeResult(
+        const SizedBox(height: 32),
+        _heartBeatTitle(context),
+        const SizedBox(height: 15),
+        const RangeResult(
           type: RecordType.BloodPressure,
           status: RecordRangeStatus.Normal,
-          level: 3,
+          level: 4,
         ),
       ],
     );
   }
 
-  /** 맥박 제목 */
-  Widget _HeartBeatTitle(BuildContext context) {
+  /// 맥박 제목
+  Widget _heartBeatTitle(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
@@ -38,7 +38,6 @@ class RecordBloodPressureRange extends StatelessWidget {
         style: getTextTheme(context).t2b.copyWith(
               color: getColorScheme(context).colorText,
             ),
-        overflow: TextOverflow.ellipsis,
       ),
     );
   }

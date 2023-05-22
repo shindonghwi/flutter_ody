@@ -20,8 +20,9 @@ class RecordBloodPressureScreen extends HookWidget {
           path: 'assets/imgs/icon_back.svg',
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: '혈압기록',
-        actionText: '저장',
+        title: getAppLocalizations(context).record_blood_pressure,
+        actionText: getAppLocalizations(context).common_save,
+        actionTextColor: getColorScheme(context).neutral50,
         actionTextCallback: () {},
       ),
       body: SingleChildScrollView(

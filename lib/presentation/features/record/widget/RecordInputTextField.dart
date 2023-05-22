@@ -46,7 +46,7 @@ class RecordInputTextField extends HookWidget {
       void onFocusChanged() => _isFocused.value = focusNode.hasFocus;
       focusNode.addListener(onFocusChanged);
       if (autoFocus) {
-        Timer(Duration(milliseconds: 300), () => focusNode.requestFocus());
+        Timer(const Duration(milliseconds: 300), () => focusNode.requestFocus());
       }
       return () => focusNode.removeListener(onFocusChanged);
     }, [focusNode]);
@@ -62,7 +62,7 @@ class RecordInputTextField extends HookWidget {
       decoration: InputDecoration(
         filled: true,
         enabled: true,
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: 0,
           vertical: 0,
         ),
@@ -71,13 +71,15 @@ class RecordInputTextField extends HookWidget {
         counterText: "",
         border: InputBorder.none,
         hintText: hint,
-        hintStyle: hintTextStyle ?? getTextTheme(context).t2b.copyWith(
-              color: getColorScheme(context).neutral60,
-            ),
+        hintStyle: hintTextStyle ??
+            getTextTheme(context).t2b.copyWith(
+                  color: getColorScheme(context).neutral60,
+                ),
       ),
-      style: textStyle ?? getTextTheme(context).t2b.copyWith(
-            color: getColorScheme(context).colorText,
-          ),
+      style: textStyle ??
+          getTextTheme(context).t2b.copyWith(
+                color: getColorScheme(context).colorText,
+              ),
       onChanged: (value) {
         onChanged?.call(value);
       },

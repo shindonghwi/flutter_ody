@@ -75,10 +75,10 @@
     "home_today_record_complete_comment_congratulation": "달성을 축하합니다!",
     "home_today_record_prepare": "준비중이에요 :)",
 
-    "record_blood_pressure": "혈압기록",
+    "record_blood_pressure": "혈압",
     "record_blood_pressure_input_title": "혈압 / 맥박",
-    "record_blood_pressure_input1_hint1": "120",
-    "record_blood_pressure_input1_hint2": "80",
+    "record_blood_pressure_input1_hint1": "119",
+    "record_blood_pressure_input1_hint2": "79",
     "record_blood_pressure_input1_unit": "mmHg",
     "record_blood_pressure_input2_hint": "70 ~ 80",
     "record_blood_pressure_input2_unit": "분/회",
@@ -102,6 +102,8 @@
     "record_glucose_memo_notification_time_120": "2시간",
 
     "record_range_figure": " 수치에 해당합니다",
+    "record_range_figure_low_bp": "저혈압",
+    "record_range_figure_high_bp": "고혈압",
     "record_range_figure_normal": "정상",
     "record_range_figure_danger": "위험",
     "record_range_figure_high_risk": "고위험",

@@ -58,11 +58,11 @@ class RangeResult extends HookWidget {
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                Container(
+                SizedBox(
                   width: 200,
                   child: Column(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 10,
                         child: LevelDivider(
                           length: colorList.length,
@@ -70,37 +70,40 @@ class RangeResult extends HookWidget {
                           colors: colorList,
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                getAppLocalizations(context)
-                                    .record_range_figure_normal,
-                                style: getTextTheme(context).c2r.copyWith(
-                                  color: getColorScheme(context).neutral70,
+                      const SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  getAppLocalizations(context)
+                                      .record_range_figure_low_bp,
+                                  style: getTextTheme(context).c2r.copyWith(
+                                    color: getColorScheme(context).neutral70,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: 19),
-                              Text(
-                                getAppLocalizations(context)
-                                    .record_range_figure_danger,
-                                style: getTextTheme(context).c2r.copyWith(
-                                  color: getColorScheme(context).neutral70,
+                                const SizedBox(width: 19),
+                                Text(
+                                  getAppLocalizations(context)
+                                      .record_range_figure_normal,
+                                  style: getTextTheme(context).c2r.copyWith(
+                                    color: getColorScheme(context).neutral70,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            getAppLocalizations(context)
-                                .record_range_figure_high_risk,
-                            style: getTextTheme(context).c2r.copyWith(
-                              color: getColorScheme(context).neutral70,
+                              ],
                             ),
-                          ),
-                        ],
+                            Text(
+                              getAppLocalizations(context)
+                                  .record_range_figure_high_bp,
+                              style: getTextTheme(context).c2r.copyWith(
+                                color: getColorScheme(context).neutral70,
+                              ),
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ),
