@@ -36,8 +36,10 @@ class LoginScreen extends HookConsumerWidget {
             if (loginProvider.currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
               movePage(RoutingScreen.Main);
             } else {
-              movePage(RoutingScreen.InputProfile,
-                  initPageNumber: loginProvider.currentProceedPage);
+              movePage(
+                RoutingScreen.InputProfile,
+                initPageNumber: loginProvider.currentProceedPage,
+              );
             }
           },
           failure: (event) {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -61,7 +63,7 @@ class Service {
   static Future<Response> postApi({
     required ServiceType type,
     required String? endPoint,
-    String jsonBody = "",
+    required Map<String, dynamic> jsonBody,
   }) async {
     final url = Uri.parse(
         '$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
@@ -72,9 +74,10 @@ class Service {
     final res = await http.post(
       url,
       headers: headers,
-      body: jsonBody,
+      body: jsonEncode(jsonBody),
     );
     debugPrint('\http response statusCode: ${res.statusCode}');
+    debugPrint('\http response method: ${res.request?.method.toString()}');
     debugPrint('\http response body: ${res.body}');
     return res;
   }
@@ -82,7 +85,7 @@ class Service {
   static Future<Response> patchApi({
     required ServiceType type,
     required String? endPoint,
-    String jsonBody = "",
+    required Map<String, dynamic> jsonBody,
   }) async {
     final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
     debugPrint('\nrequest Url: $url');
@@ -92,7 +95,7 @@ class Service {
     final res = await http.patch(
       url,
       headers: headers,
-      body: jsonBody,
+      body: jsonEncode(jsonBody),
     );
     debugPrint('\http response statusCode: ${res.statusCode}');
     debugPrint('\http response method: ${res.request?.method.toString()}');

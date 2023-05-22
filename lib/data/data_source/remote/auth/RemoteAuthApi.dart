@@ -69,7 +69,7 @@ class RemoteAuthApi {
     final response = await Service.postApi(
       type: ServiceType.Auth,
       endPoint: 'social/login',
-      jsonBody: jsonEncode(requestSocialLoginModel.toJson()),
+      jsonBody: requestSocialLoginModel.toJson(),
     );
 
     if (response.statusCode >= 500) {

@@ -32,7 +32,7 @@ class RemoteBioApi {
     final response = await Service.postApi(
       type: ServiceType.Bio,
       endPoint: 'blood-pressure',
-      jsonBody: data.toString(),
+      jsonBody: data.toJson(),
     );
 
     if (response.statusCode >= 500) {
@@ -54,7 +54,7 @@ class RemoteBioApi {
     final response = await Service.postApi(
       type: ServiceType.Bio,
       endPoint: 'glucose',
-      jsonBody: data.toString(),
+      jsonBody: data.toJson(),
     );
 
     if (response.statusCode >= 500) {
@@ -76,7 +76,7 @@ class RemoteBioApi {
     final response = await Service.postApi(
       type: ServiceType.Bio,
       endPoint: 'steps',
-      jsonBody: data.toString(),
+      jsonBody: data.toJson(),
     );
 
     if (response.statusCode >= 500) {

@@ -1,71 +1,94 @@
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:odac_flutter_app/presentation/features/record/blood_pressure/models/BpRecorderModel.dart';
 import 'package:odac_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
-import 'package:odac_flutter_app/presentation/utils/dto/Triple.dart';
 
 // 사용자가 입력한 수축기, 이완기 혈압, 맥박
 final bloodPressureRecorderProvider =
-    StateNotifierProvider<BloodPressureRecorderNotifier, Triple<int, int, int>>(
+    StateNotifierProvider<BloodPressureRecorderNotifier, BpRecorderModel>(
   (_) => BloodPressureRecorderNotifier(),
 );
 
-class BloodPressureRecorderNotifier extends StateNotifier<Triple<int, int, int>> {
-  BloodPressureRecorderNotifier() : super(Triple(0, 0, 0));
+class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
+
+  final yearMonthDay = DateTime.now().toString().split(" ")[0].split("-");
+  final hourMinuteSecond = DateTime.now().toString().split(" ")[1].split(":");
+
+  BloodPressureRecorderNotifier() : super(BpRecorderModel());
+
+  void updateTime(DateTime time) {
+    state = BpRecorderModel(
+        time: DateFormat("HH:mm").format(time),
+        systolic: state.systolic,
+        diastolic: state.diastolic,
+        hr: state.hr);
+    debugPrint("updateTime: ${state.time}");
+  }
 
   void updateSystolicBloodPressure(int systolicBloodPressure) {
-    state = Triple(systolicBloodPressure, state.second, state.third);
+    state = BpRecorderModel(
+        time: state.time,
+        systolic: systolicBloodPressure,
+        diastolic: state.diastolic,
+        hr: state.hr);
   }
 
   void updateDiastolicBloodPressure(int diastolicBloodPressure) {
-    state = Triple(state.first, diastolicBloodPressure, state.third);
+    state = BpRecorderModel(
+        time: state.time,
+        systolic: state.systolic,
+        diastolic: diastolicBloodPressure,
+        hr: state.hr);
   }
 
   void updateHeartRate(int heartRate) {
-    state = Triple(state.first, state.second, heartRate);
+    state = BpRecorderModel(
+        time: state.time,
+        systolic: state.systolic,
+        diastolic: state.diastolic,
+        hr: heartRate);
   }
 
+  int checkBpLevel() {
+    final int systolic = state.systolic;
+    final int diastolic = state.diastolic;
 
-  int checkBpLevel(){
-
-    final int systolic = state.first;
-    final int diastolic = state.second;
-
-    if (systolic == 0 || diastolic == 0){
+    if (systolic == 0 || diastolic == 0) {
       return 0;
     }
 
-    if (systolic <= 90 || diastolic <= 60){
+    if (systolic <= 90 || diastolic <= 60) {
       return 1;
-    }else if(systolic <= 120 || diastolic <= 80) {
+    } else if (systolic <= 120 || diastolic <= 80) {
       return 2;
-    }else if(systolic <= 140 || diastolic <= 90) {
+    } else if (systolic <= 140 || diastolic <= 90) {
       return 3;
-    }else if(systolic <= 160 || diastolic <= 100) {
+    } else if (systolic <= 160 || diastolic <= 100) {
       return 4;
-    }else{
+    } else {
       return 5;
     }
   }
 
-  RecordRangeStatus checkBpStatus(){
+  RecordRangeStatus checkBpStatus() {
+    final int systolic = state.systolic;
+    final int diastolic = state.diastolic;
 
-    final int systolic = state.first;
-    final int diastolic = state.second;
-
-    if (systolic == 0 || diastolic == 0){
+    if (systolic == 0 || diastolic == 0) {
       return RecordRangeStatus.None;
     }
 
-    if (systolic <= 90 || diastolic <= 60){
+    if (systolic <= 90 || diastolic <= 60) {
       return RecordRangeStatus.LowBp;
-    }else if(systolic <= 120 || diastolic <= 80) {
+    } else if (systolic <= 120 || diastolic <= 80) {
       return RecordRangeStatus.Normal;
-    }else if(systolic <= 140 || diastolic <= 90) {
+    } else if (systolic <= 140 || diastolic <= 90) {
       return RecordRangeStatus.HighBp;
-    }else if(systolic <= 160 || diastolic <= 100) {
+    } else if (systolic <= 160 || diastolic <= 100) {
       return RecordRangeStatus.HighBp;
-    }else{
+    } else {
       return RecordRangeStatus.HighBp;
     }
   }
-
 }

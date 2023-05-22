@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/presentation/features/record/blood_pressure/models/BpRecorderModel.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/notifier/BloodPressureRecorderNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/widget/LevelDivider.dart';
 import 'package:odac_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
@@ -19,7 +20,7 @@ class RecordBloodPressureRange extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final bpRecorder = ref.watch<Triple<int,int,int>>(bloodPressureRecorderProvider);
+    final bpRecorder = ref.watch<BpRecorderModel>(bloodPressureRecorderProvider);
     final bpRecorderRead = ref.read(bloodPressureRecorderProvider.notifier);
 
     return Column(

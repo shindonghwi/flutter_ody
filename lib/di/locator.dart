@@ -15,6 +15,10 @@ import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseC
 import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyUpdateUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/bio/GetBioHistoryUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/bio/PostBioBloodPressureUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/bio/PostBioGlucoseUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/bio/PostBioStepsUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeBirthdayUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeDiseasesUseCase.dart';
@@ -47,6 +51,10 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PatchMeHeightUseCase>(() => PatchMeHeightUseCase());
   GetIt.instance.registerLazySingleton<PatchMeWeightUseCase>(() => PatchMeWeightUseCase());
   GetIt.instance.registerLazySingleton<PatchMeDiseasesUseCase>(() => PatchMeDiseasesUseCase());
+  GetIt.instance.registerLazySingleton<PostBioBloodPressureUseCase>(() => PostBioBloodPressureUseCase());
+  GetIt.instance.registerLazySingleton<PostBioGlucoseUseCase>(() => PostBioGlucoseUseCase());
+  GetIt.instance.registerLazySingleton<PostBioStepsUseCase>(() => PostBioStepsUseCase());
+  GetIt.instance.registerLazySingleton<GetBioHistoryUseCase>(() => GetBioHistoryUseCase());
 
   /// -------
   /// repository
