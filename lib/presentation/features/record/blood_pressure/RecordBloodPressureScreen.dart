@@ -19,7 +19,6 @@ class RecordBloodPressureScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch<UIState<String?>>(recordBloodPressureUiStateProvider);
     final stateProvider = ref.read(recordBloodPressureUiStateProvider.notifier);
-    final bpRecorderProvider = ref.read(bloodPressureRecorderProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -32,21 +31,6 @@ class RecordBloodPressureScreen extends HookConsumerWidget {
           },
           failure: (event) {
             SnackBarUtil.show(context, event.errorMessage);
-          },
-          idle: (_) {
-            final List<String> yearMonthDay =
-                DateTime.now().toString().split(" ")[0].split("-");
-            final List<String> hourMinuteSecond =
-                DateTime.now().toString().split(" ")[1].split(":");
-
-            bpRecorderProvider.updateTime(DateTime(
-              double.parse(yearMonthDay[0]).toInt(),
-              double.parse(yearMonthDay[1]).toInt(),
-              double.parse(yearMonthDay[2]).toInt(),
-              double.parse(hourMinuteSecond[0]).toInt(),
-              double.parse(hourMinuteSecond[1]).toInt(),
-              double.parse(hourMinuteSecond[2]).toInt(),
-            ));
           },
         );
       });

@@ -11,11 +11,15 @@ final bloodPressureRecorderProvider =
 );
 
 class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
-
   final yearMonthDay = DateTime.now().toString().split(" ")[0].split("-");
   final hourMinuteSecond = DateTime.now().toString().split(" ")[1].split(":");
 
-  BloodPressureRecorderNotifier() : super(BpRecorderModel());
+  BloodPressureRecorderNotifier()
+      : super(BpRecorderModel(
+            time: DateFormat("HH:mm").format(DateTime.now()),
+            systolic: 0,
+            diastolic: 0,
+            hr: 0));
 
   void updateTime(DateTime time) {
     state = BpRecorderModel(
@@ -23,7 +27,6 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
         systolic: state.systolic,
         diastolic: state.diastolic,
         hr: state.hr);
-    debugPrint("updateTime: ${state.time}");
   }
 
   void updateSystolicBloodPressure(int systolicBloodPressure) {

@@ -5,9 +5,9 @@ class BpRecorderModel {
   final int hr;
 
   BpRecorderModel({
-    this.time = "00:00",
-    this.systolic = 0,
-    this.diastolic = 0,
-    this.hr = 0,
+    required this.time,
+    required this.systolic,
+    required this.diastolic,
+    required this.hr,
   });
 }
