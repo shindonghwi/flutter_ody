@@ -16,14 +16,14 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
 
   BloodPressureRecorderNotifier()
       : super(BpRecorderModel(
-            time: DateFormat("HH:mm").format(DateTime.now()),
+            time: DateTime.now(),
             systolic: 0,
             diastolic: 0,
             hr: 0));
 
   void updateTime(DateTime time) {
     state = BpRecorderModel(
-        time: DateFormat("HH:mm").format(time),
+        time: time,
         systolic: state.systolic,
         diastolic: state.diastolic,
         hr: state.hr);

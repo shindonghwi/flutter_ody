@@ -1,5 +1,5 @@
 class BpRecorderModel {
-  final String time;
+  final DateTime time;
   final int systolic;
   final int diastolic;
   final int hr;

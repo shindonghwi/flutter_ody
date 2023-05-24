@@ -15,7 +15,7 @@ class RecordBloodPressureUiStateNotifier extends StateNotifier<UIState<String?>>
       GetIt.instance<PostBioBloodPressureUseCase>();
 
   void postBp({
-    required String time,
+    required DateTime time,
     required int systolicBloodPressure,
     required int diastolicBloodPressure,
     required int heartRate,
