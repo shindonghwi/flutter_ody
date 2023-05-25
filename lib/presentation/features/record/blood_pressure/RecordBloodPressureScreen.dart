@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.dart';
-import 'package:odac_flutter_app/presentation/features/record/blood_pressure/notifier/BloodPressureRecorderNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/notifier/RecordBloodPressureUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/widget/RecordBloodPressure.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/widget/RecordBloodPressureAppBar.dart';
@@ -25,8 +24,10 @@ class RecordBloodPressureScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         state.when(
           success: (event) async {
-            SnackBarUtil.show(context,
-                getAppLocalizations(context).message_record_complete_blood_pressure);
+            SnackBarUtil.show(
+              context,
+              getAppLocalizations(context).message_record_complete_blood_pressure,
+            );
             stateProvider.resetState();
             Navigator.pop(context);
           },
@@ -46,7 +47,9 @@ class RecordBloodPressureScreen extends HookConsumerWidget {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: const [
-                RecordDateSelector(type: RecordType.BloodPressure,),
+                RecordDateSelector(
+                  type: RecordType.BloodPressure,
+                ),
                 RecordBloodPressure(),
               ],
             ),

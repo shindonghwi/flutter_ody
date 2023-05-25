@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/models/BpRecorderModel.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/notifier/BloodPressureRecorderNotifier.dart';
-import 'package:odac_flutter_app/presentation/features/record/blood_pressure/widget/LevelDivider.dart';
+import 'package:odac_flutter_app/presentation/features/record/widget/LevelDivider.dart';
 import 'package:odac_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
 import 'package:odac_flutter_app/presentation/features/record/model/RecordType.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';

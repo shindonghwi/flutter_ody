@@ -6,6 +6,7 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
 enum RecordRangeStatus {
   LowBp, // 저혈압
   HighBp, // 고혈압
+  Warning, // 주의
   Normal, // 정상
   Danger, // 위험
   None, // --
@@ -16,6 +17,7 @@ class RecordRangeStatusHelper {
     RecordRangeStatus.LowBp: "저혈압",
     RecordRangeStatus.HighBp: "고혈압",
     RecordRangeStatus.Normal: "정상",
+    RecordRangeStatus.Warning: "주의",
     RecordRangeStatus.Danger: "위험",
     RecordRangeStatus.None: "정상"
   };
@@ -51,36 +53,64 @@ class RecordRangeStatusHelper {
 
   static List<Color> getDividerColorList(
     BuildContext context,
+    RecordType type,
     RecordRangeStatus status,
   ) {
-    switch (status) {
-      case RecordRangeStatus.Normal:
+    if (type == RecordType.BloodPressure) {
+      switch (status) {
+        case RecordRangeStatus.Normal:
+          return [
+            getColorScheme(context).primary20,
+            getColorScheme(context).primary40,
+            getColorScheme(context).primary60,
+            getColorScheme(context).primary80,
+            getColorScheme(context).primary100,
+          ];
+        case RecordRangeStatus.LowBp:
+        case RecordRangeStatus.HighBp:
+        case RecordRangeStatus.Danger:
+          return [
+            getColorScheme(context).error20,
+            getColorScheme(context).error40,
+            getColorScheme(context).error60,
+            getColorScheme(context).error80,
+            getColorScheme(context).error100,
+          ];
+        default:
+          return [
+            getColorScheme(context).neutral30,
+            getColorScheme(context).neutral30,
+            getColorScheme(context).neutral30,
+            getColorScheme(context).neutral30,
+            getColorScheme(context).neutral30,
+          ];
+      }
+    }else if (type == RecordType.Glucose){
+      if (status == RecordRangeStatus.Normal){
         return [
           getColorScheme(context).primary20,
           getColorScheme(context).primary40,
-          getColorScheme(context).primary60,
           getColorScheme(context).primary80,
-          getColorScheme(context).primary100,
         ];
-      case RecordRangeStatus.LowBp:
-      case RecordRangeStatus.HighBp:
-      case RecordRangeStatus.Danger:
+      }else if (status == RecordRangeStatus.Warning){
         return [
           getColorScheme(context).error20,
           getColorScheme(context).error40,
-          getColorScheme(context).error60,
           getColorScheme(context).error80,
-          getColorScheme(context).error100,
         ];
-      default:
+      }else if (status == RecordRangeStatus.Danger){
         return [
-          getColorScheme(context).neutral30,
-          getColorScheme(context).neutral30,
-          getColorScheme(context).neutral30,
-          getColorScheme(context).neutral30,
-          getColorScheme(context).neutral30,
+          getColorScheme(context).error20,
+          getColorScheme(context).error40,
+          getColorScheme(context).error80,
         ];
+      }
     }
+    return [
+      getColorScheme(context).neutral30,
+      getColorScheme(context).neutral30,
+      getColorScheme(context).neutral30,
+    ];
   }
 
   static String getOdyImagePath(
@@ -102,9 +132,7 @@ class RecordRangeStatusHelper {
       switch (status) {
         case RecordRangeStatus.Normal:
           return "assets/imgs/ody_glucose_result_normal.png";
-        case RecordRangeStatus.LowBp:
-        case RecordRangeStatus.HighBp:
-        case RecordRangeStatus.Danger:
+        case RecordRangeStatus.Warning:
           return "assets/imgs/ody_glucose_result_danger.png";
         default:
           return "assets/imgs/ody_glucose_result_default.png";

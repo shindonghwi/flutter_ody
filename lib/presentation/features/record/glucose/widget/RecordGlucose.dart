@@ -14,14 +14,14 @@ class RecordGlucose extends HookWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 10, left: 15, right: 15),
-      padding:  EdgeInsets.only(left: 20, top: 22, bottom: 21, right: 14),
+      margin: const EdgeInsets.only(top: 16, left: 15, right: 15),
+      padding:  const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: getColorScheme(context).white,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Column(
-        children: [
+        children: const [
           RecordGlucoseInput(),
           RecordGlucoseRange(),
         ],

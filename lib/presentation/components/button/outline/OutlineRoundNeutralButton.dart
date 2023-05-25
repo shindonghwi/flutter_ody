@@ -66,17 +66,13 @@ class OutlineRoundNeutralButton extends HookConsumerWidget {
             ),
             color: _getBackgroundColor(context, buttonState),
           ),
-          child: Padding(
-            padding: buttonPadding,
-            child: Center(
-              child: Text(
-                text,
-                style: getTextTheme(context).l3m.copyWith(
-                      color: _getTextColor(context, buttonState),
-                    ),
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-              ),
+          child: Center(
+            child: Text(
+              text,
+              style: getTextTheme(context).l3m.copyWith(
+                    color: _getTextColor(context, buttonState),
+                  ),
+              textAlign: TextAlign.center,
             ),
           ),
         ),

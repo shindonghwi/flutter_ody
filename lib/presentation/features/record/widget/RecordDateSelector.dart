@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/notifier/BloodPressureRecorderNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/record/glucose/notifier/GlucoseRecorderNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/record/model/RecordType.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -11,14 +13,17 @@ import 'package:odac_flutter_app/presentation/utils/date/DateTransfer.dart';
 import 'package:odac_flutter_app/presentation/utils/picker/TimePicker.dart';
 
 class RecordDateSelector extends HookConsumerWidget {
+  final RecordType type;
   const RecordDateSelector({
     super.key,
+    required this.type
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
     final bpRead = ref.read(bloodPressureRecorderProvider.notifier);
+    final glucoseRead = ref.read(glucoseRecorderProvider.notifier);
 
     final selectedTime = useState<String>(
       DateTransfer.dateTimeToAmPmTime(DateTime.now()),
@@ -32,7 +37,11 @@ class RecordDateSelector extends HookConsumerWidget {
           hour: result.hour,
           minute: result.minute,
         );
-        bpRead.updateTime(selectDateTime);
+        if (type == RecordType.BloodPressure) {
+          bpRead.updateTime(selectDateTime);
+        } else {
+          glucoseRead.updateTime(selectDateTime);
+        }
         selectedTime.value = DateTransfer.dateTimeToAmPmTime(
           DateTime.now().copyWith(hour: result.hour, minute: result.minute),
         );

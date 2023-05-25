@@ -105,6 +105,7 @@
     "record_range_figure_low_bp": "저혈압",
     "record_range_figure_high_bp": "고혈압",
     "record_range_figure_normal": "정상",
+    "record_range_figure_warning": "주의",
     "record_range_figure_danger": "위험",
     "record_range_figure_high_risk": "고위험",
 

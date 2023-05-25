@@ -12,10 +12,10 @@ class OutlineButtonSize {
   static const double _smallHeight = 40;
   static const double _smallPaddingHorizontal = 55;
 
-  static const double _xsmallHeight = 35;
-  static const double _xsmallPaddingHorizontal = 40;
+  static const double _xsmallHeight = 30;
+  static const double _xsmallPaddingHorizontal = 16;
 
-  /** 타입에 따른 버튼 패딩 반환 */
+  /// 타입에 따른 버튼 패딩 반환
   static EdgeInsets getButtonPadding(ButtonSizeType type) {
     final Pair padding;
 
@@ -40,7 +40,7 @@ class OutlineButtonSize {
     );
   }
 
-  /** 타입에 따른 버튼 높이 반환 */
+  /// 타입에 따른 버튼 높이 반환
   static double getButtonHeight(ButtonSizeType type) {
     switch (type) {
       case ButtonSizeType.Large:

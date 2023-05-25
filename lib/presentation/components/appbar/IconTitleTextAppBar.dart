@@ -10,17 +10,19 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final bool isCenterTitle;
   final String actionText;
+  final bool actionIconEnable;
   final Color? actionTextColor;
   final Function? actionTextCallback;
 
   const IconTitleTextAppBar({
     super.key,
-    AppBarIcon? this.leadingIcon = null,
-    String this.title = "",
-    bool this.isCenterTitle = true,
-    String this.actionText = "",
-    Color? this.actionTextColor = null,
-    Function? this.actionTextCallback = null,
+    this.leadingIcon,
+    this.title = "",
+    this.isCenterTitle = true,
+    this.actionText = "",
+    this.actionIconEnable = true,
+    this.actionTextColor,
+    this.actionTextCallback,
   });
 
   @override
@@ -33,35 +35,40 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
       automaticallyImplyLeading: false,
       leading: leadingIcon != null
           ? InkWell(
-              onTap: () => leadingIcon?.onPressed.call(),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SvgPicture.asset(
-                  leadingIcon!.path,
-                  width: 56,
-                  height: 56,
-                  colorFilter: ColorFilter.mode(
-                    leadingIcon!.tint != null
-                        ? leadingIcon!.tint!
-                        : getColorScheme(context).neutral100,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-            )
+        onTap: () => leadingIcon?.onPressed.call(),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SvgPicture.asset(
+            leadingIcon!.path,
+            width: 56,
+            height: 56,
+            colorFilter: ColorFilter.mode(
+              leadingIcon!.tint != null
+                  ? leadingIcon!.tint!
+                  : getColorScheme(context).neutral100,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
+      )
           : const SizedBox(),
       title: Text(
         title,
         style: getTextTheme(context).l1m.copyWith(
-              color: getColorScheme(context).colorText,
-            ),
+          color: getColorScheme(context).colorText,
+        ),
       ),
       centerTitle: isCenterTitle,
       actions: [
         SizedBox(
           height: double.infinity,
           child: InkWell(
-            onTap: () => actionTextCallback?.call(),
+            enableFeedback: actionIconEnable,
+            onTap: () {
+              if (actionIconEnable == true){
+                actionTextCallback?.call();
+              }
+            },
             child: Align(
               alignment: Alignment.center,
               child: Padding(
@@ -69,8 +76,8 @@ class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
                 child: Text(
                   actionText,
                   style: getTextTheme(context).t4m.copyWith(
-                        color: actionTextColor ?? getColorScheme(context).neutral70,
-                      ),
+                    color: actionTextColor ?? getColorScheme(context).neutral70,
+                  ),
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                 ),

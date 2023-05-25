@@ -5,7 +5,7 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-import '../blood_pressure/widget/LevelDivider.dart';
+import 'LevelDivider.dart';
 import '../model/RecordRangeStatus.dart';
 
 class RangeResult extends HookWidget {
@@ -25,7 +25,7 @@ class RangeResult extends HookWidget {
     final colorList = RecordRangeStatusHelper.getDividerColorList(context, type, status);
 
     final AnimationController _controller = useAnimationController(
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
     );
 
     useEffect(() {
@@ -54,14 +54,16 @@ class RangeResult extends HookWidget {
                       TextSpan(
                         text: "\"${RecordRangeStatusHelper.fromString(status)}\"",
                         style: getTextTheme(context).b2b.copyWith(
-                          color: RecordRangeStatusHelper.getStatusColor(context, status),
-                        ),
+                              color:
+                                  RecordRangeStatusHelper.getStatusColor(context, status),
+                            ),
                       ),
                       TextSpan(
                         text: getAppLocalizations(context).record_range_figure,
                         style: getTextTheme(context).b3sb.copyWith(
-                          color: RecordRangeStatusHelper.getSubTextColor(context, status),
-                        ),
+                              color: RecordRangeStatusHelper.getSubTextColor(
+                                  context, status),
+                            ),
                       ),
                     ],
                   ),
@@ -82,36 +84,14 @@ class RangeResult extends HookWidget {
                       const SizedBox(height: 8),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  getAppLocalizations(context)
-                                      .record_range_figure_low_bp,
-                                  style: getTextTheme(context).c2r.copyWith(
-                                    color: getColorScheme(context).neutral70,
-                                  ),
-                                ),
-                                const SizedBox(width: 19),
-                                Text(
-                                  getAppLocalizations(context)
-                                      .record_range_figure_normal,
-                                  style: getTextTheme(context).c2r.copyWith(
-                                    color: getColorScheme(context).neutral70,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              getAppLocalizations(context)
-                                  .record_range_figure_high_bp,
-                              style: getTextTheme(context).c2r.copyWith(
-                                color: getColorScheme(context).neutral70,
-                              ),
-                            ),
-                          ],
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: type == RecordType.BloodPressure
+                                ? getBpRangeText(context)
+                                : getGlucoseRangeText(context),
+                          ),
                         ),
                       )
                     ],
@@ -126,5 +106,68 @@ class RangeResult extends HookWidget {
         ],
       ),
     );
+  }
+
+  List<Widget> getBpRangeText(BuildContext context) {
+    return [
+      Row(
+        children: [
+          Text(
+            getAppLocalizations(context).record_range_figure_low_bp,
+            style: getTextTheme(context).c2r.copyWith(
+                  color: getColorScheme(context).neutral70,
+                ),
+          ),
+          const SizedBox(width: 19),
+          Text(
+            getAppLocalizations(context).record_range_figure_normal,
+            style: getTextTheme(context).c2r.copyWith(
+                  color: getColorScheme(context).neutral70,
+                ),
+          ),
+        ],
+      ),
+      Text(
+        getAppLocalizations(context).record_range_figure_high_bp,
+        style: getTextTheme(context).c2r.copyWith(
+              color: getColorScheme(context).neutral70,
+            ),
+      ),
+    ];
+  }
+
+  List<Widget> getGlucoseRangeText(BuildContext context) {
+    return [
+      Flexible(
+          fit: FlexFit.tight,
+          flex: 1,
+          child: Text(
+            getAppLocalizations(context).record_range_figure_normal,
+            style: getTextTheme(context).c2r.copyWith(
+              color: getColorScheme(context).neutral70,
+            ),
+            textAlign: TextAlign.right,
+          )),
+      Flexible(
+          fit: FlexFit.tight,
+          flex: 1,
+          child: Text(
+            getAppLocalizations(context).record_range_figure_warning,
+            style: getTextTheme(context).c2r.copyWith(
+              color: getColorScheme(context).neutral70,
+            ),
+            textAlign: TextAlign.right,
+          )),
+      Flexible(
+          fit: FlexFit.tight,
+          flex: 1,
+          child: Text(
+            getAppLocalizations(context).record_range_figure_danger,
+            style: getTextTheme(context).c2r.copyWith(
+              color: getColorScheme(context).neutral70,
+            ),
+            textAlign: TextAlign.right,
+          )),
+    ];
   }
 }

@@ -8,10 +8,10 @@ class LevelDivider extends HookWidget {
   final int length;
   final List<Color> colors;
 
-  LevelDivider({
-    required int this.level,
-    required int this.length,
-    required List<Color> this.colors,
+  const LevelDivider({super.key,
+    required this.level,
+    required this.length,
+    required this.colors,
   });
 
   @override

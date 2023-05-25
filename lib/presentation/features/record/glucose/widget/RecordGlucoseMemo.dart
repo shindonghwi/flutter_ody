@@ -8,11 +8,12 @@ import 'package:odac_flutter_app/presentation/components/button/outline/OutlineR
 import 'package:odac_flutter_app/presentation/components/textarea/BasicTextArea.dart';
 import 'package:odac_flutter_app/presentation/components/textarea/model/TextAreaModel.dart';
 import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
-import 'package:odac_flutter_app/presentation/features/record/glucose/provider/RecordGlucoseMemoTextFieldProvider.dart';
+import 'package:odac_flutter_app/presentation/features/record/glucose/notifier/GlucoseRecorderNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/record/glucose/notifier/RecordGlucoseMemoTextFieldNotifier.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
+import 'package:odac_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class RecordGlucoseMemo extends HookWidget {
   const RecordGlucoseMemo({
@@ -23,28 +24,28 @@ class RecordGlucoseMemo extends HookWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 10, left: 15, right: 15),
-      padding: EdgeInsets.only(left: 20, top: 22, bottom: 24, right: 14),
+      margin: const EdgeInsets.only(top: 22, left: 15, right: 15),
+      padding: const EdgeInsets.only(left: 24, top: 27, bottom: 21, right: 24),
       decoration: BoxDecoration(
         color: getColorScheme(context).white,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Column(
         children: [
-          _PushNotificationTitle(context),
-          SizedBox(height: 23),
-          _SelectorNotificationTime(),
-          SizedBox(height: 35),
-          _MemoTitle(context),
-          SizedBox(height: 20),
-          _MemoTextField()
+          _pushNotificationTitle(context),
+          const SizedBox(height: 16),
+          const _SelectorNotificationTime(),
+          const SizedBox(height: 32),
+          _memoTitle(context),
+          const SizedBox(height: 16),
+          const _MemoTextField()
         ],
       ),
     );
   }
 
-  /** 푸시 알림 제목 */
-  Row _PushNotificationTitle(BuildContext context) {
+  /// 푸시 알림 제목
+  Row _pushNotificationTitle(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -54,22 +55,20 @@ class RecordGlucoseMemo extends HookWidget {
           style: getTextTheme(context).t2b.copyWith(
                 color: getColorScheme(context).colorText,
               ),
-          overflow: TextOverflow.ellipsis,
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 8),
         Text(
           getAppLocalizations(context).record_glucose_push_notification_subtitle,
           style: getTextTheme(context).c2r.copyWith(
                 color: getColorScheme(context).neutral70,
               ),
-          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
   }
 
-  /** 메모 제목 */
-  Widget _MemoTitle(BuildContext context) {
+  /// 메모 제목
+  Widget _memoTitle(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
@@ -90,8 +89,10 @@ class _MemoTextField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final fieldState = ref.watch<TextAreaModel>(RecordGlucoseMemoTextFieldProvider);
-    final fieldStateRead = ref.read(RecordGlucoseMemoTextFieldProvider.notifier);
+    final glucoseRecorderRead = ref.read(glucoseRecorderProvider.notifier);
+
+    final fieldState = ref.watch<TextAreaModel>(recordGlucoseMemoTextFieldProvider);
+    final fieldStateRead = ref.read(recordGlucoseMemoTextFieldProvider.notifier);
 
     return BasicTextArea(
       maxLine: 3,
@@ -103,71 +104,60 @@ class _MemoTextField extends HookConsumerWidget {
       },
       limit: 200,
       showCounterText: true,
+      onChanged: (value) {
+        glucoseRecorderRead.updateMemo(value);
+      },
     );
   }
 }
 
-/** 푸시 알림 시간 선택 */
-class _SelectorNotificationTime extends HookWidget {
+/// 푸시 알림 시간 선택
+class _SelectorNotificationTime extends HookConsumerWidget {
   const _SelectorNotificationTime({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final List<Pair<String, ValueNotifier>> buttonList = [
-      Pair(
-        getAppLocalizations(context).record_glucose_memo_notification_time_10,
-        useState(
-          StateNotifierProvider<ButtonNotifier, ButtonState>(
-            (_) => ButtonNotifier(
-              state: ButtonState.Default,
-            ),
-          ),
-        ),
-      ),
-      Pair(
-        getAppLocalizations(context).record_glucose_memo_notification_time_30,
-        useState(
-          StateNotifierProvider<ButtonNotifier, ButtonState>(
-            (_) => ButtonNotifier(
-              state: ButtonState.Default,
-            ),
-          ),
-        ),
-      ),
-      Pair(
-        getAppLocalizations(context).record_glucose_memo_notification_time_60,
-        useState(
-          StateNotifierProvider<ButtonNotifier, ButtonState>(
-            (_) => ButtonNotifier(
-              state: ButtonState.Default,
-            ),
-          ),
-        ),
-      ),
-      Pair(
-        getAppLocalizations(context).record_glucose_memo_notification_time_120,
-        useState(
-          StateNotifierProvider<ButtonNotifier, ButtonState>(
-            (_) => ButtonNotifier(
-              state: ButtonState.Default,
-            ),
-          ),
-        ),
-      ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final glucoseRecorderRead = ref.read(glucoseRecorderProvider.notifier);
+
+    final remindTimeList = [
+      getAppLocalizations(context).record_glucose_memo_notification_time_10,
+      getAppLocalizations(context).record_glucose_memo_notification_time_30,
+      getAppLocalizations(context).record_glucose_memo_notification_time_60,
+      getAppLocalizations(context).record_glucose_memo_notification_time_120,
     ];
 
-    return Container(
+    final remindTimeState = useState<int?>(null);
+
+    return SizedBox(
       width: double.infinity,
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: buttonList.map((e) {
-            return OutlineRoundNeutralButton(
-              text: e.first,
-              onPressed: () {},
-              type: ButtonSizeType.Small,
-              buttonProvider: e.second.value,
+          children: remindTimeList.map((e) {
+            return SizedBox(
+              width: 68,
+              child: OutlineRoundNeutralButton(
+                  text: e,
+                  onPressed: () {
+                    final remindTime = RegexUtil.extractIntegers(e);
+
+                    if (remindTimeState.value == remindTime) {
+                      remindTimeState.value = null;
+                      glucoseRecorderRead.updateRemindTime(0);
+                    }else{
+                      remindTimeState.value = remindTime;
+                      glucoseRecorderRead.updateRemindTime(remindTime);
+                    }
+                  },
+                  type: ButtonSizeType.XSmall,
+                  buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
+                    (_) => ButtonNotifier(
+                      state: remindTimeState.value == RegexUtil.extractIntegers(e)
+                          ? ButtonState.Activated
+                          : ButtonState.Default,
+                    ),
+                  )),
             );
           }).toList()),
     );

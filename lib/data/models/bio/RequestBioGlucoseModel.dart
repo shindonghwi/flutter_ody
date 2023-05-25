@@ -6,10 +6,10 @@ part 'RequestBioGlucoseModel.g.dart';
 @JsonSerializable()
 class RequestBioGlucoseModel {
   final String time;
-  final GlucoseMeasureType type;
+  final String type;
   final int glucose;
   final String? memo;
-  final String? remindTime;
+  final int? remindTime;
 
   RequestBioGlucoseModel({
     required this.time,
