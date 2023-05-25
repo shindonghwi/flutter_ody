@@ -15,9 +15,9 @@
 	make create-aab-prod: 			안드로이드 prod aad 추출			\
 
 
-
-# 스플래시 화면 재 설정
-run-splash:
+# 스플래시 화면 및 로고 아이콘 재 설정
+run-icon:
+	flutter pub run flutter_launcher_icons:main
 	flutter pub run flutter_native_splash:remove
 	flutter pub run flutter_native_splash:create
 

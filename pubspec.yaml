@@ -29,6 +29,7 @@ dependencies:
   json_annotation: ^4.8.1
   flutter_native_timezone: ^2.0.0
   firebase_auth: ^4.6.1
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
