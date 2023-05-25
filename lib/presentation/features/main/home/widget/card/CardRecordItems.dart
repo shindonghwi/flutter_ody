@@ -24,7 +24,10 @@ class CardRecordItems extends HookConsumerWidget {
         nextSlideScreen(RoutingScreen.RecordedListBloodPressure.route),
       );
     } else if (title == getAppLocalizations(context).home_today_record_glucose) {
-      Navigator.push(context, nextSlideScreen(RoutingScreen.RecordGlucose.route));
+      Navigator.push(
+        context,
+        nextSlideScreen(RoutingScreen.RecordedListGlucose.route),
+      );
     } else {}
   }
 

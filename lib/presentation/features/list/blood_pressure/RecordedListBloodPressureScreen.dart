@@ -21,7 +21,7 @@ class RecordedListBloodPressureScreen extends StatelessWidget {
         ),
         title: getAppLocalizations(context).list_record_blood_pressure_title,
       ),
-      backgroundColor: getColorScheme(context).colorUI01,
+      backgroundColor: getColorScheme(context).colorUI03,
       body: Center(
         child: EmptyView(
           screen: RoutingScreen.RecordedListBloodPressure,
