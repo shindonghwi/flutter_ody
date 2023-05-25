@@ -22,7 +22,7 @@ class RangeResult extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorList = RecordRangeStatusHelper.getDividerColorList(context, status);
+    final colorList = RecordRangeStatusHelper.getDividerColorList(context, type, status);
 
     final AnimationController _controller = useAnimationController(
       duration: Duration(milliseconds: 1000),

@@ -56,8 +56,9 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
   int checkBpLevel() {
     final int systolic = state.systolic;
     final int diastolic = state.diastolic;
+    final int hr = state.hr;
 
-    if (systolic == 0 || diastolic == 0) {
+    if (systolic == 0 || diastolic == 0 || hr == 0) {
       return 0;
     }
 
@@ -77,8 +78,9 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
   RecordRangeStatus checkBpStatus() {
     final int systolic = state.systolic;
     final int diastolic = state.diastolic;
+    final int hr = state.hr;
 
-    if (systolic == 0 || diastolic == 0) {
+    if (systolic == 0 || diastolic == 0 || hr == 0) {
       return RecordRangeStatus.None;
     }
 

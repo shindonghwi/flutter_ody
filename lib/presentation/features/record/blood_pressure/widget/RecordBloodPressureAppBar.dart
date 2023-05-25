@@ -5,6 +5,7 @@ import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/models/BpRecorderModel.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/notifier/BloodPressureRecorderNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/notifier/RecordBloodPressureUiStateNotifier.dart';
+import 'package:odac_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
@@ -14,11 +15,14 @@ class RecordBloodPressureAppBar extends HookConsumerWidget with PreferredSizeWid
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bgRecorder = ref.watch<BpRecorderModel>(bloodPressureRecorderProvider);
+    final bgRecorderRead = ref.read(bloodPressureRecorderProvider.notifier);
     final bpStateRead = ref.read(recordBloodPressureUiStateProvider.notifier);
 
-    final actionTextColor = ("${bgRecorder.systolic}".length >= 2 && "${bgRecorder.diastolic}".length >= 2)
+    final actionTextColor =  bgRecorderRead.checkBpLevel() != 0
         ? getColorScheme(context).colorText
         : getColorScheme(context).neutral50;
+
+    final actionIconEnable = bgRecorderRead.checkBpStatus() != RecordRangeStatus.None;
 
     return IconTitleTextAppBar(
       leadingIcon: AppBarIcon(
@@ -28,6 +32,7 @@ class RecordBloodPressureAppBar extends HookConsumerWidget with PreferredSizeWid
       title: getAppLocalizations(context).record_blood_pressure,
       actionText: getAppLocalizations(context).common_save,
       actionTextColor: actionTextColor,
+      actionIconEnable: actionIconEnable,
       actionTextCallback: () {
         bpStateRead.postBp(
           time: bgRecorder.time,

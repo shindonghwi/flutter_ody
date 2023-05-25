@@ -194,7 +194,11 @@ class _InputBloodHeartBeatTextField extends HookConsumerWidget {
                         ),
                     onDoneAction: () => FocusScope.of(context).unfocus(),
                     onChanged: (value) {
-                      bgRecorderRead.updateHeartRate(int.parse(value));
+                      int? parsedValue;
+                      if (value.isNotEmpty){
+                        parsedValue = int.tryParse(value);
+                      }
+                      bgRecorderRead.updateHeartRate(parsedValue ?? 0);
                       if (value.length == 2) {
                         FocusScope.of(context).unfocus();
                       }

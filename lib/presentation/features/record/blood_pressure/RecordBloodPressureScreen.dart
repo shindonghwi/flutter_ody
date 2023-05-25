@@ -6,6 +6,7 @@ import 'package:odac_flutter_app/presentation/features/record/blood_pressure/not
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/notifier/RecordBloodPressureUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/widget/RecordBloodPressure.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/widget/RecordBloodPressureAppBar.dart';
+import 'package:odac_flutter_app/presentation/features/record/model/RecordType.dart';
 import 'package:odac_flutter_app/presentation/features/record/widget/RecordDateSelector.dart';
 import 'package:odac_flutter_app/presentation/models/UiState.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
@@ -45,7 +46,7 @@ class RecordBloodPressureScreen extends HookConsumerWidget {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: const [
-                RecordDateSelector(),
+                RecordDateSelector(type: RecordType.BloodPressure,),
                 RecordBloodPressure(),
               ],
             ),
