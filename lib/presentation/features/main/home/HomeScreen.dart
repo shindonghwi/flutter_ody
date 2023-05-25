@@ -34,7 +34,6 @@ class HomeScreen extends HookWidget {
               const SliverPadding(padding: EdgeInsets.only(bottom: 57.0))
             ],
           ),
-          floatingButton(context),
           CalendarContainerView(
             calendarMinHeight: CalendarSize.minHeight(context),
             calendarMaxHeight: CalendarSize.maxHeight(context),
@@ -43,40 +42,6 @@ class HomeScreen extends HookWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Positioned floatingButton(BuildContext context) {
-    return Positioned(
-      bottom: 17,
-      right: 20,
-      child: Container(
-        width: 50,
-        height: 50,
-        decoration: BoxDecoration(
-          color: getColorScheme(context).primary100,
-          borderRadius: BorderRadius.circular(100),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF8D8D8D).withOpacity(0.3),
-              spreadRadius: 0,
-              blurRadius: 5,
-              offset: const Offset(2, 5), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () {},
-            borderRadius: BorderRadius.circular(100),
-            child: Icon(
-              Icons.add,
-              color: getColorScheme(context).white,
-            ),
-          ),
-        ),
       ),
     );
   }
