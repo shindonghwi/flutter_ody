@@ -17,275 +17,162 @@ import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:pedometer/pedometer.dart';
 
-// class SplashScreen extends HookWidget {
-//   final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =
-//       GetIt.instance<GetAppPolicyCheckUseCase>();
-//
-//   final PostSocialLoginInUseCase _postSocialLoginInUseCase =
-//       GetIt.instance<PostSocialLoginInUseCase>();
-//
-//   GetMeInfoUseCase get getMeInfoUseCase => GetIt.instance<GetMeInfoUseCase>();
-//
-//   SplashScreen({super.key});
-//
-//   Future<String?> getSocialAccessToken(String platform) async {
-//     final String platformName = platform.toLowerCase();
-//     if (platformName.contains("google")) {
-//       final GoogleSignInAccount? googleUser = await GoogleSignIn().signInSilently();
-//       if (googleUser != null) {
-//         final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-//         return googleAuth.idToken;
-//       }
-//     } else if (platformName.contains("kakao")) {
-//       return null;
-//     } else if (platformName.contains("apple")) {
-//       return null;
-//     }
-//     return null;
-//   }
-//
-//   /// 소셜 로그인 정보를 확인한다.
-//   Future<SocialLoginModel?> checkFirebaseUserSocialInfo() async {
-//     User? user = firebaseAuth.currentUser;
-//
-//     if (user != null) {
-//       List<UserInfo>? providers = user.providerData;
-//       for (UserInfo provider in providers) {
-//         LoginPlatform platform = getLoginPlatform(provider.providerId);
-//         String? accessToken = await getSocialAccessToken(platform.name);
-//         debugPrint("accessToken: $accessToken");
-//         if (accessToken != null) {
-//           return SocialLoginModel(platform, accessToken);
-//         }
-//       }
-//     }
-//
-//     return null;
-//   }
-//
-//   /// 로그인 플랫폼을 구분한다.
-//   LoginPlatform getLoginPlatform(String platform) {
-//     final String platformName = platform.toLowerCase();
-//
-//     if (platformName.contains("google")) {
-//       return LoginPlatform.Google;
-//     } else if (platformName.contains("kakao")) {
-//       return LoginPlatform.Kakao;
-//     } else if (platformName.contains("apple")) {
-//       return LoginPlatform.Apple;
-//     } else {
-//       return LoginPlatform.None;
-//     }
-//   }
-//
-//   setServiceHeader(String? token) async {
-//     final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
-//     final languageCode = WidgetsBinding.instance.window.locale.languageCode;
-//     final countryCode = WidgetsBinding.instance.window.locale.countryCode.toString();
-//
-//     Service.setHeader(
-//       languageCode: languageCode,
-//       countryCode: countryCode,
-//       timeZone: timeZone,
-//       token: token ?? "",
-//     );
-//   }
-//
-//   /// 회원가입 완료 여부 체크
-//   int getSignUpProceedPage(ResponseProfileModel? profile) {
-//     if (profile == null) return 0;
-//
-//     final profileData = profile.toJson();
-//     if (profileData["gender"] == null) return 0;
-//     if (profileData["birthday"] == null) return 1;
-//     if ((profileData["height"] as int?) == null || profileData["height"] == 0) return 2;
-//     if ((profileData["weight"] as int?) == null || profileData["weight"] == 0) return 3;
-//
-//     return SIGN_UP_PROCEED_COMPLETE;
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     SocialLoginModel? socialInfo;
-//     final currentContext = context;
-//
-//     movePage(RoutingScreen screen, {int initPageNumber = 0}) async {
-//       Navigator.pushReplacement(
-//         currentContext,
-//         nextSlideScreen(screen.route, parameter: initPageNumber),
-//       );
-//     }
-//
-//     useEffect(() {
-//       WidgetsBinding.instance.addPostFrameCallback((_) async {
-//         final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
-//         final languageCode = WidgetsBinding.instance.window.locale.languageCode;
-//         final countryCode = WidgetsBinding.instance.window.locale.countryCode.toString();
-//         Service.setHeader(
-//           languageCode: languageCode,
-//           countryCode: countryCode,
-//           timeZone: timeZone,
-//         );
-//
-//         _getAppPolicyCheckUseCase.call().then((granted) async {
-//           if (granted) {
-//             socialInfo = await checkFirebaseUserSocialInfo();
-//             if (socialInfo == null) {
-//               movePage(RoutingScreen.Login);
-//             } else {
-//               final res = await _postSocialLoginInUseCase.call(
-//                 platform: socialInfo!.loginPlatform,
-//                 accessToken: socialInfo?.accessToken ?? "",
-//               );
-//
-//               if (res.status == 200) {
-//                 // 내 정보 요청
-//                 await setServiceHeader(res.data?.accessToken);
-//                 await getMeInfoUseCase.call().then((value) {
-//                   if (value.status == 200) {
-//                     final currentProceedPage = getSignUpProceedPage(value.data?.profile);
-//                     if (currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
-//                       movePage(RoutingScreen.Main);
-//                     } else {
-//                       movePage(
-//                         RoutingScreen.InputProfile,
-//                         initPageNumber: currentProceedPage,
-//                       );
-//                     }
-//                   } else {
-//                     movePage(RoutingScreen.Login);
-//                   }
-//                 });
-//               } else {
-//                 movePage(RoutingScreen.Login);
-//               }
-//             }
-//           } else {
-//             movePage(RoutingScreen.OnBoarding);
-//           }
-//         });
-//       });
-//     }, []);
-//
-//     return Scaffold(
-//       backgroundColor: getColorScheme(context).colorUIBackground,
-//       body: Center(
-//         child: Image.asset("assets/imgs/logo_ody.png"),
-//       ),
-//     );
-//   }
-// }
+class SplashScreen extends HookWidget {
+  final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =
+      GetIt.instance<GetAppPolicyCheckUseCase>();
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  final PostSocialLoginInUseCase _postSocialLoginInUseCase =
+      GetIt.instance<PostSocialLoginInUseCase>();
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
+  GetMeInfoUseCase get getMeInfoUseCase => GetIt.instance<GetMeInfoUseCase>();
 
-class _SplashScreenState extends State<SplashScreen> {
-  late Stream<StepCount> _stepCountStream;
-  late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String _status = '?', _steps = '?';
+  SplashScreen({super.key});
 
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
+  Future<String?> getSocialAccessToken(String platform) async {
+    final String platformName = platform.toLowerCase();
+    if (platformName.contains("google")) {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signInSilently();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        return googleAuth.idToken;
+      }
+    } else if (platformName.contains("kakao")) {
+      return null;
+    } else if (platformName.contains("apple")) {
+      return null;
+    }
+    return null;
   }
 
-  void onStepCount(StepCount event) {
-    print(event);
-    setState(() {
-      _steps = event.steps.toString();
-    });
+  /// 소셜 로그인 정보를 확인한다.
+  Future<SocialLoginModel?> checkFirebaseUserSocialInfo() async {
+    User? user = firebaseAuth.currentUser;
+
+    if (user != null) {
+      List<UserInfo>? providers = user.providerData;
+      for (UserInfo provider in providers) {
+        LoginPlatform platform = getLoginPlatform(provider.providerId);
+        String? accessToken = await getSocialAccessToken(platform.name);
+        debugPrint("accessToken: $accessToken");
+        if (accessToken != null) {
+          return SocialLoginModel(platform, accessToken);
+        }
+      }
+    }
+
+    return null;
   }
 
-  void onPedestrianStatusChanged(PedestrianStatus event) {
-    print(event);
-    setState(() {
-      _status = event.status;
-    });
+  /// 로그인 플랫폼을 구분한다.
+  LoginPlatform getLoginPlatform(String platform) {
+    final String platformName = platform.toLowerCase();
+
+    if (platformName.contains("google")) {
+      return LoginPlatform.Google;
+    } else if (platformName.contains("kakao")) {
+      return LoginPlatform.Kakao;
+    } else if (platformName.contains("apple")) {
+      return LoginPlatform.Apple;
+    } else {
+      return LoginPlatform.None;
+    }
   }
 
-  void onPedestrianStatusError(error) {
-    print('onPedestrianStatusError: $error');
-    setState(() {
-      _status = 'Pedestrian Status not available';
-    });
-    print(_status);
+  setServiceHeader(String? token) async {
+    final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    final languageCode = WidgetsBinding.instance.window.locale.languageCode;
+    final countryCode = WidgetsBinding.instance.window.locale.countryCode.toString();
+
+    Service.setHeader(
+      languageCode: languageCode,
+      countryCode: countryCode,
+      timeZone: timeZone,
+      token: token ?? "",
+    );
   }
 
-  void onStepCountError(error) {
-    print('onStepCountError: $error');
-    setState(() {
-      _steps = 'Step Count not available';
-    });
-  }
+  /// 회원가입 완료 여부 체크
+  int getSignUpProceedPage(ResponseProfileModel? profile) {
+    if (profile == null) return 0;
 
-  void initPlatformState() {
-    _pedestrianStatusStream = Pedometer.pedestrianStatusStream;
-    _pedestrianStatusStream
-        .listen(onPedestrianStatusChanged)
-        .onError(onPedestrianStatusError);
+    final profileData = profile.toJson();
+    if (profileData["gender"] == null) return 0;
+    if (profileData["birthday"] == null) return 1;
+    if ((profileData["height"] as int?) == null || profileData["height"] == 0) return 2;
+    if ((profileData["weight"] as int?) == null || profileData["weight"] == 0) return 3;
 
-    _stepCountStream = Pedometer.stepCountStream;
-    _stepCountStream.listen(onStepCount).onError(onStepCountError);
-
-    if (!mounted) return;
+    return SIGN_UP_PROCEED_COMPLETE;
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Pedometer example app'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Steps taken:',
-                style: TextStyle(fontSize: 30),
-              ),
-              Text(
-                _steps,
-                style: TextStyle(fontSize: 60),
-              ),
-              Divider(
-                height: 100,
-                thickness: 0,
-                color: Colors.white,
-              ),
-              Text(
-                'Pedestrian status:',
-                style: TextStyle(fontSize: 30),
-              ),
-              Icon(
-                _status == 'walking'
-                    ? Icons.directions_walk
-                    : _status == 'stopped'
-                    ? Icons.accessibility_new
-                    : Icons.error,
-                size: 100,
-              ),
-              Center(
-                child: Text(
-                  _status,
-                  style: _status == 'walking' || _status == 'stopped'
-                      ? TextStyle(fontSize: 30)
-                      : TextStyle(fontSize: 20, color: Colors.red),
-                ),
-              )
-            ],
-          ),
-        ),
+    SocialLoginModel? socialInfo;
+    final currentContext = context;
+
+    movePage(RoutingScreen screen, {int initPageNumber = 0}) async {
+      Navigator.pushReplacement(
+        currentContext,
+        nextSlideScreen(screen.route, parameter: initPageNumber),
+      );
+    }
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+        final languageCode = WidgetsBinding.instance.window.locale.languageCode;
+        final countryCode = WidgetsBinding.instance.window.locale.countryCode.toString();
+        Service.setHeader(
+          languageCode: languageCode,
+          countryCode: countryCode,
+          timeZone: timeZone,
+        );
+
+        _getAppPolicyCheckUseCase.call().then((granted) async {
+          if (granted) {
+            socialInfo = await checkFirebaseUserSocialInfo();
+            if (socialInfo == null) {
+              movePage(RoutingScreen.Login);
+            } else {
+              final res = await _postSocialLoginInUseCase.call(
+                platform: socialInfo!.loginPlatform,
+                accessToken: socialInfo?.accessToken ?? "",
+              );
+
+              if (res.status == 200) {
+                // 내 정보 요청
+                await setServiceHeader(res.data?.accessToken);
+                await getMeInfoUseCase.call().then((value) {
+                  if (value.status == 200) {
+                    final currentProceedPage = getSignUpProceedPage(value.data?.profile);
+                    if (currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
+                      movePage(RoutingScreen.Main);
+                    } else {
+                      movePage(
+                        RoutingScreen.InputProfile,
+                        initPageNumber: currentProceedPage,
+                      );
+                    }
+                  } else {
+                    movePage(RoutingScreen.Login);
+                  }
+                });
+              } else {
+                movePage(RoutingScreen.Login);
+              }
+            }
+          } else {
+            movePage(RoutingScreen.OnBoarding);
+          }
+        });
+      });
+    }, []);
+
+    return Scaffold(
+      backgroundColor: getColorScheme(context).colorUIBackground,
+      body: Center(
+        child: Image.asset("assets/imgs/logo_ody.png"),
       ),
     );
   }
 }
-
