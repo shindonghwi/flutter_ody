@@ -6,6 +6,7 @@ import 'package:odac_flutter_app/firebase_options_dev.dart';
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: 'ody-app-dev',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Environment.newInstance(BuildType.dev).run();

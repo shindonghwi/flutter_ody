@@ -13,6 +13,7 @@ final googleSignIn = Platform.isAndroid
   scopes: ['email', 'profile'],
 )
     : GoogleSignIn(
+  clientId: '15204988302-f47hudjuqr6vj3cajbi1ekk912mv0i5c.apps.googleusercontent.com',
   scopes: ['email', 'profile'],
 );
 //
