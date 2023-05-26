@@ -1,48 +1,48 @@
 {
   "project_info": {
-    "project_number": "1043075265104",
-    "project_id": "orotcode-ody",
-    "storage_bucket": "orotcode-ody.appspot.com"
+    "project_number": "15204988302",
+    "project_id": "ody-app-dev",
+    "storage_bucket": "ody-app-dev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1043075265104:android:a8023df24843a6747c9755",
+        "mobilesdk_app_id": "1:15204988302:android:5d835fc0704eca23e120df",
         "android_client_info": {
-          "package_name": "com.orot.ody"
+          "package_name": "com.orot.ody.dev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1043075265104-bvl0i1h5094n2c3q2u8ne9kjnsg2mcdo.apps.googleusercontent.com",
+          "client_id": "15204988302-86r6aeij0c16bilfo5inv2h2fqgkgam1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.orot.ody",
-            "certificate_hash": "97aae50d3d91f0ef7c2e54a2e64e2d4d55f6f128"
+            "package_name": "com.orot.ody.dev",
+            "certificate_hash": "13b053e35f4258f8a2ff20f8c87174f44cc207c8"
           }
         },
         {
-          "client_id": "1043075265104-5q93dg6vcl2ursb0d77pdimle1cs8m3o.apps.googleusercontent.com",
+          "client_id": "15204988302-e8cssafmcebffl95v1makhqvhje5b4h9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD2uUOk3AjztpjiLJocZzzVPet6GPBC0Og"
+          "current_key": "AIzaSyBqXf-zq0YW9YXtaVxC6CQCxqsrfoqu6vY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1043075265104-5q93dg6vcl2ursb0d77pdimle1cs8m3o.apps.googleusercontent.com",
+              "client_id": "15204988302-e8cssafmcebffl95v1makhqvhje5b4h9.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1043075265104-eh61eveicb593umgq5daetoo90qmdg2a.apps.googleusercontent.com",
+              "client_id": "15204988302-f47hudjuqr6vj3cajbi1ekk912mv0i5c.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.orot.ody"
+                "bundle_id": "com.orot.ody.dev"
               }
             }
           ]

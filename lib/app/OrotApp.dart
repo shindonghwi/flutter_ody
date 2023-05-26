@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -5,9 +7,19 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/theme.dart';
 
-final googleSignIn = GoogleSignIn(
+final googleSignIn = Platform.isAndroid
+    ? GoogleSignIn(
+  clientId: '15204988302-e8cssafmcebffl95v1makhqvhje5b4h9.apps.googleusercontent.com',
+  scopes: ['email', 'profile'],
+)
+    : GoogleSignIn(
   scopes: ['email', 'profile'],
 );
+//
+//
+// final googleSignIn = GoogleSignIn(
+//   scopes: ['email', 'profile'],
+// );
 
 final firebaseAuth = FirebaseAuth.instance;
 
