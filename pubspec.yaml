@@ -30,6 +30,7 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   firebase_auth: ^4.6.1
   flutter_launcher_icons: ^0.13.1
+  pedometer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
