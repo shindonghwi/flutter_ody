@@ -5,6 +5,7 @@ import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.d
 import 'package:odac_flutter_app/presentation/features/constant/constants.dart';
 import 'package:odac_flutter_app/presentation/features/login/notifier/LoginUiStateNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/login/widget/LoginContent.dart';
+import 'package:odac_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:odac_flutter_app/presentation/models/UiState.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
@@ -20,7 +21,8 @@ class LoginScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch<UIState<String?>>(loginUiStateProvider);
-    final loginProvider = ref.read(loginUiStateProvider.notifier);
+    final loginRead = ref.read(loginUiStateProvider.notifier);
+    final meInfoRead = ref.read(meInfoProvider.notifier);
 
     movePage(RoutingScreen screen, {int initPageNumber = 0}) async {
       Navigator.pushReplacement(
@@ -33,12 +35,15 @@ class LoginScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         state.when(
           success: (event) async {
-            if (loginProvider.currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
+            if (loginRead.meInfo != null){
+              meInfoRead.updateMeInfo(loginRead.meInfo!);
+            }
+            if (loginRead.currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
               movePage(RoutingScreen.Main);
             } else {
               movePage(
                 RoutingScreen.InputProfile,
-                initPageNumber: loginProvider.currentProceedPage,
+                initPageNumber: loginRead.currentProceedPage,
               );
             }
           },

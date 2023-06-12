@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
+import 'package:odac_flutter_app/data/models/me/ResponseMeInfoModel.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseProfileModel.dart';
 import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
@@ -31,6 +32,7 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
   int currentProceedPage = 0;
+  ResponseMeInfoModel? meInfo;
 
   setServiceHeader(String? token) async {
     final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
@@ -78,6 +80,9 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
             await setServiceHeader(res.data?.accessToken);
             await getMeInfoUseCase.call().then((value) {
               if (value.status == 200) {
+                if (value.data != null){
+                  meInfo = value.data;
+                }
                 currentProceedPage = getSignUpProceedPage(value.data?.profile);
               }
             });

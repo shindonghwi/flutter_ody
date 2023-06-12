@@ -57,7 +57,7 @@ class OutlineDefaultTextField extends HookWidget {
       void onFocusChanged() => _isFocused.value = focusNode.hasFocus;
       focusNode.addListener(onFocusChanged);
       if (autoFocus) {
-        Timer(Duration(milliseconds: 300), () => focusNode.requestFocus());
+        Timer(const Duration(milliseconds: 300), () => focusNode.requestFocus());
       }
       return () => focusNode.removeListener(onFocusChanged);
     }, [focusNode]);
@@ -98,7 +98,7 @@ class OutlineDefaultTextField extends HookWidget {
         errorBorder: getBorder(
             context, fieldState == TextFieldState.Error ? TextFieldState.Error : TextFieldState.Focus),
         disabledBorder: getBorder(context, TextFieldState.Disabled),
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 13,
         ),
@@ -115,8 +115,9 @@ class OutlineDefaultTextField extends HookWidget {
         onChanged?.call(value);
       },
       onTap: () => _isFocused.value = true,
-      onFieldSubmitted: (value) => _isFocused.value = false,
+      // onFieldSubmitted: (value) => _isFocused.value = false,
       onEditingComplete: () {
+        _isFocused.value = false;
         switch (textInputAction) {
           case TextInputAction.next:
             onNextAction?.call();

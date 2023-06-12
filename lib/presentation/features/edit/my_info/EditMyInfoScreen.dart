@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
+import 'package:odac_flutter_app/presentation/features/edit/my_nickname/EditMyNicknameScreen.dart';
+import 'package:odac_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
@@ -9,36 +12,55 @@ import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/dto/Triple.dart';
 
-class EditMyInfoScreen extends HookWidget {
+class EditMyInfoScreen extends HookConsumerWidget {
   const EditMyInfoScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final meInfo = ref.watch(meInfoProvider);
+
+    useEffect(() {
+      if (meInfo == null){
+        Navigator.pushReplacement(
+          context,
+          nextSlideScreen(RoutingScreen.Login.route),
+        );
+      }
+    }, []);
+
     final itemList = [
       Triple(
         getAppLocalizations(context).edit_my_info_title_nickname,
-        "운동하는 다람쥐",
-        () {
-          Navigator.pushNamed(
-            context,
-            RoutingScreen.EditMyNickname.route,
-            arguments: "운동하는 다람쥐"
+        meInfo?.nick ?? "",
+        () async {
+          final result = await Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const EditMyNicknameScreen()),
           );
+          // Navigator.pushNamed(
+          //   context,
+          //   RoutingScreen.EditMyNickname.route,
+          //   arguments: meInfo?.nick ?? ""
+          // );
         },
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_height,
-        "178 cm",
-        () {
-          Navigator.push(
-            context,
-            nextSlideScreen(RoutingScreen.EditMyHeight.route),
+        meInfo?.profile.height ?? "",
+        () async{
+          final result = await Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const EditMyNicknameScreen()),
           );
+          debugPrint("resuasdfasfdlt: $result");
+          // Navigator.push(
+          //   context,
+          //   nextSlideScreen(RoutingScreen.EditMyHeight.route),
+          // );
         },
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_weight,
-        "64 kg",
+        meInfo?.profile.weight ?? "",
         () {
           Navigator.push(
             context,
@@ -48,7 +70,7 @@ class EditMyInfoScreen extends HookWidget {
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_email,
-        "rkgus2598@hanmail.net",
+        meInfo?.email ?? "",
         null,
       )
     ];
@@ -100,14 +122,14 @@ class EditMyInfoScreen extends HookWidget {
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      onTap: action == null ? null : () => action?.call(),
+                      onTap: action == null ? null : () => action.call(),
                       borderRadius: BorderRadius.circular(5),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0),
                           child: Text(
-                            content,
+                            content.toString(),
                             style: getTextTheme(context).b2r.copyWith(
                                   color: getColorScheme(context).colorText,
                                 ),

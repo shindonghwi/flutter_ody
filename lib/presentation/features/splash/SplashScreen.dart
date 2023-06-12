@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/app/OrotApp.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseProfileModel.dart';
@@ -13,12 +14,13 @@ import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseC
 import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:odac_flutter_app/presentation/features/constant/constants.dart';
+import 'package:odac_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class SplashScreen extends HookWidget {
+class SplashScreen extends HookConsumerWidget {
   final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =
       GetIt.instance<GetAppPolicyCheckUseCase>();
 
@@ -106,8 +108,9 @@ class SplashScreen extends HookWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     SocialLoginModel? socialInfo;
+    final meInfoRead = ref.read(meInfoProvider.notifier);
     final currentContext = context;
 
     movePage(RoutingScreen screen, {int initPageNumber = 0}) async {
@@ -144,6 +147,11 @@ class SplashScreen extends HookWidget {
                 await setServiceHeader(res.data?.accessToken);
                 await getMeInfoUseCase.call().then((value) {
                   if (value.status == 200) {
+
+                    if (value.data != null){
+                      meInfoRead.updateMeInfo(value.data!);
+                    }
+
                     final currentProceedPage = getSignUpProceedPage(value.data?.profile);
                     if (currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
                       movePage(RoutingScreen.Main);

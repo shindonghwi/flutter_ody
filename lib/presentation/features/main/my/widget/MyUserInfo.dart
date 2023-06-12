@@ -1,41 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:odac_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class MyUserInfo extends HookWidget {
+class MyUserInfo extends HookConsumerWidget {
   const MyUserInfo({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final meInfo = ref.read(meInfoProvider);
+
+    useEffect(() {
+      if (meInfo == null){
+        Navigator.pushReplacement(
+          context,
+          nextSlideScreen(RoutingScreen.Login.route),
+        );
+      }
+    }, []);
+
+    return meInfo != null ? Container(
       margin: const EdgeInsets.fromLTRB(18, 26, 18, 0),
       child: Column(
         children: [
-          _nicknameAndSetting(context),
+          _nicknameAndSetting(context, meInfo.nick),
           const SizedBox(height: 2),
-          _userEmail(context)
+          _userEmail(context, meInfo.email)
         ],
       ),
-    );
+    ) : const CircleLoading();
   }
 
   /// 사용자 닉네임 및 설정 아이콘
-  Row _nicknameAndSetting(BuildContext context) {
+  Row _nicknameAndSetting(BuildContext context, String nick) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _nickname(context),
+        _nickname(context, nick),
         _setting(context),
       ],
     );
   }
 
-  Widget _nickname(BuildContext context) {
+  Widget _nickname(BuildContext context, String nick) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -52,7 +66,7 @@ class MyUserInfo extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "운동하는 다람쥐",
+                nick,
                 style: getTextTheme(context).t2b.copyWith(
                       color: getColorScheme(context).colorText,
                     ),
@@ -104,7 +118,7 @@ class MyUserInfo extends HookWidget {
   }
 
   /// 사용자 가입 소셜 및 이메일
-  Row _userEmail(BuildContext context) {
+  Row _userEmail(BuildContext context, String email) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,7 +132,7 @@ class MyUserInfo extends HookWidget {
           width: 8,
         ),
         Text(
-          "sdsdsddd@orotcode.com",
+          email,
           style: getTextTheme(context).c2r.copyWith(
                 color: getColorScheme(context).colorText,
               ),
