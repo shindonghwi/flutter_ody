@@ -19,7 +19,24 @@ class ResponseProfileModel {
     required this.preventive,
   });
 
-  factory ResponseProfileModel.fromJson(Map<String, dynamic> json) => _$ResponseProfileModelFromJson(json);
+  factory ResponseProfileModel.fromJson(Map<String, dynamic> json) =>
+      _$ResponseProfileModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponseProfileModelToJson(this);
+
+  ResponseProfileModel copyWith({
+    final String? gender,
+    final String? birthday,
+    final int? height,
+    final int? weight,
+    final ResponsePreventiveModel? preventive,
+  }) {
+    return ResponseProfileModel(
+        gender: gender ?? this.gender,
+        birthday: birthday ?? this.birthday,
+        height: height ?? this.height,
+        weight: weight ?? this.weight,
+        preventive: preventive ?? this.preventive
+    );
+  }
 }

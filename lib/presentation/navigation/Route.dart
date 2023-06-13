@@ -99,11 +99,14 @@ enum RoutingScreen {
       case "/edit/my_info":
         return const EditMyInfoScreen();
       case "/edit/my_nickname":
-        return const EditMyNicknameScreen();
+        String nick = parameter;
+        return EditMyNicknameScreen(nick: nick);
       case "/edit/my_height":
-        return const EditMyHeightScreen();
+        int height = int.parse(parameter);
+        return EditMyHeightScreen(height: height);
       case "/edit/my_weight":
-        return const EditMyWeightScreen();
+        int weight = int.parse(parameter);
+        return EditMyWeightScreen(weight: weight);
       case "/setting":
         return const SettingScreen();
       case "/withdrawal":

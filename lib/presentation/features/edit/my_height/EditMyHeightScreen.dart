@@ -18,21 +18,24 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class EditMyHeightScreen extends HookConsumerWidget {
+  final int height;
+
   const EditMyHeightScreen({
     Key? key,
+    this.height = 0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(patchMeInfoUiStateProvider);
     final stateRead = ref.read(patchMeInfoUiStateProvider.notifier);
-    final height = useState('');
+    final heightData = useState(height.toString());
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         state.when(
           success: (event) async {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(heightData.value);
             stateRead.init();
           },
           failure: (event) {
@@ -51,13 +54,12 @@ class EditMyHeightScreen extends HookConsumerWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         actionText: getAppLocalizations(context).common_complete,
-        actionTextColor: height.value.isEmpty
+        actionTextColor: heightData.value.isEmpty
             ? getColorScheme(context).neutral50
             : getColorScheme(context).neutral100,
-        actionIconEnable: height.value.isNotEmpty,
+        actionIconEnable: heightData.value.isNotEmpty,
         actionTextCallback: () {
-          debugPrint('height: $height');
-          stateRead.patchHeight(int.parse(height.value));
+          stateRead.patchHeight(int.parse(heightData.value));
         },
         title: getAppLocalizations(context).edit_my_height_title,
       ),
@@ -66,7 +68,8 @@ class EditMyHeightScreen extends HookConsumerWidget {
         child: Stack(
           children: [
             _HeightContent(
-              callback: (String value) => height.value = value,
+              callback: (String value) => heightData.value = value,
+              initHeight: heightData.value,
             ),
             if (state is Loading) const CircleLoading(),
           ],
@@ -77,27 +80,32 @@ class EditMyHeightScreen extends HookConsumerWidget {
 }
 
 class _HeightContent extends HookConsumerWidget {
+  final String initHeight;
   final Function(String value) callback;
 
-  const _HeightContent({Key? key, required this.callback}) : super(key: key);
+  const _HeightContent({
+    Key? key,
+    required this.callback,
+    required this.initHeight,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final meInfo = ref.watch(meInfoProvider);
     final helpText = useState('');
     final fieldState = useState(TextFieldState.Complete);
-    final height = useState('');
 
     useEffect(() {
-      if (meInfo == null) {
-        Navigator.pushReplacement(
-          context,
-          nextSlideScreen(RoutingScreen.Login.route),
-        );
-      } else {
-        callback.call(meInfo.profile.height.toString());
-        height.value = meInfo.profile.height.toString();
-      }
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (meInfo == null) {
+          Navigator.pushReplacement(
+            context,
+            nextSlideScreen(RoutingScreen.Login.route),
+          );
+        } else {
+          callback.call(meInfo.profile.height.toString());
+        }
+      });
     }, []);
 
     return Container(
@@ -113,7 +121,7 @@ class _HeightContent extends HookConsumerWidget {
           ),
           const SizedBox(height: 16),
           OutlineDefaultTextField(
-            controller: useTextEditingController(text: height.value),
+            controller: useTextEditingController(text: initHeight),
             textInputType: TextInputType.datetime,
             textInputAction: TextInputAction.done,
             autoFocus: true,

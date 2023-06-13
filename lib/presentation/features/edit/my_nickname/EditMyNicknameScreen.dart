@@ -9,8 +9,11 @@ import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class EditMyNicknameScreen extends HookWidget {
+  final String nick;
+
   const EditMyNicknameScreen({
     Key? key,
+    this.nick = "",
   }) : super(key: key);
 
   @override
@@ -44,7 +47,7 @@ class EditMyNicknameScreen extends HookWidget {
               ),
               const SizedBox(height: 16),
               OutlineDefaultTextField(
-                controller: useTextEditingController(text: 'nickname'),
+                controller: useTextEditingController(text: nick),
                 textInputType: TextInputType.datetime,
                 textInputAction: TextInputAction.next,
                 autoFocus: true,

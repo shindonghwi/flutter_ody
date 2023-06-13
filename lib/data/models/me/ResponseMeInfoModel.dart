@@ -19,4 +19,16 @@ class ResponseMeInfoModel {
       _$ResponseMeInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponseMeInfoModelToJson(this);
+
+  ResponseMeInfoModel copyWith({
+    String? email,
+    String? nick,
+    ResponseProfileModel? profile,
+  }) {
+    return ResponseMeInfoModel(
+      email: email ?? this.email,
+      nick: nick ?? this.nick,
+      profile: profile ?? this.profile
+    );
+  }
 }

@@ -25,4 +25,28 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
     state = meInfo;
   }
 
+  void updateMeInfoNick(String nick) {
+    ResponseMeInfoModel meInfo = state!.copyWith(
+        nick: nick,
+    );
+    debugPrint("updateMeInfoNick : ${meInfo.toJson()}");
+    state = meInfo;
+  }
+
+  void updateMeInfoHeight(int height) {
+    ResponseMeInfoModel meInfo = state!.copyWith(
+        profile: state!.profile.copyWith(height: height)
+    );
+    debugPrint("updateMeInfoHeight : ${meInfo.toJson()}");
+    state = meInfo;
+  }
+
+  void updateMeInfoWeight(int weight) {
+    ResponseMeInfoModel meInfo = state!.copyWith(
+        profile: state!.profile.copyWith(weight: weight)
+    );
+    debugPrint("updateMeInfoHeight : ${meInfo.toJson()}");
+    state = meInfo;
+  }
+
 }

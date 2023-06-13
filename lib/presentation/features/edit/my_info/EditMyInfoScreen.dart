@@ -17,11 +17,11 @@ class EditMyInfoScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final meInfo = ref.watch(meInfoProvider);
+    final meInfoRead = ref.read(meInfoProvider.notifier);
 
     useEffect(() {
-      if (meInfo == null){
+      if (meInfo == null) {
         Navigator.pushReplacement(
           context,
           nextSlideScreen(RoutingScreen.Login.route),
@@ -34,38 +34,42 @@ class EditMyInfoScreen extends HookConsumerWidget {
         getAppLocalizations(context).edit_my_info_title_nickname,
         meInfo?.nick ?? "",
         () async {
-          final result = await Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const EditMyNicknameScreen()),
+          final String callbackNick = await Navigator.push(
+            context,
+            nextSlideScreen(
+              RoutingScreen.EditMyNickname.route,
+              parameter: meInfo?.nick.toString() ?? "",
+            ),
           );
-          // Navigator.pushNamed(
-          //   context,
-          //   RoutingScreen.EditMyNickname.route,
-          //   arguments: meInfo?.nick ?? ""
-          // );
+          meInfoRead.updateMeInfoNick(callbackNick);
         },
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_height,
         meInfo?.profile.height ?? "",
-        () async{
-          final result = await Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const EditMyNicknameScreen()),
+        () async {
+          final String callbackHeight = await Navigator.push(
+            context,
+            nextSlideScreen(
+              RoutingScreen.EditMyHeight.route,
+              parameter: meInfo?.profile.height?.toString() ?? "0",
+            ),
           );
-          debugPrint("resuasdfasfdlt: $result");
-          // Navigator.push(
-          //   context,
-          //   nextSlideScreen(RoutingScreen.EditMyHeight.route),
-          // );
+          meInfoRead.updateMeInfoHeight(int.parse(callbackHeight));
         },
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_weight,
         meInfo?.profile.weight ?? "",
-        () {
-          Navigator.push(
+        () async {
+          final String callbackWeight = await Navigator.push(
             context,
-            nextSlideScreen(RoutingScreen.EditMyWeight.route),
+            nextSlideScreen(
+              RoutingScreen.EditMyWeight.route,
+              parameter: meInfo?.profile.weight?.toString() ?? "0",
+            ),
           );
+          meInfoRead.updateMeInfoWeight(int.parse(callbackWeight));
         },
       ),
       Triple(

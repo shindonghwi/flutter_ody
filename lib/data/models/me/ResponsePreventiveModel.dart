@@ -15,4 +15,12 @@ class ResponsePreventiveModel {
       _$ResponsePreventiveModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponsePreventiveModelToJson(this);
+
+  ResponsePreventiveModel copyWith({
+    final List<ResponseDiseaseModel>? diseases,
+  }) {
+    return ResponsePreventiveModel(
+      diseases: diseases ?? this.diseases,
+    );
+  }
 }

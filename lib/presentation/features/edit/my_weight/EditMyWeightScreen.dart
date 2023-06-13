@@ -18,21 +18,24 @@ import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class EditMyWeightScreen extends HookConsumerWidget {
+  final int weight;
+
   const EditMyWeightScreen({
     Key? key,
+    this.weight = 0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(patchMeInfoUiStateProvider);
     final stateRead = ref.read(patchMeInfoUiStateProvider.notifier);
-    final weight = useState('');
+    final weightData = useState(weight.toString());
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         state.when(
           success: (event) async {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(weightData.value);
             stateRead.init();
           },
           failure: (event) {
@@ -50,12 +53,12 @@ class EditMyWeightScreen extends HookConsumerWidget {
           path: 'assets/imgs/icon_back.svg',
           onPressed: () => Navigator.of(context).pop(),
         ),
-        actionTextColor: weight.value.isEmpty
+        actionTextColor: weightData.value.isEmpty
             ? getColorScheme(context).neutral50
             : getColorScheme(context).neutral100,
-        actionIconEnable: weight.value.isNotEmpty,
+        actionIconEnable: weightData.value.isNotEmpty,
         actionText: getAppLocalizations(context).common_complete,
-        actionTextCallback: () => stateRead.patchHeight(int.parse(weight.value)),
+        actionTextCallback: () => stateRead.patchHeight(int.parse(weightData.value)),
         title: getAppLocalizations(context).edit_my_weight_title,
       ),
       body: SingleChildScrollView(
@@ -63,7 +66,8 @@ class EditMyWeightScreen extends HookConsumerWidget {
         child: Stack(
           children: [
             _WeightContent(
-              callback: (String value) => weight.value = value,
+              callback: (String value) => weightData.value = value,
+              initWeight: weightData.value,
             ),
             if (state is Loading) const CircleLoading(),
           ],
@@ -74,27 +78,34 @@ class EditMyWeightScreen extends HookConsumerWidget {
 }
 
 class _WeightContent extends HookConsumerWidget {
+  final String initWeight;
   final Function(String value) callback;
 
-  const _WeightContent({Key? key, required this.callback}) : super(key: key);
+  const _WeightContent({
+    Key? key,
+    required this.callback,
+    required this.initWeight,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final meInfo = ref.watch(meInfoProvider);
     final helpText = useState('');
     final fieldState = useState(TextFieldState.Complete);
-    final weight = useState('');
+
     useEffect(() {
-      if (meInfo == null) {
-        Navigator.pushReplacement(
-          context,
-          nextSlideScreen(RoutingScreen.Login.route),
-        );
-      } else {
-        callback.call(meInfo.profile.weight.toString());
-        weight.value = meInfo.profile.weight.toString();
-      }
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (meInfo == null) {
+          Navigator.pushReplacement(
+            context,
+            nextSlideScreen(RoutingScreen.Login.route),
+          );
+        } else {
+          callback.call(meInfo.profile.weight.toString());
+        }
+      });
     }, []);
+
 
     return Container(
       margin: const EdgeInsets.only(top: 32, left: 24, right: 24),
@@ -109,7 +120,7 @@ class _WeightContent extends HookConsumerWidget {
           ),
           const SizedBox(height: 16),
           OutlineDefaultTextField(
-            controller: useTextEditingController(text: weight.value),
+            controller: useTextEditingController(text: initWeight),
             textInputType: TextInputType.datetime,
             textInputAction: TextInputAction.done,
             autoFocus: true,
