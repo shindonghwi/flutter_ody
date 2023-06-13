@@ -80,6 +80,30 @@ class RemoteMeApi {
     }
   }
 
+  /// 닉네임 수정
+  Future<ApiResponse<void>> patchNickname({required String nick}) async {
+    final response = await Service.patchApi(
+        type: ServiceType.Me,
+        endPoint: 'nick',
+        jsonBody: Map.from({
+          "nick": nick,
+        }));
+
+    if (response.statusCode >= 500) {
+      return ApiResponse(
+        status: response.statusCode,
+        message: _getAppLocalization.get().message_server_error_5xx,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+            (json) => ResponseMeInfoModel.fromJson(json),
+      );
+    }
+  }
+
+
   /// 키 수정
   Future<ApiResponse<void>> patchHeight({required int height}) async {
     final response = await Service.patchApi(

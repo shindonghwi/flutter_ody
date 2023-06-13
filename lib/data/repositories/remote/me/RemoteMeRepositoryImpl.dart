@@ -27,6 +27,12 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
   }
 
   @override
+  Future<ApiResponse<void>> patchNickname(String nick) {
+    RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
+    return remoteMeApi.patchNickname(nick: nick);
+  }
+
+  @override
   Future<ApiResponse<void>> patchHeight(int height) {
     RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
     return remoteMeApi.patchHeight(height: height);

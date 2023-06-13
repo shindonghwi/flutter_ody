@@ -24,6 +24,7 @@ import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeBirthdayUseCas
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeDiseasesUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeGenderUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeHeightUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeNicknameUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeWeightUseCase.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
@@ -48,6 +49,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<GetMeInfoUseCase>(() => GetMeInfoUseCase());
   GetIt.instance.registerLazySingleton<PatchMeGenderUseCase>(() => PatchMeGenderUseCase());
   GetIt.instance.registerLazySingleton<PatchMeBirthdayUseCase>(() => PatchMeBirthdayUseCase());
+  GetIt.instance.registerLazySingleton<PatchMeNicknameUseCase>(() => PatchMeNicknameUseCase());
   GetIt.instance.registerLazySingleton<PatchMeHeightUseCase>(() => PatchMeHeightUseCase());
   GetIt.instance.registerLazySingleton<PatchMeWeightUseCase>(() => PatchMeWeightUseCase());
   GetIt.instance.registerLazySingleton<PatchMeDiseasesUseCase>(() => PatchMeDiseasesUseCase());

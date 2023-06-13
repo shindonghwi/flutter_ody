@@ -18,6 +18,9 @@ abstract class RemoteMeRepository {
   /// 생년월일 수정
   Future<ApiResponse<void>> patchBirthday(String birthday);
 
+  /// 닉네임 수정
+  Future<ApiResponse<void>> patchNickname(String nick);
+
   /// 키 수정
   Future<ApiResponse<void>> patchHeight(int height);
 
