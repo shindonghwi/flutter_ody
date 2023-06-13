@@ -17,6 +17,10 @@ ResponseProfileModel _$ResponseProfileModelFromJson(
           ? null
           : ResponsePreventiveModel.fromJson(
               json['preventive'] as Map<String, dynamic>),
+      social: json['social'] == null
+          ? null
+          : ResponseSocialModel.fromJson(
+              json['social'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ResponseProfileModelToJson(
@@ -27,4 +31,5 @@ Map<String, dynamic> _$ResponseProfileModelToJson(
       'height': instance.height,
       'weight': instance.weight,
       'preventive': instance.preventive,
+      'social': instance.social,
     };

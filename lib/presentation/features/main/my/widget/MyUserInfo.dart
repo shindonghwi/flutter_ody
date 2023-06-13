@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:odac_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
@@ -18,7 +19,7 @@ class MyUserInfo extends HookConsumerWidget {
     final meInfo = ref.read(meInfoProvider);
 
     useEffect(() {
-      if (meInfo == null){
+      if (meInfo == null) {
         Navigator.pushReplacement(
           context,
           nextSlideScreen(RoutingScreen.Login.route),
@@ -26,16 +27,18 @@ class MyUserInfo extends HookConsumerWidget {
       }
     }, []);
 
-    return meInfo != null ? Container(
-      margin: const EdgeInsets.fromLTRB(18, 26, 18, 0),
-      child: Column(
-        children: [
-          _nicknameAndSetting(context, meInfo.nick),
-          const SizedBox(height: 2),
-          _userEmail(context, meInfo.email)
-        ],
-      ),
-    ) : const CircleLoading();
+    return meInfo != null
+        ? Container(
+            margin: const EdgeInsets.fromLTRB(18, 26, 18, 0),
+            child: Column(
+              children: [
+                _nicknameAndSetting(context, meInfo.nick),
+                const SizedBox(height: 2),
+                _userEmail(context, meInfo.email, meInfo.profile.social?.type),
+              ],
+            ),
+          )
+        : const CircleLoading();
   }
 
   /// 사용자 닉네임 및 설정 아이콘
@@ -118,19 +121,29 @@ class MyUserInfo extends HookConsumerWidget {
   }
 
   /// 사용자 가입 소셜 및 이메일
-  Row _userEmail(BuildContext context, String email) {
+  Row _userEmail(BuildContext context, String email, String? type) {
+    final String? lowerCaseType = type?.toLowerCase();
+    String? socialIconPath;
+
+    if (LoginPlatform.Google.name.toLowerCase() == lowerCaseType) {
+      socialIconPath = "assets/imgs/icon_google.png";
+    } else if (LoginPlatform.Apple.name.toLowerCase() == lowerCaseType) {
+      socialIconPath = "assets/imgs/icon_apple.png";
+    } else if (LoginPlatform.Kakao.name.toLowerCase() == lowerCaseType) {
+      socialIconPath = "assets/imgs/icon_kakao.png";
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset(
-          "assets/imgs/icon_kakao.png",
-          width: 24,
-          height: 24,
-        ),
-        const SizedBox(
-          width: 8,
-        ),
+        if (socialIconPath != null)
+          Image.asset(
+            socialIconPath,
+            width: 24,
+            height: 24,
+          ),
+        const SizedBox(width: 8),
         Text(
           email,
           style: getTextTheme(context).c2r.copyWith(
