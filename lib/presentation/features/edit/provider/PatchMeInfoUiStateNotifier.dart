@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeHeightUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeNicknameUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeWeightUseCase.dart';
 import 'package:odac_flutter_app/presentation/models/UiState.dart';
 import 'package:riverpod/riverpod.dart';
@@ -14,6 +15,7 @@ class PatchMeInfoUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   PatchMeHeightUseCase get _patchMeHeightUseCase => GetIt.instance<PatchMeHeightUseCase>();
   PatchMeWeightUseCase get _patchMeWeightUseCase => GetIt.instance<PatchMeWeightUseCase>();
+  PatchMeNicknameUseCase get _patchMeNicknameUseCase => GetIt.instance<PatchMeNicknameUseCase>();
 
   void init(){
     state = Idle();
@@ -41,16 +43,14 @@ class PatchMeInfoUiStateNotifier extends StateNotifier<UIState<String?>> {
     }
   }
 
-  // TODO: 닉네임 수정기능 필요
-  // PatchMeWeightUseCase get _patchMeWeightUseCase => GetIt.instance<PatchMeWeightUseCase>();
-  // void patchNickname(String nick) async {
-  //   state = Loading();
-  //   final res = await _patchMeNicknameUseCase.call(weight: weight);
-  //
-  //   if (res.status == 200){
-  //     state = Success("");
-  //   } else {
-  //     state = Failure(res.message);
-  //   }
-  // }
+  void patchNickname(String nick) async {
+    state = Loading();
+    final res = await _patchMeNicknameUseCase.call(nick: nick);
+
+    if (res.status == 200){
+      state = Success("");
+    } else {
+      state = Failure(res.message);
+    }
+  }
 }

@@ -58,7 +58,7 @@ class EditMyWeightScreen extends HookConsumerWidget {
             : getColorScheme(context).neutral100,
         actionIconEnable: weightData.value.isNotEmpty,
         actionText: getAppLocalizations(context).common_complete,
-        actionTextCallback: () => stateRead.patchHeight(int.parse(weightData.value)),
+        actionTextCallback: () => stateRead.patchWeight(int.parse(weightData.value)),
         title: getAppLocalizations(context).edit_my_weight_title,
       ),
       body: SingleChildScrollView(
