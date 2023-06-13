@@ -12,6 +12,7 @@ import 'package:odac_flutter_app/presentation/features/onboarding/OnBoardingScre
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/RecordBloodPressureScreen.dart';
 import 'package:odac_flutter_app/presentation/features/record/glucose/RecordGlucoseScreen.dart';
 import 'package:odac_flutter_app/presentation/features/setting/SettingScreen.dart';
+import 'package:odac_flutter_app/presentation/features/setting/alarm/SettingAlarmScreen.dart';
 import 'package:odac_flutter_app/presentation/features/splash/SplashScreen.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/WelcomeScreen.dart';
 import 'package:odac_flutter_app/presentation/features/withdrawal/WithdrawalReasonScreen.dart';
@@ -38,6 +39,7 @@ enum RoutingScreen {
   EditMyHeight(route: "/edit/my_height"), // 키 수정
   EditMyWeight(route: "/edit/my_weight"), // 몸무게 수정
   Setting(route: "/setting"), // 설정화면
+  SettingAlarm(route: "/setting/alarm"), // 알림 설정화면
   Withdrawal(route: "/withdrawal"), // 회원탈퇴
   WithdrawalReason(route: "/withdrawal/reason"); // 회원탈퇴 사유
 
@@ -67,6 +69,7 @@ enum RoutingScreen {
       RoutingScreen.EditMyHeight.route: (context) => const EditMyHeightScreen(),
       RoutingScreen.EditMyWeight.route: (context) => const EditMyWeightScreen(),
       RoutingScreen.Setting.route: (context) => const SettingScreen(),
+      RoutingScreen.SettingAlarm.route: (context) => const SettingAlarmScreen(),
       RoutingScreen.Withdrawal.route: (context) => const WithdrawalScreen(),
       RoutingScreen.WithdrawalReason.route: (context) => const WithdrawalReasonScreen(),
     };
@@ -109,6 +112,8 @@ enum RoutingScreen {
         return EditMyWeightScreen(weight: weight);
       case "/setting":
         return const SettingScreen();
+      case "/setting/alarm":
+        return const SettingAlarmScreen();
       case "/withdrawal":
         return const WithdrawalScreen();
       case "/withdrawal/reason":

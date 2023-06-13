@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:odac_flutter_app/presentation/components/checkbox/switch/SwitchCheckBox.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -13,7 +15,7 @@ class SettingAppAlarmSwitch extends HookWidget {
     final isSwitchOn = useState(false);
 
     return Container(
-      padding: const EdgeInsets.only(left: 24, right: 24, top: 32, bottom: 24),
+      padding: const EdgeInsets.only(left: 24, right: 16, top: 32, bottom: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -23,10 +25,6 @@ class SettingAppAlarmSwitch extends HookWidget {
           // 앱 알림 설정 스위치
           const SizedBox(height: 24),
           _switch(context, isSwitchOn),
-
-          // 알림 설정 설명
-          const SizedBox(height: 6),
-          _description(context),
         ],
       ),
     );
@@ -54,26 +52,33 @@ class SettingAppAlarmSwitch extends HookWidget {
                 color: getColorScheme(context).colorText,
               ),
         ),
-        SizedBox(
-          width: 43,
-          height: 26,
-          child: SwitchCheckBox(
-            isOn: isSwitchOn.value,
-            onChanged: (value) {
-              isSwitchOn.value = !value;
-            },
+        Container(
+          margin: const EdgeInsets.only(left: 4),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  nextSlideScreen(RoutingScreen.SettingAlarm.route),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  "assets/imgs/icon_next_1_5_large.svg",
+                  width: 24,
+                  height: 24,
+                  colorFilter: ColorFilter.mode(
+                    getColorScheme(context).neutral60,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            ),
           ),
-        )
+        ),
       ],
-    );
-  }
-
-  Text _description(BuildContext context) {
-    return Text(
-      getAppLocalizations(context).setting_sub_menu_alarm_app_description,
-      style: getTextTheme(context).c2r.copyWith(
-            color: getColorScheme(context).neutral70,
-          ),
     );
   }
 }
