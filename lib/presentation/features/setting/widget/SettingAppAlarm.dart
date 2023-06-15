@@ -7,8 +7,8 @@ import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class SettingAppAlarmSwitch extends HookWidget {
-  const SettingAppAlarmSwitch({Key? key}) : super(key: key);
+class SettingAppAlarm extends HookWidget {
+  const SettingAppAlarm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,26 +43,26 @@ class SettingAppAlarmSwitch extends HookWidget {
     BuildContext context,
     ValueNotifier<bool> isSwitchOn,
   ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          getAppLocalizations(context).setting_sub_menu_alarm_app,
-          style: getTextTheme(context).t4m.copyWith(
-                color: getColorScheme(context).colorText,
-              ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(left: 4),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  nextSlideScreen(RoutingScreen.SettingAlarm.route),
-                );
-              },
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            nextSlideScreen(RoutingScreen.SettingAlarm.route),
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              getAppLocalizations(context).setting_sub_menu_alarm_app,
+              style: getTextTheme(context).t4m.copyWith(
+                    color: getColorScheme(context).colorText,
+                  ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 4),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SvgPicture.asset(
@@ -76,9 +76,9 @@ class SettingAppAlarmSwitch extends HookWidget {
                 ),
               ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

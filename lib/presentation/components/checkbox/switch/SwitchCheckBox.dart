@@ -15,14 +15,12 @@ class SwitchCheckBox extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> _isOn = useState(isOn);
     const duration = Duration(milliseconds: 300);
 
     return LayoutBuilder(builder: (context, constraints) {
       return GestureDetector(
         onTap: () {
-          _isOn.value = !_isOn.value;
-          onChanged?.call(_isOn.value);
+          onChanged?.call(!isOn);
         },
         child: AnimatedContainer(
           duration: duration,
@@ -30,13 +28,13 @@ class SwitchCheckBox extends HookWidget {
           width: constraints.minWidth,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            color: _isOn.value
+            color: isOn
                 ? getColorScheme(context).primary100
                 : getColorScheme(context).colorPrimaryDisable,
           ),
           child: AnimatedAlign(
             duration: duration,
-            alignment: _isOn.value ? Alignment.centerRight : Alignment.centerLeft,
+            alignment: isOn ? Alignment.centerRight : Alignment.centerLeft,
             curve: Curves.easeIn,
             child: Padding(
               padding: const EdgeInsets.all(3.0),

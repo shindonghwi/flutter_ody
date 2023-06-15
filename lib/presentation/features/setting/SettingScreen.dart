@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
-import 'package:odac_flutter_app/presentation/features/setting/widget/SettingAppAlarmSwitch.dart';
+import 'package:odac_flutter_app/presentation/features/setting/widget/SettingAppAlarm.dart';
 import 'package:odac_flutter_app/presentation/features/setting/widget/SettingEtc.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
@@ -25,7 +25,7 @@ class SettingScreen extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            const SettingAppAlarmSwitch(),
+            const SettingAppAlarm(),
             _divider(context),
             const SettingEtc()
           ],
