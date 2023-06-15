@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:odac_flutter_app/presentation/components/popup/PopupUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
@@ -89,10 +90,7 @@ class SettingEtc extends HookWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            nextSlideScreen(RoutingScreen.Withdrawal.route),
-          );
+          PopupUtil.showLogout(backgroundTouchCloseFlag: true);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
