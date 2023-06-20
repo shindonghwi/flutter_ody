@@ -20,12 +20,15 @@ import 'package:odac_flutter_app/domain/usecases/remote/bio/PostBioBloodPressure
 import 'package:odac_flutter_app/domain/usecases/remote/bio/PostBioGlucoseUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/bio/PostBioStepsUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/GetMeMedicinesUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeBirthdayUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeDiseasesUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeGenderUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeHeightUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeMedicineUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeNicknameUseCase.dart';
 import 'package:odac_flutter_app/domain/usecases/remote/me/PatchMeWeightUseCase.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/PostMeMedicineUseCase.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 final serviceLocator = GetIt.instance;
@@ -57,6 +60,9 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostBioGlucoseUseCase>(() => PostBioGlucoseUseCase());
   GetIt.instance.registerLazySingleton<PostBioStepsUseCase>(() => PostBioStepsUseCase());
   GetIt.instance.registerLazySingleton<GetBioHistoryUseCase>(() => GetBioHistoryUseCase());
+  GetIt.instance.registerLazySingleton<GetMeMedicinesUseCase>(() => GetMeMedicinesUseCase());
+  GetIt.instance.registerLazySingleton<PatchMeMedicineUseCase>(() => PatchMeMedicineUseCase());
+  GetIt.instance.registerLazySingleton<PostMeMedicineUseCase>(() => PostMeMedicineUseCase());
 
   /// -------
   /// repository
