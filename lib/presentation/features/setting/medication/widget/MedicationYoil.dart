@@ -46,12 +46,12 @@ class MedicationYoil extends HookWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: selectedYoilList.value.contains(e)
+                          color: selectedYoilList.value.contains(e.first)
                               ? getColorScheme(context).colorPrimaryFocus
                               : getColorScheme(context).neutral50,
                           width: 1,
                         ),
-                        color: selectedYoilList.value.contains(e)
+                        color: selectedYoilList.value.contains(e.first)
                             ? getColorScheme(context).colorPrimaryFocus
                             : getColorScheme(context).colorUI01,
                       ),
@@ -60,7 +60,7 @@ class MedicationYoil extends HookWidget {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(100),
                           onTap: () {
-                            if (selectedYoilList.value.contains(e)) {
+                            if (selectedYoilList.value.contains(e.first)) {
                               selectedYoilList.value = [...selectedYoilList.value..remove(e.first)];
                             } else {
                               selectedYoilList.value = [...selectedYoilList.value..add(e.first)];
@@ -71,7 +71,7 @@ class MedicationYoil extends HookWidget {
                             child: Text(
                               e.second,
                               style: getTextTheme(context).l2m.copyWith(
-                                    color: selectedYoilList.value.contains(e)
+                                    color: selectedYoilList.value.contains(e.first)
                                         ? getColorScheme(context).white
                                         : getColorScheme(context).colorText,
                                   ),

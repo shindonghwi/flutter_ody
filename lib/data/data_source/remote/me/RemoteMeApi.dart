@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
+import 'package:odac_flutter_app/data/models/ApiListResponse.dart';
 import 'package:odac_flutter_app/data/models/ApiResponse.dart';
 import 'package:odac_flutter_app/data/models/me/RequestMeMedicineModel.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeInfoModel.dart';
@@ -206,4 +207,27 @@ class RemoteMeApi {
       );
     }
   }
+
+  /// 약 목록 조회
+  Future<ApiListResponse<ResponseMeMedicineModel>> getMedicines() async {
+    final response = await Service.getApi(
+        type: ServiceType.Me,
+        endPoint: 'medicines',
+    );
+
+    if (response.statusCode >= 500) {
+      return ApiListResponse(
+          status: response.statusCode,
+          message: _getAppLocalization.get().message_server_error_5xx,
+          list: null,
+          count: 0
+      );
+    } else {
+      return ApiListResponse.fromJson(
+        jsonDecode(response.body),
+            (json) => ResponseMeMedicineModel.fromJson(json),
+      );
+    }
+  }
+
 }

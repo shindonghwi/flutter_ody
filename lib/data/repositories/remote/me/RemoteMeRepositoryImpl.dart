@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:odac_flutter_app/data/data_source/remote/auth/RemoteAuthApi.dart';
 import 'package:odac_flutter_app/data/data_source/remote/me/RemoteMeApi.dart';
+import 'package:odac_flutter_app/data/models/ApiListResponse.dart';
 import 'package:odac_flutter_app/data/models/ApiResponse.dart';
 import 'package:odac_flutter_app/data/models/auth/RequestSocialLoginModel.dart';
 import 'package:odac_flutter_app/data/models/auth/ResponseSocialLoginModel.dart';
@@ -62,6 +63,12 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
   Future<ApiResponse<ResponseMeMedicineModel>> postMedicine(RequestMeMedicineModel data) {
     RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
     return remoteMeApi.postMedicine(data: data);
+  }
+
+  @override
+  Future<ApiListResponse<ResponseMeMedicineModel>> getMedicines() {
+    RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
+    return remoteMeApi.getMedicines();
   }
 
 

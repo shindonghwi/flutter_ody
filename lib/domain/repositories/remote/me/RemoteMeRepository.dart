@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:odac_flutter_app/data/models/ApiListResponse.dart';
 import 'package:odac_flutter_app/data/models/ApiResponse.dart';
 import 'package:odac_flutter_app/data/models/me/RequestMeMedicineModel.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeInfoModel.dart';
@@ -29,6 +30,10 @@ abstract class RemoteMeRepository {
   /// 예방 질병 수정
   Future<ApiResponse<void>> patchDiseases(List<DiseaseType> diseases);
 
-  /// 예방 질병 수정
+  /// 약 등록
   Future<ApiResponse<ResponseMeMedicineModel>> postMedicine(RequestMeMedicineModel data);
+
+  /// 약 목록 조회
+  Future<ApiListResponse<ResponseMeMedicineModel>> getMedicines();
+
 }
