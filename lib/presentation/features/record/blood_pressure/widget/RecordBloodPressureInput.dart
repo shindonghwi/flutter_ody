@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/presentation/components/bottom_sheet/BottomSheetBPTable.dart';
+import 'package:odac_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/notifier/BloodPressureRecorderNotifier.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
@@ -43,14 +45,23 @@ class RecordBloodPressureInput extends HookWidget {
           overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(width: 8),
-        SvgPicture.asset(
-          'assets/imgs/icon_information.svg',
-          colorFilter: ColorFilter.mode(
-            getColorScheme(context).neutral60,
-            BlendMode.srcIn,
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(100),
+            onTap: () {
+              CommonBottomSheet.showBottomSheet(context, child: const BottomSheetBPTable());
+            },
+            child: SvgPicture.asset(
+              'assets/imgs/icon_information.svg',
+              colorFilter: ColorFilter.mode(
+                getColorScheme(context).neutral60,
+                BlendMode.srcIn,
+              ),
+              width: 24,
+              height: 24,
+            ),
           ),
-          width: 24,
-          height: 24,
         ),
       ],
     );
@@ -64,7 +75,6 @@ class _InputBloodPressureTextField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final bgRecorderRead = ref.read(bloodPressureRecorderProvider.notifier);
 
     return Container(
@@ -156,7 +166,6 @@ class _InputBloodHeartBeatTextField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final bgRecorderRead = ref.read(bloodPressureRecorderProvider.notifier);
 
     return Container(
@@ -195,7 +204,7 @@ class _InputBloodHeartBeatTextField extends HookConsumerWidget {
                     onDoneAction: () => FocusScope.of(context).unfocus(),
                     onChanged: (value) {
                       int? parsedValue;
-                      if (value.isNotEmpty){
+                      if (value.isNotEmpty) {
                         parsedValue = int.tryParse(value);
                       }
                       bgRecorderRead.updateHeartRate(parsedValue ?? 0);
