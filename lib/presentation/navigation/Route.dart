@@ -6,6 +6,7 @@ import 'package:odac_flutter_app/presentation/features/edit/my_weight/EditMyWeig
 import 'package:odac_flutter_app/presentation/features/input_profile/InputProfileScreen.dart';
 import 'package:odac_flutter_app/presentation/features/list/blood_pressure/RecordedListBloodPressureScreen.dart';
 import 'package:odac_flutter_app/presentation/features/list/glucose/RecordedListGlucoseScreen.dart';
+import 'package:odac_flutter_app/presentation/features/list/medication/MedicationListScreen.dart';
 import 'package:odac_flutter_app/presentation/features/login/LoginScreen.dart';
 import 'package:odac_flutter_app/presentation/features/main/MainScreen.dart';
 import 'package:odac_flutter_app/presentation/features/onboarding/OnBoardingScreen.dart';
@@ -13,6 +14,7 @@ import 'package:odac_flutter_app/presentation/features/record/blood_pressure/Rec
 import 'package:odac_flutter_app/presentation/features/record/glucose/RecordGlucoseScreen.dart';
 import 'package:odac_flutter_app/presentation/features/setting/SettingScreen.dart';
 import 'package:odac_flutter_app/presentation/features/setting/alarm/SettingAlarmScreen.dart';
+import 'package:odac_flutter_app/presentation/features/setting/medication/AddMedicationScreen.dart';
 import 'package:odac_flutter_app/presentation/features/splash/SplashScreen.dart';
 import 'package:odac_flutter_app/presentation/features/welcome/WelcomeScreen.dart';
 import 'package:odac_flutter_app/presentation/features/withdrawal/WithdrawalReasonScreen.dart';
@@ -34,12 +36,14 @@ enum RoutingScreen {
   RecordGlucose(route: "/record/glucose"), // 혈당 기록
   RecordedListBloodPressure(route: "/list/blood_pressure"), // 혈압 기록 목록
   RecordedListGlucose(route: "/list/glucose"), // 혈당 기록 목록
+  MedicationList(route: "/list/medication"), // 약 알림 리스트
   EditMyInfo(route: "/edit/my_info"), // 내 정보 수정
   EditMyNickname(route: "/edit/my_nickname"), // 닉네임 수정
   EditMyHeight(route: "/edit/my_height"), // 키 수정
   EditMyWeight(route: "/edit/my_weight"), // 몸무게 수정
   Setting(route: "/setting"), // 설정화면
   SettingAlarm(route: "/setting/alarm"), // 알림 설정화면
+  AddMedication(route: "/setting/add/medication"), // 약 알림 추가화면
   Withdrawal(route: "/withdrawal"), // 회원탈퇴
   WithdrawalReason(route: "/withdrawal/reason"); // 회원탈퇴 사유
 
@@ -57,19 +61,18 @@ enum RoutingScreen {
       RoutingScreen.InputProfile.route: (context) => const InputProfileScreen(),
       RoutingScreen.Welcome.route: (context) => const WelcomeScreen(),
       RoutingScreen.Main.route: (context) => MainScreen(),
-      RoutingScreen.RecordBloodPressure.route: (context) =>
-          const RecordBloodPressureScreen(),
+      RoutingScreen.RecordBloodPressure.route: (context) => const RecordBloodPressureScreen(),
       RoutingScreen.RecordGlucose.route: (context) => const RecordGlucoseScreen(),
-      RoutingScreen.RecordedListBloodPressure.route: (context) =>
-          const RecordedListBloodPressureScreen(),
-      RoutingScreen.RecordedListGlucose.route: (context) =>
-          const RecordedListGlucoseScreen(),
+      RoutingScreen.RecordedListBloodPressure.route: (context) => const RecordedListBloodPressureScreen(),
+      RoutingScreen.RecordedListGlucose.route: (context) => const RecordedListGlucoseScreen(),
+      RoutingScreen.MedicationList.route: (context) => const MedicationListScreen(),
       RoutingScreen.EditMyInfo.route: (context) => const EditMyInfoScreen(),
       RoutingScreen.EditMyNickname.route: (context) => const EditMyNicknameScreen(),
       RoutingScreen.EditMyHeight.route: (context) => const EditMyHeightScreen(),
       RoutingScreen.EditMyWeight.route: (context) => const EditMyWeightScreen(),
       RoutingScreen.Setting.route: (context) => const SettingScreen(),
       RoutingScreen.SettingAlarm.route: (context) => const SettingAlarmScreen(),
+      RoutingScreen.AddMedication.route: (context) => const AddMedicationScreen(),
       RoutingScreen.Withdrawal.route: (context) => const WithdrawalScreen(),
       RoutingScreen.WithdrawalReason.route: (context) => const WithdrawalReasonScreen(),
     };
@@ -99,6 +102,8 @@ enum RoutingScreen {
         return const RecordedListBloodPressureScreen();
       case "/list/glucose":
         return const RecordedListGlucoseScreen();
+      case "/list/medication":
+        return const MedicationListScreen();
       case "/edit/my_info":
         return const EditMyInfoScreen();
       case "/edit/my_nickname":
@@ -114,6 +119,8 @@ enum RoutingScreen {
         return const SettingScreen();
       case "/setting/alarm":
         return const SettingAlarmScreen();
+      case "/setting/add/medication":
+        return const AddMedicationScreen();
       case "/withdrawal":
         return const WithdrawalScreen();
       case "/withdrawal/reason":

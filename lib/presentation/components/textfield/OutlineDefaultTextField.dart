@@ -37,10 +37,10 @@ class OutlineDefaultTextField extends HookWidget {
     this.textInputType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
     this.showCounterText = false,
-    this.helpText = null,
-    this.onChanged = null,
-    this.onNextAction = null,
-    this.onDoneAction = null,
+    this.helpText,
+    this.onChanged,
+    this.onNextAction,
+    this.onDoneAction,
     this.inputFormatters = const [],
     required this.fieldState,
     required this.controller,
@@ -93,10 +93,10 @@ class OutlineDefaultTextField extends HookWidget {
         border: getBorder(context, TextFieldState.Default),
         enabledBorder: getBorder(context, TextFieldState.Default),
         focusedBorder: getBorder(context, TextFieldState.Focus),
-        focusedErrorBorder: getBorder(
-            context, fieldState == TextFieldState.Error ? TextFieldState.Error : TextFieldState.Focus),
-        errorBorder: getBorder(
-            context, fieldState == TextFieldState.Error ? TextFieldState.Error : TextFieldState.Focus),
+        focusedErrorBorder: getBorder(context,
+            fieldState == TextFieldState.Error ? TextFieldState.Error : TextFieldState.Focus),
+        errorBorder: getBorder(context,
+            fieldState == TextFieldState.Error ? TextFieldState.Error : TextFieldState.Focus),
         disabledBorder: getBorder(context, TextFieldState.Disabled),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -165,11 +165,11 @@ class OutlineDefaultTextField extends HookWidget {
       textColor = getColorScheme(context).colorText;
     } else if (type == TextFieldState.Error) {
       textColor = getColorScheme(context).colorText;
-    }else if (type == TextFieldState.Default) {
+    } else if (type == TextFieldState.Default) {
       textColor = getColorScheme(context).neutral50;
     } else if (type == TextFieldState.Disabled) {
       textColor = getColorScheme(context).colorPrimaryDisable;
-    }else if (type == TextFieldState.Complete) {
+    } else if (type == TextFieldState.Complete) {
       textColor = getColorScheme(context).neutral50;
     }
     return textColor;

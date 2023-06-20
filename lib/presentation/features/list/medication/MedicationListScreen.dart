@@ -9,8 +9,8 @@ import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
-class RecordedListBloodPressureScreen extends StatelessWidget {
-  const RecordedListBloodPressureScreen({Key? key}) : super(key: key);
+class MedicationListScreen extends StatelessWidget {
+  const MedicationListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +21,16 @@ class RecordedListBloodPressureScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
           tint: getColorScheme(context).colorText,
         ),
-        actionIcon: AppBarIcon(
-          path: 'assets/imgs/icon_information.svg',
-          onPressed: () {
-            CommonBottomSheet.showBottomSheet(context, child: const BottomSheetBPTable());
-          },
-          tint: getColorScheme(context).colorText,
-        ),
-        title: getAppLocalizations(context).list_record_blood_pressure_title,
+        title: getAppLocalizations(context).my_item_subtitle_pill,
       ),
       backgroundColor: getColorScheme(context).colorUI03,
       body: Center(
         child: EmptyView(
-          screen: RoutingScreen.RecordedListBloodPressure,
+          screen: RoutingScreen.MedicationList,
           onPressed: () {
             Navigator.push(
               context,
-              nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
+              nextSlideScreen(RoutingScreen.AddMedication.route),
             );
           },
         ),

@@ -140,6 +140,14 @@
     "setting_alarm_report": "보고서 알림",
     "setting_alarm_report_description": "기록한 내용을 주간 및 월간 보고서를 통해 분석해드려요\n알림을 통해 매 주, 매 월 마다 보고서를 받아 볼 수 있어요!",
 
+    "add_medication_title": "약 추가하기",
+    "add_medication_name": "약 이름",
+    "add_medication_name_description": "(글자수가 8자 이상인 이름은 앞부분만 보여집니다)",
+    "add_medication_name_input_hint": "예시 ) 비타민",
+    "add_medication_yoil": "약 먹는 요일",
+    "add_medication_time": "약 먹는 시간",
+    "add_medication_time_text": "오전 8시 30분",
+
     "withdrawal_title": "회원탈퇴",
     "withdrawal_confirm_title": "오디를 탈퇴하기 전에\n확인해주세요",
     "withdrawal_policy_1_start": "오디 탈퇴 회원에 대한",
@@ -189,7 +197,7 @@
 
     "empty_record": "아직 작성한 기록이 없어요\n기록을 통해 건강한 생활을 시작해보아요 :)",
     "empty_report": "분석할 내역이 없어요\n기록을 통해 건강한 생활을 시작해보아요 :)",
-    "empty_alarm": "아직 알림이 없어요",
+    "empty_alarm": "아직 저장한 알림이 없어요\n기록을 통해 건강한 생활을 시작해보아요 :)",
     "empty_button_alarm_add": "알림 추가하기",
     "empty_button_record": "기록 시작하기",
     "empty_button_go_home": "홈으로 가기",
@@ -209,6 +217,15 @@
     "common_continue": "계속",
     "common_signup": "회원가입",
     "common_signin": "로그인",
+    "common_hour_unit": "시",
+    "common_minute_unit": "분",
+    "common_monday": "월",
+    "common_tuesday": "화",
+    "common_wednesday": "수",
+    "common_thursday": "목",
+    "common_friday": "금",
+    "common_saturday": "토",
+    "common_sunday": "일",
     "common_am": "오전",
     "common_pm": "오후"
 
