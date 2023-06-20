@@ -23,7 +23,7 @@ class MedicationListScreen extends StatelessWidget {
         ),
         title: getAppLocalizations(context).my_item_subtitle_pill,
       ),
-      backgroundColor: getColorScheme(context).colorUI03,
+      backgroundColor: getColorScheme(context).colorUI01,
       body: Center(
         child: EmptyView(
           screen: RoutingScreen.MedicationList,
