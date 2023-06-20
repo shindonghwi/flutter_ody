@@ -8,7 +8,6 @@ import 'package:odac_flutter_app/presentation/components/button/fill/FillButton.
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
@@ -43,7 +42,7 @@ class WithdrawalReasonScreen extends HookWidget {
         title: getAppLocalizations(context).withdrawal_title,
       ),
       body: Container(
-        margin: const EdgeInsets.fromLTRB(24, 32, 24, 24),
+        margin: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -65,6 +64,7 @@ class WithdrawalReasonScreen extends HookWidget {
       getAppLocalizations(context).withdrawal_reason_description,
       style: getTextTheme(context).b2b.copyWith(
             color: getColorScheme(context).colorText,
+            height: 1.2,
           ),
     );
   }
@@ -78,8 +78,7 @@ class WithdrawalReasonScreen extends HookWidget {
     );
   }
 
-  Container _reaseons(
-      BuildContext context, List<Pair<ValueNotifier<bool>, String>> reasonItems) {
+  Container _reaseons(BuildContext context, List<Pair<ValueNotifier<bool>, String>> reasonItems) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),

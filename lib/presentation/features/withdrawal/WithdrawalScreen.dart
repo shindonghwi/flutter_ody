@@ -30,13 +30,8 @@ class WithdrawalScreen extends HookWidget {
       ),
       Triple(
         getAppLocalizations(context).withdrawal_policy_2_start,
-        "",
+        getAppLocalizations(context).withdrawal_policy_2_medium,
         getAppLocalizations(context).withdrawal_policy_2_end,
-      ),
-      Triple(
-        getAppLocalizations(context).withdrawal_policy_3_start,
-        getAppLocalizations(context).withdrawal_policy_3_medium,
-        getAppLocalizations(context).withdrawal_policy_3_end,
       ),
     ];
 
@@ -54,7 +49,7 @@ class WithdrawalScreen extends HookWidget {
         title: getAppLocalizations(context).withdrawal_title,
       ),
       body: Container(
-        margin: const EdgeInsets.fromLTRB(16, 32, 24, 40),
+        margin: const EdgeInsets.fromLTRB(24, 24, 24, 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -64,7 +59,9 @@ class WithdrawalScreen extends HookWidget {
               buttonState.value = isChecked ? ButtonState.Activated : ButtonState.Disabled;
               debugPrint(buttonState.value.toString());
             }),
-            const Expanded(child: SizedBox()),
+            const Expanded(
+              child: SizedBox(),
+            ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -102,6 +99,7 @@ class WithdrawalScreen extends HookWidget {
         getAppLocalizations(context).withdrawal_confirm_title,
         style: getTextTheme(context).h3b.copyWith(
               color: getColorScheme(context).colorText,
+              height: 1.28,
             ),
       ),
     );
@@ -115,11 +113,13 @@ class WithdrawalScreen extends HookWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       margin: const EdgeInsets.only(top: 30, left: 8),
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: policyItems.map((e) {
+        children: policyItems.asMap().entries.map((e) {
+          int index = e.key;
+          Triple data = e.value;
           return Column(
             children: [
               Row(
@@ -129,9 +129,9 @@ class WithdrawalScreen extends HookWidget {
                     padding: const EdgeInsets.only(right: 4.0),
                     child: Text(
                       "•",
-                      style: getTextTheme(context).b3r.copyWith(
-                            color: getColorScheme(context).neutral70,
-                          ),
+                      style: getTextTheme(context)
+                          .b3r
+                          .copyWith(color: getColorScheme(context).neutral70, height: 1.42),
                     ),
                   ),
                   Expanded(
@@ -139,22 +139,22 @@ class WithdrawalScreen extends HookWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: e.first,
-                            style: getTextTheme(context).b3r.copyWith(
-                                  color: getColorScheme(context).neutral70,
-                                ),
+                            text: data.first,
+                            style: getTextTheme(context)
+                                .b3r
+                                .copyWith(color: getColorScheme(context).neutral70, height: 1.42),
                           ),
                           TextSpan(
-                            text: e.second,
-                            style: getTextTheme(context).c1b.copyWith(
-                                  color: getColorScheme(context).neutral80,
-                                ),
+                            text: data.second,
+                            style: getTextTheme(context)
+                                .c1b
+                                .copyWith(color: getColorScheme(context).neutral80, height: 1.42),
                           ),
                           TextSpan(
-                            text: e.third,
-                            style: getTextTheme(context).b3r.copyWith(
-                                  color: getColorScheme(context).neutral70,
-                                ),
+                            text: data.third,
+                            style: getTextTheme(context)
+                                .b3r
+                                .copyWith(color: getColorScheme(context).neutral70, height: 1.42),
                           ),
                         ],
                       ),
@@ -163,7 +163,10 @@ class WithdrawalScreen extends HookWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              if (index != policyItems.length - 1)
+                const SizedBox(
+                  height: 12,
+                )
             ],
           );
         }).toList(),
@@ -177,7 +180,7 @@ class WithdrawalScreen extends HookWidget {
     Function(bool) callback,
   ) {
     return Container(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: 24),
       child: Material(
         color: Colors.transparent,
         child: InkWell(

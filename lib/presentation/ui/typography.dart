@@ -120,7 +120,7 @@ extension StyleText on TextTheme {
   TextStyle get b2b => defaultTextStyle.copyWith(
       fontSize: 16,
       fontWeight: FontWeight.w700,
-      // height: 1.5
+      // height: 1.2
   );
   TextStyle get b3r => defaultTextStyle.copyWith(
       fontSize: 14,
