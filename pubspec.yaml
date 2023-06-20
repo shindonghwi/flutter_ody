@@ -31,6 +31,8 @@ dependencies:
   firebase_auth: ^4.6.1
   flutter_launcher_icons: ^0.13.1
   pedometer: ^3.0.0
+  numberpicker: ^2.1.2
+  wheel_chooser: ^1.1.2
 
 dev_dependencies:
   flutter_test:

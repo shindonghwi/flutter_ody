@@ -57,7 +57,7 @@ class BottomSheetWidget extends StatelessWidget {
           topRight: Radius.circular(borderRadius),
         ),
       ),
-      child: child,
+      child: SingleChildScrollView(child: child),
     );
   }
 }

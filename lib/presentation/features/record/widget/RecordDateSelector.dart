@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:odac_flutter_app/presentation/components/bottom_sheet/BottomSheetTimeSetting.dart';
+import 'package:odac_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:odac_flutter_app/presentation/features/record/blood_pressure/notifier/BloodPressureRecorderNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/record/glucose/notifier/GlucoseRecorderNotifier.dart';
 import 'package:odac_flutter_app/presentation/features/record/model/RecordType.dart';
@@ -14,14 +16,11 @@ import 'package:odac_flutter_app/presentation/utils/picker/TimePicker.dart';
 
 class RecordDateSelector extends HookConsumerWidget {
   final RecordType type;
-  const RecordDateSelector({
-    super.key,
-    required this.type
-  });
+
+  const RecordDateSelector({super.key, required this.type});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final bpRead = ref.read(bloodPressureRecorderProvider.notifier);
     final glucoseRead = ref.read(glucoseRecorderProvider.notifier);
 
@@ -31,21 +30,22 @@ class RecordDateSelector extends HookConsumerWidget {
 
     // 시간을 선택하는 픽커
     showTimeSelectPicker() async {
-      final result = await TimePicker.show(context);
-      if (result != null) {
-        final selectDateTime = DateTime.now().copyWith(
-          hour: result.hour,
-          minute: result.minute,
-        );
-        if (type == RecordType.BloodPressure) {
-          bpRead.updateTime(selectDateTime);
-        } else {
-          glucoseRead.updateTime(selectDateTime);
-        }
-        selectedTime.value = DateTransfer.dateTimeToAmPmTime(
-          DateTime.now().copyWith(hour: result.hour, minute: result.minute),
-        );
-      }
+      CommonBottomSheet.showBottomSheet(context, child: BottomSheetTimeSetting(
+        callback: (hour, minute) {
+          final selectDateTime = DateTime.now().copyWith(
+            hour: hour,
+            minute: minute,
+          );
+          if (type == RecordType.BloodPressure) {
+            bpRead.updateTime(selectDateTime);
+          } else {
+            glucoseRead.updateTime(selectDateTime);
+          }
+          selectedTime.value = DateTransfer.dateTimeToAmPmTime(
+            DateTime.now().copyWith(hour: hour, minute: minute),
+          );
+        },
+      ));
     }
 
     return Container(

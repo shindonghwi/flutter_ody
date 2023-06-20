@@ -7,7 +7,7 @@
     "login_title": "건강한 관리의 시작\n오디",
     "login_sns": "SNS 계정으로 로그인하기",
     "login_signup_description1": "계속하면 당사의",
-    "login_signup_description2": " 서비스 약관",
+    "login_signup_description2": "서비스 약관",
     "login_signup_description3": "에 동의하고,",
     "login_signup_description4": " 개인정보 처리방침",
     "login_signup_description5": "을 읽어\n당사의 데이터 수집, 사용, 공유 방법을 확인 하였음을 동의하는 것으로 간주합니다.",
@@ -175,6 +175,8 @@
     "bottom_sheet_glucose_table_title": "혈당 분류",
     "bottom_sheet_glucose_table_description": "정상 혈당범위는 공복 99mg/dL 이하, 식후 2시간 180mg/dL 입니다",
     "bottom_sheet_glucose_table_origin_info": "참고 : 대한당뇨병학회 에서 권장하는 혈당수치 표 입니다",
+    "bottom_sheet_time_setting_title": "시간 설정",
+    "bottom_sheet_time_setting_complete": "설정 완료",
 
     "message_save_success": "저장에 성공하였습니다",
     "message_save_fail": "저장에 실패하였습니다",
@@ -192,6 +194,7 @@
     "empty_button_record": "기록 시작하기",
     "empty_button_go_home": "홈으로 가기",
 
+
     "common_skip": "넘어가기",
     "common_next": "다음",
     "common_required": "필수",
@@ -205,6 +208,8 @@
     "common_select": "선택",
     "common_continue": "계속",
     "common_signup": "회원가입",
-    "common_signin": "로그인"
+    "common_signin": "로그인",
+    "common_am": "오전",
+    "common_pm": "오후"
 
 }
