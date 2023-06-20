@@ -13,10 +13,10 @@ class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
 
   const IconTitleIconAppBar({
     super.key,
-    this.leadingIcon = null,
+    this.leadingIcon,
     this.title = "",
     this.isCenterTitle = true,
-    this.actionIcon = null,
+    this.actionIcon,
   });
 
   @override
@@ -44,7 +44,7 @@ class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
                 ),
               ),
             )
-          : SizedBox(),
+          : const SizedBox(),
       title: Text(
         title,
         style: getTextTheme(context).l1m.copyWith(
@@ -57,13 +57,13 @@ class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
           alignment: Alignment.center,
           child: actionIcon != null
               ? InkWell(
-                  onTap: () {},
+                  onTap: () => actionIcon?.onPressed.call(),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: SvgPicture.asset(
                       actionIcon!.path,
-                      width: 56,
-                      height: 56,
+                      width: 24,
+                      height: 24,
                       colorFilter: ColorFilter.mode(
                         actionIcon!.tint != null
                             ? actionIcon!.tint!
@@ -73,12 +73,12 @@ class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
                     ),
                   ),
                 )
-              : SizedBox(),
+              : const SizedBox(),
         ),
       ],
     );
   }
 
   @override
-  Size get preferredSize => Size(double.infinity, 56);
+  Size get preferredSize => const Size(double.infinity, 56);
 }
