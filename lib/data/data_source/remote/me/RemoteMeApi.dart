@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'package:get_it/get_it.dart';
 import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/data/models/ApiResponse.dart';
+import 'package:odac_flutter_app/data/models/me/RequestMeMedicineModel.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeInfoModel.dart';
+import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:odac_flutter_app/domain/models/me/DiseaseType.dart';
 import 'package:odac_flutter_app/domain/models/me/GenderType.dart';
+import 'package:odac_flutter_app/domain/models/me/YoilType.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 
 class RemoteMeApi {
@@ -98,11 +101,10 @@ class RemoteMeApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-            (json) => ResponseMeInfoModel.fromJson(json),
+        (json) => ResponseMeInfoModel.fromJson(json),
       );
     }
   }
-
 
   /// 키 수정
   Future<ApiResponse<void>> patchHeight({required int height}) async {
@@ -156,8 +158,7 @@ class RemoteMeApi {
         type: ServiceType.Me,
         endPoint: 'preventive/disease',
         jsonBody: Map.from({
-          "diseases":
-              diseases.map((disease) => DiseaseTypeHelper.fromString(disease)).toList(),
+          "diseases": diseases.map((disease) => DiseaseTypeHelper.fromString(disease)).toList(),
         }));
 
     if (response.statusCode >= 500) {
@@ -170,6 +171,38 @@ class RemoteMeApi {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
         (json) => ResponseMeInfoModel.fromJson(json),
+      );
+    }
+  }
+
+  /// 약 등록
+  Future<ApiResponse<ResponseMeMedicineModel>> postMedicine(
+      {required RequestMeMedicineModel data}) async {
+    final dayList = [];
+    for (var element in data.days) {
+      dayList.add(YoilTypeHelper.fromString(element));
+    }
+
+    final response = await Service.postApi(
+        type: ServiceType.Me,
+        endPoint: 'medicine',
+        jsonBody: Map.from({
+          "name": data.name,
+          "days": dayList,
+          "time": data.time,
+          "enabled": data.enabled,
+        }));
+
+    if (response.statusCode >= 500) {
+      return ApiResponse(
+        status: response.statusCode,
+        message: _getAppLocalization.get().message_server_error_5xx,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+        (json) => ResponseMeMedicineModel.fromJson(json),
       );
     }
   }

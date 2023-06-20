@@ -1,0 +1,24 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'ResponseMeMedicineModel.g.dart';
+
+@JsonSerializable()
+class ResponseMeMedicineModel {
+  final int? medicineSeq;
+  final String? name;
+  final List<String>? days;
+  final String time;
+  final bool enabled;
+
+  ResponseMeMedicineModel({
+    required this.medicineSeq,
+    required this.name,
+    required this.days,
+    required this.time,
+    required this.enabled,
+  });
+
+  factory ResponseMeMedicineModel.fromJson(Map<String, dynamic> json) => _$ResponseMeMedicineModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ResponseMeMedicineModelToJson(this);
+}

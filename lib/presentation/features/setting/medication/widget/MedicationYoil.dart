@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:odac_flutter_app/domain/models/me/YoilType.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
 
 class MedicationYoil extends HookWidget {
   const MedicationYoil({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final yoilList = [
-      getAppLocalizations(context).common_monday,
-      getAppLocalizations(context).common_tuesday,
-      getAppLocalizations(context).common_wednesday,
-      getAppLocalizations(context).common_thursday,
-      getAppLocalizations(context).common_friday,
-      getAppLocalizations(context).common_saturday,
-      getAppLocalizations(context).common_sunday,
+    final List<Pair<YoilType, String>> yoilList = [
+      Pair(YoilType.MONDAY, getAppLocalizations(context).common_monday),
+      Pair(YoilType.TUESDAY, getAppLocalizations(context).common_tuesday),
+      Pair(YoilType.WEDNESDAY, getAppLocalizations(context).common_wednesday),
+      Pair(YoilType.THURSDAY, getAppLocalizations(context).common_thursday),
+      Pair(YoilType.FRIDAY, getAppLocalizations(context).common_friday),
+      Pair(YoilType.SATURDAY, getAppLocalizations(context).common_saturday),
+      Pair(YoilType.SUNDAY, getAppLocalizations(context).common_sunday),
     ];
 
-    final selectedYoilList = useState<List<String>>([]);
+    final selectedYoilList = useState<List<YoilType>>([]);
 
     return Container(
       padding: const EdgeInsets.fromLTRB(35, 24, 35, 0),
@@ -59,15 +61,15 @@ class MedicationYoil extends HookWidget {
                           borderRadius: BorderRadius.circular(100),
                           onTap: () {
                             if (selectedYoilList.value.contains(e)) {
-                              selectedYoilList.value = [...selectedYoilList.value..remove(e)];
+                              selectedYoilList.value = [...selectedYoilList.value..remove(e.first)];
                             } else {
-                              selectedYoilList.value = [...selectedYoilList.value..add(e)];
+                              selectedYoilList.value = [...selectedYoilList.value..add(e.first)];
                             }
                             debugPrint(selectedYoilList.value.toString());
                           },
                           child: Center(
                             child: Text(
-                              e,
+                              e.second,
                               style: getTextTheme(context).l2m.copyWith(
                                     color: selectedYoilList.value.contains(e)
                                         ? getColorScheme(context).white
