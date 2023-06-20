@@ -5,6 +5,7 @@ import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
 import 'package:odac_flutter_app/data/models/ApiListResponse.dart';
 import 'package:odac_flutter_app/data/models/ApiResponse.dart';
 import 'package:odac_flutter_app/data/models/me/RequestMeMedicineModel.dart';
+import 'package:odac_flutter_app/data/models/me/RequestMeMedicineUpdateModel.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeInfoModel.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:odac_flutter_app/domain/models/me/DiseaseType.dart';
@@ -211,8 +212,8 @@ class RemoteMeApi {
   /// 약 목록 조회
   Future<ApiListResponse<ResponseMeMedicineModel>> getMedicines() async {
     final response = await Service.getApi(
-        type: ServiceType.Me,
-        endPoint: 'medicines',
+      type: ServiceType.Me,
+      endPoint: 'medicines',
     );
 
     if (response.statusCode >= 500) {
@@ -220,14 +221,35 @@ class RemoteMeApi {
           status: response.statusCode,
           message: _getAppLocalization.get().message_server_error_5xx,
           list: null,
-          count: 0
-      );
+          count: 0);
     } else {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
-            (json) => ResponseMeMedicineModel.fromJson(json),
+        (json) => ResponseMeMedicineModel.fromJson(json),
       );
     }
   }
 
+  /// 약 활성화 업데이트
+  Future<ApiResponse<ResponseMeMedicineModel>> patchMedicine({
+    required RequestMeMedicineUpdateModel data,
+  }) async {
+    final response = await Service.patchApi(
+      type: ServiceType.Me,
+      endPoint: 'medicine',
+      jsonBody: data.toJson(),
+    );
+
+    if (response.statusCode >= 500) {
+      return ApiResponse(
+          status: response.statusCode,
+          message: _getAppLocalization.get().message_server_error_5xx,
+          data: null);
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+        (json) => ResponseMeMedicineModel.fromJson(json),
+      );
+    }
+  }
 }

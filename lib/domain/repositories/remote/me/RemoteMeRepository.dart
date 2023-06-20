@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:odac_flutter_app/data/models/ApiListResponse.dart';
 import 'package:odac_flutter_app/data/models/ApiResponse.dart';
 import 'package:odac_flutter_app/data/models/me/RequestMeMedicineModel.dart';
+import 'package:odac_flutter_app/data/models/me/RequestMeMedicineUpdateModel.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeInfoModel.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:odac_flutter_app/domain/models/me/DiseaseType.dart';
@@ -35,5 +36,8 @@ abstract class RemoteMeRepository {
 
   /// 약 목록 조회
   Future<ApiListResponse<ResponseMeMedicineModel>> getMedicines();
+
+  /// 약 활성화 업데이트
+  Future<ApiResponse<ResponseMeMedicineModel>> patchMedicine(RequestMeMedicineUpdateModel data);
 
 }

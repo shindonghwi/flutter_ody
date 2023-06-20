@@ -3,8 +3,8 @@ import 'package:odac_flutter_app/data/models/ApiListResponse.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:odac_flutter_app/domain/repositories/remote/me/RemoteMeRepository.dart';
 
-class GetMeMediciansUseCase {
-  GetMeMediciansUseCase();
+class GetMeMedicinesUseCase {
+  GetMeMedicinesUseCase();
 
   final RemoteMeRepository _remoteMeRepository = GetIt.instance<RemoteMeRepository>();
 
