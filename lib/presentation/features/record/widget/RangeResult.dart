@@ -24,17 +24,6 @@ class RangeResult extends HookWidget {
   Widget build(BuildContext context) {
     final colorList = RecordRangeStatusHelper.getDividerColorList(context, type, status);
 
-    final AnimationController _controller = useAnimationController(
-      duration: const Duration(milliseconds: 1000),
-    );
-
-    useEffect(() {
-      _controller.forward();
-      return () {
-        _controller.dispose();
-      };
-    }, []);
-
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(left: 10),

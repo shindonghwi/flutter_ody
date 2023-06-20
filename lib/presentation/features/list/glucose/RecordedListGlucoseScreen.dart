@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
+import 'package:odac_flutter_app/presentation/components/bottom_sheet/BottomSheetGlucoseTable.dart';
+import 'package:odac_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:odac_flutter_app/presentation/components/empty/EmptyView.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
@@ -18,6 +20,13 @@ class RecordedListGlucoseScreen extends StatelessWidget {
         leadingIcon: AppBarIcon(
           path: 'assets/imgs/icon_back.svg',
           onPressed: () => Navigator.of(context).pop(),
+          tint: getColorScheme(context).colorText,
+        ),
+        actionIcon: AppBarIcon(
+          path: 'assets/imgs/icon_information.svg',
+          onPressed: () {
+            CommonBottomSheet.showBottomSheet(context, child: const BottomSheetGlucoseTable());
+          },
           tint: getColorScheme(context).colorText,
         ),
         title: getAppLocalizations(context).list_record_glucose_title,

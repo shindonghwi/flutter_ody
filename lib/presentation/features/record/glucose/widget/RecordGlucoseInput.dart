@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/domain/models/bio/GlucoseMesaureType.dart';
+import 'package:odac_flutter_app/presentation/components/bottom_sheet/BottomSheetGlucoseTable.dart';
+import 'package:odac_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
@@ -45,14 +47,23 @@ class RecordGlucoseInput extends HookWidget {
               ),
         ),
         const SizedBox(width: 8),
-        SvgPicture.asset(
-          'assets/imgs/icon_information.svg',
-          colorFilter: ColorFilter.mode(
-            getColorScheme(context).neutral60,
-            BlendMode.srcIn,
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(100),
+            onTap: (){
+              CommonBottomSheet.showBottomSheet(context, child: const BottomSheetGlucoseTable());
+            },
+            child: SvgPicture.asset(
+              'assets/imgs/icon_information.svg',
+              colorFilter: ColorFilter.mode(
+                getColorScheme(context).neutral60,
+                BlendMode.srcIn,
+              ),
+              width: 24,
+              height: 24,
+            ),
           ),
-          width: 24,
-          height: 24,
         ),
       ],
     );
