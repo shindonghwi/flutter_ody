@@ -108,4 +108,8 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
         break;
     }
   }
+
+  void init(){
+    state = Idle();
+  }
 }

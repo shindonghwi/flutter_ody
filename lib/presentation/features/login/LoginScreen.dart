@@ -36,6 +36,7 @@ class LoginScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         state.when(
           success: (event) async {
+            loginRead.init();
             if (loginRead.meInfo != null){
               meInfoRead.updateMeInfo(loginRead.meInfo!);
             }
