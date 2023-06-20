@@ -14,12 +14,13 @@ class MainScreen extends HookWidget {
     final _currentIndex = useState(0); // Current index of the active tab
 
     List<Pair> _iconList = [
-      Pair('assets/imgs/icon_calendar.svg', getAppLocalizations(context).main_tab_home),
-      Pair('assets/imgs/icon_calendar.svg', getAppLocalizations(context).main_tab_news),
-      Pair('assets/imgs/icon_calendar.svg', getAppLocalizations(context).main_tab_my),
+      Pair('assets/imgs/icon_record_1.svg', getAppLocalizations(context).main_tab_record),
+      Pair('assets/imgs/icon_analyzing.svg', getAppLocalizations(context).main_tab_analysis),
+      Pair('assets/imgs/icon_mypage.svg', getAppLocalizations(context).main_tab_my),
     ];
 
     return Scaffold(
+      extendBody: true,
       body: IndexedStack(
         index: _currentIndex.value,
         children: const [
@@ -49,28 +50,39 @@ class MainScreen extends HookWidget {
           },
           items: _iconList.map((data) {
             return BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                data.first,
-                width: 24,
-                height: 24,
-                colorFilter: ColorFilter.mode(
-                  getColorScheme(context).neutral50,
-                  BlendMode.srcIn,
-                ),
+              icon: Column(
+                children: [
+                  SvgPicture.asset(
+                    data.first,
+                    width: 24,
+                    height: 24,
+                    colorFilter: ColorFilter.mode(
+                      getColorScheme(context).neutral50,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  const SizedBox(height: 4,)
+                ],
               ),
-              activeIcon: SvgPicture.asset(
-                data.first,
-                width: 24,
-                height: 24,
-                colorFilter: ColorFilter.mode(
-                  getColorScheme(context).colorPrimaryFocus,
-                  BlendMode.srcIn,
-                ),
+              activeIcon: Column(
+                children: [
+                  SvgPicture.asset(
+                    data.first,
+                    width: 24,
+                    height: 24,
+                    colorFilter: ColorFilter.mode(
+                      getColorScheme(context).colorPrimaryFocus,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  const SizedBox(height: 4,)
+                ],
               ),
               label: data.second,
             );
           }).toList(),
-          selectedLabelStyle: getTextTheme(context).c3r,
+          selectedLabelStyle: getTextTheme(context).c3b,
+          unselectedLabelStyle: getTextTheme(context).c3b,
         ),
       ),
     );

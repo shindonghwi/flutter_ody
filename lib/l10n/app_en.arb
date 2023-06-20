@@ -51,8 +51,8 @@
     "welcome_subtitle": "“오디” 와 함께 건강관리를 시작해볼까요?",
     "welcome_button": "홈으로 가기",
 
-    "main_tab_home": "홈",
-    "main_tab_news": "소식",
+    "main_tab_record": "나의기록",
+    "main_tab_analysis": "분석하기",
     "main_tab_my": "내 정보",
 
     "my_item_title_report": "보고서",
