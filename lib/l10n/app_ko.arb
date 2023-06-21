@@ -227,6 +227,8 @@
     "common_saturday": "토",
     "common_sunday": "일",
     "common_am": "오전",
-    "common_pm": "오후"
+    "common_pm": "오후",
+    "common_edit": "편집",
+    "common_delete": "삭제"
 
 }
