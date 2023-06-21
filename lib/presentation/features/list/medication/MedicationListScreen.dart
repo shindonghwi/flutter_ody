@@ -80,7 +80,7 @@ class MedicationListScreen extends HookConsumerWidget {
                         itemBuilder: (BuildContext context, int index) {
                           return MedicineItem(data: uiState.value[index]);
                         },
-                        itemCount: 3,
+                        itemCount: uiState.value.length,
                       ),
                     ),
                   ),
