@@ -50,21 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBqXf-zq0YW9YXtaVxC6CQCxqsrfoqu6vY',
-    appId: '1:15204988302:android:5d835fc0704eca23e120df',
-    messagingSenderId: '15204988302',
-    projectId: 'ody-app-dev',
-    storageBucket: 'ody-app-dev.appspot.com',
+    apiKey: 'AIzaSyDUnmxMWLjfzRFVvHigr4y_vDvV0oEdXsc',
+    appId: '1:739051866939:android:bea59afbd28c3aac1d851e',
+    messagingSenderId: '739051866939',
+    projectId: 'orotcode-ody-dev',
+    storageBucket: 'orotcode-ody-dev.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA4vHrTyTjzzLEdD5_FZjKqEVdGjGpvgCM',
-    appId: '1:15204988302:ios:8bb0198d44e614c9e120df',
-    messagingSenderId: '15204988302',
-    projectId: 'ody-app-dev',
-    storageBucket: 'ody-app-dev.appspot.com',
-    androidClientId: '15204988302-86r6aeij0c16bilfo5inv2h2fqgkgam1.apps.googleusercontent.com',
-    iosClientId: '15204988302-f47hudjuqr6vj3cajbi1ekk912mv0i5c.apps.googleusercontent.com',
+    apiKey: 'AIzaSyC_tLq2Zrpy59N3pTpkDhONvGi5NTBGY0w',
+    appId: '1:739051866939:ios:ac9724fc286111e11d851e',
+    messagingSenderId: '739051866939',
+    projectId: 'orotcode-ody-dev',
+    storageBucket: 'orotcode-ody-dev.appspot.com',
+    iosClientId: '739051866939-7ii7c6od0j78mu7idigtm1e2tpjqlstg.apps.googleusercontent.com',
     iosBundleId: 'com.orot.ody.dev',
   );
 }

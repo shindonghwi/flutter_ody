@@ -9,18 +9,11 @@ import 'package:odac_flutter_app/presentation/ui/theme.dart';
 
 final googleSignIn = Platform.isAndroid
     ? GoogleSignIn(
-  clientId: '15204988302-e8cssafmcebffl95v1makhqvhje5b4h9.apps.googleusercontent.com',
   scopes: ['email', 'profile'],
 )
     : GoogleSignIn(
-  clientId: '15204988302-f47hudjuqr6vj3cajbi1ekk912mv0i5c.apps.googleusercontent.com',
   scopes: ['email', 'profile'],
 );
-//
-//
-// final googleSignIn = GoogleSignIn(
-//   scopes: ['email', 'profile'],
-// );
 
 final firebaseAuth = FirebaseAuth.instance;
 
