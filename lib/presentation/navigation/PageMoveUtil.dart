@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:odac_flutter_app/presentation/navigation/Route.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 
 PageRouteBuilder nextSlideScreen(String route, {dynamic parameter}) {
   return PageRouteBuilder(

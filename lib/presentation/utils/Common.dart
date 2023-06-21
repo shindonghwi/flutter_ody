@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:odac_flutter_app/app/OrotApp.dart';
-import 'package:odac_flutter_app/presentation/ui/theme.dart';
+import 'package:ody_flutter_app/app/OrotApp.dart';
+import 'package:ody_flutter_app/presentation/ui/theme.dart';
 
 AppLocalizations getAppLocalizations(BuildContext context) {
   return AppLocalizations.of(context);

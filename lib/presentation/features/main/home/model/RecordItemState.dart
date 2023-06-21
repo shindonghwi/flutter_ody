@@ -1,4 +1,4 @@
-import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
+import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 
 class RecordItemState {
   final String title;

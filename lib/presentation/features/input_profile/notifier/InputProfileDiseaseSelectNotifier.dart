@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/domain/models/me/DiseaseType.dart';
+import 'package:ody_flutter_app/domain/models/me/DiseaseType.dart';
 
 final diseaseListStateProvider =
     StateNotifierProvider<DiseaseSelectNotifier, List<DiseaseType>>(

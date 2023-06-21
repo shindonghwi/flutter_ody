@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:odac_flutter_app/data/models/me/ResponsePreventiveModel.dart';
-import 'package:odac_flutter_app/data/models/me/ResponseSocialModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponsePreventiveModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseSocialModel.dart';
 
 part 'ResponseProfileModel.g.dart';
 

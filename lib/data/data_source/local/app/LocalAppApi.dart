@@ -1,4 +1,4 @@
-import 'package:odac_flutter_app/data/data_source/local/SharedKey.dart';
+import 'package:ody_flutter_app/data/data_source/local/SharedKey.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalAppApi {

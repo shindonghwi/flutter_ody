@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/domain/models/bio/GlucoseMesaureType.dart';
-import 'package:odac_flutter_app/presentation/features/record/blood_pressure/models/BpRecorderModel.dart';
-import 'package:odac_flutter_app/presentation/features/record/glucose/models/GlucoseRecorderModel.dart';
-import 'package:odac_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
+import 'package:ody_flutter_app/domain/models/bio/GlucoseMesaureType.dart';
+import 'package:ody_flutter_app/presentation/features/record/blood_pressure/models/BpRecorderModel.dart';
+import 'package:ody_flutter_app/presentation/features/record/glucose/models/GlucoseRecorderModel.dart';
+import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
 
 // 사용자가 입력한 혈당 상태, 값, 푸시알림, 메모
 final glucoseRecorderProvider =

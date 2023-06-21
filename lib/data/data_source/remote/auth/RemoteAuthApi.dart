@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:odac_flutter_app/app/OrotApp.dart';
-import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
-import 'package:odac_flutter_app/data/models/ApiResponse.dart';
-import 'package:odac_flutter_app/data/models/auth/RequestSocialLoginModel.dart';
-import 'package:odac_flutter_app/data/models/auth/ResponseSocialLoginModel.dart';
-import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
-import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/app/OrotApp.dart';
+import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
+import 'package:ody_flutter_app/data/models/ApiResponse.dart';
+import 'package:ody_flutter_app/data/models/auth/RequestSocialLoginModel.dart';
+import 'package:ody_flutter_app/data/models/auth/ResponseSocialLoginModel.dart';
+import 'package:ody_flutter_app/domain/models/auth/LoginPlatform.dart';
+import 'package:ody_flutter_app/domain/models/auth/SocialLoginModel.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RemoteAuthApi {
   RemoteAuthApi();

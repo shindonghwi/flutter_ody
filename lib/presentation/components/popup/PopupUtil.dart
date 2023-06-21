@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:odac_flutter_app/app/OrotApp.dart';
-import 'package:odac_flutter_app/presentation/components/popup/widget/PopupAppPolicy.dart';
-import 'package:odac_flutter_app/presentation/components/popup/widget/PopupLogout.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/app/OrotApp.dart';
+import 'package:ody_flutter_app/presentation/components/popup/widget/PopupAppPolicy.dart';
+import 'package:ody_flutter_app/presentation/components/popup/widget/PopupLogout.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class PopupUtil {
   static void showAppPolicy({required bool backgroundTouchCloseFlag}) {

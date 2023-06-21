@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:odac_flutter_app/presentation/features/main/my/widget/AdBanner.dart';
-import 'package:odac_flutter_app/presentation/features/main/my/widget/MyAlarmSetting.dart';
-import 'package:odac_flutter_app/presentation/features/main/my/widget/MyReport.dart';
-import 'package:odac_flutter_app/presentation/features/main/my/widget/MyUserInfo.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/ui/typography.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/widget/AdBanner.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/widget/MyAlarmSetting.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/widget/MyReport.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/widget/MyUserInfo.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class MyScreen extends StatelessWidget {
   const MyScreen({Key? key}) : super(key: key);

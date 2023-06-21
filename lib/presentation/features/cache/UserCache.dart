@@ -1,4 +1,4 @@
-import 'package:odac_flutter_app/data/models/me/ResponseMeInfoModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeInfoModel.dart';
 
 final userCache = UserCache();
 

@@ -1,4 +1,4 @@
-import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
+import 'package:ody_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'SocialLoginModel.g.dart';

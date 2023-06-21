@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:odac_flutter_app/domain/models/me/YoilType.dart';
+import 'package:ody_flutter_app/domain/models/me/YoilType.dart';
 
 part 'RequestMeMedicineUpdateModel.g.dart';
 

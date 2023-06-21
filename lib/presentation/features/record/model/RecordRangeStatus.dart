@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:odac_flutter_app/presentation/features/record/model/RecordType.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/features/record/model/RecordType.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 enum RecordRangeStatus {
   LowBp, // 저혈압

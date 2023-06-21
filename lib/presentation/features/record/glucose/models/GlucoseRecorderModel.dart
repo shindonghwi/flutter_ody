@@ -1,4 +1,4 @@
-import 'package:odac_flutter_app/domain/models/bio/GlucoseMesaureType.dart';
+import 'package:ody_flutter_app/domain/models/bio/GlucoseMesaureType.dart';
 
 class GlucoseRecorderModel {
   final DateTime time;

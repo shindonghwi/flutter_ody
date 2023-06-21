@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
-import 'package:odac_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
-import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
-import 'package:odac_flutter_app/presentation/components/bottom_sheet/BottomSheetGlucoseTable.dart';
-import 'package:odac_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
-import 'package:odac_flutter_app/presentation/components/empty/EmptyView.dart';
-import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
-import 'package:odac_flutter_app/presentation/navigation/Route.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
+import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
+import 'package:ody_flutter_app/presentation/components/bottom_sheet/BottomSheetGlucoseTable.dart';
+import 'package:ody_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
+import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
+import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RecordedListGlucoseScreen extends StatelessWidget {
   const RecordedListGlucoseScreen({Key? key}) : super(key: key);

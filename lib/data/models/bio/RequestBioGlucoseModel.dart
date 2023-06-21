@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:odac_flutter_app/domain/models/bio/GlucoseMesaureType.dart';
+import 'package:ody_flutter_app/domain/models/bio/GlucoseMesaureType.dart';
 
 part 'RequestBioGlucoseModel.g.dart';
 

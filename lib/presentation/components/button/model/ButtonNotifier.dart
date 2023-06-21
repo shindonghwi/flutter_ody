@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
 
 class ButtonNotifier extends StateNotifier<ButtonState> {
   final ButtonState state;

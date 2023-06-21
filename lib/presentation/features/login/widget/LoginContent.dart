@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
-import 'package:odac_flutter_app/presentation/features/login/notifier/LoginUiStateNotifier.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/ui/typography.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
+import 'package:ody_flutter_app/domain/models/auth/LoginPlatform.dart';
+import 'package:ody_flutter_app/presentation/features/login/notifier/LoginUiStateNotifier.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 
 class LoginContent extends HookConsumerWidget {
   const LoginContent({Key? key}) : super(key: key);

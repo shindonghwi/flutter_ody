@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/notifier/CalendarFormatNotifier.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/notifier/CalendarHeightNotifier.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/notifier/DimNotifier.dart';
-import 'package:odac_flutter_app/presentation/features/main/home/widget/DimBackgroundView.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarFormatNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarHeightNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/DimNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/widget/DimBackgroundView.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 /// @feature: 드래그 가능한 캘린터 뷰

@@ -1,9 +1,9 @@
 import 'package:get_it/get_it.dart';
-import 'package:odac_flutter_app/data/models/me/RequestMeMedicineModel.dart';
-import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
-import 'package:odac_flutter_app/domain/models/me/YoilType.dart';
-import 'package:odac_flutter_app/domain/usecases/remote/me/PostMeMedicineUseCase.dart';
-import 'package:odac_flutter_app/presentation/models/UiState.dart';
+import 'package:ody_flutter_app/data/models/me/RequestMeMedicineModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
+import 'package:ody_flutter_app/domain/models/me/YoilType.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/me/PostMeMedicineUseCase.dart';
+import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:riverpod/riverpod.dart';
 
 final registerMedicineProvider = StateNotifierProvider<RegisterMedicineNotifier, UIState<String>>(

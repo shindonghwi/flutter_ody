@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:odac_flutter_app/data/models/ApiResponse.dart';
-import 'package:odac_flutter_app/domain/models/me/GenderType.dart';
-import 'package:odac_flutter_app/domain/repositories/remote/me/RemoteMeRepository.dart';
+import 'package:ody_flutter_app/data/models/ApiResponse.dart';
+import 'package:ody_flutter_app/domain/models/me/GenderType.dart';
+import 'package:ody_flutter_app/domain/repositories/remote/me/RemoteMeRepository.dart';
 
 class PatchMeHeightUseCase {
   PatchMeHeightUseCase();

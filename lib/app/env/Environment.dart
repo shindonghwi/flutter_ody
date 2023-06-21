@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/app/OrotApp.dart';
-import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
-import 'package:odac_flutter_app/di/locator.dart';
-import 'package:odac_flutter_app/presentation/ui/theme.dart';
+import 'package:ody_flutter_app/app/OrotApp.dart';
+import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
+import 'package:ody_flutter_app/di/locator.dart';
+import 'package:ody_flutter_app/presentation/ui/theme.dart';
 
 enum BuildType { dev, prod }
 

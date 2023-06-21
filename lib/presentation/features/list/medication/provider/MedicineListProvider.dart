@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
-import 'package:odac_flutter_app/domain/usecases/remote/me/DeleteMedicineUseCase.dart';
-import 'package:odac_flutter_app/domain/usecases/remote/me/GetMeMedicinesUseCase.dart';
-import 'package:odac_flutter_app/presentation/models/UiState.dart';
-import 'package:odac_flutter_app/presentation/utils/CollectionUtil.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/me/DeleteMedicineUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/me/GetMeMedicinesUseCase.dart';
+import 'package:ody_flutter_app/presentation/models/UiState.dart';
+import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:riverpod/riverpod.dart';
 
 enum MedicineActionType {

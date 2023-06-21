@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
+import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
 
 class DateParser {
   static String getGlobalTimeDate(DateTime time) {

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:odac_flutter_app/data/models/me/ResponseDiseaseModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseDiseaseModel.dart';
 
 part 'ResponseSocialModel.g.dart';
 

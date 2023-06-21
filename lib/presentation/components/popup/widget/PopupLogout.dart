@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
-import 'package:odac_flutter_app/presentation/navigation/Route.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/ui/typography.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class PopUpLogout extends HookConsumerWidget {
   const PopUpLogout({Key? key}) : super(key: key);

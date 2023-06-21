@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:odac_flutter_app/presentation/navigation/Route.dart';
-import 'package:odac_flutter_app/presentation/ui/theme.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
+import 'package:ody_flutter_app/presentation/ui/theme.dart';
 
 final googleSignIn = Platform.isAndroid
     ? GoogleSignIn(

@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:odac_flutter_app/data/models/ApiResponse.dart';
-import 'package:odac_flutter_app/data/models/bio/RequestBioStepsModel.dart';
-import 'package:odac_flutter_app/domain/repositories/remote/bio/RemoteBioRepository.dart';
+import 'package:ody_flutter_app/data/models/ApiResponse.dart';
+import 'package:ody_flutter_app/data/models/bio/RequestBioStepsModel.dart';
+import 'package:ody_flutter_app/domain/repositories/remote/bio/RemoteBioRepository.dart';
 
 class PostBioStepsUseCase {
   PostBioStepsUseCase();

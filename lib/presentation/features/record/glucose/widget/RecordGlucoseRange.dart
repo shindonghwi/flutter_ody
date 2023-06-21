@@ -1,14 +1,14 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/features/record/glucose/models/GlucoseRecorderModel.dart';
-import 'package:odac_flutter_app/presentation/features/record/glucose/notifier/GlucoseRecorderNotifier.dart';
-import 'package:odac_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
-import 'package:odac_flutter_app/presentation/features/record/model/RecordType.dart';
-import 'package:odac_flutter_app/presentation/features/record/widget/RangeResult.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/ui/typography.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/features/record/glucose/models/GlucoseRecorderModel.dart';
+import 'package:ody_flutter_app/presentation/features/record/glucose/notifier/GlucoseRecorderNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
+import 'package:ody_flutter_app/presentation/features/record/model/RecordType.dart';
+import 'package:ody_flutter_app/presentation/features/record/widget/RangeResult.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RecordGlucoseRange extends HookConsumerWidget {
   const RecordGlucoseRange({

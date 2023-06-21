@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class CalendarSize {
   static double _getMinRatio() => 0.16;

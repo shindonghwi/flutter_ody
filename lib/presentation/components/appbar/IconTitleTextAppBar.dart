@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/ui/typography.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class IconTitleTextAppBar extends StatelessWidget with PreferredSizeWidget {
   final AppBarIcon? leadingIcon;

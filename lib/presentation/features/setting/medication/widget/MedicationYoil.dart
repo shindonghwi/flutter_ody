@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/domain/models/me/YoilType.dart';
-import 'package:odac_flutter_app/presentation/features/setting/medication/provider/RegisterMedicineProvider.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/ui/typography.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
+import 'package:ody_flutter_app/domain/models/me/YoilType.dart';
+import 'package:ody_flutter_app/presentation/features/setting/medication/provider/RegisterMedicineProvider.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 
 class MedicationYoil extends HookConsumerWidget {
   const MedicationYoil({Key? key}) : super(key: key);

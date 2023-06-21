@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
-import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
-import 'package:odac_flutter_app/presentation/components/button/fill/FillButton.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
-import 'package:odac_flutter_app/presentation/components/checkbox/model/CheckBoxSize.dart';
-import 'package:odac_flutter_app/presentation/components/checkbox/model/CheckBoxType.dart';
-import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
-import 'package:odac_flutter_app/presentation/navigation/Route.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/ui/typography.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:odac_flutter_app/presentation/utils/dto/Triple.dart';
+import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
+import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
+import 'package:ody_flutter_app/presentation/components/button/fill/FillButton.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:ody_flutter_app/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
+import 'package:ody_flutter_app/presentation/components/checkbox/model/CheckBoxSize.dart';
+import 'package:ody_flutter_app/presentation/components/checkbox/model/CheckBoxType.dart';
+import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class WithdrawalScreen extends HookWidget {
   const WithdrawalScreen({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/textarea/model/TextAreaModel.dart';
-import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
+import 'package:ody_flutter_app/presentation/components/textarea/model/TextAreaModel.dart';
+import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 
 final recordGlucoseMemoTextFieldProvider =
 StateNotifierProvider<RecordGlucoseMemoTextFieldNotifier, TextAreaModel>(

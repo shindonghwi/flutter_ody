@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
-import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
-import 'package:odac_flutter_app/presentation/features/edit/my_nickname/EditMyNicknameScreen.dart';
-import 'package:odac_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
-import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
-import 'package:odac_flutter_app/presentation/navigation/Route.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/ui/typography.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
-import 'package:odac_flutter_app/presentation/utils/dto/Triple.dart';
+import 'package:ody_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
+import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
+import 'package:ody_flutter_app/presentation/features/edit/my_nickname/EditMyNicknameScreen.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
+import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class EditMyInfoScreen extends HookConsumerWidget {
   const EditMyInfoScreen({Key? key}) : super(key: key);

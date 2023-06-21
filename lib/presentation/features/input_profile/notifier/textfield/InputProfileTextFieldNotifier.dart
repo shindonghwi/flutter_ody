@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
-import 'package:odac_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
+import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
+import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 
 abstract class InputProfileTextFieldNotifier extends StateNotifier<TextFieldModel> {
   InputProfileTextFieldNotifier() : super(TextFieldModel(TextFieldState.Default, ''));

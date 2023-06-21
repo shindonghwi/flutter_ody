@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/button/fill/FillButton.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/features/cache/UserCache.dart';
-import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
-import 'package:odac_flutter_app/presentation/navigation/Route.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/ui/typography.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/components/button/fill/FillButton.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:ody_flutter_app/presentation/features/cache/UserCache.dart';
+import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class WelcomeScreen extends HookWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:odac_flutter_app/data/models/ApiResponse.dart';
-import 'package:odac_flutter_app/data/models/auth/RequestSocialLoginModel.dart';
-import 'package:odac_flutter_app/data/models/auth/ResponseSocialLoginModel.dart';
-import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
+import 'package:ody_flutter_app/data/models/ApiResponse.dart';
+import 'package:ody_flutter_app/data/models/auth/RequestSocialLoginModel.dart';
+import 'package:ody_flutter_app/data/models/auth/ResponseSocialLoginModel.dart';
+import 'package:ody_flutter_app/domain/models/auth/SocialLoginModel.dart';
 
 abstract class RemoteAuthRepository {
   /// 구글 로그인

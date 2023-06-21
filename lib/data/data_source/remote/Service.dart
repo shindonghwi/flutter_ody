@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:odac_flutter_app/app/env/Environment.dart';
+import 'package:ody_flutter_app/app/env/Environment.dart';
 
 class Service {
   static String baseUrl = "${Environment.apiUrl}/${Environment.apiVersion}";

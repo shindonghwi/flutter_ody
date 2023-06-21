@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
-import 'package:odac_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
-import 'package:odac_flutter_app/presentation/features/list/medication/provider/MedicineScreenModeProvider.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
+import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
+import 'package:ody_flutter_app/presentation/features/list/medication/provider/MedicineScreenModeProvider.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class MedicineAppBar extends HookConsumerWidget with PreferredSizeWidget {
   const MedicineAppBar({Key? key}) : super(key: key);

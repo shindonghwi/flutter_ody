@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
-import 'package:odac_flutter_app/presentation/components/empty/EmptyView.dart';
-import 'package:odac_flutter_app/presentation/features/list/medication/provider/MedicineListProvider.dart';
-import 'package:odac_flutter_app/presentation/features/list/medication/widget/MedicineItem.dart';
-import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
-import 'package:odac_flutter_app/presentation/navigation/Route.dart';
-import 'package:odac_flutter_app/presentation/utils/CollectionUtil.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
+import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
+import 'package:ody_flutter_app/presentation/features/list/medication/provider/MedicineListProvider.dart';
+import 'package:ody_flutter_app/presentation/features/list/medication/widget/MedicineItem.dart';
+import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
+import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 
 class MedicineMainContent extends HookConsumerWidget {
   final List<ResponseMeMedicineModel> items;

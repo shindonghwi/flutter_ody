@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageIndexProvider.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/widget/birthday/InputProfileBirthday.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/widget/disease/InputProfileDisease.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/widget/gender/InputProfileGender.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/widget/height/InputProfileHeight.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/widget/weight/InputProfileWeight.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/provider/InputProfilePageIndexProvider.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/widget/birthday/InputProfileBirthday.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/widget/disease/InputProfileDisease.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/widget/gender/InputProfileGender.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/widget/height/InputProfileHeight.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/widget/weight/InputProfileWeight.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class SurveyPageView extends HookConsumerWidget {
   final int totalPageCount;

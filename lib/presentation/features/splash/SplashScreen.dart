@@ -5,20 +5,20 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/app/OrotApp.dart';
-import 'package:odac_flutter_app/data/data_source/remote/Service.dart';
-import 'package:odac_flutter_app/data/models/me/ResponseProfileModel.dart';
-import 'package:odac_flutter_app/domain/models/auth/LoginPlatform.dart';
-import 'package:odac_flutter_app/domain/models/auth/SocialLoginModel.dart';
-import 'package:odac_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
-import 'package:odac_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
-import 'package:odac_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
-import 'package:odac_flutter_app/presentation/features/constant/constants.dart';
-import 'package:odac_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
-import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
-import 'package:odac_flutter_app/presentation/navigation/Route.dart';
-import 'package:odac_flutter_app/presentation/ui/colors.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/app/OrotApp.dart';
+import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseProfileModel.dart';
+import 'package:ody_flutter_app/domain/models/auth/LoginPlatform.dart';
+import 'package:ody_flutter_app/domain/models/auth/SocialLoginModel.dart';
+import 'package:ody_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
+import 'package:ody_flutter_app/presentation/features/constant/constants.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
+import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class SplashScreen extends HookConsumerWidget {
   final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =

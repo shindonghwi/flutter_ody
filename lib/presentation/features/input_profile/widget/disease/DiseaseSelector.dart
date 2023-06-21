@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/domain/models/me/DiseaseType.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
-import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
-import 'package:odac_flutter_app/presentation/components/button/outline/OutlineRoundPrimaryButton.dart';
-import 'package:odac_flutter_app/presentation/features/input_profile/notifier/InputProfileDiseaseSelectNotifier.dart';
-import 'package:odac_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/domain/models/me/DiseaseType.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:ody_flutter_app/presentation/components/button/outline/OutlineRoundPrimaryButton.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/notifier/InputProfileDiseaseSelectNotifier.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class DiseaseSelector extends HookConsumerWidget {
   const DiseaseSelector({

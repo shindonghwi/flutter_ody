@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:odac_flutter_app/app/OrotApp.dart';
-import 'package:odac_flutter_app/data/models/me/ResponseMeInfoModel.dart';
-import 'package:odac_flutter_app/presentation/features/cache/UserCache.dart';
+import 'package:ody_flutter_app/app/OrotApp.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeInfoModel.dart';
+import 'package:ody_flutter_app/presentation/features/cache/UserCache.dart';
 import 'package:riverpod/riverpod.dart';
 
 final meInfoProvider = StateNotifierProvider<MeInfoNotifier, ResponseMeInfoModel?>(
