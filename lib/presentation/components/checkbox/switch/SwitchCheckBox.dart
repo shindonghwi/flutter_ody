@@ -15,7 +15,7 @@ class SwitchCheckBox extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    const duration = Duration(milliseconds: 300);
+    const duration = Duration(milliseconds: 100);
 
     return LayoutBuilder(builder: (context, constraints) {
       return GestureDetector(

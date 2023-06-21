@@ -8,7 +8,7 @@ class GetMeMedicinesUseCase {
 
   final RemoteMeRepository _remoteMeRepository = GetIt.instance<RemoteMeRepository>();
 
-  Future<ApiListResponse<ResponseMeMedicineModel>> call() async {
+  Future<ApiListResponse<List<ResponseMeMedicineModel>>> call() async {
     return await _remoteMeRepository.getMedicines();
   }
 }

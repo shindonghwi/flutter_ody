@@ -210,7 +210,7 @@ class RemoteMeApi {
   }
 
   /// 약 목록 조회
-  Future<ApiListResponse<ResponseMeMedicineModel>> getMedicines() async {
+  Future<ApiListResponse<List<ResponseMeMedicineModel>>> getMedicines() async {
     final response = await Service.getApi(
       type: ServiceType.Me,
       endPoint: 'medicines',
@@ -225,7 +225,11 @@ class RemoteMeApi {
     } else {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
-        (json) => ResponseMeMedicineModel.fromJson(json),
+            (json) {
+          return List<ResponseMeMedicineModel>.from(json.map(
+                  (item) => ResponseMeMedicineModel.fromJson(item as Map<String, dynamic>)
+          ));
+        },
       );
     }
   }

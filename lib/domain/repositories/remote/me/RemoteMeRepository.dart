@@ -35,7 +35,7 @@ abstract class RemoteMeRepository {
   Future<ApiResponse<ResponseMeMedicineModel>> postMedicine(RequestMeMedicineModel data);
 
   /// 약 목록 조회
-  Future<ApiListResponse<ResponseMeMedicineModel>> getMedicines();
+  Future<ApiListResponse<List<ResponseMeMedicineModel>>> getMedicines();
 
   /// 약 활성화 업데이트
   Future<ApiResponse<ResponseMeMedicineModel>> patchMedicine(RequestMeMedicineUpdateModel data);

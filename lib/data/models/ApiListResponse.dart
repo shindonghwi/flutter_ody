@@ -14,35 +14,25 @@ class ApiListResponse<T> {
   });
 
   factory ApiListResponse.fromJson(
-    Map<String, dynamic>? json,
-    T Function(dynamic) fromJsonT,
-  ) {
+      Map<String, dynamic>? json,
+      T Function(dynamic) fromJsonT,
+      ) {
     try {
-      debugPrint('ApiListResponse.fromJson: ${ApiListResponse(
-        status: json!['status'] as int,
-        message: json['message'] as String,
-        list: fromJsonT(json['list']),
-        count: json['count'] as int,
-      )}');
       return ApiListResponse(
-        status: json['status'] as int,
+        status: json!['status'] as int,
         message: json['message'] as String,
         list: fromJsonT(json['list']),
         count: json['count'] as int,
       );
     } catch (e) {
-      debugPrint('ApiResponse.fromJson: ${ApiListResponse(
+      debugPrint('Error parsing JSON: $e');
+      return ApiListResponse(
         status: json!['status'] as int,
         message: json['message'] as String,
-        list: fromJsonT(json['list']),
-        count: json['count'] as int,
-      )}');
-      return ApiListResponse(
-        status: json['status'] as int,
-        message: json['message'] as String,
-        list: fromJsonT(json['list']),
+        list: null,
         count: json['count'] as int,
       );
     }
   }
+
 }

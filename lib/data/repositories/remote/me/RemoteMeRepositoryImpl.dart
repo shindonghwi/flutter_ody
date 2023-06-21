@@ -67,7 +67,7 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
   }
 
   @override
-  Future<ApiListResponse<ResponseMeMedicineModel>> getMedicines() {
+  Future<ApiListResponse<List<ResponseMeMedicineModel>>> getMedicines() {
     RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
     return remoteMeApi.getMedicines();
   }
