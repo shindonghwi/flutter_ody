@@ -112,9 +112,13 @@ class MedicineItem extends HookConsumerWidget {
                         Text(
                           "$amText ${hour12.toString().padLeft(2, '0')}${getAppLocalizations(context).common_hour_unit} ${minute.toString().padLeft(2, '0')}${getAppLocalizations(context).common_minute_unit}",
                           style: getTextTheme(context).b3sb.copyWith(
-                                color: switchState.value
-                                    ? getColorScheme(context).colorText
-                                    : getColorScheme(context).neutral70,
+                                color: !isEditMode
+                                    ? switchState.value
+                                        ? getColorScheme(context).colorText
+                                        : getColorScheme(context).neutral70
+                                    : checkList.contains(data)
+                                        ? getColorScheme(context).colorText
+                                        : getColorScheme(context).neutral70,
                               ),
                         ),
                         const SizedBox(
@@ -123,9 +127,13 @@ class MedicineItem extends HookConsumerWidget {
                         Text(
                           yoilList.toString(),
                           style: getTextTheme(context).c2r.copyWith(
-                                color: switchState.value
-                                    ? getColorScheme(context).colorText
-                                    : getColorScheme(context).neutral70,
+                                color: !isEditMode
+                                    ? switchState.value
+                                        ? getColorScheme(context).colorText
+                                        : getColorScheme(context).neutral70
+                                    : checkList.contains(data)
+                                        ? getColorScheme(context).colorText
+                                        : getColorScheme(context).neutral70,
                               ),
                         ),
                       ],
