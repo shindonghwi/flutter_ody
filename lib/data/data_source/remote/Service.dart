@@ -103,6 +103,29 @@ class Service {
     debugPrint('\http response body: ${res.body}');
     return res;
   }
+
+  static Future<Response> deleteApi({
+    required ServiceType type,
+    required String? endPoint,
+    required Map<String, dynamic>? jsonBody,
+  }) async {
+    final url = Uri.parse(
+        '$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+    debugPrint('\nrequest Url: $url');
+    debugPrint('request header: $headers');
+    debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
+
+    final res = await http.delete(
+      url,
+      headers: headers,
+      body: jsonEncode(jsonBody),
+    );
+    debugPrint('\http response statusCode: ${res.statusCode}');
+    debugPrint('\http response method: ${res.request?.method.toString()}');
+    debugPrint('\http response body: ${res.body}');
+    return res;
+  }
+
 }
 
 enum ServiceType {

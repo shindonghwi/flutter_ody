@@ -225,10 +225,9 @@ class RemoteMeApi {
     } else {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
-            (json) {
-          return List<ResponseMeMedicineModel>.from(json.map(
-                  (item) => ResponseMeMedicineModel.fromJson(item as Map<String, dynamic>)
-          ));
+        (json) {
+          return List<ResponseMeMedicineModel>.from(
+              json.map((item) => ResponseMeMedicineModel.fromJson(item as Map<String, dynamic>)));
         },
       );
     }
@@ -253,6 +252,29 @@ class RemoteMeApi {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
         (json) => ResponseMeMedicineModel.fromJson(json),
+      );
+    }
+  }
+
+  /// 약 삭제
+  Future<ApiResponse<void>> deleteMedicine({
+    required int medicineSeq,
+  }) async {
+    final response = await Service.deleteApi(
+      type: ServiceType.Me,
+      endPoint: 'medicine/$medicineSeq',
+      jsonBody: null,
+    );
+
+    if (response.statusCode >= 500) {
+      return ApiResponse(
+          status: response.statusCode,
+          message: _getAppLocalization.get().message_server_error_5xx,
+          data: null);
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+        (json) => null,
       );
     }
   }

@@ -40,4 +40,7 @@ abstract class RemoteMeRepository {
   /// 약 활성화 업데이트
   Future<ApiResponse<ResponseMeMedicineModel>> patchMedicine(RequestMeMedicineUpdateModel data);
 
+  /// 약 삭제
+  Future<ApiResponse<void>> deleteMedicine(int medicineSeq);
+
 }

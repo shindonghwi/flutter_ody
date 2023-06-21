@@ -1,8 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:odac_flutter_app/domain/models/me/YoilType.dart';
+import 'package:odac_flutter_app/domain/usecases/remote/me/DeleteMedicineUseCase.dart';
 import 'package:odac_flutter_app/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:odac_flutter_app/presentation/components/checkbox/model/CheckBoxSize.dart';
 import 'package:odac_flutter_app/presentation/components/checkbox/model/CheckBoxType.dart';
@@ -26,10 +30,17 @@ class MedicineItem extends HookConsumerWidget {
     final checkList = ref.watch(medicineCheckListProvider);
     final checkListRead = ref.read(medicineCheckListProvider.notifier);
     final isEditMode = ref.watch(medicineScreenModeProvider);
+
+
+    GetIt.instance<DeleteMedicineUseCase>().call(7);
+
+    // 약 스위치
     final switchState = useState(data.enabled);
 
+    // 약 이름
     final medicineName = data.name;
 
+    // 약 알림 시간
     final hour24 = int.parse(data.time.split(":").first);
     int hour12 = hour24 > 12 ? hour24 - 12 : hour24;
     final minute = int.parse(data.time.split(":").last);
@@ -37,13 +48,21 @@ class MedicineItem extends HookConsumerWidget {
         ? getAppLocalizations(context).common_am
         : getAppLocalizations(context).common_pm;
 
-    final String? yoilList = data.days?.map(
+    // 약 요일 정보
+    final List<String>? yoilList = data.days?.map(
       (e) {
         return YoilTypeHelper.yoilTypeCodeToText(
           YoilTypeHelper.stringToYoilType(e),
         );
       },
-    ).join(" ");
+    ).toList();
+
+    yoilList?.sort((a, b) {
+      List<String> order = window.locales.contains("en")
+          ? ['Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat', 'Sun']
+          : ['월', '화', '수', '목', '금', '토', '일'];
+      return order.indexOf(a) - order.indexOf(b);
+    });
 
     return Material(
       color: Colors.transparent,
@@ -125,7 +144,7 @@ class MedicineItem extends HookConsumerWidget {
                           height: 4,
                         ),
                         Text(
-                          yoilList.toString(),
+                          yoilList?.join(" ") ?? "",
                           style: getTextTheme(context).c2r.copyWith(
                                 color: !isEditMode
                                     ? switchState.value

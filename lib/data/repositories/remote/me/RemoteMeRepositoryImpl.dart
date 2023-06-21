@@ -78,5 +78,11 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
     return remoteMeApi.patchMedicine(data: data);
   }
 
+  @override
+  Future<ApiResponse<void>> deleteMedicine(int medicineSeq) {
+    RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
+    return remoteMeApi.deleteMedicine(medicineSeq: medicineSeq);
+  }
+
 
 }
