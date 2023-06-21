@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:odac_flutter_app/data/models/me/RequestMeMedicineModel.dart';
+import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:odac_flutter_app/presentation/components/button/fill/FillButton.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:odac_flutter_app/presentation/features/list/medication/provider/MedicineCheckListProvider.dart';
+import 'package:odac_flutter_app/presentation/features/list/medication/provider/MedicineListProvider.dart';
 import 'package:odac_flutter_app/presentation/features/list/medication/provider/MedicineScreenModeProvider.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
@@ -16,6 +20,7 @@ class MedicineBottomContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final checkList = ref.watch(medicineCheckListProvider);
     final isEditMode = ref.watch(medicineScreenModeProvider);
     final isEditModeRead = ref.read(medicineScreenModeProvider.notifier);
 
@@ -31,7 +36,9 @@ class MedicineBottomContent extends HookConsumerWidget {
                 type: ButtonSizeType.Normal,
                 onPressed: () {},
                 buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-                  (_) => ButtonNotifier(state: ButtonState.Activated),
+                  (_) => ButtonNotifier(
+                    state: checkList.isNotEmpty ? ButtonState.Activated : ButtonState.Disabled,
+                  ),
                 ),
               ),
             ),
@@ -39,13 +46,14 @@ class MedicineBottomContent extends HookConsumerWidget {
   }
 }
 
-class _FloatingButton extends StatelessWidget {
+class _FloatingButton extends HookConsumerWidget {
   const _FloatingButton({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final alarmItemsRead = ref.read(medicineListProvider.notifier);
     return Container(
       width: 50,
       height: 50,
@@ -66,11 +74,16 @@ class _FloatingButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(100),
-          onTap: () {
-            Navigator.push(
+          onTap: () async {
+            ResponseMeMedicineModel data = await Navigator.push(
               context,
               nextSlideScreen(RoutingScreen.AddMedication.route),
             );
+
+            if (data.medicineSeq != null){
+              alarmItemsRead.addMedicine(data);
+            }
+
           },
           child: SvgPicture.asset(
             'assets/imgs/icon_plus_btn.svg',

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/domain/models/me/YoilType.dart';
+import 'package:odac_flutter_app/presentation/features/setting/medication/provider/RegisterMedicineProvider.dart';
 import 'package:odac_flutter_app/presentation/ui/colors.dart';
 import 'package:odac_flutter_app/presentation/ui/typography.dart';
 import 'package:odac_flutter_app/presentation/utils/Common.dart';
 import 'package:odac_flutter_app/presentation/utils/dto/Pair.dart';
 
-class MedicationYoil extends HookWidget {
+class MedicationYoil extends HookConsumerWidget {
   const MedicationYoil({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final List<Pair<YoilType, String>> yoilList = [
       Pair(YoilType.MONDAY, getAppLocalizations(context).common_monday),
       Pair(YoilType.TUESDAY, getAppLocalizations(context).common_tuesday),
@@ -22,6 +24,7 @@ class MedicationYoil extends HookWidget {
     ];
 
     final selectedYoilList = useState<List<YoilType>>([]);
+    final uiStateRead = ref.read(registerMedicineProvider.notifier);
 
     return Container(
       padding: const EdgeInsets.fromLTRB(35, 24, 35, 0),
@@ -65,7 +68,7 @@ class MedicationYoil extends HookWidget {
                             } else {
                               selectedYoilList.value = [...selectedYoilList.value..add(e.first)];
                             }
-                            debugPrint(selectedYoilList.value.toString());
+                            uiStateRead.updateMedicineYoil(selectedYoilList.value);
                           },
                           child: Center(
                             child: Text(

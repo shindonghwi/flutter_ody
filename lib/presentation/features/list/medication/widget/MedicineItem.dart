@@ -30,10 +30,7 @@ class MedicineItem extends HookConsumerWidget {
     final checkList = ref.watch(medicineCheckListProvider);
     final checkListRead = ref.read(medicineCheckListProvider.notifier);
     final isEditMode = ref.watch(medicineScreenModeProvider);
-
-
-    GetIt.instance<DeleteMedicineUseCase>().call(7);
-
+    
     // 약 스위치
     final switchState = useState(data.enabled);
 
