@@ -2,11 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:odac_flutter_app/domain/models/me/YoilType.dart';
-import 'package:odac_flutter_app/domain/usecases/remote/me/DeleteMedicineUseCase.dart';
 import 'package:odac_flutter_app/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:odac_flutter_app/presentation/components/checkbox/model/CheckBoxSize.dart';
 import 'package:odac_flutter_app/presentation/components/checkbox/model/CheckBoxType.dart';
@@ -30,7 +28,7 @@ class MedicineItem extends HookConsumerWidget {
     final checkList = ref.watch(medicineCheckListProvider);
     final checkListRead = ref.read(medicineCheckListProvider.notifier);
     final isEditMode = ref.watch(medicineScreenModeProvider);
-    
+
     // 약 스위치
     final switchState = useState(data.enabled);
 
@@ -46,7 +44,7 @@ class MedicineItem extends HookConsumerWidget {
         : getAppLocalizations(context).common_pm;
 
     // 약 요일 정보
-    final List<String>? yoilList = data.days?.map(
+    List<String>? yoilList = data.days?.map(
       (e) {
         return YoilTypeHelper.yoilTypeCodeToText(
           YoilTypeHelper.stringToYoilType(e),
@@ -54,12 +52,16 @@ class MedicineItem extends HookConsumerWidget {
       },
     ).toList();
 
-    yoilList?.sort((a, b) {
-      List<String> order = window.locales.contains("en")
-          ? ['Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat', 'Sun']
-          : ['월', '화', '수', '목', '금', '토', '일'];
-      return order.indexOf(a) - order.indexOf(b);
-    });
+    if (yoilList?.length != 7) {
+      yoilList?.sort((a, b) {
+        List<String> order = window.locales.contains("en")
+            ? ['Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat', 'Sun']
+            : ['월', '화', '수', '목', '금', '토', '일'];
+        return order.indexOf(a) - order.indexOf(b);
+      });
+    }else{
+      yoilList = [getAppLocalizations(context).common_every];
+    }
 
     return Material(
       color: Colors.transparent,

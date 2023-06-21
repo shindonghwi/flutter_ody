@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:odac_flutter_app/data/models/me/RequestMeMedicineModel.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:odac_flutter_app/presentation/components/button/fill/FillButton.dart';
 import 'package:odac_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
@@ -20,9 +19,9 @@ class MedicineBottomContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final uiStateRead = ref.read(medicineListProvider.notifier);
     final checkList = ref.watch(medicineCheckListProvider);
     final isEditMode = ref.watch(medicineScreenModeProvider);
-    final isEditModeRead = ref.read(medicineScreenModeProvider.notifier);
 
     return Align(
       alignment: Alignment.bottomRight,
@@ -34,7 +33,7 @@ class MedicineBottomContent extends HookConsumerWidget {
                 text:
                     "${getAppLocalizations(context).common_delete}${getAppLocalizations(context).common_complete}",
                 type: ButtonSizeType.Normal,
-                onPressed: () {},
+                onPressed: () => uiStateRead.removeMedicines(checkList),
                 buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
                   (_) => ButtonNotifier(
                     state: checkList.isNotEmpty ? ButtonState.Activated : ButtonState.Disabled,
@@ -80,10 +79,9 @@ class _FloatingButton extends HookConsumerWidget {
               nextSlideScreen(RoutingScreen.AddMedication.route),
             );
 
-            if (data.medicineSeq != null){
+            if (data.medicineSeq != null) {
               alarmItemsRead.addMedicine(data);
             }
-
           },
           child: SvgPicture.asset(
             'assets/imgs/icon_plus_btn.svg',

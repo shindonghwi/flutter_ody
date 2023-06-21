@@ -188,6 +188,9 @@
 
     "message_save_success": "저장에 성공하였습니다",
     "message_save_fail": "저장에 실패하였습니다",
+    "message_success_register": "등록되었습니다",
+    "message_success_remove": "삭제되었습니다",
+    "message_delete_fail": "삭제에 실패하였습니다",
     "message_not_support_platform": "지원하지 않는 플랫폼입니다",
     "message_not_found_user": "사용자 정보를 찾을 수 없습니다",
     "message_server_error_5xx": "서버 오류가 발생했습니다\n잠시 후에 다시 시도해주세요",
@@ -219,6 +222,7 @@
     "common_signin": "로그인",
     "common_hour_unit": "시",
     "common_minute_unit": "분",
+    "common_every": "매일",
     "common_monday": "월",
     "common_tuesday": "화",
     "common_wednesday": "수",

@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:odac_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:odac_flutter_app/presentation/features/list/medication/provider/MedicineCheckListProvider.dart';
 import 'package:odac_flutter_app/presentation/features/list/medication/provider/MedicineListProvider.dart';
 import 'package:odac_flutter_app/presentation/features/list/medication/provider/MedicineScreenModeProvider.dart';
 import 'package:odac_flutter_app/presentation/features/list/medication/widget/MedicineAppBar.dart';
@@ -20,13 +21,24 @@ class MedicationListScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final uiState = ref.watch(medicineListProvider);
+    final uiStateRead = ref.read(medicineListProvider.notifier);
+    final checkListRead = ref.read(medicineCheckListProvider.notifier);
     final isEditModeRead = ref.read(medicineScreenModeProvider.notifier);
-    final alarmItemsRead = ref.read(medicineListProvider.notifier);
+    final currentMedicineState = useState<List<ResponseMeMedicineModel>?>(null);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
-          loading: (_) => isEditModeRead.changeMode(false),
+          success: (event) async {
+            currentMedicineState.value = event.value;
+            isEditModeRead.changeMode(false);
+            if (uiStateRead.actionType == MedicineActionType.ADD_ITEM){
+              SnackBarUtil.show(context, getAppLocalizations(context).message_success_register);
+            } else if (uiStateRead.actionType == MedicineActionType.REMOVE_ITEM){
+              checkListRead.clear();
+              SnackBarUtil.show(context, getAppLocalizations(context).message_success_remove);
+            }
+          },
           failure: (event) => SnackBarUtil.show(context, event.errorMessage),
         );
       });
@@ -34,7 +46,7 @@ class MedicationListScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        alarmItemsRead.requestMedicineList();
+        uiStateRead.requestMedicineList();
       });
     }, []);
 
@@ -43,13 +55,16 @@ class MedicationListScreen extends HookConsumerWidget {
       backgroundColor: getColorScheme(context).colorUI01,
       body: Stack(
         children: [
-          if (uiState is Success<List<ResponseMeMedicineModel>>)
-            MedicineMainContent(items: uiState.value),
-          if (uiState is Loading) const CircleLoading(),
+          currentMedicineState.value == null
+              ? uiState is Success<List<ResponseMeMedicineModel>>
+              ? MedicineMainContent(items: uiState.value)
+              : const SizedBox()
+              : MedicineMainContent(items: currentMedicineState.value!),
           if (uiState is Success<List<ResponseMeMedicineModel>>)
             !CollectionUtil.isNullorEmpty(uiState.value)
                 ? const MedicineBottomContent()
-                : const SizedBox()
+                : const SizedBox(),
+          if (uiState is Loading) const CircleLoading(),
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:odac_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:odac_flutter_app/presentation/components/empty/EmptyView.dart';
+import 'package:odac_flutter_app/presentation/features/list/medication/provider/MedicineListProvider.dart';
 import 'package:odac_flutter_app/presentation/features/list/medication/widget/MedicineItem.dart';
 import 'package:odac_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:odac_flutter_app/presentation/navigation/Route.dart';
@@ -17,15 +18,20 @@ class MedicineMainContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final alarmItemsRead = ref.read(medicineListProvider.notifier);
     return CollectionUtil.isNullorEmpty(items)
         ? Center(
             child: EmptyView(
               screen: RoutingScreen.MedicationList,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                ResponseMeMedicineModel data = await Navigator.push(
                   context,
                   nextSlideScreen(RoutingScreen.AddMedication.route),
                 );
+
+                if (data.medicineSeq != null) {
+                  alarmItemsRead.addMedicine(data);
+                }
               },
             ),
           )
