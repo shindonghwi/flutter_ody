@@ -81,6 +81,7 @@ class CalendarContentView extends HookConsumerWidget {
                 onPageChanged: (focusedDay) {
                   _focusedDay.value = focusedDay;
                   calendarPageRead.updatePageDatetime(focusedDay);
+                  debugPrint('onPageChanged: $focusedDay');
                 },
                 calendarBuilders: CalendarBuilders(
                   dowBuilder: (context, day) {

@@ -1,25 +1,12 @@
 import 'dart:convert';
-import 'dart:ffi';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:ody_flutter_app/app/OrotApp.dart';
-import 'package:ody_flutter_app/app/env/Environment.dart';
 import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
 import 'package:ody_flutter_app/data/models/ApiListResponse.dart';
 import 'package:ody_flutter_app/data/models/ApiResponse.dart';
-import 'package:ody_flutter_app/data/models/auth/RequestSocialLoginModel.dart';
-import 'package:ody_flutter_app/data/models/auth/ResponseSocialLoginModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioStepsModel.dart';
-import 'package:ody_flutter_app/data/models/me/ResponseMeInfoModel.dart';
-import 'package:ody_flutter_app/domain/models/auth/LoginPlatform.dart';
-import 'package:ody_flutter_app/domain/models/auth/SocialLoginModel.dart';
-import 'package:ody_flutter_app/domain/models/me/DiseaseType.dart';
-import 'package:ody_flutter_app/domain/models/me/GenderType.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RemoteBioApi {
@@ -94,7 +81,8 @@ class RemoteBioApi {
   }
 
   /// 월간 건강정보 조회
-  Future<ApiListResponse<void>> getBioHistory({required int year, required int month}) async {
+  Future<ApiListResponse<List<String>>> getBioHistory(
+      {required int year, required int month}) async {
     final response = await Service.getApi(
       type: ServiceType.Bio,
       endPoint: 'history/$year/$month',
@@ -102,18 +90,17 @@ class RemoteBioApi {
 
     if (response.statusCode >= 500) {
       return ApiListResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
-        list: null,
-        count: 0
-      );
+          status: response.statusCode,
+          message: _getAppLocalization.get().message_server_error_5xx,
+          list: null,
+          count: 0);
     } else {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
-        (json) => null,
+        (json) {
+          return List<String>.from(json.map((item) => item.toString()).toList());
+        },
       );
     }
   }
-
-
 }
