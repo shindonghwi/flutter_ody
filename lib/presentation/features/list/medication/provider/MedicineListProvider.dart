@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:ody_flutter_app/data/models/me/RequestMeMedicineUpdateModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/DeleteMedicineUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/GetMeMedicinesUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeMedicineUseCase.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
@@ -12,6 +14,7 @@ enum MedicineActionType {
   GET_LIST,
   ADD_ITEM,
   REMOVE_ITEM,
+  UPDATE_ITEM,
   NONE,
 }
 
@@ -84,5 +87,21 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
       final removeFailMedicineNameList = removeFailList.map((e) => e.name).join(", ");
       state = Failure("$removeFailMedicineNameList ${_getAppLocalization.get().message_delete_fail}");
     }
+  }
+
+  Future<bool> updateMedicineState(int medicineSeq, bool enabled) async {
+    actionType = MedicineActionType.UPDATE_ITEM;
+    final res = await GetIt.instance<PatchMeMedicineUseCase>().call(
+      data: RequestMeMedicineUpdateModel(
+        medicineSeq: medicineSeq,
+        enabled: enabled,
+      ),
+    );
+
+    if (res.status != 200){
+      state = Failure(res.message);
+      return false;
+    }
+    return true;
   }
 }

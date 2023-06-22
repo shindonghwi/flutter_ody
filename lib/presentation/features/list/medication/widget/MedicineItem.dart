@@ -2,14 +2,18 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:ody_flutter_app/data/models/me/RequestMeMedicineUpdateModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:ody_flutter_app/domain/models/me/YoilType.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeMedicineUseCase.dart';
 import 'package:ody_flutter_app/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:ody_flutter_app/presentation/components/checkbox/model/CheckBoxSize.dart';
 import 'package:ody_flutter_app/presentation/components/checkbox/model/CheckBoxType.dart';
 import 'package:ody_flutter_app/presentation/components/checkbox/switch/SwitchCheckBox.dart';
 import 'package:ody_flutter_app/presentation/features/list/medication/provider/MedicineCheckListProvider.dart';
+import 'package:ody_flutter_app/presentation/features/list/medication/provider/MedicineListProvider.dart';
 import 'package:ody_flutter_app/presentation/features/list/medication/provider/MedicineScreenModeProvider.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -28,6 +32,7 @@ class MedicineItem extends HookConsumerWidget {
     final checkList = ref.watch(medicineCheckListProvider);
     final checkListRead = ref.read(medicineCheckListProvider.notifier);
     final isEditMode = ref.watch(medicineScreenModeProvider);
+    final uiStateRead = ref.read(medicineListProvider.notifier);
 
     // 약 스위치
     final switchState = useState(data.enabled);
@@ -36,16 +41,20 @@ class MedicineItem extends HookConsumerWidget {
     final medicineName = data.name;
 
     // 약 알림 시간
-    final hour24 = int.parse(data.time.split(":").first);
+    final hour24 = int.parse(data.time
+        .split(":")
+        .first);
     int hour12 = hour24 > 12 ? hour24 - 12 : hour24;
-    final minute = int.parse(data.time.split(":").last);
+    final minute = int.parse(data.time
+        .split(":")
+        .last);
     final amText = hour24 < 12
         ? getAppLocalizations(context).common_am
         : getAppLocalizations(context).common_pm;
 
     // 약 요일 정보
     List<String>? yoilList = data.days?.map(
-      (e) {
+          (e) {
         return YoilTypeHelper.yoilTypeCodeToText(
           YoilTypeHelper.stringToYoilType(e),
         );
@@ -59,7 +68,7 @@ class MedicineItem extends HookConsumerWidget {
             : ['월', '화', '수', '목', '금', '토', '일'];
         return order.indexOf(a) - order.indexOf(b);
       });
-    }else{
+    } else {
       yoilList = [getAppLocalizations(context).common_every];
     }
 
@@ -73,11 +82,11 @@ class MedicineItem extends HookConsumerWidget {
             border: Border.all(
               color: !isEditMode
                   ? switchState.value
-                      ? getColorScheme(context).primary100
-                      : getColorScheme(context).colorPrimaryDisable
+                  ? getColorScheme(context).primary100
+                  : getColorScheme(context).colorPrimaryDisable
                   : checkList.contains(data)
-                      ? getColorScheme(context).primary100
-                      : getColorScheme(context).colorPrimaryDisable,
+                  ? getColorScheme(context).primary100
+                  : getColorScheme(context).colorPrimaryDisable,
               width: 1.5,
             ),
           ),
@@ -108,14 +117,14 @@ class MedicineItem extends HookConsumerWidget {
                     Text(
                       medicineName.toString(),
                       style: getTextTheme(context).t2b.copyWith(
-                            color: !isEditMode
-                                ? switchState.value
-                                    ? getColorScheme(context).colorText
-                                    : getColorScheme(context).neutral70
-                                : checkList.contains(data)
-                                    ? getColorScheme(context).colorText
-                                    : getColorScheme(context).neutral70,
-                          ),
+                        color: !isEditMode
+                            ? switchState.value
+                            ? getColorScheme(context).colorText
+                            : getColorScheme(context).neutral70
+                            : checkList.contains(data)
+                            ? getColorScheme(context).colorText
+                            : getColorScheme(context).neutral70,
+                      ),
                       maxLines: 1,
                     ),
                   ],
@@ -128,16 +137,18 @@ class MedicineItem extends HookConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "$amText ${hour12.toString().padLeft(2, '0')}${getAppLocalizations(context).common_hour_unit} ${minute.toString().padLeft(2, '0')}${getAppLocalizations(context).common_minute_unit}",
+                          "$amText ${hour12.toString().padLeft(2, '0')}${getAppLocalizations(
+                              context).common_hour_unit} ${minute.toString().padLeft(
+                              2, '0')}${getAppLocalizations(context).common_minute_unit}",
                           style: getTextTheme(context).b3sb.copyWith(
-                                color: !isEditMode
-                                    ? switchState.value
-                                        ? getColorScheme(context).colorText
-                                        : getColorScheme(context).neutral70
-                                    : checkList.contains(data)
-                                        ? getColorScheme(context).colorText
-                                        : getColorScheme(context).neutral70,
-                              ),
+                            color: !isEditMode
+                                ? switchState.value
+                                ? getColorScheme(context).colorText
+                                : getColorScheme(context).neutral70
+                                : checkList.contains(data)
+                                ? getColorScheme(context).colorText
+                                : getColorScheme(context).neutral70,
+                          ),
                         ),
                         const SizedBox(
                           height: 4,
@@ -145,14 +156,14 @@ class MedicineItem extends HookConsumerWidget {
                         Text(
                           yoilList?.join(" ") ?? "",
                           style: getTextTheme(context).c2r.copyWith(
-                                color: !isEditMode
-                                    ? switchState.value
-                                        ? getColorScheme(context).colorText
-                                        : getColorScheme(context).neutral70
-                                    : checkList.contains(data)
-                                        ? getColorScheme(context).colorText
-                                        : getColorScheme(context).neutral70,
-                              ),
+                            color: !isEditMode
+                                ? switchState.value
+                                ? getColorScheme(context).colorText
+                                : getColorScheme(context).neutral70
+                                : checkList.contains(data)
+                                ? getColorScheme(context).colorText
+                                : getColorScheme(context).neutral70,
+                          ),
                         ),
                       ],
                     ),
@@ -169,8 +180,11 @@ class MedicineItem extends HookConsumerWidget {
                             height: 26,
                             child: SwitchCheckBox(
                               isOn: switchState.value,
-                              onChanged: (value) {
-                                switchState.value = value;
+                              onChanged: (value) async {
+                                final isSuccess = await uiStateRead.updateMedicineState(data.medicineSeq ?? -1, value);
+                                if (isSuccess){
+                                  switchState.value = value;
+                                }
                               },
                             ),
                           )
