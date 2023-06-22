@@ -17,6 +17,6 @@ class CalendarSize {
   }
 
   static double underMargin(BuildContext context) {
-    return getMediaQuery(context).size.height * (_getMinRatio() - 24.0 / getMediaQuery(context).size.height);
+    return getMediaQuery(context).size.height * (_getMinRatio() + 24.0 / getMediaQuery(context).size.height);
   }
 }

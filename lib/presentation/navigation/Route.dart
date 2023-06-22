@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ody_flutter_app/presentation/features/analysis/blood_pressure/AnalysisBloodPressureScreen.dart';
+import 'package:ody_flutter_app/presentation/features/analysis/glucose/AnalysisGlucoseScreen.dart';
 import 'package:ody_flutter_app/presentation/features/edit/my_height/EditMyHeightScreen.dart';
 import 'package:ody_flutter_app/presentation/features/edit/my_info/EditMyInfoScreen.dart';
 import 'package:ody_flutter_app/presentation/features/edit/my_nickname/EditMyNicknameScreen.dart';
@@ -19,8 +21,6 @@ import 'package:ody_flutter_app/presentation/features/splash/SplashScreen.dart';
 import 'package:ody_flutter_app/presentation/features/welcome/WelcomeScreen.dart';
 import 'package:ody_flutter_app/presentation/features/withdrawal/WithdrawalReasonScreen.dart';
 import 'package:ody_flutter_app/presentation/features/withdrawal/WithdrawalScreen.dart';
-import 'package:ody_flutter_app/presentation/features/withdrawal/WithdrawalScreen.dart';
-import 'package:ody_flutter_app/presentation/features/withdrawal/WithdrawalScreen.dart';
 
 /// @feature: 화면의 Route Name 정의
 ///
@@ -31,11 +31,17 @@ enum RoutingScreen {
   Login(route: "/login"), // 로그인
   InputProfile(route: "/input_profile"), // 사용자 정보 입력
   Welcome(route: "/welcome"), // 회원가입 완료화면
+
   Main(route: "/main"), // 메인화면
+
   RecordBloodPressure(route: "/record/blood_pressure"), // 혈압 기록
   RecordGlucose(route: "/record/glucose"), // 혈당 기록
   RecordedListBloodPressure(route: "/list/blood_pressure"), // 혈압 기록 목록
   RecordedListGlucose(route: "/list/glucose"), // 혈당 기록 목록
+
+  AnalysisBloodPressure(route: "/analysis/blood_pressure"), // 혈압 분석
+  AnalysisGlucose(route: "/analysis/glucose"), // 혈당 분석
+
   MedicationList(route: "/list/medication"), // 약 알림 리스트
   EditMyInfo(route: "/edit/my_info"), // 내 정보 수정
   EditMyNickname(route: "/edit/my_nickname"), // 닉네임 수정
@@ -65,6 +71,8 @@ enum RoutingScreen {
       RoutingScreen.RecordGlucose.route: (context) => const RecordGlucoseScreen(),
       RoutingScreen.RecordedListBloodPressure.route: (context) => const RecordedListBloodPressureScreen(),
       RoutingScreen.RecordedListGlucose.route: (context) => const RecordedListGlucoseScreen(),
+      RoutingScreen.AnalysisBloodPressure.route: (context) => const AnalysisBloodPressureScreen(),
+      RoutingScreen.AnalysisGlucose.route: (context) => const AnalysisGlucoseScreen(),
       RoutingScreen.MedicationList.route: (context) => const MedicationListScreen(),
       RoutingScreen.EditMyInfo.route: (context) => const EditMyInfoScreen(),
       RoutingScreen.EditMyNickname.route: (context) => const EditMyNicknameScreen(),
@@ -98,6 +106,10 @@ enum RoutingScreen {
         return const RecordBloodPressureScreen();
       case "/record/glucose":
         return const RecordGlucoseScreen();
+      case "/analysis/blood_pressure":
+        return const AnalysisBloodPressureScreen();
+      case "/analysis/glucose":
+        return const AnalysisGlucoseScreen();
       case "/list/blood_pressure":
         return const RecordedListBloodPressureScreen();
       case "/list/glucose":

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ody_flutter_app/presentation/features/main/analysis/AnalysisScreen.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/HomeScreen.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/HomeAppBar.dart';
@@ -32,9 +33,7 @@ class MainScreen extends HookWidget {
             index: _currentIndex.value,
             children: const [
               HomeScreen(),
-              Center(
-                child: Text("news"),
-              ),
+              AnalysisScreen(),
               MyScreen(),
             ],
           ),
