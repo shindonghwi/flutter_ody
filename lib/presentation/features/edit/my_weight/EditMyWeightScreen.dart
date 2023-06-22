@@ -125,7 +125,7 @@ class _WeightContent extends HookConsumerWidget {
             textInputAction: TextInputAction.done,
             autoFocus: true,
             onChanged: (String value) => callback.call(value),
-            limit: 10,
+            limit: 3,
             maxLine: 1,
             helpText: helpText.value,
             fieldState: fieldState.value,
