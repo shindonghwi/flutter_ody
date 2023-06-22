@@ -31,15 +31,7 @@ class HomeScreen extends HookWidget {
               ),
               const SliverPadding(padding: EdgeInsets.only(top: 24.0)),
               const CardRecordItems(),
-              const SliverPadding(padding: EdgeInsets.only(bottom: 57.0))
             ],
-          ),
-          CalendarContainerView(
-            calendarMinHeight: CalendarSize.minHeight(context),
-            calendarMaxHeight: CalendarSize.maxHeight(context),
-            child: CalendarContentView(
-              maxHeight: CalendarSize.maxHeight(context),
-            ),
           ),
         ],
       ),

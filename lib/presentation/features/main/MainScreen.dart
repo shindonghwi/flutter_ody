@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/HomeScreen.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/widget/HomeAppBar.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/widget/calendar/CalendarContainerView.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/widget/calendar/CalendarContentView.dart';
 import 'package:ody_flutter_app/presentation/features/main/my/MyScreen.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -21,24 +25,38 @@ class MainScreen extends HookWidget {
 
     return Scaffold(
       extendBody: true,
-      body: IndexedStack(
-        index: _currentIndex.value,
-        children: const [
-          HomeScreen(),
-          Center(child: Text("news"),),
-          MyScreen(),
+      appBar: _currentIndex.value < _iconList.length - 1 ? const HomeAppBar() : null,
+      body: Stack(
+        children: [
+          IndexedStack(
+            index: _currentIndex.value,
+            children: const [
+              HomeScreen(),
+              Center(
+                child: Text("news"),
+              ),
+              MyScreen(),
+            ],
+          ),
+          if (_currentIndex.value < _iconList.length - 1)
+            CalendarContainerView(
+              calendarMinHeight: CalendarSize.minHeight(context),
+              calendarMaxHeight: CalendarSize.maxHeight(context),
+              child: CalendarContentView(
+                maxHeight: CalendarSize.maxHeight(context),
+              ),
+            ),
         ],
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            top: BorderSide(
-              color: getColorScheme(context).neutral50,
-              width: 1,
-            ),
-          )
-        ),
+            color: Colors.white,
+            border: Border(
+              top: BorderSide(
+                color: getColorScheme(context).neutral50,
+                width: 1,
+              ),
+            )),
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
@@ -61,7 +79,9 @@ class MainScreen extends HookWidget {
                       BlendMode.srcIn,
                     ),
                   ),
-                  const SizedBox(height: 4,)
+                  const SizedBox(
+                    height: 4,
+                  )
                 ],
               ),
               activeIcon: Column(
@@ -75,7 +95,9 @@ class MainScreen extends HookWidget {
                       BlendMode.srcIn,
                     ),
                   ),
-                  const SizedBox(height: 4,)
+                  const SizedBox(
+                    height: 4,
+                  )
                 ],
               ),
               label: data.second,

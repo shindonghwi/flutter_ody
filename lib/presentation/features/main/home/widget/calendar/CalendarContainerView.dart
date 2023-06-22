@@ -81,9 +81,7 @@ class DraggableContainer extends HookConsumerWidget {
         void onVerticalDragDown(DragDownDetails details) {}
 
         void onVerticalDragUpdate(DragUpdateDetails details) {
-          calendarHeightRead
-              .updateHeight(calendarHeightRead.getHeight() + details.delta.dy);
-          ;
+          calendarHeightRead.updateHeight(calendarHeightRead.getHeight() + details.delta.dy);
           calendarHeightRead
               .updateHeight(calendarHeightRead.getHeight().clamp(minHeight, maxHeight));
 
