@@ -38,6 +38,7 @@ class AddMedicationScreen extends HookConsumerWidget {
     }, [uiState]);
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: getColorScheme(context).colorUI01,
       appBar: IconTitleIconAppBar(
         leadingIcon: AppBarIcon(
@@ -47,29 +48,30 @@ class AddMedicationScreen extends HookConsumerWidget {
         ),
         title: getAppLocalizations(context).add_medication_title,
       ),
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(40, 0, 40, 24),
+          child: FillButton(
+            text: getAppLocalizations(context).common_complete,
+            type: ButtonSizeType.Normal,
+            onPressed: () => uiStateRead.register(),
+            buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
+              (_) => ButtonNotifier(
+                state: ButtonState.Activated,
+              ),
+            ),
+          ),
+        ),
+      ),
       body: Stack(
         children: [
-          Column(
-            children: [
-              const MedicationName(),
-              const SizedBox(height: 32),
-              const MedicationYoil(),
-              const SizedBox(height: 32),
-              const MedicationTime(),
-              const Expanded(child: SizedBox()),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(40, 0, 40, 58),
-                child: FillButton(
-                  text: getAppLocalizations(context).common_complete,
-                  type: ButtonSizeType.Normal,
-                  onPressed: () => uiStateRead.register(),
-                  buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-                    (_) => ButtonNotifier(
-                      state: ButtonState.Activated,
-                    ),
-                  ),
-                ),
-              ),
+          ListView(
+            children: const [
+              MedicationName(),
+              SizedBox(height: 32),
+              MedicationYoil(),
+              SizedBox(height: 32),
+              MedicationTime(),
             ],
           ),
           if (uiState is Loading) const CircleLoading(),

@@ -52,7 +52,7 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
     actionType = MedicineActionType.ADD_ITEM;
     if (state is Success) {
       final currentList = (state as Success<List<ResponseMeMedicineModel>>).value;
-      final updatedList = [data, ...currentList];
+      final updatedList = CollectionUtil.isNullorEmpty(currentList) ? [data] : [data, ...currentList];
       state = Success(updatedList);
     }
   }
