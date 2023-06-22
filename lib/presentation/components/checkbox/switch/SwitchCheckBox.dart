@@ -19,9 +19,7 @@ class SwitchCheckBox extends HookWidget {
 
     return LayoutBuilder(builder: (context, constraints) {
       return GestureDetector(
-        onTap: () {
-          onChanged?.call(!isOn);
-        },
+        onTap: () => onChanged?.call(!isOn),
         child: AnimatedContainer(
           duration: duration,
           curve: Curves.easeIn,

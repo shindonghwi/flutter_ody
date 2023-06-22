@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ody_flutter_app/data/models/me/RequestMeMedicineUpdateModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
@@ -28,7 +27,6 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
 
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
-
   var actionType = MedicineActionType.NONE;
 
   void requestMedicineList() async {
@@ -55,7 +53,8 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
     actionType = MedicineActionType.ADD_ITEM;
     if (state is Success) {
       final currentList = (state as Success<List<ResponseMeMedicineModel>>).value;
-      final updatedList = CollectionUtil.isNullorEmpty(currentList) ? [data] : [data, ...currentList];
+      final updatedList =
+          CollectionUtil.isNullorEmpty(currentList) ? [data] : [data, ...currentList];
       state = Success(updatedList);
     }
   }
@@ -85,7 +84,8 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
 
     if (removeFailList.isNotEmpty) {
       final removeFailMedicineNameList = removeFailList.map((e) => e.name).join(", ");
-      state = Failure("$removeFailMedicineNameList ${_getAppLocalization.get().message_delete_fail}");
+      state =
+          Failure("$removeFailMedicineNameList ${_getAppLocalization.get().message_delete_fail}");
     }
   }
 
@@ -98,10 +98,26 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
       ),
     );
 
-    if (res.status != 200){
+    if (res.status == 200) {
+      if (state is Success<List<ResponseMeMedicineModel>>) {
+        final successState = state as Success<List<ResponseMeMedicineModel>>;
+        final updatedList = successState.value.map((item) {
+          if (item.medicineSeq == medicineSeq) {
+            return item.copyWith(enabled: enabled);
+          }
+          return item;
+        }).toList();
+        state = Success([...updatedList]);
+      }
+      return true;
+    } else {
       state = Failure(res.message);
-      return false;
     }
-    return true;
+    return false;
+  }
+
+  void init() {
+    state = Idle();
+    actionType = MedicineActionType.NONE;
   }
 }

@@ -27,25 +27,30 @@ class MedicationListScreen extends HookConsumerWidget {
     final currentMedicineState = useState<List<ResponseMeMedicineModel>?>(null);
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        uiState.when(
-          success: (event) async {
-            currentMedicineState.value = event.value;
-            isEditModeRead.changeMode(false);
-            if (uiStateRead.actionType == MedicineActionType.ADD_ITEM){
-              SnackBarUtil.show(context, getAppLocalizations(context).message_success_register);
-            } else if (uiStateRead.actionType == MedicineActionType.REMOVE_ITEM){
-              checkListRead.clear();
-              SnackBarUtil.show(context, getAppLocalizations(context).message_success_remove);
-            }
-          },
-          failure: (event) => SnackBarUtil.show(context, event.errorMessage),
-        );
-      });
+      void handleUiStateChange() async {
+        await Future(() {
+          uiState.when(
+            success: (event) async {
+              currentMedicineState.value = event.value;
+              isEditModeRead.changeMode(false);
+              if (uiStateRead.actionType == MedicineActionType.ADD_ITEM) {
+                SnackBarUtil.show(context, getAppLocalizations(context).message_success_register);
+              } else if (uiStateRead.actionType == MedicineActionType.REMOVE_ITEM) {
+                checkListRead.clear();
+                SnackBarUtil.show(context, getAppLocalizations(context).message_success_remove);
+              }
+            },
+            failure: (event) => SnackBarUtil.show(context, event.errorMessage),
+          );
+        });
+      }
+      handleUiStateChange();
+      return null;
     }, [uiState]);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        uiStateRead.init();
         uiStateRead.requestMedicineList();
       });
     }, []);
@@ -57,8 +62,8 @@ class MedicationListScreen extends HookConsumerWidget {
         children: [
           currentMedicineState.value == null
               ? uiState is Success<List<ResponseMeMedicineModel>>
-              ? MedicineMainContent(items: uiState.value)
-              : const SizedBox()
+                  ? MedicineMainContent(items: uiState.value)
+                  : const SizedBox()
               : MedicineMainContent(items: currentMedicineState.value!),
           if (uiState is Success<List<ResponseMeMedicineModel>>)
             !CollectionUtil.isNullorEmpty(uiState.value)
