@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/AxisEmphasisModel.dart';
+import 'package:ody_flutter_app/presentation/components/graph/model/GraphLineModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/GraphPointModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/ShadowAreaModel.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 enum RecordGraphType { POINT, LINE }
@@ -35,7 +37,15 @@ class RecordGraph extends StatelessWidget {
   int xAxisUnitWidth = 15;
 
   /// 점 리스트
-  List<GraphPointModel> graphPointList = [];
+  GraphPointModel graphPointModel = GraphPointModel(
+    pointData: [],
+  );
+
+  /// 점 - 라인 리스트
+  GraphLineModel graphLineModel = GraphLineModel(
+    pointData: [],
+    lineColor: Colors.black,
+  );
 
   RecordGraph({
     Key? key,
@@ -57,7 +67,7 @@ class RecordGraph extends StatelessWidget {
     required this.xAxisInnerHorizontalPadding,
     required this.dividerColor,
     required this.xAxisUnitWidth,
-    required this.graphPointList,
+    required this.graphPointModel,
   })  : graphType = RecordGraphType.POINT,
         super(key: key);
 
@@ -69,6 +79,8 @@ class RecordGraph extends StatelessWidget {
     required this.shadowAreaList,
     required this.xAxisInnerHorizontalPadding,
     required this.dividerColor,
+    required this.xAxisUnitWidth,
+    required this.graphLineModel,
   })  : graphType = RecordGraphType.LINE,
         super(key: key);
 
@@ -100,7 +112,8 @@ class RecordGraph extends StatelessWidget {
                         yAxisList: yAxisList,
                         dividerColor: dividerColor,
                         shadowAreaList: shadowAreaList,
-                        graphPointList: graphPointList,
+                        graphPointModel: graphPointModel,
+                        graphLineModel: graphLineModel,
                         xAxisInnerHorizontalPadding: xAxisInnerHorizontalPadding,
                         xAxisUnitWidth: xAxisUnitWidth,
                         graphType: graphType,
@@ -130,7 +143,8 @@ class _GraphContent extends HookWidget {
     required this.yAxisList,
     required this.dividerColor,
     required this.shadowAreaList,
-    required this.graphPointList,
+    required this.graphPointModel,
+    required this.graphLineModel,
     required this.xAxisInnerHorizontalPadding,
     required this.xAxisUnitWidth,
     required this.graphType,
@@ -140,7 +154,8 @@ class _GraphContent extends HookWidget {
   final List<AxisEmphasisModel> yAxisList;
   final Color dividerColor;
   final List<ShadowAreaModel> shadowAreaList;
-  final List<GraphPointModel> graphPointList;
+  final GraphPointModel graphPointModel;
+  final GraphLineModel graphLineModel;
   final double xAxisInnerHorizontalPadding;
   final int xAxisUnitWidth;
   final RecordGraphType graphType;
@@ -157,6 +172,37 @@ class _GraphContent extends HookWidget {
       final color = element.color;
       areaList.add(Triple(1 - startY, areaFactor <= 0 ? 0.01 : areaFactor, color));
     }
+
+    final List<GraphPointDataModel> coordinatePointDataList = [];
+    final List<GraphPointDataModel> lineDataList = [];
+    Pair<List<GraphPointDataModel>, Color> coordinateLineDataList = Pair([], graphLineModel.lineColor);
+
+    xAxisList.map((xAxisData) {
+      if (graphType == RecordGraphType.POINT) {
+        for (var element in graphPointModel.pointData) {
+          if (element.label == xAxisData.label) {
+            final areaFactor = (element.yValue - min) / (max - min);
+            coordinatePointDataList.add(GraphPointDataModel(
+              label: element.label,
+              yValue: areaFactor <= 0 ? 0.002 : areaFactor,
+              pointColor: element.pointColor,
+            ));
+          }
+        }
+      } else {
+        for (var element in graphLineModel.pointData) {
+          if (element.label == xAxisData.label) {
+            final areaFactor = (element.yValue - min) / (max - min);
+            lineDataList.add(GraphPointDataModel(
+              label: element.label,
+              yValue: areaFactor <= 0 ? 0.002 : areaFactor,
+              pointColor: element.pointColor,
+            ));
+          }
+        }
+        coordinateLineDataList = Pair(lineDataList, graphLineModel.lineColor);
+      }
+    }).toList();
 
     return Stack(
       children: [
@@ -202,56 +248,63 @@ class _GraphContent extends HookWidget {
             ],
           ),
         ),
-        if (graphType == RecordGraphType.POINT)
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: xAxisInnerHorizontalPadding),
-            padding: EdgeInsets.symmetric(vertical: getMediaQuery(context).size.height * 0.002),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: xAxisList.map((xAxisData) {
-                final factorList = [];
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          margin: EdgeInsets.symmetric(horizontal: xAxisInnerHorizontalPadding),
+          padding: EdgeInsets.symmetric(vertical: getMediaQuery(context).size.height * 0.002),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: graphType == RecordGraphType.POINT
+                ? xAxisList.map((xAxisData) {
+                    return SizedBox(
+                      width: xAxisUnitWidth.toDouble(),
+                      height: double.infinity,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          const circleSize = 6.0;
+                          final containerHeight = constraints.maxHeight - circleSize;
 
-                for (var element in graphPointList) {
-                  if (element.pointX.label == xAxisData.label) {
-                    final areaFactor = (element.pointY - min) / (max - min);
-                    factorList.add(areaFactor <= 0 ? 0.002 : areaFactor);
-                  }
-                }
-
-                return SizedBox(
-                  width: xAxisUnitWidth.toDouble(),
-                  height: double.infinity,
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      const circleSize = 6.0;
-                      final containerHeight = constraints.maxHeight - circleSize;
-
-                      return Stack(
-                        children: factorList.map((e) {
-                          return Positioned(
-                            left: 0,
-                            right: 0,
-                            top: containerHeight - (containerHeight * e),
-                            child: Container(
-                              width: circleSize,
-                              height: circleSize,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: xAxisData.color,
-                              ),
-                            ),
+                          return Stack(
+                              children: coordinatePointDataList.map((e) {
+                            return xAxisData.label == e.label
+                                ? Positioned(
+                                    left: 0,
+                                    right: 0,
+                                    top: containerHeight - (containerHeight * e.yValue),
+                                    child: Container(
+                                      width: circleSize,
+                                      height: circleSize,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: e.pointColor,
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox();
+                          }).toList());
+                        },
+                      ),
+                    );
+                  }).toList()
+                : [
+                    Expanded(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          const circleSize = 6.0;
+                          final containerHeight = constraints.maxHeight - circleSize;
+                          return CustomPaint(
+                            size: Size(MediaQuery.of(context).size.width, containerHeight),
+                            painter: LinePainter(xAxisList, coordinateLineDataList),
+                            child: Container(),
                           );
-                        }).toList(),
-                      );
-                    },
-                  ),
-                );
-              }).toList(),
-            ),
-          )
+                        },
+                      ),
+                    )
+                  ],
+          ),
+        )
       ],
     );
   }
@@ -337,4 +390,55 @@ class _XAxisContent extends HookWidget {
       ],
     );
   }
+}
+
+class LinePainter extends CustomPainter {
+  final List<AxisEmphasisModel> xAxisList;
+  final Pair<List<GraphPointDataModel>, Color> pointLineDataList;
+
+  LinePainter(
+    this.xAxisList,
+    this.pointLineDataList,
+  );
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final linePaint = Paint()
+      ..color = pointLineDataList.second
+      ..strokeWidth = 2.0
+      ..style = PaintingStyle.stroke;
+
+    final dataPointSpacing = size.width / (xAxisList.length - 1);
+
+    Path path = Path(); // Create a new path for the line
+
+    /// 선 그리기
+    for (int i = 0; i < pointLineDataList.first.length; i++) {
+      int xIndex = xAxisList.map((e) => e.label).toList().indexOf(pointLineDataList.first[i].label);
+      final xPos = xIndex * dataPointSpacing;
+      final yPos = size.height - (size.height * pointLineDataList.first[i].yValue);
+
+      if (i == 0) {
+        path.moveTo(xPos, yPos);
+      } else {
+        path.lineTo(xPos, yPos);
+      }
+    }
+    canvas.drawPath(path, linePaint);
+
+    /// 점 그리기
+    for (int i = 0; i < pointLineDataList.first.length; i++) {
+      int xIndex = xAxisList.map((e) => e.label).toList().indexOf(pointLineDataList.first[i].label);
+      final xPos = xIndex * dataPointSpacing;
+      final yPos = size.height - (size.height * pointLineDataList.first[i].yValue);
+
+      final circlePaint = Paint()
+        ..color = pointLineDataList.first[i].pointColor
+        ..style = PaintingStyle.fill;
+      canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(LinePainter oldDelegate) => true;
 }

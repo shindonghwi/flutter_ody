@@ -1,11 +1,21 @@
-import 'package:ody_flutter_app/presentation/components/graph/model/AxisEmphasisModel.dart';
+import 'dart:ui';
 
 class GraphPointModel {
-  final AxisEmphasisModel pointX;
-  final double pointY;
+  final List<GraphPointDataModel> pointData;
 
   GraphPointModel({
-    required this.pointX,
-    required this.pointY,
+    required this.pointData,
+  });
+}
+
+class GraphPointDataModel {
+  final String label;
+  final double yValue;
+  final Color pointColor;
+
+  GraphPointDataModel({
+    required this.label,
+    required this.yValue,
+    required this.pointColor,
   });
 }
