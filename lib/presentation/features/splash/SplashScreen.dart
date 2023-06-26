@@ -114,10 +114,12 @@ class SplashScreen extends HookConsumerWidget {
     final currentContext = context;
 
     movePage(RoutingScreen screen, {int initPageNumber = 0}) async {
-      Navigator.pushReplacement(
-        currentContext,
-        nextSlideScreen(screen.route, parameter: initPageNumber),
-      );
+      Future.delayed(const Duration(milliseconds: 700),  () async {
+        Navigator.pushReplacement(
+          currentContext,
+          nextSlideScreen(screen.route, parameter: initPageNumber),
+        );
+      });
     }
 
     useEffect(() {

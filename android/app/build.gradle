@@ -93,7 +93,7 @@ android {
     defaultConfig {
         applicationId "com.orot.ody"
         minSdkVersion 26
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -115,6 +115,11 @@ flutter {
 }
 
 dependencies {
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:32.0.0')
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.core:core-splashscreen:1.0.0'
     implementation platform('com.google.firebase:firebase-bom:32.0.0')

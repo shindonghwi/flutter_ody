@@ -34,6 +34,7 @@ dependencies:
   numberpicker: ^2.1.2
   wheel_chooser: ^1.1.2
   infinite_scroll_pagination: ^3.2.0
+  firebase_crashlytics: ^3.3.3
 
 dev_dependencies:
   flutter_test:
@@ -74,14 +75,14 @@ flutter:
           weight: 900
 
 flutter_native_splash:
-  image: assets/imgs/logo.png
-  image_dark: assets/imgs/logo.png
+  image: assets/imgs/logo_android.png
+  image_dark: assets/imgs/logo_android.png
   color: "#FFFFFF"
   color_dark: "#FFFFFF"
 
   # Android 12 이상 버전에서 적용
   android_12:
-    image: assets/imgs/logo.png
-    image_dark: assets/imgs/logo.png
+    image: assets/imgs/logo_android.png
+    image_dark: assets/imgs/logo_android.png
     color: "#FFFFFF"
     color_dark: "#FFFFFF"
