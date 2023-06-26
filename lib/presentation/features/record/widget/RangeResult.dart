@@ -78,9 +78,7 @@ class RangeResult extends HookConsumerWidget {
                           width: double.infinity,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: type == RecordType.BloodPressure
-                                ? getBpRangeText(context)
-                                : getGlucoseRangeText(context),
+                            children: getRangeText(context),
                           ),
                         ),
                       )
@@ -126,7 +124,7 @@ class RangeResult extends HookConsumerWidget {
     ];
   }
 
-  List<Widget> getGlucoseRangeText(BuildContext context) {
+  List<Widget> getRangeText(BuildContext context) {
     return [
       Flexible(
           fit: FlexFit.tight,

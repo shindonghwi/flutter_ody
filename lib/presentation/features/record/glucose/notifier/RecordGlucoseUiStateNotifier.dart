@@ -42,6 +42,6 @@ class RecordGlucoseUiStateNotifier extends StateNotifier<UIState<String?>> {
     }
   }
 
-  void resetState() => state = Idle();
+  void init() => state = Idle();
 
 }

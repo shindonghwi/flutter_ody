@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/features/record/glucose/notifier/GlucoseRecorderNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/record/glucose/notifier/RecordGlucoseUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/record/glucose/widget/RecordGlucose.dart';
 import 'package:ody_flutter_app/presentation/features/record/glucose/widget/RecordGlucoseAppBar.dart';
@@ -18,26 +19,37 @@ class RecordGlucoseScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch<UIState<String?>>(recordGlucoseUiStateProvider);
-    final stateProvider = ref.read(recordGlucoseUiStateProvider.notifier);
+    final uiState = ref.watch<UIState<String?>>(recordGlucoseUiStateProvider);
+    final uiStateRead = ref.read(recordGlucoseUiStateProvider.notifier);
+    final glucoseRecorderRead = ref.read(glucoseRecorderProvider.notifier);
+
+    useEffect(() {
+      void handleUiStateChange() async {
+        await Future(() {
+          uiState.when(
+            success: (event) async {
+              SnackBarUtil.show(
+                context,
+                getAppLocalizations(context).message_record_complete_glucose,
+              );
+              Navigator.pop(context);
+            },
+            failure: (event) {
+              SnackBarUtil.show(context, event.errorMessage);
+            },
+          );
+        });
+      }
+      handleUiStateChange();
+      return null;
+    }, [uiState]);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        state.when(
-          success: (event) async {
-            SnackBarUtil.show(
-              context,
-              getAppLocalizations(context).message_record_complete_glucose,
-            );
-            stateProvider.resetState();
-            Navigator.pop(context);
-          },
-          failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
-          },
-        );
+        uiStateRead.init();
+        glucoseRecorderRead.init();
       });
-    }, [state]);
+    }, []);
 
     return Stack(
       children: [
@@ -55,7 +67,7 @@ class RecordGlucoseScreen extends HookConsumerWidget {
             ),
           ),
         ),
-        if (state is Loading) const CircleLoading(),
+        if (uiState is Loading) const CircleLoading(),
       ],
     );
   }
