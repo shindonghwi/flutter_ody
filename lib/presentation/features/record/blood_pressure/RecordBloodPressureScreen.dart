@@ -23,32 +23,35 @@ class RecordBloodPressureScreen extends HookConsumerWidget {
     final bpRecorderRead = ref.read(bloodPressureRecorderProvider.notifier);
 
     useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        bpRecorderRead.init();
+        uiStateRead.init();
+      });
+    }, []);
+
+    useEffect(() {
       void handleUiStateChange() async {
-        await Future(() {
-          uiState.when(
-            success: (event) async {
-              SnackBarUtil.show(
-                context,
-                getAppLocalizations(context).message_record_complete_blood_pressure,
-              );
-              Navigator.of(context).pop(bpRecorderRead.getBioBpModel());
-            },
-            failure: (event) {
-              SnackBarUtil.show(context, event.errorMessage);
-            },
-          );
-        });
+        uiState.when(
+          success: (event) async {
+            SnackBarUtil.show(
+              context,
+              getAppLocalizations(context).message_record_complete_blood_pressure,
+            );
+            Navigator.of(context).pop(bpRecorderRead.getBioBpModel());
+            uiStateRead.init();
+            bpRecorderRead.init();
+          },
+          failure: (event) {
+            SnackBarUtil.show(context, event.errorMessage);
+          },
+        );
       }
-      handleUiStateChange();
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        handleUiStateChange();
+      });
       return null;
     }, [uiState]);
 
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        uiStateRead.init();
-        bpRecorderRead.init();
-      });
-    }, []);
 
     return Stack(
       children: [

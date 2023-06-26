@@ -69,7 +69,7 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
       return 0;
     }
 
-    if (systolic < 120 || diastolic < 80) {
+    if (systolic < 120 && diastolic < 80) {
       return 1; // 정상
     } else if ((systolic >= 120 && systolic < 130) && diastolic < 80) {
       return 2; // 주의혈압
@@ -93,7 +93,7 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
       bpStatus = RecordRangeStatus.None;
     }
 
-    if (systolic < 120 || diastolic < 80) {
+    if (systolic < 120 && diastolic < 80) {
       bpStatus = RecordRangeStatus.Normal;
     } else if ((systolic >= 120 && systolic < 130) && diastolic < 80) {
       bpStatus = RecordRangeStatus.Danger;

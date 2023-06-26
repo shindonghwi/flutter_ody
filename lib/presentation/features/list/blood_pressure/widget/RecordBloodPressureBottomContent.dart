@@ -53,9 +53,11 @@ class _FloatingButton extends HookConsumerWidget {
               context,
               nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
             );
-            if (data.systolicBloodPressure != 0){
-              uiStateRead.addBloodPressure(data);
-            }
+            try{
+              if (data.diastolicBloodPressure != 0){
+                uiStateRead.addBloodPressure(data);
+              }
+            }catch(e){}
           },
           child: SvgPicture.asset(
             'assets/imgs/icon_plus_btn.svg',

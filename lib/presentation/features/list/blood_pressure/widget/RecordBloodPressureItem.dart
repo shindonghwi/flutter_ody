@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
+import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
@@ -96,7 +97,9 @@ class RecordBloodPressureItem extends HookWidget {
               Text(
                 model.status.name.toString(),
                 style: getTextTheme(context).b2b.copyWith(
-                      color: getColorScheme(context).colorError,
+                      color: RecordRangeStatus.Normal.name.toLowerCase() == model.status.code.toString().toLowerCase()
+                          ? getColorScheme(context).primary100
+                          : getColorScheme(context).colorError,
                     ),
               )
             ],
