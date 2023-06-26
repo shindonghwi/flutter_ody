@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioStatusModel.dart';
+import 'package:ody_flutter_app/presentation/features/record/blood_pressure/notifier/RecordBloodPressureUiStateNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/record/glucose/notifier/RecordGlucoseUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/record/model/RecordType.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
-import 'LevelDivider.dart';
 import '../model/RecordRangeStatus.dart';
+import 'LevelDivider.dart';
 
-class RangeResult extends HookWidget {
+class RangeResult extends HookConsumerWidget {
   final RecordType type;
   final RecordRangeStatus status;
   final int level;
@@ -21,7 +24,7 @@ class RangeResult extends HookWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colorList = RecordRangeStatusHelper.getDividerColorList(context, type, status);
 
     return Container(
@@ -43,15 +46,13 @@ class RangeResult extends HookWidget {
                       TextSpan(
                         text: "\"${RecordRangeStatusHelper.fromString(status)}\"",
                         style: getTextTheme(context).b2b.copyWith(
-                              color:
-                                  RecordRangeStatusHelper.getStatusColor(context, status),
+                              color: RecordRangeStatusHelper.getStatusColor(context, status),
                             ),
                       ),
                       TextSpan(
                         text: getAppLocalizations(context).record_range_figure,
                         style: getTextTheme(context).b3sb.copyWith(
-                              color: RecordRangeStatusHelper.getSubTextColor(
-                                  context, status),
+                              color: RecordRangeStatusHelper.getSubTextColor(context, status),
                             ),
                       ),
                     ],
@@ -133,8 +134,8 @@ class RangeResult extends HookWidget {
           child: Text(
             getAppLocalizations(context).record_range_figure_normal,
             style: getTextTheme(context).c2r.copyWith(
-              color: getColorScheme(context).neutral70,
-            ),
+                  color: getColorScheme(context).neutral70,
+                ),
             textAlign: TextAlign.right,
           )),
       Flexible(
@@ -143,8 +144,8 @@ class RangeResult extends HookWidget {
           child: Text(
             getAppLocalizations(context).record_range_figure_warning,
             style: getTextTheme(context).c2r.copyWith(
-              color: getColorScheme(context).neutral70,
-            ),
+                  color: getColorScheme(context).neutral70,
+                ),
             textAlign: TextAlign.right,
           )),
       Flexible(
@@ -153,8 +154,8 @@ class RangeResult extends HookWidget {
           child: Text(
             getAppLocalizations(context).record_range_figure_danger,
             style: getTextTheme(context).c2r.copyWith(
-              color: getColorScheme(context).neutral70,
-            ),
+                  color: getColorScheme(context).neutral70,
+                ),
             textAlign: TextAlign.right,
           )),
     ];

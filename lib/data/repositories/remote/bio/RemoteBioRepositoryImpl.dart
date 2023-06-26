@@ -5,6 +5,7 @@ import 'package:ody_flutter_app/data/models/ApiResponse.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioStepsModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/domain/repositories/remote/bio/RemoteBioRepository.dart';
 
 class RemoteBioRepositoryImpl implements RemoteBioRepository {
@@ -29,7 +30,7 @@ class RemoteBioRepositoryImpl implements RemoteBioRepository {
   }
 
   @override
-  Future<ApiListResponse<void>> getBioHistoryForDays(int year, int month, int day) {
+  Future<ApiResponse<ResponseBioForDaysModel>> getBioHistoryForDays(int year, int month, int day){
     RemoteBioApi remoteBioApi = GetIt.instance<RemoteBioApi>();
     return remoteBioApi.getBioHistoryForDays(year: year, month: month, day: day);
   }

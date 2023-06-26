@@ -1,18 +1,18 @@
 import 'package:get_it/get_it.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioStatusModel.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/PostBioBloodPressureUseCase.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:riverpod/riverpod.dart';
 
-final recordBloodPressureUiStateProvider =
-    StateNotifierProvider<RecordBloodPressureUiStateNotifier, UIState<String?>>(
+final recordBloodPressureUiStateProvider = StateNotifierProvider<RecordBloodPressureUiStateNotifier, UIState<String?>>(
   (_) => RecordBloodPressureUiStateNotifier(),
 );
 
 class RecordBloodPressureUiStateNotifier extends StateNotifier<UIState<String?>> {
   RecordBloodPressureUiStateNotifier() : super(Idle<String?>());
 
-  PostBioBloodPressureUseCase get _postBioBloodPressureUseCase =>
-      GetIt.instance<PostBioBloodPressureUseCase>();
+  PostBioBloodPressureUseCase get _postBioBloodPressureUseCase => GetIt.instance<PostBioBloodPressureUseCase>();
 
   void postBp({
     required DateTime time,
@@ -38,6 +38,5 @@ class RecordBloodPressureUiStateNotifier extends StateNotifier<UIState<String?>>
     }
   }
 
-  void resetState() => state = Idle();
-
+  void init() => state = Idle();
 }

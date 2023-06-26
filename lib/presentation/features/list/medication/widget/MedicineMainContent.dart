@@ -35,21 +35,18 @@ class MedicineMainContent extends HookConsumerWidget {
               },
             ),
           )
-        : SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              child: ListView.separated(
-                shrinkWrap: true,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(height: 16); // Adjust the height as needed
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  return MedicineItem(data: items[index]);
-                },
-                itemCount: items.length,
-              ),
-            ),
-          );
+        : Container(
+          padding: const EdgeInsets.all(24),
+          child: ListView.separated(
+            shrinkWrap: true,
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(height: 16); // Adjust the height as needed
+            },
+            itemBuilder: (BuildContext context, int index) {
+              return MedicineItem(data: items[index]);
+            },
+            itemCount: items.length,
+          ),
+        );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:ody_flutter_app/data/models/ApiListResponse.dart';
+import 'package:ody_flutter_app/data/models/ApiResponse.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/domain/repositories/remote/bio/RemoteBioRepository.dart';
 
 class GetBioHistoryForDaysUseCase {
@@ -7,7 +9,7 @@ class GetBioHistoryForDaysUseCase {
 
   final RemoteBioRepository _remoteBioRepository = GetIt.instance<RemoteBioRepository>();
 
-  Future<ApiListResponse<void>> call({
+  Future<ApiResponse<ResponseBioForDaysModel>> call({
     required int year,
     required int month,
     required int day,

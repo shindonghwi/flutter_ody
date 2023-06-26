@@ -9,4 +9,7 @@ class CalendarPageNotifier extends StateNotifier<DateTime> {
   CalendarPageNotifier() : super(DateTime.now());
 
   void updatePageDatetime(DateTime date) => state = date;
+
+  DateTime getCurrentDateTime() => state;
+
 }

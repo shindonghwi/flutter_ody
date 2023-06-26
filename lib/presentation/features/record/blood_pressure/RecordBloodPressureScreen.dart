@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/features/record/blood_pressure/notifier/BloodPressureRecorderNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/record/blood_pressure/notifier/RecordBloodPressureUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/record/blood_pressure/widget/RecordBloodPressure.dart';
 import 'package:ody_flutter_app/presentation/features/record/blood_pressure/widget/RecordBloodPressureAppBar.dart';
@@ -17,26 +18,28 @@ class RecordBloodPressureScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch<UIState<String?>>(recordBloodPressureUiStateProvider);
-    final stateProvider = ref.read(recordBloodPressureUiStateProvider.notifier);
+    final uiState = ref.watch<UIState<dynamic>>(recordBloodPressureUiStateProvider);
+    final uiStateRead = ref.read(recordBloodPressureUiStateProvider.notifier);
+    final bpRecorderRead = ref.read(bloodPressureRecorderProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        state.when(
+        uiState.when(
           success: (event) async {
             SnackBarUtil.show(
               context,
               getAppLocalizations(context).message_record_complete_blood_pressure,
             );
-            stateProvider.resetState();
-            Navigator.pop(context);
+            Navigator.of(context).pop(bpRecorderRead.getBioBpModel());
+            bpRecorderRead.init();
+            uiStateRead.init();
           },
           failure: (event) {
             SnackBarUtil.show(context, event.errorMessage);
           },
         );
       });
-    }, [state]);
+    }, [uiState]);
 
     return Stack(
       children: [
@@ -55,7 +58,7 @@ class RecordBloodPressureScreen extends HookConsumerWidget {
             ),
           ),
         ),
-        if (state is Loading) const CircleLoading(),
+        if (uiState is Loading) const CircleLoading(),
       ],
     );
   }

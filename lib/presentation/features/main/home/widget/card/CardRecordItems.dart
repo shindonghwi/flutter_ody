@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/model/RecordItemState.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
@@ -15,14 +16,18 @@ class CardRecordItems extends HookConsumerWidget {
     super.key,
   });
 
-  void movePage(BuildContext context, String title) {
+  void movePage(BuildContext context, String title, DateTime currentDateTime) {
     if (title == getAppLocalizations(context).home_today_record_walk) {
       // 걸음수 화면
     } else if (title == getAppLocalizations(context).home_today_record_blood_pressure) {
       Navigator.push(
         context,
-        nextSlideScreen(RoutingScreen.RecordedListBloodPressure.route),
+        nextSlideScreen(
+          RoutingScreen.RecordedListBloodPressure.route,
+          parameter: currentDateTime,
+        ),
       );
+
     } else if (title == getAppLocalizations(context).home_today_record_glucose) {
       Navigator.push(
         context,
@@ -33,6 +38,8 @@ class CardRecordItems extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentPageDatetimeRead = ref.read(calendarPageProvider.notifier);
+
     final recordItemState = [
       useState<RecordItemState>(
         RecordItemState(
@@ -121,7 +128,7 @@ class CardRecordItems extends HookConsumerWidget {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () => movePage(context, title),
+                    onTap: () => movePage(context, title, currentPageDatetimeRead.getCurrentDateTime()),
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
                       height: double.infinity,

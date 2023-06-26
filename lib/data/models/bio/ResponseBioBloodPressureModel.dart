@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioStatusModel.dart';
-import 'package:ody_flutter_app/data/models/me/ResponseProfileModel.dart';
 
 part 'ResponseBioBloodPressureModel.g.dart';
 
@@ -24,4 +23,20 @@ class ResponseBioBloodPressureModel {
       _$ResponseBioBloodPressureModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponseBioBloodPressureModelToJson(this);
+
+  ResponseBioBloodPressureModel copyWith({
+    int? systolicBloodPressure,
+    int? diastolicBloodPressure,
+    int? heartRate,
+    ResponseBioStatusModel? status,
+    String? createdAt,
+  }) {
+    return ResponseBioBloodPressureModel(
+      systolicBloodPressure: systolicBloodPressure ?? this.systolicBloodPressure,
+      diastolicBloodPressure: diastolicBloodPressure ?? this.diastolicBloodPressure,
+      heartRate: heartRate ?? this.heartRate,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }

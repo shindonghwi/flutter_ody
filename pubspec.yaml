@@ -33,6 +33,7 @@ dependencies:
   pedometer: ^3.0.0
   numberpicker: ^2.1.2
   wheel_chooser: ^1.1.2
+  infinite_scroll_pagination: ^3.2.0
 
 dev_dependencies:
   flutter_test:

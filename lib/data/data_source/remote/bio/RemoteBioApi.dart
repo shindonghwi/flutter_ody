@@ -7,6 +7,7 @@ import 'package:ody_flutter_app/data/models/ApiResponse.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioStepsModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RemoteBioApi {
@@ -81,8 +82,7 @@ class RemoteBioApi {
   }
 
   /// 월간 건강정보 조회
-  Future<ApiListResponse<List<String>>> getBioHistoryMontly(
-      {required int year, required int month}) async {
+  Future<ApiListResponse<List<String>>> getBioHistoryMontly({required int year, required int month}) async {
     final response = await Service.getApi(
       type: ServiceType.Bio,
       endPoint: 'history/$year/$month',
@@ -105,7 +105,7 @@ class RemoteBioApi {
   }
 
   /// 일일 건강정보 조회
-  Future<ApiListResponse<List<String>>> getBioHistoryForDays(
+  Future<ApiResponse<ResponseBioForDaysModel>> getBioHistoryForDays(
       {required int year, required int month, required int day}) async {
     final response = await Service.getApi(
       type: ServiceType.Bio,
@@ -113,17 +113,15 @@ class RemoteBioApi {
     );
 
     if (response.statusCode >= 500) {
-      return ApiListResponse(
-          status: response.statusCode,
-          message: _getAppLocalization.get().message_server_error_5xx,
-          list: null,
-          count: 0);
+      return ApiResponse(
+        status: response.statusCode,
+        message: _getAppLocalization.get().message_server_error_5xx,
+        data: null,
+      );
     } else {
-      return ApiListResponse.fromJson(
+      return ApiResponse.fromJson(
         jsonDecode(response.body),
-        (json) {
-          return List<String>.from(json.map((item) => item.toString()).toList());
-        },
+        (json) => ResponseBioForDaysModel.fromJson(json),
       );
     }
   }
