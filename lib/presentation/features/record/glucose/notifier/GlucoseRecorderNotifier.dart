@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseTypeModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioStatusModel.dart';
 import 'package:ody_flutter_app/domain/models/bio/GlucoseMesaureType.dart';
 import 'package:ody_flutter_app/presentation/features/record/glucose/models/GlucoseRecorderModel.dart';
 import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
@@ -16,6 +19,8 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
           measureType: GlucoseMeasureType.None,
           glucose: 0,
         ));
+
+  var glucoseStatus = RecordRangeStatus.None;
 
   void updateTime(DateTime time) {
     state = GlucoseRecorderModel(
@@ -72,6 +77,21 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
     debugPrint('update remindTime: ${state.remindTime}');
   }
 
+  ResponseBioGlucoseModel getBioGlucoseModel() {
+    return ResponseBioGlucoseModel(
+      type: ResponseBioGlucoseTypeModel(
+        code: state.measureType.name.toString(),
+        name: GlucoseMeasureTypeHelper.fromString(state.measureType),
+      ),
+      glucose: state.glucose,
+      status: ResponseBioStatusModel(
+        code: glucoseStatus.name.toString(),
+        name: RecordRangeStatusHelper.fromString(glucoseStatus),
+      ),
+      createdAt: "${DateTime.now().hour}:${DateTime.now().minute}",
+    );
+  }
+
   /**
    *   1. 당뇨병 환자의 혈당 기준
       - 공복 혈당: 126mg/dL 이상
@@ -114,7 +134,7 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
           return 3;
         }
       // 식사전
-      case GlucoseMeasureType.BeforeMeal:
+      case GlucoseMeasureType.Preprandial:
         if (glucose <= 100) {
           return 1;
         } else if (glucose <= 140) {
@@ -123,7 +143,7 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
           return 3;
         }
       // 식사전
-      case GlucoseMeasureType.AfterMeals:
+      case GlucoseMeasureType.Postprandial:
         if (glucose <= 140) {
           return 1;
         } else if (glucose <= 200) {
@@ -132,7 +152,7 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
           return 3;
         }
       // 식사전
-      case GlucoseMeasureType.PostWorkout:
+      case GlucoseMeasureType.PostExercise:
         if (glucose <= 140) {
           return 1;
         } else if (glucose <= 180) {
@@ -159,44 +179,49 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
       // 공복
       case GlucoseMeasureType.Fasting:
         if (glucose <= 100) {
-          return RecordRangeStatus.Normal;
+          glucoseStatus = RecordRangeStatus.Normal;
         } else if (glucose <= 126) {
-          return RecordRangeStatus.Danger;
+          glucoseStatus = RecordRangeStatus.Danger;
         } else {
-          return RecordRangeStatus.Risk;
+          glucoseStatus = RecordRangeStatus.Risk;
         }
-      // 식사전
-      case GlucoseMeasureType.BeforeMeal:
+        break;
+      case GlucoseMeasureType.Preprandial:
         if (glucose <= 100) {
-          return RecordRangeStatus.Normal;
+          glucoseStatus = RecordRangeStatus.Normal;
         } else if (glucose <= 140) {
-          return RecordRangeStatus.Danger;
+          glucoseStatus = RecordRangeStatus.Danger;
         } else {
-          return RecordRangeStatus.Risk;
+          glucoseStatus = RecordRangeStatus.Risk;
         }
-      // 식사전
-      case GlucoseMeasureType.AfterMeals:
+        break;
+    // 식사전
+      case GlucoseMeasureType.Postprandial:
         if (glucose <= 140) {
-          return RecordRangeStatus.Normal;
+          glucoseStatus = RecordRangeStatus.Normal;
         } else if (glucose <= 200) {
-          return RecordRangeStatus.Danger;
+          glucoseStatus = RecordRangeStatus.Danger;
         } else {
-          return RecordRangeStatus.Risk;
+          glucoseStatus = RecordRangeStatus.Risk;
         }
-      // 식사전
-      case GlucoseMeasureType.PostWorkout:
+        break;
+    // 식사전
+      case GlucoseMeasureType.PostExercise:
         if (glucose <= 140) {
-          return RecordRangeStatus.Normal;
+          glucoseStatus = RecordRangeStatus.Normal;
         } else if (glucose <= 180) {
-          return RecordRangeStatus.Danger;
+          glucoseStatus = RecordRangeStatus.Danger;
         } else {
-          return RecordRangeStatus.Risk;
+          glucoseStatus = RecordRangeStatus.Risk;
         }
+        break;
       default:
         {
-          return RecordRangeStatus.None;
+          glucoseStatus = RecordRangeStatus.None;
         }
     }
+
+    return glucoseStatus;
   }
 
   void init() {

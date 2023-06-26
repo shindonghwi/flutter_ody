@@ -15,7 +15,7 @@ class RecordRangeStatusHelper {
     RecordRangeStatus.Normal: "정상",
     RecordRangeStatus.Danger: "위험",
     RecordRangeStatus.Risk: "고위험",
-    RecordRangeStatus.None: "정상"
+    RecordRangeStatus.None: ""
   };
 
   static String fromString(RecordRangeStatus status) => _stringToEnum[status] ?? "정상";

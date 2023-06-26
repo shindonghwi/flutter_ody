@@ -31,7 +31,10 @@ class CardRecordItems extends HookConsumerWidget {
     } else if (title == getAppLocalizations(context).home_today_record_glucose) {
       Navigator.push(
         context,
-        nextSlideScreen(RoutingScreen.RecordedListGlucose.route),
+        nextSlideScreen(
+          RoutingScreen.RecordedListGlucose.route,
+          parameter: currentDateTime,
+        ),
       );
     } else {}
   }

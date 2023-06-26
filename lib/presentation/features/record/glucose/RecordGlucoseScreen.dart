@@ -30,9 +30,11 @@ class RecordGlucoseScreen extends HookConsumerWidget {
             success: (event) async {
               SnackBarUtil.show(
                 context,
-                getAppLocalizations(context).message_record_complete_glucose,
+                getAppLocalizations(context).message_record_complete_blood_pressure,
               );
-              Navigator.pop(context);
+              Navigator.of(context).pop(glucoseRecorderRead.getBioGlucoseModel());
+              uiStateRead.init();
+              glucoseRecorderRead.init();
             },
             failure: (event) {
               SnackBarUtil.show(context, event.errorMessage);

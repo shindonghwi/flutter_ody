@@ -10,8 +10,6 @@ final bloodPressureRecorderProvider = StateNotifierProvider<BloodPressureRecorde
 );
 
 class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
-  final yearMonthDay = DateTime.now().toString().split(" ")[0].split("-");
-  final hourMinuteSecond = DateTime.now().toString().split(" ")[1].split(":");
   var bpStatus = RecordRangeStatus.None;
 
   BloodPressureRecorderNotifier() : super(BpRecorderModel(time: DateTime.now(), systolic: 0, diastolic: 0, hr: 0));

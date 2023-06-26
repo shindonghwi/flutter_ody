@@ -80,9 +80,9 @@ class _SelectorMealType extends HookConsumerWidget {
 
     final measureTypeList = [
       GlucoseMeasureType.Fasting,
-      GlucoseMeasureType.BeforeMeal,
-      GlucoseMeasureType.AfterMeals,
-      GlucoseMeasureType.PostWorkout,
+      GlucoseMeasureType.Preprandial,
+      GlucoseMeasureType.Postprandial,
+      GlucoseMeasureType.PostExercise,
     ];
 
     final selectedMeasureType = useState<GlucoseMeasureType?>(null);
