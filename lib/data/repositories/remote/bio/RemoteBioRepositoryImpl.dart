@@ -11,12 +11,6 @@ class RemoteBioRepositoryImpl implements RemoteBioRepository {
   RemoteBioRepositoryImpl();
 
   @override
-  Future<ApiListResponse<void>> getBioHistory(int year, int month) {
-    RemoteBioApi remoteBioApi = GetIt.instance<RemoteBioApi>();
-    return remoteBioApi.getBioHistory(year: year, month: month);
-  }
-
-  @override
   Future<ApiResponse<void>> postBloodPressure(RequestBioBloodPressureModel data) {
     RemoteBioApi remoteBioApi = GetIt.instance<RemoteBioApi>();
     return remoteBioApi.postBloodPressure(data: data);
@@ -32,5 +26,17 @@ class RemoteBioRepositoryImpl implements RemoteBioRepository {
   Future<ApiResponse<void>> postSteps(RequestBioStepsModel data) {
     RemoteBioApi remoteBioApi = GetIt.instance<RemoteBioApi>();
     return remoteBioApi.postSteps(data: data);
+  }
+
+  @override
+  Future<ApiListResponse<void>> getBioHistoryForDays(int year, int month, int day) {
+    RemoteBioApi remoteBioApi = GetIt.instance<RemoteBioApi>();
+    return remoteBioApi.getBioHistoryForDays(year: year, month: month, day: day);
+  }
+
+  @override
+  Future<ApiListResponse<void>> getBioHistoryMontly(int year, int month) {
+    RemoteBioApi remoteBioApi = GetIt.instance<RemoteBioApi>();
+    return remoteBioApi.getBioHistoryMontly(year: year, month: month);
   }
 }

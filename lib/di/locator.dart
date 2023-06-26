@@ -15,7 +15,8 @@ import 'package:ody_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCa
 import 'package:ody_flutter_app/domain/usecases/local/app/GetAppPolicyUpdateUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
-import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioHistoryUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioHistoryForDaysUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioHistoryMontlyUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/PostBioBloodPressureUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/PostBioGlucoseUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/PostBioStepsUseCase.dart';
@@ -40,7 +41,6 @@ void initServiceLocator() {
   /// -------
   GetIt.instance.registerLazySingleton<AppLocalization>(() => AppLocalization());
 
-
   /// -------
   /// usecase
   /// -------
@@ -60,7 +60,8 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostBioBloodPressureUseCase>(() => PostBioBloodPressureUseCase());
   GetIt.instance.registerLazySingleton<PostBioGlucoseUseCase>(() => PostBioGlucoseUseCase());
   GetIt.instance.registerLazySingleton<PostBioStepsUseCase>(() => PostBioStepsUseCase());
-  GetIt.instance.registerLazySingleton<GetBioHistoryUseCase>(() => GetBioHistoryUseCase());
+  GetIt.instance.registerLazySingleton<GetBioHistoryMontlyUseCase>(() => GetBioHistoryMontlyUseCase());
+  GetIt.instance.registerLazySingleton<GetBioHistoryForDaysUseCase>(() => GetBioHistoryForDaysUseCase());
   GetIt.instance.registerLazySingleton<GetMeMedicinesUseCase>(() => GetMeMedicinesUseCase());
   GetIt.instance.registerLazySingleton<PatchMeMedicineUseCase>(() => PatchMeMedicineUseCase());
   GetIt.instance.registerLazySingleton<PostMeMedicineUseCase>(() => PostMeMedicineUseCase());
