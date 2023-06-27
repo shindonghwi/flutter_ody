@@ -171,6 +171,58 @@
     "list_record_blood_pressure_title": "혈압 기록",
     "list_record_glucose_title": "혈당 기록",
 
+    "analysis_blood_pressure_title": "혈압 분석",
+    "analysis_blood_pressure_average": "혈압 평균",
+    "analysis_blood_pressure_average_measure_text1": "총",
+    "analysis_blood_pressure_average_measure_text2": "측정했어요",
+    "analysis_blood_pressure_average_measure_text_unit": "{count}회",
+    "@analysis_blood_pressure_average_measure_text_unit":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "analysis_blood_pressure_average_measure_description": "혈압 정상 범위는 수축기 90 - 120, 이완기 60 - 80mmHg 입니다\n맥박 정상 범위는 성인 기준 70~75 회/분 입니다",
+    "analysis_blood_pressure_average_systolic": "수축기 혈압 평균",
+    "analysis_blood_pressure_average_diastolic": "이완기 혈압 평균",
+    "analysis_blood_pressure_average_heart_rate": "맥박 평균",
+    "analysis_blood_pressure_record_title": "혈압 기록 분석",
+    "analysis_blood_pressure_record_measure_text1": "총",
+    "analysis_blood_pressure_record_measure_text2": "측정을 기준으로 했어요",
+    "analysis_blood_pressure_record_measure_description": "아침과 저녁 한번씩, 총 두번정도 측정하는 것이 좋아요",
+    "analysis_blood_pressure_figure_title": "혈압 수치",
+    "analysis_blood_pressure_figure_text1": "최근 혈압은",
+    "analysis_blood_pressure_figure_text2": "입니다",
+    "analysis_blood_pressure_figure_symbol_systolic": "수축기",
+    "analysis_blood_pressure_figure_symbol_diastolic": "이완기",
+    "analysis_blood_pressure_figure_description": "정상 혈압 범위는 수축기 90 - 120, 이완기 60 - 80mmHg 입니다",
+    "analysis_heart_rate_figure_title": "맥박 수치",
+    "analysis_heart_rate_figure_text1": "최근 맥박은",
+    "analysis_heart_rate_figure_text2": "입니다",
+    "analysis_heart_rate_figure_description": "정상 맥박범위는 성인 기준 70~75회/분 입니다",
+
+    "analysis_glucose_title": "혈당 분석",
+    "analysis_glucose_record_range": "혈당 기록 범위",
+    "analysis_glucose_record_range_text1": "총",
+    "analysis_glucose_record_range_text2": "측정했어요",
+    "analysis_glucose_record_range_text_unit": "{count}회",
+    "@analysis_glucose_record_range_text_unit":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "analysis_glucose_record_range_description": "공복시 혈당 정상 범위는 70-100mg/dL 입니다\n식후 2시간 혈당 정상 범위는 90-140mg/dL 입니다",
+    "analysis_glucose_record_range_fasting": "공복 혈당 범위",
+    "analysis_glucose_record_range_preprandial": "식전 혈당 범위",
+    "analysis_glucose_record_range_postprandial": "식후 혈당 범위",
+    "analysis_glucose_record_range_postExercise": "운동후 혈당 범위",
+    "analysis_glucose_record_measure_title": "혈당 기록 분석",
+    "analysis_glucose_record_measure_text1": "총",
+    "analysis_glucose_record_measure_text2": "측정을 기준으로 했어요",
+    "analysis_glucose_record_measure_description": "혈당은 공복, 식후 2시간 혈당을 측정하는 것이 좋아요",
+    "analysis_glucose_figure_title": "혈당 수치",
+    "analysis_glucose_figure_text1": "혈당 범위는",
+    "analysis_glucose_figure_text2": "입니다",
+    "analysis_glucose_figure_description": "정상 혈당 범위는 평균 124mg/dL 입니다",
 
     "popup_app_policy_title" : "사용 약관",
     "popup_app_policy_all_grant" : "모두 동의하기",
@@ -233,6 +285,7 @@
     "common_sunday": "일",
     "common_am": "오전",
     "common_pm": "오후",
+    "common_count": "회",
     "common_edit": "편집",
     "common_delete": "삭제"
 
