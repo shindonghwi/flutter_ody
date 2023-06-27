@@ -7,6 +7,7 @@ import 'package:ody_flutter_app/presentation/features/main/home/notifier/Calenda
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/DimNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
@@ -28,9 +29,20 @@ class CalendarContentView extends HookConsumerWidget {
     final calendarPageRead = ref.read(calendarPageProvider.notifier);
     final calendarSelectDateRead = ref.read(calendarSelectDateProvider.notifier);
     final calendarHeightRead = ref.read(calendarHeightProvider.notifier);
+    final forDaysBioInfoRead = ref.read(forDaysBioInfoProvider.notifier);
 
     final _selectedDay = useState(DateTime.now());
     final _focusedDay = useState(DateTime.now());
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        forDaysBioInfoRead.requestBioInfo(
+          _selectedDay.value.year,
+          _selectedDay.value.month,
+          _selectedDay.value.day,
+        );
+      });
+    }, []);
 
     final _firstDay = DateTime.now().subtract(
       const Duration(days: 365 * 10 + 2),
@@ -77,6 +89,11 @@ class CalendarContentView extends HookConsumerWidget {
                   calendarSelectDateRead.updateSelectedDatetime(selectedDay);
                   calendarHeightRead.updateHeight(CalendarSize.minHeight(context));
                   calendarFormatRead.updateFormat(CalendarFormat.week);
+                  forDaysBioInfoRead.requestBioInfo(
+                    _selectedDay.value.year,
+                    _selectedDay.value.month,
+                    _selectedDay.value.day,
+                  );
                 },
                 onPageChanged: (focusedDay) {
                   _focusedDay.value = focusedDay;
@@ -118,7 +135,9 @@ class CalendarContentView extends HookConsumerWidget {
                       child: Text(
                         day.day.toString(),
                         style: getTextTheme(context).c2b.copyWith(
-                              color: getColorScheme(context).colorText.withOpacity(day.month == focusedDay.month ? 1 : 0.3),
+                              color: getColorScheme(context)
+                                  .colorText
+                                  .withOpacity(day.month == focusedDay.month ? 1 : 0.3),
                             ),
                       ),
                     );

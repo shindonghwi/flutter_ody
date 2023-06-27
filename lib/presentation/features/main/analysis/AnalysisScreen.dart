@@ -1,44 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
-import 'package:ody_flutter_app/presentation/navigation/Route.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/features/main/analysis/widget/AnalysisTabItemTitle.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
+import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateTransfer.dart';
 
-class AnalysisScreen extends HookWidget {
+// Navigator.push(
+// context,
+// nextSlideScreen(RoutingScreen.AnalysisBloodPressure.route),
+// );
+// Navigator.push(
+// context,
+// nextSlideScreen(RoutingScreen.AnalysisGlucose.route),
+// );
+
+class AnalysisScreen extends HookConsumerWidget {
   const AnalysisScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentPageDatetime = ref.watch<DateTime>(calendarPageProvider);
+    final uiState = ref.watch(forDaysBioInfoProvider);
+
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI02,
       body: Stack(
         children: [
-          Center(
-            child: ButtonBar(
-              alignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      nextSlideScreen(RoutingScreen.AnalysisBloodPressure.route),
-                    );
-                  },
-                  child: const Text('혈압 분석'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      nextSlideScreen(RoutingScreen.AnalysisGlucose.route),
-                    );
-                  },
-                  child: const Text('혈당 분석'),
-                ),
-              ],
+          Container(
+            color: getColorScheme(context).colorUI02,
+            margin: EdgeInsets.only(top: CalendarSize.underMargin(context), left: 20, right: 20),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    DateTransfer.dateTimeToYearMonthDayYoil(currentPageDatetime),
+                    style: getTextTheme(context).t2b.copyWith(
+                          color: getColorScheme(context).colorText,
+                        ),
+                  ),
+                  const SizedBox(
+                    height: 22,
+                  ),
+                  AnalysisTabItemTitle(title: getAppLocalizations(context).home_today_record_walk),
+                  AnalysisTabItemTitle(title: getAppLocalizations(context).home_today_record_blood_pressure),
+                  AnalysisTabItemTitle(title: getAppLocalizations(context).home_today_record_glucose),
+                ],
+              ),
             ),
           ),
+          if (uiState is Loading) const CircleLoading()
         ],
       ),
     );
