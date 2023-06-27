@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
@@ -229,8 +231,6 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
       time: DateTime.now(),
       measureType: GlucoseMeasureType.None,
       glucose: 0,
-      memo: '',
-      remindTime: 0,
     );
   }
 }
