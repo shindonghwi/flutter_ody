@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:ody_flutter_app/presentation/features/main/analysis/widget/AnalysisTabItemTitle.dart';
@@ -7,15 +6,13 @@ import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSi
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
+import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateTransfer.dart';
 
-// Navigator.push(
-// context,
-// nextSlideScreen(RoutingScreen.AnalysisBloodPressure.route),
-// );
 // Navigator.push(
 // context,
 // nextSlideScreen(RoutingScreen.AnalysisGlucose.route),
@@ -52,8 +49,24 @@ class AnalysisScreen extends HookConsumerWidget {
                     height: 22,
                   ),
                   AnalysisTabItemTitle(title: getAppLocalizations(context).home_today_record_walk),
-                  AnalysisTabItemTitle(title: getAppLocalizations(context).home_today_record_blood_pressure),
-                  AnalysisTabItemTitle(title: getAppLocalizations(context).home_today_record_glucose),
+                  AnalysisTabItemTitle(
+                    title: getAppLocalizations(context).home_today_record_blood_pressure,
+                    movePage: () {
+                      Navigator.push(
+                        context,
+                        nextSlideScreen(RoutingScreen.AnalysisBloodPressure.route),
+                      );
+                    },
+                  ),
+                  AnalysisTabItemTitle(
+                    title: getAppLocalizations(context).home_today_record_glucose,
+                    movePage: () {
+                      Navigator.push(
+                        context,
+                        nextSlideScreen(RoutingScreen.AnalysisGlucose.route),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

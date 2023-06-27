@@ -6,10 +6,12 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class AnalysisTabItemTitle extends StatelessWidget {
   final String title;
+  final Function? movePage;
 
   const AnalysisTabItemTitle({
     super.key,
     required this.title,
+    this.movePage,
   });
 
   @override
@@ -20,7 +22,7 @@ class AnalysisTabItemTitle extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(4),
-            onTap: () {},
+            onTap: () => movePage?.call(),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               child: Row(
