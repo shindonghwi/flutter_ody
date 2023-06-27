@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
-import 'package:ody_flutter_app/presentation/features/list/blood_pressure/provider/RecordListBloodPressureProvider.dart';
 import 'package:ody_flutter_app/presentation/features/list/glucose/provider/RecordListGlucoseProvider.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
@@ -11,13 +9,21 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RecordGlucoseBottomContent extends HookConsumerWidget {
-  const RecordGlucoseBottomContent({Key? key}) : super(key: key);
+  final DateTime date;
+
+  const RecordGlucoseBottomContent({
+    Key? key,
+    required this.date,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Align(
+    final now = DateTime.now();
+    bool isRecordButtonVisible = "${date.year}${date.month}${date.day}" == "${now.year}${now.month}${now.day}";
+
+    return Align(
       alignment: Alignment.bottomRight,
-      child: _FloatingButton(),
+      child: isRecordButtonVisible ? const _FloatingButton() : const SizedBox(),
     );
   }
 }
@@ -55,11 +61,11 @@ class _FloatingButton extends HookConsumerWidget {
               context,
               nextSlideScreen(RoutingScreen.RecordGlucose.route),
             );
-            try{
-              if (data.glucose != 0){
+            try {
+              if (data.glucose != 0) {
                 uiStateRead.addGlucose(data);
               }
-            }catch(e){}
+            } catch (e) {}
           },
           child: SvgPicture.asset(
             'assets/imgs/icon_plus_btn.svg',

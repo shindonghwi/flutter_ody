@@ -103,7 +103,7 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                   ),
           if (uiState is Success<List<ResponseBioBloodPressureModel>>)
             !CollectionUtil.isNullorEmpty(uiState.value)
-                ? const RecordBloodPressureBottomContent()
+                ? RecordBloodPressureBottomContent(date: date!)
                 : const SizedBox(),
           if (uiState is Loading) const CircleLoading()
         ],

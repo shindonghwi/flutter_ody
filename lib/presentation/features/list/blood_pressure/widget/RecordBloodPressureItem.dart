@@ -17,15 +17,13 @@ class RecordBloodPressureItem extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final hour24 = int.parse(model.createdAt.split(":").first);
-    int hour12 = hour24 > 12 ? hour24 - 12 : hour24;
-    final minute = int.parse(model.createdAt.split(":").last);
     final amText = hour24 < 12 ? getAppLocalizations(context).common_am : getAppLocalizations(context).common_pm;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "$amText $hour12${getAppLocalizations(context).common_hour_unit}:$minute${getAppLocalizations(context).common_minute_unit}",
+          "$amText ${model.createdAt}",
           style: getTextTheme(context).b3sb.copyWith(
                 color: getColorScheme(context).neutral70,
               ),

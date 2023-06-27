@@ -102,7 +102,7 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
                     ),
                   ),
           if (uiState is Success<List<ResponseBioGlucoseModel>>)
-            !CollectionUtil.isNullorEmpty(uiState.value) ? const RecordGlucoseBottomContent() : const SizedBox(),
+            !CollectionUtil.isNullorEmpty(uiState.value) ? RecordGlucoseBottomContent(date: date!) : const SizedBox(),
           if (uiState is Loading) const CircleLoading()
         ],
       ),

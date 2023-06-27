@@ -9,13 +9,22 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RecordBloodPressureBottomContent extends HookConsumerWidget {
-  const RecordBloodPressureBottomContent({Key? key}) : super(key: key);
+  final DateTime date;
+
+  const RecordBloodPressureBottomContent({
+    Key? key,
+    required this.date,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Align(
+
+    final now = DateTime.now();
+    bool isRecordButtonVisible = "${date.year}${date.month}${date.day}" == "${now.year}${now.month}${now.day}";
+
+    return Align(
       alignment: Alignment.bottomRight,
-      child: _FloatingButton(),
+      child: isRecordButtonVisible ? const _FloatingButton() : const SizedBox(),
     );
   }
 }
@@ -53,11 +62,11 @@ class _FloatingButton extends HookConsumerWidget {
               context,
               nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
             );
-            try{
-              if (data.diastolicBloodPressure != 0){
+            try {
+              if (data.diastolicBloodPressure != 0) {
                 uiStateRead.addBloodPressure(data);
               }
-            }catch(e){}
+            } catch (e) {}
           },
           child: SvgPicture.asset(
             'assets/imgs/icon_plus_btn.svg',
