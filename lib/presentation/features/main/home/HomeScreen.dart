@@ -13,23 +13,24 @@ class HomeScreen extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI02,
-      body: Stack(
-        children: [
-          CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverToBoxAdapter(
-                child: Container(
-                  color: getColorScheme(context).colorUI02,
-                  margin: EdgeInsets.only(top: CalendarSize.underMargin(context)),
-                  child: const CardTodayRecord(),
-                ),
+      body: SafeArea(
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: Container(
+                color: getColorScheme(context).colorUI02,
+                margin: EdgeInsets.only(top: CalendarSize.underMargin(context)),
+                child: const CardTodayRecord(),
               ),
-              const SliverPadding(padding: EdgeInsets.only(top: 24.0)),
-              const CardRecordItems(),
-            ],
-          ),
-        ],
+            ),
+            const SliverPadding(
+              padding: EdgeInsets.fromLTRB(20, 24, 20, 40),
+              sliver: CardRecordItems(),
+            ),
+            // const CardRecordItems(),
+          ],
+        ),
       ),
     );
   }

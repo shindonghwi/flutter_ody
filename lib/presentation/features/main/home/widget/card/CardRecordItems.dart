@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/model/RecordItemState.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
-import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
@@ -27,7 +27,6 @@ class CardRecordItems extends HookConsumerWidget {
           parameter: currentDateTime,
         ),
       );
-
     } else if (title == getAppLocalizations(context).home_today_record_glucose) {
       Navigator.push(
         context,
@@ -61,7 +60,7 @@ class CardRecordItems extends HookConsumerWidget {
           title: getAppLocalizations(context).home_today_record_blood_pressure,
           contents: [
             Pair(
-              "오늘은 어떠세요?",
+              "오늘은",
               getAppLocalizations(context).home_today_record_blood_pressure_unit1,
             ),
           ],
@@ -107,17 +106,14 @@ class CardRecordItems extends HookConsumerWidget {
           final contents = recordItemState[index].value.contents;
           final imagePath = recordItemState[index].value.imagePath;
 
+          debugPrint("title : $title index: ${index % 2}");
+
           return Stack(
             children: [
               Container(
-                margin: EdgeInsets.only(
-                  left: index % 2 == 0 ? 20 : 0,
-                  right: index % 2 == 1 ? 20 : 0,
-                ),
                 decoration: BoxDecoration(
-                  color: isEmotionType(context, title)
-                      ? getColorScheme(context).neutral30
-                      : getColorScheme(context).white,
+                  color:
+                      isEmotionType(context, title) ? getColorScheme(context).neutral30 : getColorScheme(context).white,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
