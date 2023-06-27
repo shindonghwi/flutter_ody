@@ -126,6 +126,7 @@
     "setting_sub_menu_etc": "기타",
     "setting_sub_menu_etc_version": "버전 정보",
     "setting_sub_menu_etc_version_latest": "최신버전",
+    "setting_sub_menu_etc_version_update": "업데이트",
     "setting_sub_menu_etc_logout": "로그아웃",
     "setting_sub_menu_etc_logout_description": "정말로 로그아웃 하시겠습니까?",
     "setting_sub_menu_etc_withdrawal": "탈퇴하기",

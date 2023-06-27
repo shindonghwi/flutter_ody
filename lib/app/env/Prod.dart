@@ -4,10 +4,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:ody_flutter_app/app/env/Environment.dart';
+import 'package:ody_flutter_app/firebase/FirebaseRemoteConfigService.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseRemoteConfigService().initialize();
 
   // 모든 오류 기록
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
