@@ -62,27 +62,27 @@ class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
           ),
         ),
       ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(
-                  "assets/imgs/icon_alrmoff.svg",
-                  colorFilter: ColorFilter.mode(
-                    getColorScheme(context).neutral100,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+      // actions: [
+      //   Padding(
+      //     padding: const EdgeInsets.symmetric(vertical: 4.0),
+      //     child: Material(
+      //       color: Colors.transparent,
+      //       child: InkWell(
+      //         onTap: () {},
+      //         child: Padding(
+      //           padding: const EdgeInsets.all(8.0),
+      //           child: SvgPicture.asset(
+      //             "assets/imgs/icon_alrmoff.svg",
+      //             colorFilter: ColorFilter.mode(
+      //               getColorScheme(context).neutral100,
+      //               BlendMode.srcIn,
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ],
     );
   }
 }
