@@ -33,6 +33,9 @@ enum RoutingScreen {
   Welcome(route: "/welcome"), // 회원가입 완료화면
 
   Main(route: "/main"), // 메인화면
+  MainHome(route: "/main/home"), // 메인 - 홈(나의기록)
+  MainAnalysis(route: "/main/analysis"), // 메인 - 분석하기
+  MainMyInfo(route: "/main/my_info"), // 메인 - 내정보
 
   RecordBloodPressure(route: "/record/blood_pressure"), // 혈압 기록
   RecordGlucose(route: "/record/glucose"), // 혈당 기록

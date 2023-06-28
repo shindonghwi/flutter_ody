@@ -18,7 +18,7 @@ class CalendarContentView extends HookConsumerWidget {
 
   const CalendarContentView({
     super.key,
-    required double this.maxHeight,
+    required this.maxHeight,
   });
 
   @override

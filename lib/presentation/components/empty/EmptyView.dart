@@ -25,6 +25,8 @@ class EmptyView extends HookWidget {
         return 'assets/imgs/icon_record_2.svg';
       }else if (screen == RoutingScreen.MedicationList) {
         return 'assets/imgs/icon_alarm_2.svg';
+      }else if (screen == RoutingScreen.MainAnalysis) {
+        return null;
       }
       return null;
     }
@@ -36,6 +38,8 @@ class EmptyView extends HookWidget {
         return getAppLocalizations(context).empty_record;
       } else if (screen == RoutingScreen.MedicationList) {
         return getAppLocalizations(context).empty_alarm;
+      }else if (screen == RoutingScreen.MainAnalysis) {
+        return getAppLocalizations(context).empty_report;
       }
       return null;
     }
@@ -47,6 +51,8 @@ class EmptyView extends HookWidget {
         return getAppLocalizations(context).empty_button_record;
       } else if (screen == RoutingScreen.MedicationList) {
         return getAppLocalizations(context).empty_button_alarm_add;
+      } else if (screen == RoutingScreen.MainAnalysis) {
+        return getAppLocalizations(context).empty_button_go_home;
       }
       return null;
     }
@@ -71,7 +77,7 @@ class EmptyView extends HookWidget {
             message,
             style: getTextTheme(context).l2m.copyWith(
                   color: getColorScheme(context).neutral70,
-                  height: 1.25,
+                  height: 1.2,
                 ),
             textAlign: TextAlign.center,
           ),
