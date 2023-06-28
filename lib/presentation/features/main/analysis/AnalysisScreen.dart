@@ -128,7 +128,7 @@ class _BpList extends StatelessWidget {
           movePage: () {
             Navigator.push(
               context,
-              nextSlideScreen(RoutingScreen.AnalysisBloodPressure.route),
+              nextSlideScreen(RoutingScreen.AnalysisBloodPressure.route, parameter: bpList),
             );
           },
         ),

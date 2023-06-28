@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/presentation/features/analysis/blood_pressure/AnalysisBloodPressureScreen.dart';
 import 'package:ody_flutter_app/presentation/features/analysis/glucose/AnalysisGlucoseScreen.dart';
 import 'package:ody_flutter_app/presentation/features/edit/my_height/EditMyHeightScreen.dart';
@@ -110,7 +111,8 @@ enum RoutingScreen {
       case "/record/glucose":
         return const RecordGlucoseScreen();
       case "/analysis/blood_pressure":
-        return const AnalysisBloodPressureScreen();
+        List<ResponseBioBloodPressureModel>? bpList = parameter;
+        return AnalysisBloodPressureScreen(bpList: bpList);
       case "/analysis/glucose":
         return const AnalysisGlucoseScreen();
       case "/list/blood_pressure":

@@ -6,8 +6,11 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class AverageBloodPressure extends StatelessWidget {
+  final int count;
+
   const AverageBloodPressure({
     super.key,
+    required this.count,
   });
 
   @override
@@ -37,7 +40,7 @@ class AverageBloodPressure extends StatelessWidget {
           title: getAppLocalizations(context).analysis_blood_pressure_average,
           secondTitle: Triple(
             getAppLocalizations(context).analysis_blood_pressure_average_measure_text1,
-            getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(2),
+            getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(count),
             getAppLocalizations(context).analysis_blood_pressure_average_measure_text2,
           ),
           description: getAppLocalizations(context).analysis_blood_pressure_average_measure_description,
