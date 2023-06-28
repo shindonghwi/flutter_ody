@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioHistoryForDaysUseCase.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
@@ -29,6 +30,22 @@ class ForDaysBioInfoNotifier extends StateNotifier<UIState<ResponseBioForDaysMod
       state = Success(data);
     } else {
       state = Success(null);
+    }
+  }
+
+  void addGlucoseBioInfo(ResponseBioGlucoseModel glucoseData) {
+    if (state is Success) {
+      final currentData = (state as Success<ResponseBioForDaysModel>).value;
+      currentData.glucoses.add(glucoseData);
+      state = Success(currentData);
+    }
+  }
+
+  void addBpBioInfo(ResponseBioBloodPressureModel bpData) {
+    if (state is Success) {
+      final currentData = (state as Success<ResponseBioForDaysModel>).value;
+      currentData.bloodPressures.add(bpData);
+      state = Success(currentData);
     }
   }
 

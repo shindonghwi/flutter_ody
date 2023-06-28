@@ -10,7 +10,7 @@ class SnackBarUtil {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          message,
+          message.toString(),
           style: getTextTheme(context).b2r.copyWith(
                 color: ThemeMode.system == ThemeMode.dark
                     ? AppTheme.darkTheme.colorScheme.white

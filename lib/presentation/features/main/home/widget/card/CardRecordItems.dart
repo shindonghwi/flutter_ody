@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioStepModel.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/card/widget/CardBpItem.dart';
@@ -16,51 +17,18 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class CardRecordItems extends HookConsumerWidget {
+  final ResponseBioForDaysModel model;
+
   const CardRecordItems({
     super.key,
+    required this.model,
   });
-
-  void movePage(BuildContext context, String title, DateTime currentDateTime) {
-    if (title == getAppLocalizations(context).home_today_record_walk) {
-      // 걸음수 화면
-    } else if (title == getAppLocalizations(context).home_today_record_blood_pressure) {
-    } else if (title == getAppLocalizations(context).home_today_record_glucose) {
-      Navigator.push(
-        context,
-        nextSlideScreen(
-          RoutingScreen.RecordedListGlucose.route,
-          parameter: currentDateTime,
-        ),
-      );
-    } else {}
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uiState = ref.watch(forDaysBioInfoProvider);
-
-    final ValueNotifier<List<ResponseBioStepModel>?> stepDataListState = useState([]);
-    final ValueNotifier<List<ResponseBioBloodPressureModel>?> bpDataListState = useState([]);
-    final ValueNotifier<List<ResponseBioGlucoseModel>?> glucoseDataListState = useState([]);
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        uiState.when(
-          success: (event) async {
-            if (!CollectionUtil.isNullorEmpty(event.value?.steps)) {
-              event.value?.steps.first;
-            } else {}
-
-            stepDataListState.value = event.value?.steps;
-            bpDataListState.value = event.value?.bloodPressures;
-            glucoseDataListState.value = event.value?.glucoses;
-          },
-          failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
-          },
-        );
-      });
-    }, [uiState]);
+    final List<ResponseBioStepModel> stepDataList = model.steps;
+    final List<ResponseBioBloodPressureModel> bpDataList = model.bloodPressures;
+    final List<ResponseBioGlucoseModel> glucoseDataList = model.glucoses;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 48),
@@ -81,7 +49,7 @@ class CardRecordItems extends HookConsumerWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: CardBpItem(
-                  bpDataList: bpDataListState.value,
+                  bpDataList: bpDataList,
                 ),
               ),
             ],
@@ -93,7 +61,7 @@ class CardRecordItems extends HookConsumerWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: CardGlucoseItem(
-                  glucoseDataList: glucoseDataListState.value,
+                  glucoseDataList: glucoseDataList,
                 ),
               ),
               const SizedBox(width: 20),

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/provider/RecordListBloodPressureProvider.dart';
+import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
@@ -18,25 +19,28 @@ class RecordBloodPressureBottomContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final now = DateTime.now();
     bool isRecordButtonVisible = "${date.year}${date.month}${date.day}" == "${now.year}${now.month}${now.day}";
 
     return Align(
       alignment: Alignment.bottomRight,
-      child: isRecordButtonVisible ? const _FloatingButton() : const SizedBox(),
+      child: isRecordButtonVisible ? _FloatingButton(date: date) : const SizedBox(),
     );
   }
 }
 
 class _FloatingButton extends HookConsumerWidget {
+  final DateTime date;
+
   const _FloatingButton({
     super.key,
+    required this.date,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final uiStateRead = ref.read(recordListBloodPressureProvider.notifier);
+
     return Container(
       width: 50,
       height: 50,
@@ -64,6 +68,7 @@ class _FloatingButton extends HookConsumerWidget {
             );
             try {
               if (data.diastolicBloodPressure != 0) {
+                ref.read(forDaysBioInfoProvider.notifier).addBpBioInfo(data);
                 uiStateRead.addBloodPressure(data);
               }
             } catch (e) {}

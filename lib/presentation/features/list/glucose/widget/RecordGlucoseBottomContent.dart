@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
 import 'package:ody_flutter_app/presentation/features/list/glucose/provider/RecordListGlucoseProvider.dart';
+import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
@@ -23,14 +24,17 @@ class RecordGlucoseBottomContent extends HookConsumerWidget {
 
     return Align(
       alignment: Alignment.bottomRight,
-      child: isRecordButtonVisible ? const _FloatingButton() : const SizedBox(),
+      child: isRecordButtonVisible ? _FloatingButton(date: date,) : const SizedBox(),
     );
   }
 }
 
 class _FloatingButton extends HookConsumerWidget {
+  final DateTime date;
+
   const _FloatingButton({
     super.key,
+    required this.date,
   });
 
   @override
@@ -63,6 +67,7 @@ class _FloatingButton extends HookConsumerWidget {
             );
             try {
               if (data.glucose != 0) {
+                ref.read(forDaysBioInfoProvider.notifier).addGlucoseBioInfo(data);
                 uiStateRead.addGlucose(data);
               }
             } catch (e) {}
