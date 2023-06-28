@@ -77,10 +77,18 @@ class AnalysisScreen extends HookConsumerWidget {
                           const SizedBox(
                             height: 22,
                           ),
-                          if (!CollectionUtil.isNullorEmpty(stepList.value)) _StepList(stepList: stepList.value),
-                          if (!CollectionUtil.isNullorEmpty(bpList.value)) _BpList(bpList: bpList.value),
+                          if (!CollectionUtil.isNullorEmpty(stepList.value))
+                            _StepList(
+                              stepList: stepList.value?.reversed.toList(),
+                            ),
+                          if (!CollectionUtil.isNullorEmpty(bpList.value))
+                            _BpList(
+                              bpList: bpList.value?.reversed.toList(),
+                            ),
                           if (!CollectionUtil.isNullorEmpty(glucoseList.value))
-                            _GlucoseList(glucoseList: glucoseList.value),
+                            _GlucoseList(
+                              glucoseList: glucoseList.value?.reversed.toList(),
+                            ),
                         ],
                       ),
                     )
@@ -147,7 +155,7 @@ class _BpList extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         RichText(
                           text: TextSpan(
@@ -285,13 +293,19 @@ class _GlucoseList extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(
-                          item.type.name,
-                          style: getTextTheme(context).c2b.copyWith(
-                                color: getColorScheme(context).colorText,
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: item.type.name,
+                                style: getTextTheme(context).c2b.copyWith(
+                                      color: getColorScheme(context).colorText,
+                                    ),
                               ),
+                            ],
+                          ),
                         ),
                         RichText(
                           text: TextSpan(
@@ -396,28 +410,35 @@ class _StepList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        item.toString(),
-                        style: getTextTheme(context).b2b.copyWith(
-                              color: getColorScheme(context).colorText,
-                            ),
-                      ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Text(
-                        getAppLocalizations(context).home_today_record_walk_unit,
-                        style: getTextTheme(context).c2b.copyWith(
-                              color: getColorScheme(context).neutral70,
-                            ),
-                      ),
-                    ],
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "${item.count}",
+                          style: getTextTheme(context).b2b.copyWith(
+                                color: getColorScheme(context).colorText,
+                              ),
+                        ),
+                        const WidgetSpan(
+                          child: SizedBox(width: 6),
+                        ),
+                        TextSpan(
+                          text: getAppLocalizations(context).home_today_record_walk_unit,
+                          style: getTextTheme(context).c2b.copyWith(
+                                color: getColorScheme(context).neutral70,
+                              ),
+                        ),
+                      ],
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "오전 7:49",
+                    DateTransfer.dateTimeToAmPmTimeOnlyNumber(
+                      DateTime.now().copyWith(
+                        hour: int.parse(item.createdAt.split(":").first),
+                        minute: int.parse(item.createdAt.split(":").last),
+                      ),
+                    ),
                     style: getTextTheme(context).c2b.copyWith(
                           color: getColorScheme(context).neutral70,
                         ),
