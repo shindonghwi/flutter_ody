@@ -60,7 +60,7 @@ class AnalysisScreen extends HookConsumerWidget {
           children: [
             Container(
               color: getColorScheme(context).colorUI03,
-              margin: EdgeInsets.only(top: CalendarSize.underMargin(context), left: 20, right: 20),
+              margin: const EdgeInsets.only(left: 20, right: 20),
               child: !isAllEmpty.value
                   ? SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
@@ -68,11 +68,14 @@ class AnalysisScreen extends HookConsumerWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            DateTransfer.dateTimeToYearMonthDayYoil(currentPageDatetime),
-                            style: getTextTheme(context).t2b.copyWith(
-                                  color: getColorScheme(context).colorText,
-                                ),
+                          Padding(
+                            padding: EdgeInsets.only(top: CalendarSize.underMargin(context)),
+                            child: Text(
+                              DateTransfer.dateTimeToYearMonthDayYoil(currentPageDatetime),
+                              style: getTextTheme(context).t2b.copyWith(
+                                    color: getColorScheme(context).colorText,
+                                  ),
+                            ),
                           ),
                           const SizedBox(
                             height: 22,
