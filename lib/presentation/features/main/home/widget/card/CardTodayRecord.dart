@@ -1,21 +1,29 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/PainterCircleProgress.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateTransfer.dart';
 
-class CardTodayRecord extends HookWidget {
+class CardTodayRecord extends HookConsumerWidget {
+  final ResponseBioForDaysModel model;
+
   const CardTodayRecord({
     super.key,
+    required this.model,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    DateTime currentDateTime = ref.read(calendarPageProvider.notifier).getCurrentDateTime();
+
+    bool isToday = DateChecker.isDateToday(currentDateTime);
+
     return Container(
       width: double.infinity,
       height: 120,
@@ -38,7 +46,7 @@ class CardTodayRecord extends HookWidget {
           _percentageCircleProgressBar(context), // 원형 프로그래스바
           Expanded(
             child: Center(
-              child: _recordInfo(context),
+              child: _recordInfo(context, isToday, currentDateTime),
             ),
           ), // 오늘의 기록 정보
         ],
@@ -46,13 +54,49 @@ class CardTodayRecord extends HookWidget {
     );
   }
 
-  Column _recordInfo(BuildContext context) {
+  int getCompleteCount(ResponseBioForDaysModel model) {
+    int completeCount = 0;
+    completeCount += model.steps.isNotEmpty ? 1 : 0;
+    completeCount += model.bloodPressures.isNotEmpty ? 1 : 0;
+    completeCount += model.glucoses.isNotEmpty ? 1 : 0;
+    return completeCount;
+  }
+
+  String getComment(BuildContext context, ResponseBioForDaysModel model, bool isToday) {
+    int completeCount = getCompleteCount(model);
+    if (isToday) {
+      switch (completeCount) {
+        case 0:
+          return getAppLocalizations(context).home_today_record_comment_start;
+        case 1:
+          return getAppLocalizations(context).home_today_record_comment_fighting;
+        case 2:
+          return getAppLocalizations(context).home_today_record_comment_progress;
+        default:
+          return getAppLocalizations(context).home_today_record_comment_complete;
+      }
+    } else {
+      switch (completeCount) {
+        case 0:
+          return getAppLocalizations(context).home_today_record_comment_not_recorded;
+        default:
+          return getAppLocalizations(context).home_today_record_comment_thank_you;
+      }
+    }
+  }
+
+  Column _recordInfo(BuildContext context, bool isToday, DateTime currentDateTime) {
+    int completeCount = getCompleteCount(model);
+    String comment = getComment(context, model, isToday);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          getAppLocalizations(context).home_today_record_title,
+          isToday
+              ? getAppLocalizations(context).home_today_record_title
+              : DateTransfer.dateTimeToMonthDayRecord(currentDateTime),
           style: getTextTheme(context).t2b.copyWith(
                 color: getColorScheme(context).white,
               ),
@@ -61,7 +105,7 @@ class CardTodayRecord extends HookWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: "0 / 3",
+                text: "$completeCount / 3",
                 style: getTextTheme(context).b2b.copyWith(
                       color: getColorScheme(context).white,
                     ),
@@ -70,7 +114,7 @@ class CardTodayRecord extends HookWidget {
                 child: SizedBox(width: 8),
               ),
               TextSpan(
-                text: "달성했어요",
+                text: getAppLocalizations(context).home_today_record_comment_complete_count_success,
                 style: getTextTheme(context).c2b.copyWith(
                       color: getColorScheme(context).white.withOpacity(0.5),
                     ),
@@ -80,7 +124,7 @@ class CardTodayRecord extends HookWidget {
           overflow: TextOverflow.ellipsis,
         ),
         Text(
-          "새로운 기록을 달성해볼까요?",
+          comment,
           style: getTextTheme(context).c2r.copyWith(
                 color: getColorScheme(context).white,
               ),
@@ -90,24 +134,39 @@ class CardTodayRecord extends HookWidget {
   }
 
   Widget _percentageCircleProgressBar(BuildContext context) {
+    double percentage = 0.0;
+
+    switch (getCompleteCount(model)) {
+      case 0:
+        percentage = 0.0;
+        break;
+      case 1:
+        percentage = 0.3;
+        break;
+      case 2:
+        percentage = 0.7;
+        break;
+      case 3:
+        percentage = 1.0;
+        break;
+    }
+
+    getCompleteCount(model);
+
     return SizedBox(
       width: 70,
       height: 70,
       child: Stack(
         children: [
-          Transform.rotate(
-            angle: math.pi * 7 / 6,
-            child: CustomPaint(
-              painter: PainterCircleProgress(
-                progress: 1,
-              ),
-              child: Container(),
-            ),
+          CustomCircle(
+            percentage: percentage,
+            activeColor: getColorScheme(context).white,
+            defaultColor: getColorScheme(context).white.withOpacity(0.3),
           ),
           Align(
             alignment: Alignment.center,
             child: Text(
-              "30%",
+              "${(percentage * 100).toInt()}%",
               style: getTextTheme(context).b2b.copyWith(
                     color: getColorScheme(context).white,
                   ),

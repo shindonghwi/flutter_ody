@@ -56,7 +56,7 @@ class HomeScreen extends HookConsumerWidget {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            const CardTodayRecord(),
+            CardTodayRecord(model: model),
             CardRecordItems(model: model),
           ],
         ),

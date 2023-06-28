@@ -4,12 +4,10 @@ import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioHistoryForDaysUseCase.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
-import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:riverpod/riverpod.dart';
 
-final forDaysBioInfoProvider =
-StateNotifierProvider<ForDaysBioInfoNotifier, UIState<ResponseBioForDaysModel?>>(
-      (_) => ForDaysBioInfoNotifier(),
+final forDaysBioInfoProvider = StateNotifierProvider<ForDaysBioInfoNotifier, UIState<ResponseBioForDaysModel?>>(
+  (_) => ForDaysBioInfoNotifier(),
 );
 
 class ForDaysBioInfoNotifier extends StateNotifier<UIState<ResponseBioForDaysModel?>> {
@@ -19,7 +17,7 @@ class ForDaysBioInfoNotifier extends StateNotifier<UIState<ResponseBioForDaysMod
     state = Loading();
     final res = await GetIt.instance.get<GetBioHistoryForDaysUseCase>().call(year: year, month: month, day: day);
     if (res.status == 200) {
-      _updateBioInfo(res.data);
+      Future.delayed(const Duration(milliseconds: 150), () => _updateBioInfo(res.data));
     } else {
       state = Failure(res.message);
     }
