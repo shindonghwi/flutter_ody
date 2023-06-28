@@ -39,8 +39,20 @@ class DateParser {
     return timeZoneIds.toList();
   }
 
+  static int getNumberOfDays(int year, int month) {
+    bool isLeapMonth() {
+      if (month == DateTime.february && year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
+        return true;
+      }
+      return false;
+    }
+
+    if (isLeapMonth()) {
+      return 29; // Leap month has 29 days (February in a leap year)
+    } else {
+      return DateTime(year, month + 1, 0).day; // Get the number of days in the specified month
+    }
+  }
+
 }
 
-
-// 2011-12-03T10:15:30+01:00[Europe/Paris]
-// 2023-05-24T18:05:30+09:00[Asia/Seoul]

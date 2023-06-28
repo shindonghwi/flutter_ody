@@ -7,27 +7,35 @@ import 'package:ody_flutter_app/presentation/components/button/fill/FillButton.d
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateParser.dart';
 
-class BottomSheetTimeSetting extends HookWidget {
-  final Function(int hour, int minute) callback;
+class BottomSheetCalendarSetting extends HookConsumerWidget {
+  final Function(DateTime datetime) callback;
 
-  const BottomSheetTimeSetting({
+  const BottomSheetCalendarSetting({
     Key? key,
     required this.callback,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    int hour24 = now.hour;
-    int hour12 = hour24 > 12 ? hour24 - 12 : hour24;
-    int minute = now.minute;
-    final isAm = useState(hour24 < 12 ? 0 : 1);
-    final currentHourValue = useState(hour12);
-    final currentMinValue = useState(minute);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final calendarSelectDateRead = ref.read(calendarSelectDateProvider.notifier);
+
+    final now = DateTime.now();
+
+    final currentTime = DateTime.now().copyWith(
+      year: calendarSelectDateRead.getSelectedDatetime().year,
+      month: calendarSelectDateRead.getSelectedDatetime().month,
+      day: calendarSelectDateRead.getSelectedDatetime().day,
+    );
+
+    final yearState = useState(currentTime.year);
+    final monthState = useState(currentTime.month);
+    final dayState = useState(currentTime.day);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -46,7 +54,7 @@ class BottomSheetTimeSetting extends HookWidget {
           height: 32,
         ),
         Text(
-          getAppLocalizations(context).bottom_sheet_time_setting_title,
+          getAppLocalizations(context).bottom_sheet_calendar_setting_title,
           style: getTextTheme(context).t2b.copyWith(
                 color: getColorScheme(context).colorText,
               ),
@@ -64,12 +72,19 @@ class BottomSheetTimeSetting extends HookWidget {
                   alignment: Alignment.center,
                   child: NumberPicker(
                     textMapper: (value) {
-                      return value == "0" ? '오전' : '오후';
+                      return "$value년";
                     },
-                    value: isAm.value,
-                    minValue: 0,
-                    maxValue: 1,
-                    onChanged: (value) => isAm.value = value,
+                    value: yearState.value,
+                    minValue: 2022,
+                    maxValue: now.year,
+                    itemCount: 5,
+                    onChanged: (value) {
+                      if (now.compareTo(DateTime(value, monthState.value, dayState.value)) <= 0) {
+                        yearState.value = now.year;
+                        return;
+                      }
+                      yearState.value = value;
+                    },
                     selectedTextStyle: getTextTheme(context).l1b.copyWith(
                           color: getColorScheme(context).colorText,
                         ),
@@ -88,11 +103,18 @@ class BottomSheetTimeSetting extends HookWidget {
                 Align(
                   alignment: Alignment.center,
                   child: NumberPicker(
-                    value: currentHourValue.value,
+                    value: monthState.value,
                     minValue: 1,
                     maxValue: 12,
                     itemCount: 5,
-                    onChanged: (value) => currentHourValue.value = value,
+                    onChanged: (value) {
+                      if (now.compareTo(DateTime(yearState.value, value, dayState.value)) <= 0) {
+                        yearState.value = now.year;
+                        monthState.value = now.month;
+                        return;
+                      }
+                      monthState.value = value;
+                    },
                     selectedTextStyle: getTextTheme(context).l1b.copyWith(
                           color: getColorScheme(context).colorText,
                         ),
@@ -111,11 +133,19 @@ class BottomSheetTimeSetting extends HookWidget {
                 Align(
                   alignment: Alignment.center,
                   child: NumberPicker(
-                    value: currentMinValue.value,
-                    minValue: 0,
-                    maxValue: 59,
+                    value: dayState.value,
+                    minValue: 1,
+                    maxValue: DateParser.getNumberOfDays(now.year, now.month),
                     itemCount: 5,
-                    onChanged: (value) => currentMinValue.value = value,
+                    onChanged: (value) {
+                      if (now.compareTo(DateTime(yearState.value, monthState.value, value)) <= 0) {
+                        yearState.value = now.year;
+                        monthState.value = now.month;
+                        dayState.value = now.day;
+                        return;
+                      }
+                      dayState.value = value;
+                    },
                     selectedTextStyle: getTextTheme(context).l1b.copyWith(
                           color: getColorScheme(context).colorText,
                         ),
@@ -140,10 +170,7 @@ class BottomSheetTimeSetting extends HookWidget {
             text: getAppLocalizations(context).bottom_sheet_setting_complete,
             type: ButtonSizeType.Small,
             onPressed: () {
-              callback.call(
-                currentHourValue.value + (isAm.value == 0 ? 0 : 12),
-                currentMinValue.value,
-              );
+              callback.call(DateTime(yearState.value, monthState.value, dayState.value));
               CommonBottomSheet.close(context);
             },
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(

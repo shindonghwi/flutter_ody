@@ -6,6 +6,7 @@ import 'package:ody_flutter_app/presentation/features/main/home/HomeScreen.dart'
 import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarFormatNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarHeightNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/DimNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/HomeAppBar.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/calendar/CalendarContainerView.dart';
@@ -21,7 +22,10 @@ import 'package:table_calendar/table_calendar.dart';
 class MainScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final calendarPage = ref.watch(calendarPageProvider);
     final _currentIndex = ref.watch(mainTabIndexProvider);
+
+    debugPrint('MainScreen build: ${calendarPage}');
 
     List<Pair> _iconList = [
       Pair('assets/imgs/icon_record_1.svg', getAppLocalizations(context).main_tab_record),
@@ -48,6 +52,7 @@ class MainScreen extends HookConsumerWidget {
               calendarMaxHeight: CalendarSize.maxHeight(context),
               child: CalendarContentView(
                 maxHeight: CalendarSize.maxHeight(context),
+                calendarPage: calendarPage,
               ),
             ),
         ],

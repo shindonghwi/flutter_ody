@@ -9,17 +9,20 @@ import 'package:ody_flutter_app/presentation/features/main/home/notifier/Calenda
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/DimNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/features/main/provider/MonthlyBioInfoProvider.dart';
+import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarContentView extends HookConsumerWidget {
+  final DateTime calendarPage;
   final double maxHeight;
 
   const CalendarContentView({
     super.key,
     required this.maxHeight,
+    required this.calendarPage,
   });
 
   @override
@@ -31,28 +34,27 @@ class CalendarContentView extends HookConsumerWidget {
     final calendarSelectDateRead = ref.read(calendarSelectDateProvider.notifier);
     final calendarHeightRead = ref.read(calendarHeightProvider.notifier);
     final forDaysBioInfoRead = ref.read(forDaysBioInfoProvider.notifier);
+    final monthlyBioInfo = ref.watch(monthlyBioInfoProvider);
     final monthlyBioInfoRead = ref.read(monthlyBioInfoProvider.notifier);
 
-    final _selectedDay = useState(DateTime.now());
-    final _focusedDay = useState(DateTime.now());
-
-    ValueNotifier<List<String>?> monthlyRecordDayList = useState([]);
+    final _selectedDay = useState(calendarPage);
+    final _focusedDay = useState(calendarPage);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        monthlyRecordDayList.value = await monthlyBioInfoRead.requestBioInfo(
-          _selectedDay.value.year,
-          _selectedDay.value.month,
-          _selectedDay.value.day,
+        monthlyBioInfoRead.requestBioInfo(
+          calendarPage.year,
+          calendarPage.month,
+          calendarPage.day,
         );
 
         forDaysBioInfoRead.requestBioInfo(
-          _selectedDay.value.year,
-          _selectedDay.value.month,
-          _selectedDay.value.day,
+          calendarPage.year,
+          calendarPage.month,
+          calendarPage.day,
         );
       });
-    }, []);
+    }, [calendarPage]);
 
     final _firstDay = DateTime.now().subtract(
       const Duration(days: 365 * 10 + 2),
@@ -86,7 +88,7 @@ class CalendarContentView extends HookConsumerWidget {
                 daysOfWeekHeight: 42,
                 firstDay: _firstDay,
                 lastDay: _lastDay,
-                focusedDay: _focusedDay.value,
+                focusedDay: calendarPage,
                 calendarFormat: calendarFormat,
                 selectedDayPredicate: (day) {
                   return isSameDay(_selectedDay.value, day);
@@ -107,15 +109,10 @@ class CalendarContentView extends HookConsumerWidget {
                   );
                 },
                 onPageChanged: (focusedDay) async {
-                  _focusedDay.value = focusedDay;
-                  calendarPageRead.updatePageDatetime(focusedDay);
-
-                  if (focusedDay.compareTo(DateTime.now()) <= 0) {
-                    monthlyRecordDayList.value = await monthlyBioInfoRead.requestBioInfo(
-                      focusedDay.year,
-                      focusedDay.month,
-                      focusedDay.day,
-                    );
+                  if (_focusedDay.value.month.compareTo(focusedDay.month) != 0 &&
+                      DateTime.now().compareTo(focusedDay) >= 0) {
+                    _focusedDay.value = focusedDay;
+                    calendarPageRead.updatePageDatetime(focusedDay);
                   }
                 },
                 calendarBuilders: CalendarBuilders(
@@ -181,20 +178,20 @@ class CalendarContentView extends HookConsumerWidget {
                               ),
                             ),
                           ),
-                          if (monthlyRecordDayList.value!.contains(parsedDay))
+                          if (monthlyBioInfo is Success<List<String>>)
                             Positioned(
                               left: 0,
                               right: 0,
-                              bottom: 0,
+                              bottom: 4,
                               child: Container(
-                                height: 4,
-                                width: 4,
+                                width: monthlyBioInfo.value.contains(parsedDay) ? 4 : 0,
+                                height: monthlyBioInfo.value.contains(parsedDay) ? 4 : 0,
                                 decoration: BoxDecoration(
                                   color: getColorScheme(context).colorPrimaryFocus,
                                   shape: BoxShape.circle,
                                 ),
                               ),
-                            ),
+                            )
                         ],
                       ),
                     );
