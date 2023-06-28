@@ -62,8 +62,7 @@ class _BottomNavigationBar extends HookConsumerWidget {
     super.key,
     required int currentIndex,
     required List<Pair> iconList,
-  })
-      : _currentIndex = currentIndex,
+  })  : _currentIndex = currentIndex,
         _iconList = iconList;
 
   final int _currentIndex;
@@ -79,6 +78,7 @@ class _BottomNavigationBar extends HookConsumerWidget {
     final isDimOnRead = ref.read(dimProvider.notifier);
     final calendarFormatRead = ref.read(calendarFormatProvider.notifier);
     final calendarHeightRead = ref.read(calendarHeightProvider.notifier);
+    final mainTabIndexRead = ref.read(mainTabIndexProvider.notifier);
 
     return TweenAnimationBuilder<double>(
       duration: const Duration(milliseconds: duration),
@@ -99,10 +99,7 @@ class _BottomNavigationBar extends HookConsumerWidget {
                   selectedItemColor: getColorScheme(context).colorPrimaryFocus,
                   unselectedItemColor: getColorScheme(context).neutral50,
                   currentIndex: _currentIndex,
-                  onTap: (index) =>
-                  ref
-                      .read(mainTabIndexProvider.notifier)
-                      .state = index,
+                  onTap: (index) => mainTabIndexRead.state = index,
                   items: _iconList.map((data) {
                     return BottomNavigationBarItem(
                       icon: Column(

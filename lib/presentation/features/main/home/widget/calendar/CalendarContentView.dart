@@ -100,13 +100,11 @@ class CalendarContentView extends HookConsumerWidget {
                   calendarHeightRead.updateHeight(CalendarSize.minHeight(context));
                   calendarFormatRead.updateFormat(CalendarFormat.week);
 
-                  if (selectedDay.compareTo(DateTime.now()) <= 0) {
-                    forDaysBioInfoRead.requestBioInfo(
-                      _selectedDay.value.year,
-                      _selectedDay.value.month,
-                      _selectedDay.value.day,
-                    );
-                  }
+                  forDaysBioInfoRead.requestBioInfo(
+                    _selectedDay.value.year,
+                    _selectedDay.value.month,
+                    _selectedDay.value.day,
+                  );
                 },
                 onPageChanged: (focusedDay) async {
                   _focusedDay.value = focusedDay;

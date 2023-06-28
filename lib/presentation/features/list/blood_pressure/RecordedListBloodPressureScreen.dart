@@ -11,12 +11,14 @@ import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.da
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/provider/RecordListBloodPressureProvider.dart';
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/widget/RecordBloodPressureBottomContent.dart';
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/widget/RecordBloodPressureItem.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class RecordedListBloodPressureScreen extends HookConsumerWidget {
@@ -31,6 +33,14 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final uiState = ref.watch(recordListBloodPressureProvider);
     final uiStateRead = ref.read(recordListBloodPressureProvider.notifier);
+    DateTime currentDateTime = ref.read(calendarPageProvider.notifier).getCurrentDateTime();
+    bool isToday = false;
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        isToday = DateChecker.isDateToday(currentDateTime);
+      });
+    }, [currentDateTime]);
 
     useEffect(() {
       void handleUiStateChange() async {
@@ -94,10 +104,12 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                     child: EmptyView(
                       screen: RoutingScreen.RecordedListBloodPressure,
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
-                        );
+                        isToday
+                            ? Navigator.push(
+                                context,
+                                nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
+                              )
+                            : Navigator.of(context).pop();
                       },
                     ),
                   ),

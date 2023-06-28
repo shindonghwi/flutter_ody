@@ -11,12 +11,14 @@ import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.da
 import 'package:ody_flutter_app/presentation/features/list/glucose/provider/RecordListGlucoseProvider.dart';
 import 'package:ody_flutter_app/presentation/features/list/glucose/widget/RecordGlucoseBottomContent.dart';
 import 'package:ody_flutter_app/presentation/features/list/glucose/widget/RecordGlucoseItem.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class RecordedListGlucoseScreen extends HookConsumerWidget {
@@ -31,6 +33,14 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final uiState = ref.watch(recordListGlucoseProvider);
     final uiStateRead = ref.read(recordListGlucoseProvider.notifier);
+    DateTime currentDateTime = ref.read(calendarPageProvider.notifier).getCurrentDateTime();
+    bool isToday = false;
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        isToday = DateChecker.isDateToday(currentDateTime);
+      });
+    }, [currentDateTime]);
 
     useEffect(() {
       void handleUiStateChange() async {
@@ -94,10 +104,12 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
                     child: EmptyView(
                       screen: RoutingScreen.RecordedListGlucose,
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          nextSlideScreen(RoutingScreen.RecordGlucose.route),
-                        );
+                        isToday
+                            ? Navigator.push(
+                                context,
+                                nextSlideScreen(RoutingScreen.RecordGlucose.route),
+                              )
+                            : Navigator.of(context).pop();
                       },
                     ),
                   ),

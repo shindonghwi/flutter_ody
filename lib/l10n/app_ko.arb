@@ -258,6 +258,8 @@
     "message_record_complete_glucose": "혈당이 기록되었습니다",
 
     "empty_record": "아직 작성한 기록이 없어요\n기록을 통해 건강한 생활을 시작해보아요 :)",
+    "empty_record_pre_disable": "기록한 내역이 없어요\n전날의 기록은 기록할 수 없습니다 :(",
+    "empty_record_post_disable": "기록한 내역이 없어요\n다음날의 기록은 기록할 수 없습니다 :(",
     "empty_report": "분석할 내역이 없어요\n기록을 통해 건강한 생활을 시작해보아요 :)",
     "empty_alarm": "아직 저장한 알림이 없어요\n기록을 통해 건강한 생활을 시작해보아요 :)",
     "empty_button_alarm_add": "알림 추가하기",
