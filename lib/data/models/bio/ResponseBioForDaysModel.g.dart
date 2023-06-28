@@ -9,7 +9,9 @@ part of 'ResponseBioForDaysModel.dart';
 ResponseBioForDaysModel _$ResponseBioForDaysModelFromJson(
         Map<String, dynamic> json) =>
     ResponseBioForDaysModel(
-      steps: (json['steps'] as List<dynamic>).map((e) => e as String).toList(),
+      steps: (json['steps'] as List<dynamic>)
+          .map((e) => ResponseBioStepModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       bloodPressures: (json['bloodPressures'] as List<dynamic>)
           .map((e) =>
               ResponseBioBloodPressureModel.fromJson(e as Map<String, dynamic>))

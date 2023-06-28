@@ -25,7 +25,7 @@ class RangeResult extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorList = RecordRangeStatusHelper.getDividerColorList(context, type, status);
+    final colorList = RecordRangeStatusHelper.getDividerColorList(context, status);
 
     return Container(
       width: double.infinity,

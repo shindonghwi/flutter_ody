@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ody_flutter_app/presentation/features/main/home/model/RecordItemState.dart';
-import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioStepModel.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/widget/card/widget/CardBpItem.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/widget/card/widget/CardEmotionItem.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/widget/card/widget/CardGlucoseItem.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/widget/card/widget/CardWalkItem.dart';
+import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
-import 'package:ody_flutter_app/presentation/ui/colors.dart';
-import 'package:ody_flutter_app/presentation/ui/typography.dart';
+import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
+import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class CardRecordItems extends HookConsumerWidget {
   const CardRecordItems({
@@ -20,13 +24,6 @@ class CardRecordItems extends HookConsumerWidget {
     if (title == getAppLocalizations(context).home_today_record_walk) {
       // 걸음수 화면
     } else if (title == getAppLocalizations(context).home_today_record_blood_pressure) {
-      Navigator.push(
-        context,
-        nextSlideScreen(
-          RoutingScreen.RecordedListBloodPressure.route,
-          parameter: currentDateTime,
-        ),
-      );
     } else if (title == getAppLocalizations(context).home_today_record_glucose) {
       Navigator.push(
         context,
@@ -40,184 +37,75 @@ class CardRecordItems extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentPageDatetimeRead = ref.read(calendarPageProvider.notifier);
+    final uiState = ref.watch(forDaysBioInfoProvider);
 
-    // final recordItemState = [
-    //   useState<RecordItemState>(
-    //     RecordItemState(
-    //       title: getAppLocalizations(context).home_today_record_walk,
-    //       contents: [
-    //         Pair(
-    //           "0",
-    //           getAppLocalizations(context).home_today_record_walk_unit,
-    //         ),
-    //       ],
-    //       imagePath: 'assets/imgs/ody_record_blood_pressure.png',
-    //     ),
-    //   ),
-    //   useState<RecordItemState>(
-    //     RecordItemState(
-    //       title: getAppLocalizations(context).home_today_record_blood_pressure,
-    //       contents: [
-    //         Pair(
-    //           "오늘은",
-    //           getAppLocalizations(context).home_today_record_blood_pressure_unit1,
-    //         ),
-    //       ],
-    //       imagePath: 'assets/imgs/ody_record_blood_pressure.png',
-    //     ),
-    //   ),
-    //   useState<RecordItemState>(
-    //     RecordItemState(
-    //       title: getAppLocalizations(context).home_today_record_glucose,
-    //       contents: [
-    //         Pair(
-    //           "100",
-    //           getAppLocalizations(context).home_today_record_glucose_unit,
-    //         ),
-    //       ],
-    //       imagePath: 'assets/imgs/ody_record_blood_pressure.png',
-    //     ),
-    //   ),
-    //   useState<RecordItemState>(
-    //     RecordItemState(
-    //       title: getAppLocalizations(context).home_today_record_emotion,
-    //       contents: [
-    //         Pair(
-    //           "0",
-    //           getAppLocalizations(context).home_today_record_emotion,
-    //         ),
-    //       ],
-    //       imagePath: 'assets/imgs/ody_record_blood_pressure.png',
-    //     ),
-    //   ),
-    // ];
+    final ValueNotifier<List<ResponseBioStepModel>?> stepDataListState = useState([]);
+    final ValueNotifier<List<ResponseBioBloodPressureModel>?> bpDataListState = useState([]);
+    final ValueNotifier<List<ResponseBioGlucoseModel>?> glucoseDataListState = useState([]);
 
-    return SliverGrid(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1.0,
-        mainAxisSpacing: 16.0,
-        crossAxisSpacing: 20.0,
-      ),
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          // final title = recordItemState[index].value.title;
-          // final contents = recordItemState[index].value.contents;
-          // final imagePath = recordItemState[index].value.imagePath;
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        uiState.when(
+          success: (event) async {
+            if (!CollectionUtil.isNullorEmpty(event.value?.steps)) {
+              event.value?.steps.first;
+            } else {}
 
-          // debugPrint("title : $title index: ${index % 2}");
+            stepDataListState.value = event.value?.steps;
+            bpDataListState.value = event.value?.bloodPressures;
+            glucoseDataListState.value = event.value?.glucoses;
+          },
+          failure: (event) {
+            SnackBarUtil.show(context, event.errorMessage);
+          },
+        );
+      });
+    }, [uiState]);
 
-          return SizedBox();
-
-          // return Stack(
-          //   children: [
-          //     Container(
-          //       decoration: BoxDecoration(
-          //         color:
-          //             isEmotionType(context, title) ? getColorScheme(context).neutral30 : getColorScheme(context).white,
-          //         borderRadius: BorderRadius.circular(20),
-          //         boxShadow: [
-          //           BoxShadow(
-          //             color: const Color(0xFF8D8D8D).withOpacity(0.1),
-          //             spreadRadius: 0,
-          //             blurRadius: 5,
-          //             offset: const Offset(2, 2), // changes position of shadow
-          //           ),
-          //         ],
-          //       ),
-          //       child: Material(
-          //         color: Colors.transparent,
-          //         child: InkWell(
-          //           onTap: () => movePage(context, title, currentPageDatetimeRead.getCurrentDateTime()),
-          //           borderRadius: BorderRadius.circular(20),
-          //           child: Container(
-          //             height: double.infinity,
-          //             padding: const EdgeInsets.fromLTRB(15, 23, 10, 8),
-          //             child: Column(
-          //               crossAxisAlignment: CrossAxisAlignment.start,
-          //               children: [
-          //                 Text(
-          //                   title,
-          //                   style: getTextTheme(context).l3m.copyWith(
-          //                         color: isEmotionType(context, title)
-          //                             ? getColorScheme(context).neutral80
-          //                             : getColorScheme(context).neutral70,
-          //                       ),
-          //                 ),
-          //                 const SizedBox(
-          //                   height: 16,
-          //                 ),
-          //                 isEmotionType(context, title)
-          //                     ? Text(
-          //                         getAppLocalizations(context).home_today_record_prepare,
-          //                         style: getTextTheme(context).c1b.copyWith(
-          //                               color: getColorScheme(context).neutral70,
-          //                             ),
-          //                       )
-          //                     : Column(
-          //                         children: contents.map((e) {
-          //                           return Row(
-          //                             children: [
-          //                               Text(
-          //                                 e.first.toString(),
-          //                                 style: getTextTheme(context).t2b.copyWith(
-          //                                       color: getColorScheme(context).neutral70,
-          //                                     ),
-          //                                 textAlign: TextAlign.center,
-          //                               ),
-          //                               const SizedBox(
-          //                                 width: 8,
-          //                               ),
-          //                               Text(
-          //                                 e.second,
-          //                                 style: getTextTheme(context).c1b.copyWith(
-          //                                       color: getColorScheme(context).neutral60,
-          //                                     ),
-          //                               ),
-          //                             ],
-          //                           );
-          //                         }).toList(),
-          //                       ),
-          //                 const Expanded(child: SizedBox()),
-          //                 Align(
-          //                   alignment: Alignment.bottomRight,
-          //                   child: Image.asset(
-          //                     imagePath,
-          //                     height: 70,
-          //                     fit: BoxFit.fitHeight,
-          //                   ),
-          //                 )
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     if (isEmotionType(context, title))
-          //       IgnorePointer(
-          //         child: Container(
-          //           width: double.infinity,
-          //           height: double.infinity,
-          //           decoration: BoxDecoration(
-          //             color: getColorScheme(context).colorUI04.withOpacity(0.5),
-          //             borderRadius: BorderRadius.circular(20),
-          //             border: Border.all(
-          //               color: getColorScheme(context).colorUI04.withOpacity(0.5),
-          //             ),
-          //           ),
-          //         ),
-          //       )
-          //   ],
-          // );
-        },
-        // childCount: recordItemState.length,
-        childCount: 0,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 48),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 16,
+          ),
+          Row(
+            children: [
+              const Flexible(
+                fit: FlexFit.tight,
+                flex: 1,
+                child: CardWalkItem(),
+              ),
+              const SizedBox(width: 20),
+              Flexible(
+                fit: FlexFit.tight,
+                flex: 1,
+                child: CardBpItem(
+                  bpDataList: bpDataListState.value,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Flexible(
+                fit: FlexFit.tight,
+                flex: 1,
+                child: CardGlucoseItem(
+                  glucoseDataList: glucoseDataListState.value,
+                ),
+              ),
+              const SizedBox(width: 20),
+              const Flexible(
+                fit: FlexFit.tight,
+                flex: 1,
+                child: CardEmotionItem(),
+              ),
+            ],
+          )
+        ],
       ),
     );
-  }
-
-  bool isEmotionType(BuildContext context, String title) {
-    return title == getAppLocalizations(context).home_today_record_emotion;
   }
 }

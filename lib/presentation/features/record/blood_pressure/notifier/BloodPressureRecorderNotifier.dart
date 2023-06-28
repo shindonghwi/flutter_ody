@@ -94,15 +94,15 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
     if (systolic < 120 && diastolic < 80) {
       bpStatus = RecordRangeStatus.Normal;
     } else if ((systolic >= 120 && systolic < 130) && diastolic < 80) {
-      bpStatus = RecordRangeStatus.Danger;
+      bpStatus = RecordRangeStatus.Risk;
     } else if ((systolic >= 130 && systolic < 140) || (diastolic >= 80 && diastolic < 90)) {
-      bpStatus = RecordRangeStatus.Danger;
+      bpStatus = RecordRangeStatus.Risk;
     } else if ((systolic >= 140 && systolic < 160) || (diastolic >= 90 && diastolic < 100)) {
-      bpStatus = RecordRangeStatus.Risk;
+      bpStatus = RecordRangeStatus.HighRisk;
     } else if (systolic >= 160 || diastolic >= 100) {
-      bpStatus = RecordRangeStatus.Risk;
+      bpStatus = RecordRangeStatus.HighRisk;
     } else if (systolic >= 140 && diastolic < 90) {
-      bpStatus = RecordRangeStatus.Risk;
+      bpStatus = RecordRangeStatus.HighRisk;
     }
     return bpStatus;
   }

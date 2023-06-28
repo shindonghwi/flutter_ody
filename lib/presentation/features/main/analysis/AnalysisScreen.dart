@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioStepModel.dart';
 import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:ody_flutter_app/presentation/features/main/analysis/widget/AnalysisTabItemTitle.dart';
@@ -28,10 +29,11 @@ class AnalysisScreen extends HookConsumerWidget {
     final currentPageDatetime = ref.watch<DateTime>(calendarPageProvider);
     final uiState = ref.watch(forDaysBioInfoProvider);
 
-    final stepList = useState<List<String>?>([]);
+    final stepList = useState<List<ResponseBioStepModel>?>([]);
     final glucoseList = useState<List<ResponseBioGlucoseModel>?>([]);
     final bpList = useState<List<ResponseBioBloodPressureModel>?>([]);
     final isAllEmpty = useState(true);
+
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
@@ -363,7 +365,7 @@ class _StepList extends StatelessWidget {
     required this.stepList,
   });
 
-  final List<String>? stepList;
+  final List<ResponseBioStepModel>? stepList;
 
   @override
   Widget build(BuildContext context) {

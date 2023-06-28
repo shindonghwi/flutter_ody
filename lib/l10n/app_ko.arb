@@ -73,7 +73,9 @@
     "home_today_record_comment_complete": "달성했어요",
     "home_today_record_comment_new": "새로운 기록을 달성해볼까요?",
     "home_today_record_complete_comment_congratulation": "달성을 축하합니다!",
-    "home_today_record_prepare": "준비중이에요 :)",
+    "home_today_record_ment_empty": "기록이 없어요",
+    "home_today_record_ment_default": "오늘은 어떠세요?",
+    "home_today_record_ment_prepare": "준비중이에요 :)",
 
     "record_blood_pressure": "혈압",
     "record_blood_pressure_input_title": "혈압 / 맥박",

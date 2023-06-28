@@ -1,13 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 
 class RecordItemState {
-  final String title;
-  final List<Pair<String, String>> contents;
+  final Widget title;
+  final Widget content;
   final String imagePath;
 
   RecordItemState({
     required this.title,
-    required this.contents,
+    required this.content,
     required this.imagePath,
   });
 }

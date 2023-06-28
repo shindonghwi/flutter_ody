@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/card/CardRecordItems.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/card/CardTodayRecord.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
@@ -12,24 +11,19 @@ class HomeScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: getColorScheme(context).colorUI02,
+      backgroundColor: getColorScheme(context).colorUI03,
       body: SafeArea(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverToBoxAdapter(
-              child: Container(
-                color: getColorScheme(context).colorUI02,
-                margin: EdgeInsets.only(top: CalendarSize.underMargin(context)),
-                child: const CardTodayRecord(),
-              ),
+        child: Container(
+          margin: const EdgeInsets.only(left: 24, right: 24),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: const [
+                CardTodayRecord(),
+                CardRecordItems(),
+              ],
             ),
-            const SliverPadding(
-              padding: EdgeInsets.fromLTRB(20, 24, 20, 40),
-              sliver: CardRecordItems(),
-            ),
-            // const CardRecordItems(),
-          ],
+          ),
         ),
       ),
     );

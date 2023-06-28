@@ -1,13 +1,14 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioStepModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseProfileModel.dart';
 
 part 'ResponseBioForDaysModel.g.dart';
 
 @JsonSerializable()
 class ResponseBioForDaysModel {
-  final List<String> steps;
+  final List<ResponseBioStepModel> steps;
   final List<ResponseBioBloodPressureModel> bloodPressures;
   final List<ResponseBioGlucoseModel> glucoses;
 
@@ -23,7 +24,7 @@ class ResponseBioForDaysModel {
   Map<String, dynamic> toJson() => _$ResponseBioForDaysModelToJson(this);
 
   ResponseBioForDaysModel copyWith({
-    List<String>? steps,
+    List<ResponseBioStepModel>? steps,
     List<ResponseBioBloodPressureModel>? bloodPressures,
     List<ResponseBioGlucoseModel>? glucoses,
   }) {

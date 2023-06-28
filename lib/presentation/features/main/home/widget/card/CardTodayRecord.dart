@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/PainterCircleProgress.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -18,7 +19,7 @@ class CardTodayRecord extends HookWidget {
     return Container(
       width: double.infinity,
       height: 120,
-      margin: const EdgeInsets.symmetric(horizontal: 24),
+      margin: EdgeInsets.only(top: CalendarSize.underMargin(context)),
       padding: const EdgeInsets.fromLTRB(24, 20, 8, 20),
       decoration: BoxDecoration(
         color: getColorScheme(context).primary100,

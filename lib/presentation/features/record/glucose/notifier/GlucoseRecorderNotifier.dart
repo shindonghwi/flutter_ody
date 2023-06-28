@@ -183,18 +183,18 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
         if (glucose <= 100) {
           glucoseStatus = RecordRangeStatus.Normal;
         } else if (glucose <= 126) {
-          glucoseStatus = RecordRangeStatus.Danger;
+          glucoseStatus = RecordRangeStatus.Warn;
         } else {
-          glucoseStatus = RecordRangeStatus.Risk;
+          glucoseStatus = RecordRangeStatus.Alert;
         }
         break;
       case GlucoseMeasureType.Preprandial:
         if (glucose <= 100) {
           glucoseStatus = RecordRangeStatus.Normal;
         } else if (glucose <= 140) {
-          glucoseStatus = RecordRangeStatus.Danger;
+          glucoseStatus = RecordRangeStatus.Warn;
         } else {
-          glucoseStatus = RecordRangeStatus.Risk;
+          glucoseStatus = RecordRangeStatus.Alert;
         }
         break;
     // 식사전
@@ -202,9 +202,9 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
         if (glucose <= 140) {
           glucoseStatus = RecordRangeStatus.Normal;
         } else if (glucose <= 200) {
-          glucoseStatus = RecordRangeStatus.Danger;
+          glucoseStatus = RecordRangeStatus.Warn;
         } else {
-          glucoseStatus = RecordRangeStatus.Risk;
+          glucoseStatus = RecordRangeStatus.Alert;
         }
         break;
     // 식사전
@@ -212,9 +212,9 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
         if (glucose <= 140) {
           glucoseStatus = RecordRangeStatus.Normal;
         } else if (glucose <= 180) {
-          glucoseStatus = RecordRangeStatus.Danger;
+          glucoseStatus = RecordRangeStatus.Warn;
         } else {
-          glucoseStatus = RecordRangeStatus.Risk;
+          glucoseStatus = RecordRangeStatus.Alert;
         }
         break;
       default:
