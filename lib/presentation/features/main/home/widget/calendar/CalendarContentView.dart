@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/features/main/home/notifier/Calenda
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/DimNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
+import 'package:ody_flutter_app/presentation/features/main/provider/MonthlyBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
@@ -30,12 +31,21 @@ class CalendarContentView extends HookConsumerWidget {
     final calendarSelectDateRead = ref.read(calendarSelectDateProvider.notifier);
     final calendarHeightRead = ref.read(calendarHeightProvider.notifier);
     final forDaysBioInfoRead = ref.read(forDaysBioInfoProvider.notifier);
+    final monthlyBioInfoRead = ref.read(monthlyBioInfoProvider.notifier);
 
     final _selectedDay = useState(DateTime.now());
     final _focusedDay = useState(DateTime.now());
 
+    ValueNotifier<List<String>?> monthlyRecordDayList = useState([]);
+
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        monthlyRecordDayList.value = await monthlyBioInfoRead.requestBioInfo(
+          _selectedDay.value.year,
+          _selectedDay.value.month,
+          _selectedDay.value.day,
+        );
+
         forDaysBioInfoRead.requestBioInfo(
           _selectedDay.value.year,
           _selectedDay.value.month,
@@ -89,16 +99,26 @@ class CalendarContentView extends HookConsumerWidget {
                   calendarSelectDateRead.updateSelectedDatetime(selectedDay);
                   calendarHeightRead.updateHeight(CalendarSize.minHeight(context));
                   calendarFormatRead.updateFormat(CalendarFormat.week);
-                  forDaysBioInfoRead.requestBioInfo(
-                    _selectedDay.value.year,
-                    _selectedDay.value.month,
-                    _selectedDay.value.day,
-                  );
+
+                  if (selectedDay.compareTo(DateTime.now()) <= 0) {
+                    forDaysBioInfoRead.requestBioInfo(
+                      _selectedDay.value.year,
+                      _selectedDay.value.month,
+                      _selectedDay.value.day,
+                    );
+                  }
                 },
-                onPageChanged: (focusedDay) {
+                onPageChanged: (focusedDay) async {
                   _focusedDay.value = focusedDay;
                   calendarPageRead.updatePageDatetime(focusedDay);
-                  debugPrint('onPageChanged: $focusedDay');
+
+                  if (focusedDay.compareTo(DateTime.now()) <= 0) {
+                    monthlyRecordDayList.value = await monthlyBioInfoRead.requestBioInfo(
+                      focusedDay.year,
+                      focusedDay.month,
+                      focusedDay.day,
+                    );
+                  }
                 },
                 calendarBuilders: CalendarBuilders(
                   dowBuilder: (context, day) {
@@ -135,20 +155,49 @@ class CalendarContentView extends HookConsumerWidget {
                       child: Text(
                         day.day.toString(),
                         style: getTextTheme(context).c2b.copyWith(
-                              color: getColorScheme(context)
-                                  .colorText
-                                  .withOpacity(day.month == focusedDay.month ? 1 : 0.3),
+                              color: getColorScheme(context).colorText.withOpacity(
+                                    day.month == focusedDay.month ? 1 : 0.3,
+                                  ),
                             ),
                       ),
                     );
                   },
                   defaultBuilder: (context, day, focusedDay) {
+                    final parsedDay =
+                        "${day.year}-${day.month.toString().padLeft(2, "0")}-${day.day.toString().padLeft(2, "0")}";
+
                     return Center(
-                      child: Text(
-                        day.day.toString(),
-                        style: getTextTheme(context).c2b.copyWith(
-                              color: getColorScheme(context).colorText,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            top: 0,
+                            child: Center(
+                              child: Text(
+                                day.day.toString(),
+                                style: getTextTheme(context).c2b.copyWith(
+                                      color: getColorScheme(context).colorText,
+                                    ),
+                              ),
                             ),
+                          ),
+                          if (monthlyRecordDayList.value!.contains(parsedDay))
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              child: Container(
+                                height: 4,
+                                width: 4,
+                                decoration: BoxDecoration(
+                                  color: getColorScheme(context).colorPrimaryFocus,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                     );
                   },

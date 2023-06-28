@@ -36,7 +36,7 @@ class RemoteBioRepositoryImpl implements RemoteBioRepository {
   }
 
   @override
-  Future<ApiListResponse<void>> getBioHistoryMontly(int year, int month) {
+  Future<ApiListResponse<List<String>>> getBioHistoryMontly(int year, int month) {
     RemoteBioApi remoteBioApi = GetIt.instance<RemoteBioApi>();
     return remoteBioApi.getBioHistoryMontly(year: year, month: month);
   }

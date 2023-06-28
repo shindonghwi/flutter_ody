@@ -7,7 +7,7 @@ class GetBioHistoryMontlyUseCase {
 
   final RemoteBioRepository _remoteBioRepository = GetIt.instance<RemoteBioRepository>();
 
-  Future<ApiListResponse<void>> call({
+  Future<ApiListResponse<List<String>>> call({
     required int year,
     required int month,
   }) async {

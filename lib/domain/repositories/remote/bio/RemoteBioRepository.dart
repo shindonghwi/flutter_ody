@@ -24,7 +24,7 @@ abstract class RemoteBioRepository {
   Future<ApiResponse<void>> postSteps(RequestBioStepsModel data);
 
   /// 월간 건강정보 조회
-  Future<ApiListResponse<void>> getBioHistoryMontly(int year, int month);
+  Future<ApiListResponse<List<String>>> getBioHistoryMontly(int year, int month);
 
   /// 일간 건강정보 조회
   Future<ApiResponse<ResponseBioForDaysModel>> getBioHistoryForDays(int year, int month, int day);
