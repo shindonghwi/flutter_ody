@@ -226,7 +226,7 @@
     "analysis_glucose_record_measure_text2": "측정을 기준으로 했어요",
     "analysis_glucose_record_measure_description": "혈당은 공복, 식후 2시간 혈당을 측정하는 것이 좋아요",
     "analysis_glucose_figure_title": "혈당 수치",
-    "analysis_glucose_figure_text1": "혈당 범위는",
+    "analysis_glucose_figure_text1": "공복 혈당 범위는",
     "analysis_glucose_figure_text2": "입니다",
     "analysis_glucose_figure_description": "정상 혈당범위는 공복 99mg/dL, 식후 2시간 180mg/dL 이하입니다",
 
