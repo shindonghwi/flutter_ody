@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 class DateChecker {
   static bool isDateToday(DateTime time) {
@@ -8,9 +7,14 @@ class DateChecker {
 
   static int isDateComparisonFromToday(DateTime time) {
     final now = DateTime.now();
+    return "${now.year}-${now.month}-${now.day}".compareTo("${time.year}-${time.month}-${time.day}");
+  }
 
-    final ddd = "${now.year}-${now.month}-${now.day}".compareTo("${time.year}-${time.month}-${time.day}");
-    debugPrint("isDateComparisonFromToday: $ddd");
-    return ddd;
+  static int isDateComparison(DateTime time1, DateTime time2) {
+    return "${time1.year}-${time1.month}-${time1.day}".compareTo("${time2.year}-${time2.month}-${time2.day}");
+  }
+
+  static int isDateYearMonthComparison(DateTime time1, DateTime time2) {
+    return "${time1.year}-${time1.month}".compareTo("${time2.year}-${time2.month}");
   }
 }
