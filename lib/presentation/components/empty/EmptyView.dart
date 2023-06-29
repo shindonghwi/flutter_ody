@@ -66,11 +66,11 @@ class EmptyView extends HookConsumerWidget {
 
     String? getButtonText() {
       if (screen == RoutingScreen.RecordedListBloodPressure) {
-        return comparisonValue == 0
+        return comparisonValue.value == 0
             ? getAppLocalizations(context).empty_button_record
             : getAppLocalizations(context).empty_button_go_home;
       } else if (screen == RoutingScreen.RecordedListGlucose) {
-        return comparisonValue == 0
+        return comparisonValue.value == 0
             ? getAppLocalizations(context).empty_button_record
             : getAppLocalizations(context).empty_button_go_home;
       } else if (screen == RoutingScreen.MedicationList) {

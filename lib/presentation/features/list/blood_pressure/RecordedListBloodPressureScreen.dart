@@ -34,11 +34,11 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
     final uiState = ref.watch(recordListBloodPressureProvider);
     final uiStateRead = ref.read(recordListBloodPressureProvider.notifier);
     DateTime currentDateTime = ref.read(calendarPageProvider.notifier).getCurrentDateTime();
-    bool isToday = false;
+    final isToday = useState(false);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        isToday = DateChecker.isDateToday(currentDateTime);
+        isToday.value = DateChecker.isDateToday(currentDateTime);
       });
     }, [currentDateTime]);
 
@@ -104,7 +104,7 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                     child: EmptyView(
                       screen: RoutingScreen.RecordedListBloodPressure,
                       onPressed: () {
-                        isToday
+                        isToday.value
                             ? Navigator.push(
                                 context,
                                 nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
