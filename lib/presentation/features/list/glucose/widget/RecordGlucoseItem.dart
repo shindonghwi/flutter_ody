@@ -79,9 +79,10 @@ class RecordGlucoseItem extends HookWidget {
               Text(
                 model.status.name.toString(),
                 style: getTextTheme(context).b2b.copyWith(
-                      color: RecordRangeStatus.Normal.name.toLowerCase() == model.status.code.toString().toLowerCase()
-                          ? getColorScheme(context).primary100
-                          : getColorScheme(context).colorError,
+                      color: RecordRangeStatusHelper.getStatusTextColor(
+                        context,
+                        RecordRangeStatusHelper.getGlucoseRecordRangeStatusFromCode(model.status.code),
+                      ),
                     ),
               )
             ],

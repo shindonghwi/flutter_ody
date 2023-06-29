@@ -11,6 +11,7 @@ import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSi
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/features/main/provider/MainTabIndexProvider.dart';
+import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
@@ -266,7 +267,7 @@ class _GlucoseList extends StatelessWidget {
           movePage: () {
             Navigator.push(
               context,
-              nextSlideScreen(RoutingScreen.AnalysisGlucose.route),
+              nextSlideScreen(RoutingScreen.AnalysisGlucose.route, parameter: glucoseList),
             );
           },
         ),
@@ -345,7 +346,10 @@ class _GlucoseList extends StatelessWidget {
                         Text(
                           item.status.name,
                           style: getTextTheme(context).c1b.copyWith(
-                                color: getColorScheme(context).colorError,
+                                color: RecordRangeStatusHelper.getStatusTextColor(
+                                  context,
+                                  RecordRangeStatusHelper.getGlucoseRecordRangeStatusFromCode(item.status.code),
+                                ),
                               ),
                         ),
                         Text(

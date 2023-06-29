@@ -6,8 +6,19 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class AverageGlucose extends StatelessWidget {
+  final int count;
+  final int averageFasting;
+  final int averagePreprandial;
+  final int averagePostprandial;
+  final int averagePostExercise;
+
   const AverageGlucose({
     super.key,
+    required this.count,
+    required this.averageFasting,
+    required this.averagePreprandial,
+    required this.averagePostprandial,
+    required this.averagePostExercise,
   });
 
   @override
@@ -15,22 +26,22 @@ class AverageGlucose extends StatelessWidget {
     final averageItems = [
       Triple(
         getAppLocalizations(context).analysis_glucose_record_range_fasting,
-        99,
+        averageFasting,
         getAppLocalizations(context).record_glucose_input_unit,
       ),
       Triple(
         getAppLocalizations(context).analysis_glucose_record_range_preprandial,
-        144,
+        averagePreprandial,
         getAppLocalizations(context).record_glucose_input_unit,
       ),
       Triple(
         getAppLocalizations(context).analysis_glucose_record_range_postprandial,
-        0,
+        averagePostprandial,
         getAppLocalizations(context).record_glucose_input_unit,
       ),
       Triple(
         getAppLocalizations(context).analysis_glucose_record_range_postExercise,
-        86,
+        averagePostExercise,
         getAppLocalizations(context).record_glucose_input_unit,
       ),
     ];
@@ -42,7 +53,7 @@ class AverageGlucose extends StatelessWidget {
           title: getAppLocalizations(context).analysis_glucose_record_range,
           secondTitle: Triple(
             getAppLocalizations(context).analysis_glucose_record_range_text1,
-            getAppLocalizations(context).analysis_glucose_record_range_text_unit(2),
+            getAppLocalizations(context).analysis_glucose_record_range_text_unit(count),
             getAppLocalizations(context).analysis_glucose_record_range_text2,
           ),
           description: getAppLocalizations(context).analysis_glucose_record_range_description,

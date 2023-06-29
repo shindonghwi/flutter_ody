@@ -7,10 +7,16 @@ import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class AverageBloodPressure extends StatelessWidget {
   final int count;
+  final int averageSystolic;
+  final int averageDiastolic;
+  final int averageHeartRate;
 
   const AverageBloodPressure({
     super.key,
     required this.count,
+    required this.averageSystolic,
+    required this.averageDiastolic,
+    required this.averageHeartRate,
   });
 
   @override
@@ -18,17 +24,17 @@ class AverageBloodPressure extends StatelessWidget {
     final averageItems = [
       Triple(
         getAppLocalizations(context).analysis_blood_pressure_average_systolic,
-        110,
+        averageSystolic,
         getAppLocalizations(context).record_blood_pressure_input1_unit,
       ),
       Triple(
         getAppLocalizations(context).analysis_blood_pressure_average_diastolic,
-        110,
+        averageDiastolic,
         getAppLocalizations(context).record_blood_pressure_input1_unit,
       ),
       Triple(
         getAppLocalizations(context).analysis_blood_pressure_average_heart_rate,
-        86,
+        averageHeartRate,
         getAppLocalizations(context).record_blood_pressure_input2_unit,
       ),
     ];

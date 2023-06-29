@@ -2,25 +2,23 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
-import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
-import 'package:ody_flutter_app/presentation/components/divider/DottedDivider.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/RecordGraph.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/AxisEmphasisModel.dart';
-import 'package:ody_flutter_app/presentation/components/graph/model/GraphLineModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/GraphPointModel.dart';
-import 'package:ody_flutter_app/presentation/components/graph/model/ShadowAreaModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/widget/SymbolWidget.dart';
-import 'package:ody_flutter_app/presentation/features/analysis/blood_pressure/widget/AverageBloodPressure.dart';
-import 'package:ody_flutter_app/presentation/features/analysis/blood_pressure/widget/BpFigure.dart';
-import 'package:ody_flutter_app/presentation/features/analysis/blood_pressure/widget/BpRecordAnalysis.dart';
 import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisItemTitle.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class GlucoseFigure extends StatelessWidget {
-  const GlucoseFigure({Key? key}) : super(key: key);
+  final List<ResponseBioGlucoseModel>? glucoseList;
+
+  const GlucoseFigure({
+    Key? key,
+    required this.glucoseList,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,25 +40,23 @@ class GlucoseFigure extends StatelessWidget {
       AxisEmphasisModel(label: "160", color: getColorScheme(context).neutral60),
     ].reversed.toList();
 
-    final sampleGraphPointList = GraphPointModel(
-      pointData: [
-        GraphPointDataModel(
-          label: "08:00",
-          yValue: Random().nextInt(100) + 60.toDouble(),
-          pointColor: getColorScheme(context).colorPrimaryFocus,
-        ),
-        GraphPointDataModel(
-          label: "12:00",
-          yValue: Random().nextInt(100) + 60.toDouble(),
-          pointColor: getColorScheme(context).colorError,
-        ),
-        GraphPointDataModel(
-          label: "16:00",
-          yValue: Random().nextInt(100) + 60.toDouble(),
-          pointColor: getColorScheme(context).colorPrimaryFocus,
-        ),
-      ]
-    );
+    final sampleGraphPointList = GraphPointModel(pointData: [
+      GraphPointDataModel(
+        label: "08:00",
+        yValue: Random().nextInt(100) + 60.toDouble(),
+        pointColor: getColorScheme(context).colorPrimaryFocus,
+      ),
+      GraphPointDataModel(
+        label: "12:00",
+        yValue: Random().nextInt(100) + 60.toDouble(),
+        pointColor: getColorScheme(context).colorError,
+      ),
+      GraphPointDataModel(
+        label: "16:00",
+        yValue: Random().nextInt(100) + 60.toDouble(),
+        pointColor: getColorScheme(context).colorPrimaryFocus,
+      ),
+    ]);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

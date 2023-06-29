@@ -42,6 +42,23 @@ class RecordRangeStatusHelper {
     }
   }
 
+  static Color getStatusTextColor(
+    BuildContext context,
+    RecordRangeStatus status,
+  ) {
+    switch (status) {
+      case RecordRangeStatus.Normal:
+        return getColorScheme(context).primary100;
+      case RecordRangeStatus.Risk:
+      case RecordRangeStatus.Warn:
+      case RecordRangeStatus.HighRisk:
+      case RecordRangeStatus.Alert:
+        return getColorScheme(context).colorError;
+      default:
+        return getColorScheme(context).neutral30;
+    }
+  }
+
   static RecordRangeStatus getBPRecordRangeStatusFromCode(String code) {
     return code.toLowerCase() == RecordRangeStatus.Normal.name.toString().toLowerCase()
         ? RecordRangeStatus.Normal

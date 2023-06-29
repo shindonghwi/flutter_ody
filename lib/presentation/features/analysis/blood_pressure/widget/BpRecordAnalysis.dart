@@ -7,24 +7,33 @@ import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class BpRecordAnalysis extends StatelessWidget {
+  final int count;
+  final int sumNormal;
+  final int sumRisk;
+  final int sumHighRisk;
+
   const BpRecordAnalysis({
     super.key,
+    required this.count,
+    required this.sumNormal,
+    required this.sumRisk,
+    required this.sumHighRisk,
   });
 
   @override
   Widget build(BuildContext context) {
-    final List<Pair<String, double>> analysisItems = [
+    final List<Pair<String, int>> analysisItems = [
       Pair(
         getAppLocalizations(context).record_range_figure_normal,
-        1.0,
+        sumNormal,
       ),
       Pair(
         getAppLocalizations(context).record_range_figure_warning,
-        0.5,
+        sumRisk,
       ),
       Pair(
         getAppLocalizations(context).record_range_figure_danger,
-        0.86,
+        sumHighRisk,
       ),
     ];
 
@@ -36,7 +45,7 @@ class BpRecordAnalysis extends StatelessWidget {
           title: getAppLocalizations(context).analysis_blood_pressure_record_title,
           secondTitle: Triple(
             getAppLocalizations(context).analysis_blood_pressure_record_measure_text1,
-            getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(2),
+            getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(count),
             getAppLocalizations(context).analysis_blood_pressure_record_measure_text2,
           ),
           description: getAppLocalizations(context).analysis_blood_pressure_record_measure_description,
@@ -85,7 +94,7 @@ class BpRecordAnalysis extends StatelessWidget {
                                       : getColorScheme(context).colorError,
                               getColorScheme(context).colorPrimaryDisable,
                             ],
-                            stops: [item.second, item.second],
+                            stops: [(item.second / count).toDouble(), (item.second / count).toDouble()],
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                           ),
@@ -99,7 +108,7 @@ class BpRecordAnalysis extends StatelessWidget {
                   flex: 4,
                   fit: FlexFit.tight,
                   child: Text(
-                    "${(item.second * 100).toInt()}%",
+                    "${(item.second).toInt()}${getAppLocalizations(context).common_count}",
                     style: getTextTheme(context).c3b.copyWith(
                           color: index == 0
                               ? getColorScheme(context).primary100

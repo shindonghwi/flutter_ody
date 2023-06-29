@@ -1,11 +1,8 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
-import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
-import 'package:ody_flutter_app/presentation/components/divider/DottedDivider.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/RecordGraph.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/AxisEmphasisModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/GraphLineModel.dart';
@@ -13,19 +10,20 @@ import 'package:ody_flutter_app/presentation/components/graph/model/GraphPointMo
 import 'package:ody_flutter_app/presentation/components/graph/model/ShadowAreaModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/widget/SymbolWidget.dart';
 import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisItemTitle.dart';
-import 'package:ody_flutter_app/presentation/features/analysis/blood_pressure/widget/AverageBloodPressure.dart';
-import 'package:ody_flutter_app/presentation/features/analysis/blood_pressure/widget/BpFigure.dart';
-import 'package:ody_flutter_app/presentation/features/analysis/blood_pressure/widget/BpRecordAnalysis.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class HeartRateFigure extends StatelessWidget {
-  const HeartRateFigure({Key? key}) : super(key: key);
+  final List<ResponseBioBloodPressureModel>? bpList;
+
+  const HeartRateFigure({
+    Key? key,
+    required this.bpList,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     final sampleXAxisList = [
       AxisEmphasisModel(label: "04:00", color: getColorScheme(context).neutral60),
       AxisEmphasisModel(label: "08:00", color: getColorScheme(context).neutral60),
@@ -76,7 +74,7 @@ class HeartRateFigure extends StatelessWidget {
           title: getAppLocalizations(context).analysis_heart_rate_figure_title,
           secondTitle: Triple(
             getAppLocalizations(context).analysis_heart_rate_figure_text1,
-            "66 ${getAppLocalizations(context).record_blood_pressure_input2_unit}",
+            "${bpList?.last.heartRate} ${getAppLocalizations(context).record_blood_pressure_input2_unit}",
             getAppLocalizations(context).analysis_heart_rate_figure_text2,
           ),
           description: getAppLocalizations(context).analysis_heart_rate_figure_description,
@@ -84,7 +82,6 @@ class HeartRateFigure extends StatelessWidget {
         const SizedBox(
           height: 40,
         ),
-
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

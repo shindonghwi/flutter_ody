@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/RecordGraph.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/AxisEmphasisModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/GraphLineModel.dart';
@@ -14,7 +15,12 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class BpFigure extends StatelessWidget {
-  const BpFigure({Key? key}) : super(key: key);
+  final List<ResponseBioBloodPressureModel>? bpList;
+
+  const BpFigure({
+    Key? key,
+    this.bpList,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +55,23 @@ class BpFigure extends StatelessWidget {
       ),
     ];
 
+    // final sampleGraphLineModel = GraphLineModel(
+    //   pointData: [
+    //     GraphPointDataModel(
+    //       label: "08:00",
+    //       yValue: Random().nextInt(100) + 60.toDouble(),
+    //       pointColor: getColorScheme(context).colorError,
+    //     ),
+    //     GraphPointDataModel(
+    //       label: "12:00",
+    //       yValue: Random().nextInt(100) + 60.toDouble(),
+    //       pointColor: getColorScheme(context).colorError,
+    //     ),
+    //   ],
+    //   lineColor: getColorScheme(context).colorError,
+    // );
+    //
+
     final sampleGraphLineModel = GraphLineModel(
       pointData: [
         GraphPointDataModel(
@@ -58,6 +81,11 @@ class BpFigure extends StatelessWidget {
         ),
         GraphPointDataModel(
           label: "12:00",
+          yValue: Random().nextInt(100) + 60.toDouble(),
+          pointColor: getColorScheme(context).colorError,
+        ),
+        GraphPointDataModel(
+          label: "14:00",
           yValue: Random().nextInt(100) + 60.toDouble(),
           pointColor: getColorScheme(context).colorError,
         ),
@@ -73,7 +101,7 @@ class BpFigure extends StatelessWidget {
           title: getAppLocalizations(context).analysis_blood_pressure_figure_title,
           secondTitle: Triple(
             getAppLocalizations(context).analysis_blood_pressure_figure_text1,
-            "110 - 80 ${getAppLocalizations(context).record_blood_pressure_input1_unit}",
+            "${bpList?.last.systolicBloodPressure} - ${bpList?.last.diastolicBloodPressure} ${getAppLocalizations(context).record_blood_pressure_input1_unit}",
             getAppLocalizations(context).analysis_blood_pressure_figure_text2,
           ),
           description: getAppLocalizations(context).analysis_blood_pressure_figure_description,
@@ -95,7 +123,6 @@ class BpFigure extends StatelessWidget {
                 xAxisInnerHorizontalPadding: 0,
                 dividerColor: getColorScheme(context).neutral50,
                 xAxisUnitWidth: 28,
-                // graphPointModel: sampleGraphPointList,
                 graphLineModel: sampleGraphLineModel,
               ),
             )
