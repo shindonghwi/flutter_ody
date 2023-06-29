@@ -12,6 +12,7 @@ import 'package:ody_flutter_app/presentation/features/list/glucose/provider/Reco
 import 'package:ody_flutter_app/presentation/features/list/glucose/widget/RecordGlucoseBottomContent.dart';
 import 'package:ody_flutter_app/presentation/features/list/glucose/widget/RecordGlucoseItem.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
@@ -22,25 +23,23 @@ import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class RecordedListGlucoseScreen extends HookConsumerWidget {
-  final DateTime? date;
 
   const RecordedListGlucoseScreen({
     Key? key,
-    this.date,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final uiState = ref.watch(recordListGlucoseProvider);
     final uiStateRead = ref.read(recordListGlucoseProvider.notifier);
-    DateTime currentDateTime = ref.read(calendarPageProvider.notifier).getCurrentDateTime();
+    DateTime date = ref.watch(calendarSelectDateProvider);
     bool isToday = false;
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        isToday = DateChecker.isDateToday(currentDateTime);
+        isToday = DateChecker.isDateToday(date);
       });
-    }, [currentDateTime]);
+    }, [date]);
 
     useEffect(() {
       void handleUiStateChange() async {
@@ -63,7 +62,7 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
         if (date == null) {
           Navigator.of(context).pop();
         } else {
-          uiStateRead.requestBioGlucoseList(date!.year, date!.month, date!.day);
+          uiStateRead.requestBioGlucoseList(date.year, date.month, date.day);
         }
       });
     }, []);

@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -21,7 +22,7 @@ class EmptyView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    DateTime currentDateTime = ref.read(calendarPageProvider.notifier).getCurrentDateTime();
+    DateTime currentDateTime = ref.watch(calendarSelectDateProvider);
     final comparisonValue = useState(0);
 
     useEffect(() {

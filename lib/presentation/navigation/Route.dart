@@ -116,11 +116,9 @@ enum RoutingScreen {
       case "/analysis/glucose":
         return const AnalysisGlucoseScreen();
       case "/list/blood_pressure":
-        DateTime date = parameter;
-        return RecordedListBloodPressureScreen(date: date);
+        return const RecordedListBloodPressureScreen();
       case "/list/glucose":
-        DateTime date = parameter;
-        return RecordedListGlucoseScreen(date: date);
+        return const RecordedListGlucoseScreen();
       case "/list/medication":
         return const MedicationListScreen();
       case "/edit/my_info":

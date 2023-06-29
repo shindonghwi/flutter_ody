@@ -43,6 +43,7 @@ class CalendarContentView extends HookConsumerWidget {
     final _selectedDay = useState(calendarPage);
     final _focusedDay = useState(calendarPage);
 
+
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         monthlyBioInfoRead.requestBioInfo(

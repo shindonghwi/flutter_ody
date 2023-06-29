@@ -11,7 +11,7 @@ import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.da
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/provider/RecordListBloodPressureProvider.dart';
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/widget/RecordBloodPressureBottomContent.dart';
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/widget/RecordBloodPressureItem.dart';
-import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
@@ -22,25 +22,22 @@ import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class RecordedListBloodPressureScreen extends HookConsumerWidget {
-  final DateTime? date;
-
   const RecordedListBloodPressureScreen({
     Key? key,
-    this.date,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final uiState = ref.watch(recordListBloodPressureProvider);
     final uiStateRead = ref.read(recordListBloodPressureProvider.notifier);
-    DateTime currentDateTime = ref.read(calendarPageProvider.notifier).getCurrentDateTime();
+    DateTime date = ref.watch(calendarSelectDateProvider);
     final isToday = useState(false);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        isToday.value = DateChecker.isDateToday(currentDateTime);
+        isToday.value = DateChecker.isDateToday(date);
       });
-    }, [currentDateTime]);
+    }, [date]);
 
     useEffect(() {
       void handleUiStateChange() async {
@@ -63,7 +60,7 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
         if (date == null) {
           Navigator.of(context).pop();
         } else {
-          uiStateRead.requestBioBloodPressureList(date!.year, date!.month, date!.day);
+          uiStateRead.requestBioBloodPressureList(date.year, date.month, date.day);
         }
       });
     }, []);
