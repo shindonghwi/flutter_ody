@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
@@ -40,6 +39,10 @@ class EmptyView extends HookConsumerWidget {
         return 'assets/imgs/icon_alarm_2.svg';
       } else if (screen == RoutingScreen.MainAnalysis) {
         return null;
+      } else if (screen == RoutingScreen.ReportWeeklyList) {
+        return 'assets/imgs/icon_report.svg';
+      } else if (screen == RoutingScreen.ReportMonthlyList) {
+        return 'assets/imgs/icon_report.svg';
       }
       return null;
     }
@@ -61,6 +64,10 @@ class EmptyView extends HookConsumerWidget {
         return getAppLocalizations(context).empty_alarm;
       } else if (screen == RoutingScreen.MainAnalysis) {
         return getAppLocalizations(context).empty_report;
+      } else if (screen == RoutingScreen.ReportWeeklyList) {
+        return getAppLocalizations(context).empty_report;
+      } else if (screen == RoutingScreen.ReportMonthlyList) {
+        return getAppLocalizations(context).empty_button_go_home;
       }
       return null;
     }
@@ -78,6 +85,10 @@ class EmptyView extends HookConsumerWidget {
         return getAppLocalizations(context).empty_button_alarm_add;
       } else if (screen == RoutingScreen.MainAnalysis) {
         return getAppLocalizations(context).empty_button_go_home;
+      } else if (screen == RoutingScreen.ReportWeeklyList) {
+        return null;
+      } else if (screen == RoutingScreen.ReportMonthlyList) {
+        return null;
       }
       return null;
     }

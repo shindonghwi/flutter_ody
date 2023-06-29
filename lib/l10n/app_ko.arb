@@ -230,6 +230,10 @@
     "analysis_glucose_figure_text2": "입니다",
     "analysis_glucose_figure_description": "정상 혈당범위는 공복 99mg/dL, 식후 2시간 180mg/dL 이하입니다",
 
+    "list_report_weekly_title": "주간 보고서",
+    "list_report_monthly_title": "월간 보고서",
+
+
     "popup_app_policy_title" : "사용 약관",
     "popup_app_policy_all_grant" : "모두 동의하기",
     "popup_app_policy_age_14" : "만 14세 이상",

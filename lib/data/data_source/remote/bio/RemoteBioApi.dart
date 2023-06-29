@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/data/models/bio/RequestBioBloodPressureModel.dar
 import 'package:ody_flutter_app/data/models/bio/RequestBioGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioStepsModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportListModel.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RemoteBioApi {
@@ -125,4 +126,53 @@ class RemoteBioApi {
       );
     }
   }
+
+  /// 주간 보고서 목록 조회
+  Future<ApiListResponse<List<ResponseBioReportListModel>>> getBioReportWeekly() async {
+    final response = await Service.getApi(
+      type: ServiceType.Bio,
+      endPoint: 'reports/weekly',
+    );
+
+    if (response.statusCode >= 500) {
+      return ApiListResponse(
+          status: response.statusCode,
+          message: _getAppLocalization.get().message_server_error_5xx,
+          list: null,
+          count: 0);
+    } else {
+      return ApiListResponse.fromJson(
+        jsonDecode(response.body),
+            (json) {
+          return List<ResponseBioReportListModel>.from(
+              json.map((item) => ResponseBioReportListModel.fromJson(item as Map<String, dynamic>)));
+        },
+      );
+    }
+  }
+
+  /// 월간 보고서 목록 조회
+  Future<ApiListResponse<List<ResponseBioReportListModel>>> getBioReportMonthly() async {
+    final response = await Service.getApi(
+      type: ServiceType.Bio,
+      endPoint: 'reports/monthly',
+    );
+
+    if (response.statusCode >= 500) {
+      return ApiListResponse(
+          status: response.statusCode,
+          message: _getAppLocalization.get().message_server_error_5xx,
+          list: null,
+          count: 0);
+    } else {
+      return ApiListResponse.fromJson(
+        jsonDecode(response.body),
+            (json) {
+          return List<ResponseBioReportListModel>.from(
+              json.map((item) => ResponseBioReportListModel.fromJson(item as Map<String, dynamic>)));
+        },
+      );
+    }
+  }
+
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
@@ -17,12 +19,22 @@ class MyReport extends HookWidget {
       Triple(
         "assets/imgs/icon_weekly_report.png",
         getAppLocalizations(context).my_item_subtitle_weekly_report,
-        () {},
+        () {
+          Navigator.push(
+            context,
+            nextSlideScreen(RoutingScreen.ReportWeeklyList.route),
+          );
+        },
       ),
       Triple(
         "assets/imgs/icon_monthly_report.png",
         getAppLocalizations(context).my_item_subtitle_monthly_report,
-        () {},
+        () {
+          Navigator.push(
+            context,
+            nextSlideScreen(RoutingScreen.ReportMonthlyList.route),
+          );
+        },
       ),
     ];
 
