@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
-import 'package:ody_flutter_app/presentation/features/list/glucose/provider/RecordListGlucoseProvider.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
@@ -10,16 +10,15 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RecordGlucoseBottomContent extends HookConsumerWidget {
-  final DateTime date;
 
   const RecordGlucoseBottomContent({
     Key? key,
-    required this.date,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
+    DateTime date = ref.watch(calendarSelectDateProvider);
     bool isRecordButtonVisible = "${date.year}${date.month}${date.day}" == "${now.year}${now.month}${now.day}";
 
     return Align(
@@ -39,7 +38,8 @@ class _FloatingButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uiStateRead = ref.read(recordListGlucoseProvider.notifier);
+    final uiState = ref.watch(forDaysBioInfoProvider);
+    final uiStateRead = ref.read(forDaysBioInfoProvider.notifier);
     return Container(
       width: 50,
       height: 50,
@@ -67,8 +67,7 @@ class _FloatingButton extends HookConsumerWidget {
             );
             try {
               if (data.glucose != 0) {
-                ref.read(forDaysBioInfoProvider.notifier).addGlucoseBioInfo(data);
-                uiStateRead.addGlucose(data);
+                uiStateRead.addGlucoseBioInfo(data);
               }
             } catch (e) {}
           },

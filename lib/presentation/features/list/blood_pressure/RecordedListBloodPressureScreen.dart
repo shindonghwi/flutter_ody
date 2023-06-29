@@ -8,10 +8,10 @@ import 'package:ody_flutter_app/presentation/components/bottom_sheet/BottomSheet
 import 'package:ody_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
-import 'package:ody_flutter_app/presentation/features/list/blood_pressure/provider/RecordListBloodPressureProvider.dart';
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/widget/RecordBloodPressureBottomContent.dart';
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/widget/RecordBloodPressureItem.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
@@ -28,42 +28,29 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uiState = ref.watch(recordListBloodPressureProvider);
-    final uiStateRead = ref.read(recordListBloodPressureProvider.notifier);
+    final uiState = ref.watch(forDaysBioInfoProvider);
+    final bpList = useState<List<ResponseBioBloodPressureModel>>([]);
     DateTime date = ref.watch(calendarSelectDateProvider);
     final isToday = useState(false);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        uiState.when(
+          success: (event) async {
+            bpList.value = event.value?.bloodPressures.reversed.toList() ?? [];
+          },
+          failure: (event) {
+            SnackBarUtil.show(context, event.errorMessage);
+          },
+        );
+      });
+    }, [uiState]);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         isToday.value = DateChecker.isDateToday(date);
       });
     }, [date]);
-
-    useEffect(() {
-      void handleUiStateChange() async {
-        await Future(() {
-          uiState.when(
-            success: (event) => {},
-            failure: (event) => SnackBarUtil.show(context, event.errorMessage),
-          );
-        });
-      }
-
-      handleUiStateChange();
-      return null;
-    }, [uiState]);
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        uiStateRead.init();
-
-        if (date == null) {
-          Navigator.of(context).pop();
-        } else {
-          uiStateRead.requestBioBloodPressureList(date.year, date.month, date.day);
-        }
-      });
-    }, []);
 
     return Scaffold(
       appBar: IconTitleIconAppBar(
@@ -84,36 +71,34 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
       backgroundColor: getColorScheme(context).colorUI03,
       body: Stack(
         children: [
-          if (uiState is Success<List<ResponseBioBloodPressureModel>>)
-            !CollectionUtil.isNullorEmpty(uiState.value)
-                ? ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
-                    shrinkWrap: true,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(height: 24); // Adjust the height as needed
+          !CollectionUtil.isNullorEmpty(bpList.value)
+              ? ListView.separated(
+                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
+                  shrinkWrap: true,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 24); // Adjust the height as needed
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    return RecordBloodPressureItem(model: bpList.value[index]);
+                  },
+                  itemCount: bpList.value.length,
+                )
+              : Center(
+                  child: EmptyView(
+                    screen: RoutingScreen.RecordedListBloodPressure,
+                    onPressed: () {
+                      isToday.value
+                          ? Navigator.push(
+                              context,
+                              nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
+                            )
+                          : Navigator.of(context).pop();
                     },
-                    itemBuilder: (BuildContext context, int index) {
-                      return RecordBloodPressureItem(model: uiState.value[index]);
-                    },
-                    itemCount: uiState.value.length,
-                  )
-                : Center(
-                    child: EmptyView(
-                      screen: RoutingScreen.RecordedListBloodPressure,
-                      onPressed: () {
-                        isToday.value
-                            ? Navigator.push(
-                                context,
-                                nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
-                              )
-                            : Navigator.of(context).pop();
-                      },
-                    ),
                   ),
-          if (uiState is Success<List<ResponseBioBloodPressureModel>>)
-            !CollectionUtil.isNullorEmpty(uiState.value)
-                ? RecordBloodPressureBottomContent(date: date!)
-                : const SizedBox(),
+                ),
+          !CollectionUtil.isNullorEmpty(bpList.value)
+              ? const RecordBloodPressureBottomContent()
+              : const SizedBox(),
           if (uiState is Loading) const CircleLoading()
         ],
       ),

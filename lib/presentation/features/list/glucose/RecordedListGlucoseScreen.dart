@@ -8,11 +8,10 @@ import 'package:ody_flutter_app/presentation/components/bottom_sheet/BottomSheet
 import 'package:ody_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
-import 'package:ody_flutter_app/presentation/features/list/glucose/provider/RecordListGlucoseProvider.dart';
 import 'package:ody_flutter_app/presentation/features/list/glucose/widget/RecordGlucoseBottomContent.dart';
 import 'package:ody_flutter_app/presentation/features/list/glucose/widget/RecordGlucoseItem.dart';
-import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
@@ -23,49 +22,35 @@ import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class RecordedListGlucoseScreen extends HookConsumerWidget {
-
   const RecordedListGlucoseScreen({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uiState = ref.watch(recordListGlucoseProvider);
-    final uiStateRead = ref.read(recordListGlucoseProvider.notifier);
+    final uiState = ref.watch(forDaysBioInfoProvider);
+    final glucoseList = useState<List<ResponseBioGlucoseModel>>([]);
     DateTime date = ref.watch(calendarSelectDateProvider);
-    bool isToday = false;
+    final isToday = useState(false);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        isToday = DateChecker.isDateToday(date);
+        uiState.when(
+          success: (event) async {
+            glucoseList.value = event.value?.glucoses.reversed.toList() ?? [];
+          },
+          failure: (event) {
+            SnackBarUtil.show(context, event.errorMessage);
+          },
+        );
       });
-    }, [date]);
-
-    useEffect(() {
-      void handleUiStateChange() async {
-        await Future(() {
-          uiState.when(
-            success: (event) => {},
-            failure: (event) => SnackBarUtil.show(context, event.errorMessage),
-          );
-        });
-      }
-
-      handleUiStateChange();
-      return null;
     }, [uiState]);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        uiStateRead.init();
-
-        if (date == null) {
-          Navigator.of(context).pop();
-        } else {
-          uiStateRead.requestBioGlucoseList(date.year, date.month, date.day);
-        }
+        isToday.value = DateChecker.isDateToday(date);
       });
-    }, []);
+    }, [date]);
 
     return Scaffold(
       appBar: IconTitleIconAppBar(
@@ -86,34 +71,32 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
       backgroundColor: getColorScheme(context).colorUI03,
       body: Stack(
         children: [
-          if (uiState is Success<List<ResponseBioGlucoseModel>>)
-            !CollectionUtil.isNullorEmpty(uiState.value)
-                ? ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
-                    shrinkWrap: true,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(height: 24); // Adjust the height as needed
+          !CollectionUtil.isNullorEmpty(glucoseList.value)
+              ? ListView.separated(
+                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
+                  shrinkWrap: true,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 24); // Adjust the height as needed
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    return RecordGlucoseItem(model: glucoseList.value[index]);
+                  },
+                  itemCount: glucoseList.value.length,
+                )
+              : Center(
+                  child: EmptyView(
+                    screen: RoutingScreen.RecordedListGlucose,
+                    onPressed: () {
+                      isToday.value
+                          ? Navigator.push(
+                              context,
+                              nextSlideScreen(RoutingScreen.RecordGlucose.route),
+                            )
+                          : Navigator.of(context).pop();
                     },
-                    itemBuilder: (BuildContext context, int index) {
-                      return RecordGlucoseItem(model: uiState.value[index]);
-                    },
-                    itemCount: uiState.value.length,
-                  )
-                : Center(
-                    child: EmptyView(
-                      screen: RoutingScreen.RecordedListGlucose,
-                      onPressed: () {
-                        isToday
-                            ? Navigator.push(
-                                context,
-                                nextSlideScreen(RoutingScreen.RecordGlucose.route),
-                              )
-                            : Navigator.of(context).pop();
-                      },
-                    ),
                   ),
-          if (uiState is Success<List<ResponseBioGlucoseModel>>)
-            !CollectionUtil.isNullorEmpty(uiState.value) ? RecordGlucoseBottomContent(date: date!) : const SizedBox(),
+                ),
+          !CollectionUtil.isNullorEmpty(glucoseList.value) ? const RecordGlucoseBottomContent() : const SizedBox(),
           if (uiState is Loading) const CircleLoading()
         ],
       ),
