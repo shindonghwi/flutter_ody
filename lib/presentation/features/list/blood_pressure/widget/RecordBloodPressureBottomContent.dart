@@ -69,7 +69,9 @@ class _FloatingButton extends HookConsumerWidget {
               if (data.diastolicBloodPressure != 0) {
                 uiStateRead.addBpBioInfo(data);
               }
-            } catch (e) {}
+            } catch (e) {
+              debugPrint("bp update fail: ${e.toString()}");
+            }
           },
           child: SvgPicture.asset(
             'assets/imgs/icon_plus_btn.svg',

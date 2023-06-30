@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioHistoryForDaysUseCase.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
+import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:riverpod/riverpod.dart';
 
 final forDaysBioInfoProvider = StateNotifierProvider<ForDaysBioInfoNotifier, UIState<ResponseBioForDaysModel?>>(
@@ -32,18 +34,32 @@ class ForDaysBioInfoNotifier extends StateNotifier<UIState<ResponseBioForDaysMod
   }
 
   void addGlucoseBioInfo(ResponseBioGlucoseModel glucoseData) {
+    debugPrint("addGlucoseBioInfo : $state");
     if (state is Success) {
-      final currentData = (state as Success<ResponseBioForDaysModel>).value;
-      currentData.glucoses.add(glucoseData);
-      state = Success(currentData);
+      if (state is Success) {
+        final currentData = (state as Success<ResponseBioForDaysModel>).value;
+        final updatedList = CollectionUtil.isNullorEmpty(currentData.glucoses) ? [glucoseData] : [glucoseData, ...currentData.glucoses];
+        state = Success(currentData.copyWith(
+          steps: currentData.steps,
+          bloodPressures: currentData.bloodPressures,
+          glucoses: updatedList,
+        ));
+      }
     }
   }
 
   void addBpBioInfo(ResponseBioBloodPressureModel bpData) {
+    debugPrint("addBpBioInfo : $state");
     if (state is Success) {
-      final currentData = (state as Success<ResponseBioForDaysModel>).value;
-      currentData.bloodPressures.add(bpData);
-      state = Success(currentData);
+      if (state is Success) {
+        final currentData = (state as Success<ResponseBioForDaysModel>).value;
+        final updatedList = CollectionUtil.isNullorEmpty(currentData.bloodPressures) ? [bpData] : [bpData, ...currentData.bloodPressures];
+        state = Success(currentData.copyWith(
+          steps: currentData.steps,
+          bloodPressures: updatedList,
+          glucoses: currentData.glucoses,
+        ));
+      }
     }
   }
 

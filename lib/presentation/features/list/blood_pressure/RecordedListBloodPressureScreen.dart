@@ -37,7 +37,7 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
           success: (event) async {
-            bpList.value = event.value?.bloodPressures.reversed.toList() ?? [];
+            bpList.value = [...?event.value?.bloodPressures.reversed.toList()];
           },
           failure: (event) {
             SnackBarUtil.show(context, event.errorMessage);

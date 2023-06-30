@@ -37,7 +37,7 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
           success: (event) async {
-            glucoseList.value = event.value?.glucoses.reversed.toList() ?? [];
+            glucoseList.value = [...?event.value?.glucoses.reversed.toList()];
           },
           failure: (event) {
             SnackBarUtil.show(context, event.errorMessage);

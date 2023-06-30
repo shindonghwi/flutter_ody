@@ -69,7 +69,9 @@ class _FloatingButton extends HookConsumerWidget {
               if (data.glucose != 0) {
                 uiStateRead.addGlucoseBioInfo(data);
               }
-            } catch (e) {}
+            } catch (e) {
+              debugPrint("glucose update fail: ${e.toString()}");
+            }
           },
           child: SvgPicture.asset(
             'assets/imgs/icon_plus_btn.svg',
