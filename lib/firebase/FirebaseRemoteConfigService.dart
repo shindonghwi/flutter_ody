@@ -16,7 +16,7 @@ class FirebaseRemoteConfigService {
   double getDouble(String key) =>_remoteConfig.getDouble(key);
 
   String get aosVersionFromStore => _remoteConfig.getString(FirebaseRemoteConfigKeys.latest_version_aos);
-  String get iosVersionFromStore => _remoteConfig.getInt(FirebaseRemoteConfigKeys.latest_version_ios).toString();
+  String get iosVersionFromStore => _remoteConfig.getString(FirebaseRemoteConfigKeys.latest_version_ios);
 
   Future<void> _setConfigSettings() async => _remoteConfig.setConfigSettings(
     RemoteConfigSettings(
