@@ -27,7 +27,7 @@ main() async {
     );
   }).sendPort);
 
-  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
 
 
   Environment.newInstance(BuildType.dev).run();

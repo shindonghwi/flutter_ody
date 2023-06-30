@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC_tLq2Zrpy59N3pTpkDhONvGi5NTBGY0w',
-    appId: '1:739051866939:ios:ac9724fc286111e11d851e',
+    appId: '1:739051866939:ios:f311bbe2eecda8881d851e',
     messagingSenderId: '739051866939',
     projectId: 'orotcode-ody-dev',
     storageBucket: 'orotcode-ody-dev.appspot.com',
+    androidClientId: '739051866939-vvhba8lbfu8vnvj0egp3ld6ijov2apcq.apps.googleusercontent.com',
     iosClientId: '739051866939-7ii7c6od0j78mu7idigtm1e2tpjqlstg.apps.googleusercontent.com',
     iosBundleId: 'com.orot.ody.dev',
   );

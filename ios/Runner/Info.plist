@@ -27,6 +27,8 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.orot.ody.dev</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.739051866939-7ii7c6od0j78mu7idigtm1e2tpjqlstg</string>
@@ -35,9 +37,11 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.orot.ody</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.1043075265104-65irrc3i3gnif14d69fd6el6avsso6km</string>
+				<string>com.googleusercontent.apps.739051866939-7ii7c6od0j78mu7idigtm1e2tpjqlstg</string>
 			</array>
 		</dict>
 	</array>
