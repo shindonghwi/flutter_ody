@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/components/graph/model/AxisEmphasis
 import 'package:ody_flutter_app/presentation/components/graph/model/GraphPointModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/widget/SymbolWidget.dart';
 import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisItemTitle.dart';
+import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
@@ -23,11 +24,10 @@ class GlucoseFigure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sampleXAxisList = [
-      AxisEmphasisModel(label: "04:00", color: getColorScheme(context).neutral60),
-      AxisEmphasisModel(label: "08:00", color: getColorScheme(context).neutral60),
-      AxisEmphasisModel(label: "12:00", color: getColorScheme(context).colorPrimaryFocus),
-      AxisEmphasisModel(label: "16:00", color: getColorScheme(context).neutral60),
-      AxisEmphasisModel(label: "20:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "00:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "06:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "12:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "18:00", color: getColorScheme(context).neutral60),
       AxisEmphasisModel(label: "24:00", color: getColorScheme(context).neutral60),
     ];
 
@@ -40,23 +40,22 @@ class GlucoseFigure extends StatelessWidget {
       AxisEmphasisModel(label: "160", color: getColorScheme(context).neutral60),
     ].reversed.toList();
 
-    final sampleGraphPointList = GraphPointModel(pointData: [
-      GraphPointDataModel(
-        label: "08:00",
-        yValue: Random().nextInt(100) + 60.toDouble(),
-        pointColor: getColorScheme(context).colorPrimaryFocus,
-      ),
-      GraphPointDataModel(
-        label: "12:00",
-        yValue: Random().nextInt(100) + 60.toDouble(),
-        pointColor: getColorScheme(context).colorError,
-      ),
-      GraphPointDataModel(
-        label: "16:00",
-        yValue: Random().nextInt(100) + 60.toDouble(),
-        pointColor: getColorScheme(context).colorPrimaryFocus,
-      ),
-    ]);
+    final sampleGraphPointList = GraphPointModel(
+      pointData: glucoseList?.map((e) =>
+          GraphPointDataModel(label: e.createdAt,
+            yValue: e.glucose.toDouble(),
+            pointColor: RecordRangeStatusHelper.getStatusTextColor(
+              context, RecordRangeStatusHelper.getGlucoseRecordRangeStatusFromCode(e.status.code),),),).toList() ??
+          [],);
+
+    int? smallestLabel = glucoseList
+        ?.map((e) => e.glucose)
+        .reduce((current, next) => current.compareTo(next) < 0 ? current : next);
+
+    int? largestLabel = glucoseList
+        ?.map((e) => e.glucose)
+        .reduce((current, next) => current.compareTo(next) > 0 ? current : next);
+
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +65,7 @@ class GlucoseFigure extends StatelessWidget {
           title: getAppLocalizations(context).analysis_glucose_figure_title,
           secondTitle: Triple(
             getAppLocalizations(context).analysis_glucose_figure_text1,
-            "99 - 140 ${getAppLocalizations(context).record_glucose_input_unit}",
+            "$smallestLabel - $largestLabel ${getAppLocalizations(context).record_glucose_input_unit}",
             getAppLocalizations(context).analysis_glucose_figure_text2,
           ),
           description: getAppLocalizations(context).analysis_glucose_figure_description,
@@ -87,8 +86,6 @@ class GlucoseFigure extends StatelessWidget {
                 symbolWidget: const _SymbolList(),
                 xAxisInnerHorizontalPadding: 0,
                 dividerColor: getColorScheme(context).neutral50,
-                xAxisUnitWidth: 28,
-                // graphPointModel: sampleGraphPointList,
                 graphPointModel: sampleGraphPointList,
               ),
             )

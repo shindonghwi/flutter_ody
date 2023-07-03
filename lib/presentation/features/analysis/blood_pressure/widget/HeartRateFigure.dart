@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -25,11 +26,10 @@ class HeartRateFigure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sampleXAxisList = [
-      AxisEmphasisModel(label: "04:00", color: getColorScheme(context).neutral60),
-      AxisEmphasisModel(label: "08:00", color: getColorScheme(context).neutral60),
-      AxisEmphasisModel(label: "12:00", color: getColorScheme(context).colorPrimaryFocus),
-      AxisEmphasisModel(label: "16:00", color: getColorScheme(context).neutral60),
-      AxisEmphasisModel(label: "20:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "00:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "06:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "12:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "18:00", color: getColorScheme(context).neutral60),
       AxisEmphasisModel(label: "24:00", color: getColorScheme(context).neutral60),
     ];
 
@@ -50,21 +50,20 @@ class HeartRateFigure extends StatelessWidget {
       ),
     ];
 
-    final sampleGraphLineModel = GraphLineModel(
-      pointData: [
-        GraphPointDataModel(
-          label: "08:00",
-          yValue: Random().nextInt(100) + 60.toDouble(),
-          pointColor: getColorScheme(context).secondary100,
-        ),
-        GraphPointDataModel(
-          label: "12:00",
-          yValue: Random().nextInt(100) + 60.toDouble(),
-          pointColor: getColorScheme(context).secondary100,
-        ),
-      ],
-      lineColor: getColorScheme(context).secondary100,
-    );
+    final sampleGraphLineModelList = [
+      GraphLineModel(
+        pointData: bpList
+            ?.map(
+              (e) => GraphPointDataModel(
+            label: e.createdAt,
+            yValue: e.heartRate.toDouble(),
+            pointColor: getColorScheme(context).secondary100,
+          ),
+        )
+            .toList() ??
+            [], lineColor: getColorScheme(context).secondary100,
+      ),
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,41 +91,13 @@ class HeartRateFigure extends StatelessWidget {
                 xAxisList: sampleXAxisList,
                 yAxisList: sampleYAxisList,
                 shadowAreaList: shadowAreaList,
-                symbolWidget: const _SymbolList(),
+                symbolWidget: null,
                 xAxisInnerHorizontalPadding: 0,
                 dividerColor: getColorScheme(context).neutral50,
-                xAxisUnitWidth: 28,
-                // graphPointModel: sampleGraphPointList,
-                graphLineModel: sampleGraphLineModel,
+                graphLineModelList: sampleGraphLineModelList,
               ),
             )
           ],
-        ),
-      ],
-    );
-  }
-}
-
-class _SymbolList extends HookWidget {
-  const _SymbolList({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        SymbolWidget(
-          label: getAppLocalizations(context).analysis_blood_pressure_figure_symbol_systolic,
-          color: getColorScheme(context).colorError,
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        SymbolWidget(
-          label: getAppLocalizations(context).analysis_blood_pressure_figure_symbol_diastolic,
-          color: getColorScheme(context).colorPrimaryFocus,
         ),
       ],
     );

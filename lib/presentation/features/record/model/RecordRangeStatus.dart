@@ -51,6 +51,7 @@ class RecordRangeStatusHelper {
         return getColorScheme(context).primary100;
       case RecordRangeStatus.Risk:
       case RecordRangeStatus.Warn:
+        return getColorScheme(context).error40;
       case RecordRangeStatus.HighRisk:
       case RecordRangeStatus.Alert:
         return getColorScheme(context).colorError;

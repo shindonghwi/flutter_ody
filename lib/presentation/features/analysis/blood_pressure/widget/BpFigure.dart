@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
@@ -10,6 +8,7 @@ import 'package:ody_flutter_app/presentation/components/graph/model/GraphPointMo
 import 'package:ody_flutter_app/presentation/components/graph/model/ShadowAreaModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/widget/SymbolWidget.dart';
 import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisItemTitle.dart';
+import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
@@ -25,11 +24,10 @@ class BpFigure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sampleXAxisList = [
-      AxisEmphasisModel(label: "04:00", color: getColorScheme(context).neutral60),
-      AxisEmphasisModel(label: "08:00", color: getColorScheme(context).neutral60),
-      AxisEmphasisModel(label: "12:00", color: getColorScheme(context).colorPrimaryFocus),
-      AxisEmphasisModel(label: "16:00", color: getColorScheme(context).neutral60),
-      AxisEmphasisModel(label: "20:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "00:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "06:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "12:00", color: getColorScheme(context).neutral60),
+      AxisEmphasisModel(label: "18:00", color: getColorScheme(context).neutral60),
       AxisEmphasisModel(label: "24:00", color: getColorScheme(context).neutral60),
     ];
 
@@ -55,43 +53,32 @@ class BpFigure extends StatelessWidget {
       ),
     ];
 
-    // final sampleGraphLineModel = GraphLineModel(
-    //   pointData: [
-    //     GraphPointDataModel(
-    //       label: "08:00",
-    //       yValue: Random().nextInt(100) + 60.toDouble(),
-    //       pointColor: getColorScheme(context).colorError,
-    //     ),
-    //     GraphPointDataModel(
-    //       label: "12:00",
-    //       yValue: Random().nextInt(100) + 60.toDouble(),
-    //       pointColor: getColorScheme(context).colorError,
-    //     ),
-    //   ],
-    //   lineColor: getColorScheme(context).colorError,
-    // );
-    //
-
-    final sampleGraphLineModel = GraphLineModel(
-      pointData: [
-        GraphPointDataModel(
-          label: "08:00",
-          yValue: Random().nextInt(100) + 60.toDouble(),
-          pointColor: getColorScheme(context).colorError,
-        ),
-        GraphPointDataModel(
-          label: "12:00",
-          yValue: Random().nextInt(100) + 60.toDouble(),
-          pointColor: getColorScheme(context).colorError,
-        ),
-        GraphPointDataModel(
-          label: "14:00",
-          yValue: Random().nextInt(100) + 60.toDouble(),
-          pointColor: getColorScheme(context).colorError,
-        ),
-      ],
-      lineColor: getColorScheme(context).colorError,
-    );
+    final sampleGraphLineModelList = [
+      GraphLineModel(
+        pointData: bpList
+            ?.map(
+              (e) => GraphPointDataModel(
+            label: e.createdAt,
+            yValue: e.systolicBloodPressure.toDouble(),
+            pointColor: getColorScheme(context).colorError,
+          ),
+        )
+            .toList() ??
+            [], lineColor: getColorScheme(context).colorError,
+      ),
+      GraphLineModel(
+        pointData: bpList
+            ?.map(
+              (e) => GraphPointDataModel(
+            label: e.createdAt,
+            yValue: e.diastolicBloodPressure.toDouble(),
+            pointColor: getColorScheme(context).primary100,
+          ),
+        )
+            .toList() ??
+            [], lineColor: getColorScheme(context).primary100,
+      )
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,8 +109,7 @@ class BpFigure extends StatelessWidget {
                 symbolWidget: const _SymbolList(),
                 xAxisInnerHorizontalPadding: 0,
                 dividerColor: getColorScheme(context).neutral50,
-                xAxisUnitWidth: 28,
-                graphLineModel: sampleGraphLineModel,
+                graphLineModelList: sampleGraphLineModelList,
               ),
             )
           ],

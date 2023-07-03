@@ -6,7 +6,6 @@ import 'package:ody_flutter_app/presentation/components/graph/model/GraphPointMo
 import 'package:ody_flutter_app/presentation/components/graph/model/ShadowAreaModel.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 enum RecordGraphType { POINT, LINE }
@@ -33,8 +32,11 @@ class RecordGraph extends StatelessWidget {
   /// 구분선 색상
   final Color dividerColor;
 
-  /// x축 단위 너비
-  int xAxisUnitWidth = 15;
+  /// y축 최소값
+  final double yMin;
+
+  /// y축 최대값
+  final double yMax;
 
   /// 점 리스트
   GraphPointModel graphPointModel = GraphPointModel(
@@ -42,10 +44,7 @@ class RecordGraph extends StatelessWidget {
   );
 
   /// 점 - 라인 리스트
-  GraphLineModel graphLineModel = GraphLineModel(
-    pointData: [],
-    lineColor: Colors.black,
-  );
+  List<GraphLineModel> graphLineModelList = [];
 
   RecordGraph({
     Key? key,
@@ -56,6 +55,8 @@ class RecordGraph extends StatelessWidget {
     required this.graphType,
     required this.dividerColor,
     this.xAxisInnerHorizontalPadding = 0,
+    this.yMin = 60,
+    this.yMax = 160,
   }) : super(key: key);
 
   RecordGraph.point({
@@ -66,9 +67,10 @@ class RecordGraph extends StatelessWidget {
     required this.shadowAreaList,
     required this.xAxisInnerHorizontalPadding,
     required this.dividerColor,
-    required this.xAxisUnitWidth,
     required this.graphPointModel,
   })  : graphType = RecordGraphType.POINT,
+        yMin = 60,
+        yMax = 160,
         super(key: key);
 
   RecordGraph.line({
@@ -79,9 +81,10 @@ class RecordGraph extends StatelessWidget {
     required this.shadowAreaList,
     required this.xAxisInnerHorizontalPadding,
     required this.dividerColor,
-    required this.xAxisUnitWidth,
-    required this.graphLineModel,
+    required this.graphLineModelList,
   })  : graphType = RecordGraphType.LINE,
+        yMin = 60,
+        yMax = 160,
         super(key: key);
 
   @override
@@ -113,10 +116,11 @@ class RecordGraph extends StatelessWidget {
                         dividerColor: dividerColor,
                         shadowAreaList: shadowAreaList,
                         graphPointModel: graphPointModel,
-                        graphLineModel: graphLineModel,
+                        graphLineModelList: graphLineModelList,
                         xAxisInnerHorizontalPadding: xAxisInnerHorizontalPadding,
-                        xAxisUnitWidth: xAxisUnitWidth,
                         graphType: graphType,
+                        yMin: yMin,
+                        yMax: yMax,
                       ),
                     )
                   ],
@@ -144,10 +148,11 @@ class _GraphContent extends HookWidget {
     required this.dividerColor,
     required this.shadowAreaList,
     required this.graphPointModel,
-    required this.graphLineModel,
+    required this.graphLineModelList,
     required this.xAxisInnerHorizontalPadding,
-    required this.xAxisUnitWidth,
     required this.graphType,
+    required this.yMin,
+    required this.yMax,
   });
 
   final List<AxisEmphasisModel> xAxisList;
@@ -155,10 +160,11 @@ class _GraphContent extends HookWidget {
   final Color dividerColor;
   final List<ShadowAreaModel> shadowAreaList;
   final GraphPointModel graphPointModel;
-  final GraphLineModel graphLineModel;
+  final List<GraphLineModel> graphLineModelList;
   final double xAxisInnerHorizontalPadding;
-  final int xAxisUnitWidth;
   final RecordGraphType graphType;
+  final double yMin;
+  final double yMax;
 
   @override
   Widget build(BuildContext context) {
@@ -172,37 +178,6 @@ class _GraphContent extends HookWidget {
       final color = element.color;
       areaList.add(Triple(1 - startY, areaFactor <= 0 ? 0.01 : areaFactor, color));
     }
-
-    final List<GraphPointDataModel> coordinatePointDataList = [];
-    final List<GraphPointDataModel> lineDataList = [];
-    Pair<List<GraphPointDataModel>, Color> coordinateLineDataList = Pair([], graphLineModel.lineColor);
-
-    xAxisList.map((xAxisData) {
-      if (graphType == RecordGraphType.POINT) {
-        for (var element in graphPointModel.pointData) {
-          if (element.label == xAxisData.label) {
-            final areaFactor = (element.yValue - min) / (max - min);
-            coordinatePointDataList.add(GraphPointDataModel(
-              label: element.label,
-              yValue: areaFactor <= 0 ? 0.002 : areaFactor,
-              pointColor: element.pointColor,
-            ));
-          }
-        }
-      } else {
-        for (var element in graphLineModel.pointData) {
-          if (element.label == xAxisData.label) {
-            final areaFactor = (element.yValue - min) / (max - min);
-            lineDataList.add(GraphPointDataModel(
-              label: element.label,
-              yValue: areaFactor <= 0 ? 0.002 : areaFactor,
-              pointColor: element.pointColor,
-            ));
-          }
-        }
-        coordinateLineDataList = Pair(lineDataList, graphLineModel.lineColor);
-      }
-    }).toList();
 
     return Stack(
       children: [
@@ -253,57 +228,33 @@ class _GraphContent extends HookWidget {
           height: double.infinity,
           margin: EdgeInsets.symmetric(horizontal: xAxisInnerHorizontalPadding),
           padding: EdgeInsets.symmetric(vertical: getMediaQuery(context).size.height * 0.002),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            children: graphType == RecordGraphType.POINT
-                ? xAxisList.map((xAxisData) {
-                    return SizedBox(
-                      width: xAxisUnitWidth.toDouble(),
-                      height: double.infinity,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          const circleSize = 6.0;
-                          final containerHeight = constraints.maxHeight - circleSize;
-
-                          return Stack(
-                              children: coordinatePointDataList.map((e) {
-                            return xAxisData.label == e.label
-                                ? Positioned(
-                                    left: 0,
-                                    right: 0,
-                                    top: containerHeight - (containerHeight * e.yValue),
-                                    child: Container(
-                                      width: circleSize,
-                                      height: circleSize,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: e.pointColor,
-                                      ),
-                                    ),
-                                  )
-                                : const SizedBox();
-                          }).toList());
-                        },
-                      ),
+          child: graphType == RecordGraphType.POINT
+              ? LayoutBuilder(
+                  builder: (context, constraints) {
+                    const circleSize = 6.0;
+                    final containerHeight = constraints.maxHeight - circleSize;
+                    return CustomPaint(
+                      size: Size(MediaQuery.of(context).size.width, containerHeight),
+                      painter: PointPainter(xAxisList, graphPointModel, yMin, yMax),
+                      child: Container(),
                     );
-                  }).toList()
-                : [
-                    Expanded(
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          const circleSize = 6.0;
-                          final containerHeight = constraints.maxHeight - circleSize;
-                          return CustomPaint(
-                            size: Size(MediaQuery.of(context).size.width, containerHeight),
-                            painter: LinePainter(xAxisList, coordinateLineDataList),
-                            child: Container(),
-                          );
-                        },
-                      ),
-                    )
-                  ],
-          ),
+                  },
+                )
+              : Stack(
+                  children: graphLineModelList.map((graphLineModel) {
+                    return LayoutBuilder(
+                      builder: (context, constraints) {
+                        const circleSize = 6.0;
+                        final containerHeight = constraints.maxHeight - circleSize;
+                        return CustomPaint(
+                          size: Size(MediaQuery.of(context).size.width, containerHeight),
+                          painter: LinePainter(xAxisList, graphLineModel, yMin, yMax),
+                          child: Container(),
+                        );
+                      },
+                    );
+                  }).toList(),
+                ),
         )
       ],
     );
@@ -394,29 +345,37 @@ class _XAxisContent extends HookWidget {
 
 class LinePainter extends CustomPainter {
   final List<AxisEmphasisModel> xAxisList;
-  final Pair<List<GraphPointDataModel>, Color> pointLineDataList;
+  final GraphLineModel graphLineModel;
+  final double yMin;
+  final double yMax;
 
   LinePainter(
     this.xAxisList,
-    this.pointLineDataList,
+    this.graphLineModel,
+    this.yMin,
+    this.yMax,
   );
 
   @override
   void paint(Canvas canvas, Size size) {
     final linePaint = Paint()
-      ..color = pointLineDataList.second
+      ..color = graphLineModel.lineColor
       ..strokeWidth = 2.0
       ..style = PaintingStyle.stroke;
 
-    final dataPointSpacing = size.width / (xAxisList.length - 1);
-
-    Path path = Path(); // Create a new path for the line
+    Path path = Path();
 
     /// 선 그리기
-    for (int i = 0; i < pointLineDataList.first.length; i++) {
-      int xIndex = xAxisList.map((e) => e.label).toList().indexOf(pointLineDataList.first[i].label);
-      final xPos = xIndex * dataPointSpacing;
-      final yPos = size.height - (size.height * pointLineDataList.first[i].yValue);
+    for (int i = 0; i < graphLineModel.pointData.length; i++) {
+      final hour = graphLineModel.pointData[i].label.split(":").first;
+      final min = graphLineModel.pointData[i].label.split(":").last;
+      final double totalMinute = double.parse(hour) * 60 + double.parse(min);
+      final xPercentage = totalMinute / 1440.0;
+      final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
+          ? 0.01
+          : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
+      final xPos = size.width * xPercentage;
+      final yPos = size.height * (1.0 - yPercentage);
 
       if (i == 0) {
         path.moveTo(xPos, yPos);
@@ -427,13 +386,18 @@ class LinePainter extends CustomPainter {
     canvas.drawPath(path, linePaint);
 
     /// 점 그리기
-    for (int i = 0; i < pointLineDataList.first.length; i++) {
-      int xIndex = xAxisList.map((e) => e.label).toList().indexOf(pointLineDataList.first[i].label);
-      final xPos = xIndex * dataPointSpacing;
-      final yPos = size.height - (size.height * pointLineDataList.first[i].yValue);
-
+    for (int i = 0; i < graphLineModel.pointData.length; i++) {
+      final hour = graphLineModel.pointData[i].label.split(":").first;
+      final min = graphLineModel.pointData[i].label.split(":").last;
+      final double totalMinute = double.parse(hour) * 60 + double.parse(min);
+      final xPercentage = totalMinute / 1440.0;
+      final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
+          ? 0.01
+          : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
+      final xPos = size.width * xPercentage;
+      final yPos = size.height * (1.0 - yPercentage);
       final circlePaint = Paint()
-        ..color = pointLineDataList.first[i].pointColor
+        ..color = graphLineModel.pointData[i].pointColor
         ..style = PaintingStyle.fill;
       canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
     }
@@ -441,4 +405,41 @@ class LinePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(LinePainter oldDelegate) => true;
+}
+
+class PointPainter extends CustomPainter {
+  final List<AxisEmphasisModel> xAxisList;
+  final GraphPointModel graphPointModel;
+  final double yMin;
+  final double yMax;
+
+  PointPainter(
+    this.xAxisList,
+    this.graphPointModel,
+    this.yMin,
+    this.yMax,
+  );
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    /// 점 그리기
+    for (int i = 0; i < graphPointModel.pointData.length; i++) {
+      final hour = graphPointModel.pointData[i].label.split(":").first;
+      final min = graphPointModel.pointData[i].label.split(":").last;
+      final double totalMinute = double.parse(hour) * 60 + double.parse(min);
+      final xPercentage = totalMinute / 1440.0;
+      final yPercentage = graphPointModel.pointData[i].yValue - yMin <= 0
+          ? 0.01
+          : ((graphPointModel.pointData[i].yValue - yMin) / (yMax - yMin));
+      final xPos = size.width * xPercentage;
+      final yPos = size.height * (1.0 - yPercentage);
+      final circlePaint = Paint()
+        ..color = graphPointModel.pointData[i].pointColor
+        ..style = PaintingStyle.fill;
+      canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(PointPainter oldDelegate) => true;
 }

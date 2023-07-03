@@ -16,7 +16,6 @@ extension StyleColor on ColorScheme{
   Color get colorError => brightness == Brightness.light ? error80 : error80;
 
 
-
   Color get black => brightness == Brightness.light ? Color(0xFF000000) : Color(0xFF000000);
   Color get white => brightness == Brightness.light ? Color(0xFFFFFFFF) : Color(0xFFFFFFFF);
 
@@ -32,6 +31,7 @@ extension StyleColor on ColorScheme{
   Color get primary10 => brightness == Brightness.light ? Color(0xFFE3ECFF) : Color(0xFFE3ECFF);
 
   Color get secondary100 => brightness == Brightness.light ? Color(0xFFFF9108) : Color(0xFFFF9108);
+  Color get secondary20 => brightness == Brightness.light ? Color(0xFFFFDFB7) : Color(0xFFFFDFB7);
 
   Color get error100 => brightness == Brightness.light ? Color(0xFFFF4242) : Color(0xFFFF4242);
   Color get error90 => brightness == Brightness.light ? Color(0xFFFF5353) : Color(0xFFFF5353);

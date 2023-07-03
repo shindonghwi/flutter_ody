@@ -75,13 +75,9 @@ class AnalysisBloodPressureScreen extends StatelessWidget {
                 sumHighRisk: sumHighRisk,
               ),
               const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40)),
-              BpFigure(
-                bpList: bpList,
-              ),
+              BpFigure(bpList: bpList),
               const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40)),
-              HeartRateFigure(
-                bpList: bpList,
-              )
+              HeartRateFigure(bpList: bpList)
             ],
           ),
         ),
