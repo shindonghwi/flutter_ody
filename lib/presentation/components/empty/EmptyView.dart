@@ -67,7 +67,7 @@ class EmptyView extends HookConsumerWidget {
       } else if (screen == RoutingScreen.ReportWeeklyList) {
         return getAppLocalizations(context).empty_report;
       } else if (screen == RoutingScreen.ReportMonthlyList) {
-        return getAppLocalizations(context).empty_button_go_home;
+        return getAppLocalizations(context).empty_report;
       }
       return null;
     }

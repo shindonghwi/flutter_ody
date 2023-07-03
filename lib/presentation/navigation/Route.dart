@@ -18,6 +18,8 @@ import 'package:ody_flutter_app/presentation/features/main/MainScreen.dart';
 import 'package:ody_flutter_app/presentation/features/onboarding/OnBoardingScreen.dart';
 import 'package:ody_flutter_app/presentation/features/record/blood_pressure/RecordBloodPressureScreen.dart';
 import 'package:ody_flutter_app/presentation/features/record/glucose/RecordGlucoseScreen.dart';
+import 'package:ody_flutter_app/presentation/features/report/monthly/ReportMonthlyScreen.dart';
+import 'package:ody_flutter_app/presentation/features/report/weekly/ReportWeeklyScreen.dart';
 import 'package:ody_flutter_app/presentation/features/setting/SettingScreen.dart';
 import 'package:ody_flutter_app/presentation/features/setting/alarm/SettingAlarmScreen.dart';
 import 'package:ody_flutter_app/presentation/features/setting/medication/AddMedicationScreen.dart';
@@ -53,6 +55,9 @@ enum RoutingScreen {
   ReportMonthlyList(route: "/list/report/monthly"), // 월간 보고서 목록
   MedicationList(route: "/list/medication"), // 약 알림 리스트
 
+  ReportWeekly(route: "/report/weekly"), // 주간 보고서
+  ReportMonthly(route: "/report/monthly"), // 월간 보고서
+
   EditMyInfo(route: "/edit/my_info"), // 내 정보 수정
   EditMyNickname(route: "/edit/my_nickname"), // 닉네임 수정
   EditMyHeight(route: "/edit/my_height"), // 키 수정
@@ -76,21 +81,18 @@ enum RoutingScreen {
       RoutingScreen.Login.route: (context) => const LoginScreen(),
       RoutingScreen.InputProfile.route: (context) => const InputProfileScreen(),
       RoutingScreen.Welcome.route: (context) => const WelcomeScreen(),
-
       RoutingScreen.Main.route: (context) => MainScreen(),
-
       RoutingScreen.RecordBloodPressure.route: (context) => const RecordBloodPressureScreen(),
       RoutingScreen.RecordGlucose.route: (context) => const RecordGlucoseScreen(),
-
       RoutingScreen.AnalysisBloodPressure.route: (context) => const AnalysisBloodPressureScreen(),
       RoutingScreen.AnalysisGlucose.route: (context) => const AnalysisGlucoseScreen(),
-
       RoutingScreen.RecordedListBloodPressure.route: (context) => const RecordedListBloodPressureScreen(),
       RoutingScreen.RecordedListGlucose.route: (context) => const RecordedListGlucoseScreen(),
       RoutingScreen.ReportWeeklyList.route: (context) => const ReportWeeklyListScreen(),
       RoutingScreen.ReportMonthlyList.route: (context) => const ReportMonthlyListScreen(),
       RoutingScreen.MedicationList.route: (context) => const MedicationListScreen(),
-
+      RoutingScreen.ReportWeekly.route: (context) => const ReportWeeklyScreen(),
+      RoutingScreen.ReportMonthly.route: (context) => const ReportMonthlyScreen(),
       RoutingScreen.EditMyInfo.route: (context) => const EditMyInfoScreen(),
       RoutingScreen.EditMyNickname.route: (context) => const EditMyNicknameScreen(),
       RoutingScreen.EditMyHeight.route: (context) => const EditMyHeightScreen(),
@@ -123,6 +125,12 @@ enum RoutingScreen {
         return const RecordBloodPressureScreen();
       case "/record/glucose":
         return const RecordGlucoseScreen();
+      case "/report/weekly":
+        int? reportSeq = parameter;
+        return ReportWeeklyScreen(reportSeq: reportSeq);
+      case "/report/monthly":
+        int? reportSeq = parameter;
+        return ReportMonthlyScreen(reportSeq: reportSeq);
       case "/analysis/blood_pressure":
         List<ResponseBioBloodPressureModel>? bpList = parameter;
         return AnalysisBloodPressureScreen(bpList: bpList);

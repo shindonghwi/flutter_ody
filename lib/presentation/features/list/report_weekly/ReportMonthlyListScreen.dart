@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:ody_flutter_app/presentation/features/list/report_weekly/provider/ReportMonthlyListProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
+import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -79,7 +80,12 @@ class ReportMonthlyListScreen extends HookConsumerWidget {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  nextSlideScreen(RoutingScreen.ReportMonthly.route, parameter: item.reportSeq),
+                                );
+                              },
                               borderRadius: BorderRadius.circular(15),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 24),
