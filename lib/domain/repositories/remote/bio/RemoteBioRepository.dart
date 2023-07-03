@@ -9,6 +9,7 @@ import 'package:ody_flutter_app/data/models/bio/RequestBioGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioStepsModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportListModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWeeklyInfoModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeInfoModel.dart';
 import 'package:ody_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:ody_flutter_app/domain/models/me/DiseaseType.dart';
@@ -35,4 +36,7 @@ abstract class RemoteBioRepository {
 
   /// 월간 보고서 목록 조회
   Future<ApiListResponse<List<ResponseBioReportListModel>>> getBioReportMonthly();
+
+  /// 주간 보고서 정보 조회
+  Future<ApiResponse<ResponseBioReportWeeklyInfoModel>> getBioReportWeeklyInfo(int reportSeq);
 }
