@@ -154,8 +154,8 @@ class CardTodayRecord extends HookConsumerWidget {
     getCompleteCount(model);
 
     return SizedBox(
-      width: 70,
-      height: 70,
+      width: 90,
+      height: 90,
       child: Stack(
         children: [
           CustomCircle(

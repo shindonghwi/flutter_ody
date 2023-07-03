@@ -33,11 +33,13 @@ class AnalysisItemTitle extends StatelessWidget {
         ),
 
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               secondTitle.first,
               style: getTextTheme(context).t2b.copyWith(
                 color: getColorScheme(context).colorText,
+                  height: 1.2
               ),
               overflow: TextOverflow.visible,
             ),
@@ -45,6 +47,7 @@ class AnalysisItemTitle extends StatelessWidget {
               " ${secondTitle.second} ",
               style: getTextTheme(context).t2b.copyWith(
                 color: getColorScheme(context).colorPrimaryFocus,
+                height: 1.2
               ),
               overflow: TextOverflow.visible,
             ),
@@ -52,6 +55,7 @@ class AnalysisItemTitle extends StatelessWidget {
               secondTitle.third,
               style: getTextTheme(context).t2b.copyWith(
                 color: getColorScheme(context).colorText,
+                  height: 1.2
               ),
               overflow: TextOverflow.visible,
             ),

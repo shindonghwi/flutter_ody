@@ -234,6 +234,59 @@
     "list_report_monthly_title": "월간 보고서",
 
 
+    "report_walking_title": "걸음 수",
+    "report_walking_weekly_subtitle": "일주일 걸음 수 분석",
+    "report_walking_monthly_subtitle": "한 달 걸음 수 분석",
+    "report_walking_description": "{count} 걸음 (하루 10,000 걸음 기준)",
+    "@report_walking_description":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "report_weekly_calorie_subtitle": "일주일 칼로리 분석",
+    "report_monthly_calorie_subtitle": "한 달 칼로리 분석",
+    "report_weekly_calorie_text1": "일주일 동안",
+    "report_monthly_calorie_text1": "한 달 동안",
+    "report_weekly_calorie_text2": "를 붙태웠어요",
+    "report_calorie_description": "하루 권장 칼로리 소비량은 2,0000kcal입니다",
+    "report_weekly_base_calorie_recommend": "14,000kal",
+    "report_month_base_calorie_recommend": "56,000kal",
+    "report_weekly_average_subtitle": "일주일 평균",
+    "report_monthly_average_subtitle": "한 달 평균",
+    "report_walk_average_text1": "평균적으로",
+    "report_walk_average_text2": "걸어요",
+    "report_walk_weekly_average_description": "{yoil}에 최대 {walk}걸음을 걸었어요",
+    "@report_walk_weekly_average_description":{
+        "placeholders": {
+            "yoil": {},
+            "walk": {}
+        }
+    },
+    "report_walk_monthly_average_description": "{week}주차 {yoil}에 최대 {walk}걸음을 걸었어요",
+    "@report_walk_monthly_average_description":{
+        "placeholders": {
+            "week": {},
+            "yoil": {},
+            "walk": {}
+        }
+    },
+    "report_weekly_pre_subtitle": "지난주보다",
+    "report_monthly_pre_subtitle": "지난 달보다",
+    "report_weekly_pre_text1": "이번 주는",
+    "report_monthly_pre_text1": "이번 달은",
+    "report_monthly_pre_walk_more": "더 걸었어요",
+    "report_monthly_pre_walk_less": "덜 걸었어요",
+    "report_pre_description": "하루 평균 10,000 걸음을 기준으로 측정했어요",
+    "report_blood_pressure_title": "혈압",
+    "report_blood_pressure_weekly_average_subtitle": "일주일 혈압 평균",
+    "report_blood_pressure_monthly_average_subtitle": "한 달 혈압 평균",
+    "report_blood_pressure_weekly_average_text1": "일주일 동안",
+    "report_blood_pressure_monthly_average_text1": "한 달 동안",
+    "report_blood_pressure_weekly_average_text2": "측정했어요",
+    "report_blood_pressure_weekly_description": "수축기 혈압 평균 범위가 110mmHg 로 정상 범위입니다\n이완기 혈압 평균 범위는 79mmHg 로 평균보다 낮은 편입니다\n맥박 평균 범위는 86 회/분 으로 정상 범위입니다",
+    "report_blood_pressure_weekly_average_description": "일주일 혈압 기록 분석",
+    "report_blood_pressure_monthly_average_description": "한 달 혈압 기록 분석",
+
     "popup_app_policy_title" : "사용 약관",
     "popup_app_policy_all_grant" : "모두 동의하기",
     "popup_app_policy_age_14" : "만 14세 이상",
@@ -300,6 +353,9 @@
     "common_pm": "오후",
     "common_count": "회",
     "common_edit": "편집",
+    "common_walk": "걸음",
+    "common_week_pre": "이번주",
+    "common_week_post": "지난주",
     "common_delete": "삭제"
 
 }

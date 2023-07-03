@@ -2,9 +2,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ody_flutter_app/presentation/components/progress/PainterCircleProgress.dart';
 
 class CustomCircle extends HookWidget {
   final double percentage;
+  final double strokeWidth;
   final Color activeColor;
   final Color defaultColor;
 
@@ -13,6 +15,7 @@ class CustomCircle extends HookWidget {
     required this.percentage,
     required this.activeColor,
     required this.defaultColor,
+    this.strokeWidth = 8,
   }) : super(key: key);
 
   @override
@@ -25,6 +28,7 @@ class CustomCircle extends HookWidget {
             painter: PainterCircleProgress(
               color: defaultColor,
               progress: 1.0,
+              strokeWidth: strokeWidth,
             ),
             child: Container(),
           ),
@@ -32,44 +36,12 @@ class CustomCircle extends HookWidget {
             painter: PainterCircleProgress(
               color: activeColor,
               progress: percentage,
+              strokeWidth: strokeWidth,
             ),
             child: Container(),
           )
         ],
       ),
     );
-  }
-}
-
-/// @feature: 아래가 비어있는 원형 프로그래스바
-///
-/// @author: 2023/05/01 2:04 PM donghwishin
-class PainterCircleProgress extends CustomPainter {
-  Color color;
-  double progress;
-
-  PainterCircleProgress({
-    required this.progress,
-    required this.color,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..color = color
-      ..strokeWidth = 8
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-
-    Offset center = Offset(size.width / 2, size.height / 2);
-    double radius = math.min(size.width / 2, size.height / 2);
-
-    canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius), -math.pi / 2, 5 * math.pi / 3 * progress, false, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
   }
 }
