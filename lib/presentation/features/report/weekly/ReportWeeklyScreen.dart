@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisIt
 import 'package:ody_flutter_app/presentation/features/report/weekly/provider/ReportWeeklyProvider.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportCalorie.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalk.dart';
+import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkCompare.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkingAverage.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
@@ -73,6 +74,7 @@ class ReportWeeklyScreen extends HookConsumerWidget {
               DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
               ReportWalkingAverage(),
               DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+              ReportWalkCompare(),
             ],
           ),
         ),

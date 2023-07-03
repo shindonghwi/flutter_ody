@@ -34,7 +34,7 @@ class ReportCalorie extends StatelessWidget {
                   percentage: 0.5,
                   activeColor: getColorScheme(context).colorPrimaryFocus,
                   defaultColor: getColorScheme(context).colorPrimaryDisable,
-                  strokeWidth: 13,
+                  strokeWidth: 12,
                 ),
                 Align(
                   alignment: Alignment.center,

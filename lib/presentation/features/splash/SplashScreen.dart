@@ -168,7 +168,8 @@ class SplashScreen extends HookConsumerWidget {
                   }
                 });
               } else {
-                movePage(RoutingScreen.Login);
+                movePage(RoutingScreen.ReportWeekly);
+                // movePage(RoutingScreen.Login);
               }
             }
           } else {

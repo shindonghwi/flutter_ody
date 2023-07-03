@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ody_flutter_app/presentation/components/progress/PainterLinearHorizontalProgress.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
@@ -23,7 +24,7 @@ class ReportWalk extends HookWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                "걸음 수",
+                getAppLocalizations(context).report_walking_title,
                 style: getTextTheme(context).t1b.copyWith(
                       color: getColorScheme(context).colorText,
                     ),
@@ -52,20 +53,16 @@ class ReportWalk extends HookWidget {
           const SizedBox(
             height: 16,
           ),
-          Container(
-            height: 10,
+          SizedBox(
             width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  getColorScheme(context).primary100,
-                  getColorScheme(context).colorPrimaryDisable,
-                ],
-                stops: [0.4, 0.4],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
+            height: 10,
+            child: CustomPaint(
+              painter: PainterLinearHorizontalProgress(
+                progress: 0.5,
+                defaultColor: getColorScheme(context).colorPrimaryDisable,
+                activeColor: getColorScheme(context).primary100,
+                radius: 100,
               ),
-              borderRadius: BorderRadius.circular(100.0),
             ),
           ),
           const SizedBox(
