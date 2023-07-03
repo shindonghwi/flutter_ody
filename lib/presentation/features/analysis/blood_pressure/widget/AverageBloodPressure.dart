@@ -6,14 +6,18 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class AverageBloodPressure extends StatelessWidget {
-  final int count;
+  final String title;
+  final Triple secondTitle;
+  final String description;
   final int averageSystolic;
   final int averageDiastolic;
   final int averageHeartRate;
 
   const AverageBloodPressure({
     super.key,
-    required this.count,
+    required this.title,
+    required this.secondTitle,
+    required this.description,
     required this.averageSystolic,
     required this.averageDiastolic,
     required this.averageHeartRate,
@@ -43,13 +47,9 @@ class AverageBloodPressure extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AnalysisItemTitle(
-          title: getAppLocalizations(context).analysis_blood_pressure_average,
-          secondTitle: Triple(
-            getAppLocalizations(context).analysis_blood_pressure_average_measure_text1,
-            getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(count),
-            getAppLocalizations(context).analysis_blood_pressure_average_measure_text2,
-          ),
-          description: getAppLocalizations(context).analysis_blood_pressure_average_measure_description,
+          title: title,
+          secondTitle: secondTitle,
+          description: description,
         ),
         const SizedBox(
           height: 40,

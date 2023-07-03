@@ -10,6 +10,7 @@ import 'package:ody_flutter_app/presentation/features/analysis/blood_pressure/wi
 import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class AnalysisBloodPressureScreen extends StatelessWidget {
   final List<ResponseBioBloodPressureModel>? bpList;
@@ -62,7 +63,13 @@ class AnalysisBloodPressureScreen extends StatelessWidget {
           child: Column(
             children: [
               AverageBloodPressure(
-                count: bpList?.length ?? 0,
+                title: getAppLocalizations(context).analysis_blood_pressure_average,
+                secondTitle: Triple(
+                  getAppLocalizations(context).analysis_blood_pressure_average_measure_text1,
+                  getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(bpList?.length ?? 0),
+                  getAppLocalizations(context).analysis_blood_pressure_average_measure_text2,
+                ),
+                description: getAppLocalizations(context).analysis_blood_pressure_average_measure_description,
                 averageSystolic: (sumSystolic / totalCount).round(),
                 averageDiastolic: (sumDiastolic / totalCount).round(),
                 averageHeartRate: (sumHeartRate / totalCount).round(),

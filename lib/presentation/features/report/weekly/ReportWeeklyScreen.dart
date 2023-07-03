@@ -4,15 +4,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/divider/DottedDivider.dart';
-import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisItemTitle.dart';
 import 'package:ody_flutter_app/presentation/features/report/weekly/provider/ReportWeeklyProvider.dart';
+import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressure.dart';
+import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressureAnalysis.dart';
+import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressureGraph.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportCalorie.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalk.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkCompare.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkingAverage.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class ReportWeeklyScreen extends HookConsumerWidget {
@@ -61,24 +62,69 @@ class ReportWeeklyScreen extends HookConsumerWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
         physics: const BouncingScrollPhysics(),
-        child: Container(
-          decoration: BoxDecoration(
-            color: getColorScheme(context).colorUI02,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Column(
-            children: const [
-              ReportWalk(),
-              DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-              ReportCalorie(),
-              DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-              ReportWalkingAverage(),
-              DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-              ReportWalkCompare(),
-            ],
-          ),
+        child: Column(
+          children: const [
+            ReportCardWalk(),
+            SizedBox(height: 24,),
+            ReportCardBloodPressure(),
+          ],
         ),
       ),
     );
   }
 }
+
+class ReportCardWalk extends StatelessWidget {
+  const ReportCardWalk({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: getColorScheme(context).colorUI02,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        children: const [
+          ReportWalk(),
+          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportCalorie(),
+          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportWalkingAverage(),
+          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportWalkCompare(),
+          SizedBox(
+            height: 36,
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class ReportCardBloodPressure extends StatelessWidget {
+  const ReportCardBloodPressure({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: getColorScheme(context).colorUI02,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        children: const [
+          ReportBloodPressure(),
+          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportBloodPressureAnalysis(),
+          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          // ReportBloodPressureGraph(),
+          // DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+        ],
+      ),
+    );
+  }
+}
+
+
+
