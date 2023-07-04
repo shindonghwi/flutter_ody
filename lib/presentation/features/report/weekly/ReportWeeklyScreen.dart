@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWalkingModel.dart';
-import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWeeklyInfoModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportInfoModel.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/divider/DottedDivider.dart';
@@ -69,7 +69,7 @@ class ReportWeeklyScreen extends HookConsumerWidget {
         title: getAppLocalizations(context).my_item_subtitle_weekly_report,
       ),
       backgroundColor: getColorScheme(context).colorUI03,
-      body: uiState is Success<ResponseBioReportWeeklyInfoModel>
+      body: uiState is Success<ResponseBioReportInfoModel>
           ? SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
               physics: const BouncingScrollPhysics(),

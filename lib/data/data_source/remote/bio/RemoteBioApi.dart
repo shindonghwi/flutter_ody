@@ -9,7 +9,7 @@ import 'package:ody_flutter_app/data/models/bio/RequestBioGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioStepsModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportListModel.dart';
-import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWeeklyInfoModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportInfoModel.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RemoteBioApi {
@@ -177,7 +177,7 @@ class RemoteBioApi {
   }
 
   /// 주간 보고서 정보 조회
-  Future<ApiResponse<ResponseBioReportWeeklyInfoModel>> getBioReportWeeklyInfo(
+  Future<ApiResponse<ResponseBioReportInfoModel>> getBioReportWeeklyInfo(
       {required int reportSeq}) async {
     final response = await Service.getApi(
       type: ServiceType.Bio,
@@ -193,7 +193,7 @@ class RemoteBioApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-            (json) => ResponseBioReportWeeklyInfoModel.fromJson(json),
+            (json) => ResponseBioReportInfoModel.fromJson(json),
       );
     }
   }

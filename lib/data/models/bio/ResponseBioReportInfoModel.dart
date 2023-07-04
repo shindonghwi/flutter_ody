@@ -4,23 +4,23 @@ import 'package:ody_flutter_app/data/models/bio/ResponseBioReportGlucoseModel.da
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWalkingModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioStatusModel.dart';
 
-part 'ResponseBioReportWeeklyInfoModel.g.dart';
+part 'ResponseBioReportInfoModel.g.dart';
 
 @JsonSerializable()
-class ResponseBioReportWeeklyInfoModel {
+class ResponseBioReportInfoModel {
   final ResponseBioReportWalkingModel walking;
   final ResponseBioReportBloodPressureModel bloodPressure;
   final ResponseBioReportGlucoseModel glucose;
 
-  ResponseBioReportWeeklyInfoModel({
+  ResponseBioReportInfoModel({
     required this.walking,
     required this.bloodPressure,
     required this.glucose,
   });
 
-  factory ResponseBioReportWeeklyInfoModel.fromJson(Map<String, dynamic> json) =>
-      _$ResponseBioReportWeeklyInfoModelFromJson(json);
+  factory ResponseBioReportInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$ResponseBioReportInfoModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ResponseBioReportWeeklyInfoModelToJson(this);
+  Map<String, dynamic> toJson() => _$ResponseBioReportInfoModelToJson(this);
 
 }
