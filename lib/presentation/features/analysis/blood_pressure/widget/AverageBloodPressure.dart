@@ -55,6 +55,7 @@ class AverageBloodPressure extends StatelessWidget {
           height: 40,
         ),
         ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.all(0),
           shrinkWrap: true,
           separatorBuilder: (BuildContext context, int index) {

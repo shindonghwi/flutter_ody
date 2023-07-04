@@ -13,6 +13,10 @@ ResponseBioReportWalkingModel _$ResponseBioReportWalkingModelFromJson(
       totalCalories: json['totalCalories'] as int,
       beforeSteps: json['beforeSteps'] as int,
       averageSteps: json['averageSteps'] as int,
+      days: (json['days'] as List<dynamic>)
+          .map((e) =>
+              ResponseBioReportDaysModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ResponseBioReportWalkingModelToJson(
@@ -22,4 +26,5 @@ Map<String, dynamic> _$ResponseBioReportWalkingModelToJson(
       'totalCalories': instance.totalCalories,
       'beforeSteps': instance.beforeSteps,
       'averageSteps': instance.averageSteps,
+      'days': instance.days,
     };

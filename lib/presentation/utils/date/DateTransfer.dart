@@ -2,6 +2,9 @@ import 'package:intl/intl.dart';
 
 class DateTransfer {
 
+  static final krYoilList = ["월", "화", "수", "목", "금", "토", "일"];
+  static final enYoilList = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
   /// 오전 06시 23분
   static String dateTimeToAmPmTime(DateTime time){
     var formatter = DateFormat('a h시 mm분', 'ko_KR');
@@ -30,5 +33,15 @@ class DateTransfer {
   static String dateTimeToYearMonthDayYoil(DateTime time){
     var formatter = DateFormat("MMMM d'일' EEEE", 'ko_KR');
     return formatter.format(time);
+  }
+
+  /// 월 -> Mon
+  static String convertShortYoilKrToEn(String krYoil){
+    return enYoilList[krYoilList.indexOf(krYoil)];
+  }
+
+  /// Mon -> 월
+  static String convertShortYoilEnToKr(String enYoil){
+    return krYoilList[enYoilList.indexOf(enYoil)];
   }
 }

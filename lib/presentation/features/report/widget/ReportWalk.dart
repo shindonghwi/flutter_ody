@@ -4,9 +4,15 @@ import 'package:ody_flutter_app/presentation/components/progress/PainterLinearHo
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportWalk extends HookWidget {
-  const ReportWalk({Key? key}) : super(key: key);
+  final int totalSteps;
+
+  const ReportWalk({
+    Key? key,
+    required this.totalSteps,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +42,7 @@ class ReportWalk extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "153,685",
+                RegexUtil.commaNumber(totalSteps),
                 style: getTextTheme(context).t2b.copyWith(
                       color: getColorScheme(context).colorText,
                     ),
@@ -71,7 +77,7 @@ class ReportWalk extends HookWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              getAppLocalizations(context).report_walking_description("280,000"),
+              getAppLocalizations(context).report_walking_description(RegexUtil.commaNumber(280000)),
               style: getTextTheme(context).c3m.copyWith(
                     color: getColorScheme(context).neutral60,
                   ),

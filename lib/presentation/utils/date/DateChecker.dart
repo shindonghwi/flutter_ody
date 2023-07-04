@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class DateChecker {
@@ -35,9 +36,16 @@ class DateChecker {
     return yoilList[yoilList.indexOf(dayOfWeek)];
   }
 
-  static bool isTodayCheckFromYoil(String yoil) {
-    DateFormat dateFormat = DateFormat('EEEE', window.locale.toString());
+  static bool isTodayCheckFromEnYoil(String enYoil) {
+    DateFormat dateFormat = DateFormat('EE', 'en_US');
     String dayOfWeek = dateFormat.format(DateTime.now());
-    return dayOfWeek[0] == yoil;
+    debugPrint("dayOfWeek : $dayOfWeek $enYoil");
+    return dayOfWeek[0] == enYoil;
+  }
+
+  static bool isTodayCheckFromKrYoil(String krYoil) {
+    DateFormat dateFormat = DateFormat('EE', 'ko_KR');
+    String dayOfWeek = dateFormat.format(DateTime.now());
+    return dayOfWeek[0] == krYoil;
   }
 }

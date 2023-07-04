@@ -18,6 +18,7 @@ import 'package:ody_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCa
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioHistoryForDaysUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioHistoryMontlyUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioReportMontlyUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioReportWeeklyInfoUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioReportWeeklyUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/PostBioBloodPressureUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/PostBioGlucoseUseCase.dart';
@@ -55,24 +56,25 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostSocialLoginInUseCase>(() => PostSocialLoginInUseCase());
 
   GetIt.instance.registerLazySingleton<GetMeInfoUseCase>(() => GetMeInfoUseCase());
+  GetIt.instance.registerLazySingleton<GetMeMedicinesUseCase>(() => GetMeMedicinesUseCase());
+  GetIt.instance.registerLazySingleton<PostMeMedicineUseCase>(() => PostMeMedicineUseCase());
   GetIt.instance.registerLazySingleton<PatchMeGenderUseCase>(() => PatchMeGenderUseCase());
   GetIt.instance.registerLazySingleton<PatchMeBirthdayUseCase>(() => PatchMeBirthdayUseCase());
   GetIt.instance.registerLazySingleton<PatchMeNicknameUseCase>(() => PatchMeNicknameUseCase());
   GetIt.instance.registerLazySingleton<PatchMeHeightUseCase>(() => PatchMeHeightUseCase());
   GetIt.instance.registerLazySingleton<PatchMeWeightUseCase>(() => PatchMeWeightUseCase());
   GetIt.instance.registerLazySingleton<PatchMeDiseasesUseCase>(() => PatchMeDiseasesUseCase());
-  GetIt.instance.registerLazySingleton<GetMeMedicinesUseCase>(() => GetMeMedicinesUseCase());
   GetIt.instance.registerLazySingleton<PatchMeMedicineUseCase>(() => PatchMeMedicineUseCase());
-  GetIt.instance.registerLazySingleton<PostMeMedicineUseCase>(() => PostMeMedicineUseCase());
   GetIt.instance.registerLazySingleton<DeleteMedicineUseCase>(() => DeleteMedicineUseCase());
 
-  GetIt.instance.registerLazySingleton<PostBioBloodPressureUseCase>(() => PostBioBloodPressureUseCase());
-  GetIt.instance.registerLazySingleton<PostBioGlucoseUseCase>(() => PostBioGlucoseUseCase());
-  GetIt.instance.registerLazySingleton<PostBioStepsUseCase>(() => PostBioStepsUseCase());
+  GetIt.instance.registerLazySingleton<GetBioReportWeeklyInfoUseCase>(() => GetBioReportWeeklyInfoUseCase());
   GetIt.instance.registerLazySingleton<GetBioHistoryMontlyUseCase>(() => GetBioHistoryMontlyUseCase());
   GetIt.instance.registerLazySingleton<GetBioHistoryForDaysUseCase>(() => GetBioHistoryForDaysUseCase());
   GetIt.instance.registerLazySingleton<GetBioReportMonthlyUseCase>(() => GetBioReportMonthlyUseCase());
   GetIt.instance.registerLazySingleton<GetBioReportWeeklyUseCase>(() => GetBioReportWeeklyUseCase());
+  GetIt.instance.registerLazySingleton<PostBioBloodPressureUseCase>(() => PostBioBloodPressureUseCase());
+  GetIt.instance.registerLazySingleton<PostBioGlucoseUseCase>(() => PostBioGlucoseUseCase());
+  GetIt.instance.registerLazySingleton<PostBioStepsUseCase>(() => PostBioStepsUseCase());
 
   /// -------
   /// repository

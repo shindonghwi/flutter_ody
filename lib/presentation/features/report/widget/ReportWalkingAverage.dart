@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportDaysModel.dart';
 import 'package:ody_flutter_app/presentation/components/progress/PainterLInearVerticalProgress.dart';
 import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisItemTitle.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
@@ -7,9 +8,17 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
+import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportWalkingAverage extends StatelessWidget {
-  const ReportWalkingAverage({Key? key}) : super(key: key);
+  final int averageSteps;
+  final List<ResponseBioReportDaysModel> days;
+
+  const ReportWalkingAverage({
+    Key? key,
+    required this.averageSteps,
+    required this.days,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +30,7 @@ class ReportWalkingAverage extends StatelessWidget {
             title: getAppLocalizations(context).report_weekly_average_subtitle,
             secondTitle: Triple(
               getAppLocalizations(context).report_walk_average_text1,
-              "6,108kcal",
+              "${RegexUtil.commaNumber(averageSteps)} ${getAppLocalizations(context).common_walk}",
               getAppLocalizations(context).report_walk_average_text2,
             ),
             description: getAppLocalizations(context).report_calorie_description,
@@ -29,9 +38,9 @@ class ReportWalkingAverage extends StatelessWidget {
           const SizedBox(
             height: 32,
           ),
-          const Align(
+          Align(
             alignment: Alignment.center,
-            child: _YoilGraph(),
+            child: _YoilGraph(days: days),
           )
         ],
       ),
@@ -40,19 +49,36 @@ class ReportWalkingAverage extends StatelessWidget {
 }
 
 class _YoilGraph extends StatelessWidget {
-  const _YoilGraph({Key? key}) : super(key: key);
+  final List<ResponseBioReportDaysModel> days;
+
+  const _YoilGraph({
+    Key? key,
+    required this.days,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final yoilData = [
-      Pair(getAppLocalizations(context).common_monday, 7988),
-      Pair(getAppLocalizations(context).common_tuesday, 5232),
-      Pair(getAppLocalizations(context).common_wednesday, 2332),
-      Pair(getAppLocalizations(context).common_thursday, 1111),
-      Pair(getAppLocalizations(context).common_friday, 0),
-      Pair(getAppLocalizations(context).common_saturday, 5677),
-      Pair(getAppLocalizations(context).common_sunday, 11220),
-    ];
+
+    final yoilData = [];
+
+    for (var element in days) {
+      if (element.day == "Mon"){
+        yoilData.add(Pair(getAppLocalizations(context).common_monday, element.steps ?? 0));
+      }else if (element.day == "Tue") {
+        yoilData.add(Pair(getAppLocalizations(context).common_tuesday, element.steps ?? 0));
+      }else if (element.day == "Wed") {
+        yoilData.add(Pair(getAppLocalizations(context).common_wednesday, element.steps ?? 0));
+      }else if (element.day == "Thu") {
+        yoilData.add(Pair(getAppLocalizations(context).common_thursday, element.steps ?? 0));
+      }else if (element.day == "Fri") {
+        yoilData.add(Pair(getAppLocalizations(context).common_friday, element.steps ?? 0));
+      }else if (element.day == "Sat") {
+        yoilData.add(Pair(getAppLocalizations(context).common_saturday, element.steps ?? 0));
+      }else if (element.day == "Sun") {
+        yoilData.add(Pair(getAppLocalizations(context).common_sunday, element.steps ?? 0));
+      }
+    }
+
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 80),
@@ -69,7 +95,7 @@ class _YoilGraph extends StatelessWidget {
                     progress: e.second.toDouble() / 10000.0,
                     defaultColor: getColorScheme(context).colorUI02,
                     activeColor: getColorScheme(context).primary100.withOpacity(
-                          DateChecker.isTodayCheckFromYoil(e.first) ? 1 : 0.1,
+                          DateChecker.isTodayCheckFromKrYoil(e.first) ? 1 : 0.1,
                         ),
                     radius: 100,
                   ),
@@ -81,7 +107,7 @@ class _YoilGraph extends StatelessWidget {
               Text(
                 e.first,
                 style: getTextTheme(context).c3b.copyWith(
-                      color: DateChecker.isTodayCheckFromYoil(e.first)
+                      color: DateChecker.isTodayCheckFromKrYoil(e.first)
                           ? getColorScheme(context).colorPrimaryFocus
                           : getColorScheme(context).neutral70,
                     ),

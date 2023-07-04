@@ -5,9 +5,15 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
+import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportCalorie extends StatelessWidget {
-  const ReportCalorie({Key? key}) : super(key: key);
+  final int totalCalories;
+
+  const ReportCalorie({
+    Key? key,
+    required this.totalCalories,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +25,14 @@ class ReportCalorie extends StatelessWidget {
             title: getAppLocalizations(context).report_weekly_calorie_subtitle,
             secondTitle: Triple(
               getAppLocalizations(context).report_weekly_calorie_text1,
-              "6,108kcal",
+              "${RegexUtil.commaNumber(totalCalories)}kcal",
               getAppLocalizations(context).report_weekly_calorie_text2,
             ),
             description: getAppLocalizations(context).report_calorie_description,
           ),
-          const SizedBox(height: 28,),
+          const SizedBox(
+            height: 28,
+          ),
           SizedBox(
             width: 145,
             height: 145,
@@ -42,17 +50,19 @@ class ReportCalorie extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "6,108kcal",
+                        "${RegexUtil.commaNumber(totalCalories)}kcal",
                         style: getTextTheme(context).c1b.copyWith(
-                          color: getColorScheme(context).colorText,
-                        ),
+                              color: getColorScheme(context).colorText,
+                            ),
                       ),
-                      const SizedBox(height: 2,),
+                      const SizedBox(
+                        height: 2,
+                      ),
                       Text(
                         getAppLocalizations(context).report_weekly_base_calorie_recommend,
                         style: getTextTheme(context).c3m.copyWith(
-                          color: getColorScheme(context).neutral60,
-                        ),
+                              color: getColorScheme(context).neutral60,
+                            ),
                       ),
                     ],
                   ),
@@ -64,8 +74,4 @@ class ReportCalorie extends StatelessWidget {
       ),
     );
   }
-
-
 }
-
-

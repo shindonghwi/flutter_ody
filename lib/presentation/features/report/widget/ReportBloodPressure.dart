@@ -5,9 +5,21 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
+import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportBloodPressure extends HookWidget {
-  const ReportBloodPressure({Key? key}) : super(key: key);
+  final int totalCount;
+  final int averageSystolic;
+  final int averageDiastolic;
+  final int averageHeartRate;
+
+  const ReportBloodPressure({
+    Key? key,
+    required this.totalCount,
+    required this.averageSystolic,
+    required this.averageDiastolic,
+    required this.averageHeartRate,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +49,15 @@ class ReportBloodPressure extends HookWidget {
             title: getAppLocalizations(context).report_blood_pressure_weekly_average_subtitle,
             secondTitle: Triple(
               getAppLocalizations(context).report_blood_pressure_weekly_average_text1,
-              getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(2),
+              getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(
+                RegexUtil.commaNumber(totalCount),
+              ),
               getAppLocalizations(context).report_blood_pressure_weekly_average_text2,
             ),
             description: getAppLocalizations(context).report_blood_pressure_weekly_description,
-            averageHeartRate: 86,
-            averageSystolic: 120,
-            averageDiastolic: 80,
+            averageHeartRate: averageHeartRate,
+            averageSystolic: averageSystolic,
+            averageDiastolic: averageDiastolic,
           ),
         ],
       ),

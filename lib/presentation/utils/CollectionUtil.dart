@@ -18,7 +18,6 @@ class CollectionUtil{
 
   static List<int> fillWithNegatives(List<int> input, int maxLength) {
     List<int> output = List<int>.filled(maxLength, -1);
-    debugPrint("output: $output");
     for (int i = 0; i < input.length; i++) {
       if (input.contains(i)){
         output[i] = input[i];
@@ -26,6 +25,10 @@ class CollectionUtil{
     }
 
     return output;
+  }
+
+  static bool isEqualLowerCase(String str1, String str2){
+    return str1.toLowerCase() == str2.toLowerCase();
   }
 
 

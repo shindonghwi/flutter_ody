@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportBloodPressureModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportGlucoseModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWalkingModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWeeklyInfoModel.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/divider/DottedDivider.dart';
-import 'package:ody_flutter_app/presentation/components/progress/PainterLinearHorizontalProgress.dart';
-import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisItemTitle.dart';
-import 'package:ody_flutter_app/presentation/features/record/glucose/widget/RecordGlucose.dart';
+import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:ody_flutter_app/presentation/features/report/weekly/provider/ReportWeeklyProvider.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressure.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressureAnalysis.dart';
@@ -19,11 +21,9 @@ import 'package:ody_flutter_app/presentation/features/report/widget/ReportHeartR
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalk.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkCompare.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkingAverage.dart';
+import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
-import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
-import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class ReportWeeklyScreen extends HookConsumerWidget {
@@ -55,7 +55,7 @@ class ReportWeeklyScreen extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiStateRead.init();
-        uiStateRead.requestWeeklyInfo();
+        uiStateRead.requestWeeklyInfo(reportSeq);
       });
     }, []);
 
@@ -69,25 +69,34 @@ class ReportWeeklyScreen extends HookConsumerWidget {
         title: getAppLocalizations(context).my_item_subtitle_weekly_report,
       ),
       backgroundColor: getColorScheme(context).colorUI03,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: const [
-            ReportCardWalk(),
-            SizedBox(height: 24,),
-            ReportCardBloodPressure(),
-            SizedBox(height: 24,),
-            ReportCardGlucose(),
-          ],
-        ),
-      ),
+      body: uiState is Success<ResponseBioReportWeeklyInfoModel>
+          ? SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  ReportCardWalk(walking: uiState.value.walking),
+                  const SizedBox(height: 24),
+                  ReportCardBloodPressure(bloodPressure: uiState.value.bloodPressure),
+                  const SizedBox(height: 24),
+                  ReportCardGlucose(glucose: uiState.value.glucose),
+                ],
+              ),
+            )
+          : uiState is Loading
+              ? const CircleLoading()
+              : const SizedBox(),
     );
   }
 }
 
 class ReportCardWalk extends StatelessWidget {
-  const ReportCardWalk({Key? key}) : super(key: key);
+  final ResponseBioReportWalkingModel walking;
+
+  const ReportCardWalk({
+    Key? key,
+    required this.walking,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -97,17 +106,15 @@ class ReportCardWalk extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
-        children: const [
-          ReportWalk(),
-          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportCalorie(),
-          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportWalkingAverage(),
-          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportWalkCompare(),
-          SizedBox(
-            height: 36,
-          )
+        children: [
+          ReportWalk(totalSteps: walking.totalSteps),
+          const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportCalorie(totalCalories: walking.totalCalories),
+          const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportWalkingAverage(averageSteps: walking.averageSteps, days: walking.days),
+          const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportWalkCompare(beforeSteps: walking.beforeSteps, totalSteps: walking.totalSteps),
+          const SizedBox(height: 36)
         ],
       ),
     );
@@ -115,7 +122,12 @@ class ReportCardWalk extends StatelessWidget {
 }
 
 class ReportCardBloodPressure extends StatelessWidget {
-  const ReportCardBloodPressure({Key? key}) : super(key: key);
+  final ResponseBioReportBloodPressureModel bloodPressure;
+
+  const ReportCardBloodPressure({
+    Key? key,
+    required this.bloodPressure,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -125,15 +137,20 @@ class ReportCardBloodPressure extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
-        children: const [
-          ReportBloodPressure(),
-          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportBloodPressureAnalysis(),
-          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportBloodPressureGraph(),
-          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportHeartRateGraph(),
-          SizedBox(height: 40,)
+        children: [
+          ReportBloodPressure(
+            totalCount: bloodPressure.totalCount,
+            averageSystolic: bloodPressure.averageSystolic,
+            averageDiastolic: bloodPressure.averageDiastolic,
+            averageHeartRate: bloodPressure.averageHeartRate,
+          ),
+          const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportBloodPressureAnalysis(totalCount: bloodPressure.totalCount, states: bloodPressure.states),
+          const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportBloodPressureGraph(days: bloodPressure.days),
+          const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportHeartRateGraph(days: bloodPressure.days),
+          const SizedBox(height: 40)
         ],
       ),
     );
@@ -141,7 +158,12 @@ class ReportCardBloodPressure extends StatelessWidget {
 }
 
 class ReportCardGlucose extends StatelessWidget {
-  const ReportCardGlucose({Key? key}) : super(key: key);
+  final ResponseBioReportGlucoseModel glucose;
+
+  const ReportCardGlucose({
+    Key? key,
+    required this.glucose,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -151,17 +173,25 @@ class ReportCardGlucose extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
-        children: const [
-          ReportGlucose(),
-          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportGlucoseAnalysis(),
-          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportGlucoseGraph(),
-          SizedBox(height: 40,)
+        children: [
+          ReportGlucose(
+            totalCount: glucose.totalCount,
+            averageFasting: ((glucose.minFastingGlucose + glucose.maxFastingGlucose) / 2).round(),
+            averagePreprandial: ((glucose.minPreprandialGlucose + glucose.maxPreprandialGlucose) / 2).round(),
+            averagePostprandial: ((glucose.minPostprandialGlucose + glucose.maxPostprandialGlucose) / 2).round(),
+            averagePostExercise: ((glucose.minPostExerciseGlucose + glucose.maxPostExerciseGlucose) / 2).round(),
+          ),
+          const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportGlucoseAnalysis(totalCount: glucose.totalCount, states: glucose.states),
+          const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportGlucoseGraph(
+            minFastingGlucose: glucose.minFastingGlucose,
+            maxFastingGlucose: glucose.maxFastingGlucose,
+            days: glucose.days,
+          ),
+          const SizedBox(height: 40)
         ],
       ),
     );
   }
 }
-
-

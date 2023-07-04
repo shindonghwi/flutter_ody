@@ -385,9 +385,16 @@ class LinePainter extends CustomPainter {
         final min = graphLineModel.pointData[i].label.split(":").last;
         final double totalMinute = double.parse(hour) * 60 + double.parse(min);
         final xPercentage = totalMinute / 1440.0;
-        final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
+        var yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
             ? 0.01
             : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
+
+        if (yPercentage >= 1.0) {
+          yPercentage = 1.0;
+        } else if (yPercentage <= 0.0) {
+          yPercentage = 0.01;
+        }
+
         final xPos = size.width * xPercentage;
         final yPos = size.height * (1.0 - yPercentage);
 
@@ -405,15 +412,27 @@ class LinePainter extends CustomPainter {
         final min = graphLineModel.pointData[i].label.split(":").last;
         final double totalMinute = double.parse(hour) * 60 + double.parse(min);
         final xPercentage = totalMinute / 1440.0;
-        final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
+        var yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
             ? 0.01
             : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
+        if (yPercentage >= 1.0) {
+          yPercentage = 1.0;
+        } else if (yPercentage <= 0.0) {
+          yPercentage = 0.01;
+        }
+
         final xPos = size.width * xPercentage;
         final yPos = size.height * (1.0 - yPercentage);
+
         final circlePaint = Paint()
           ..color = graphLineModel.pointData[i].pointColor
           ..style = PaintingStyle.fill;
-        canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
+
+        canvas.drawCircle(
+          Offset(xPos, yPos),
+          graphLineModel.pointData[i].yValue <= 0 ? 0.0 : 4.0,
+          circlePaint,
+        );
       }
     } else {
       final dataPointSpacing = size.width / (xAxisList.length - 1);
@@ -421,10 +440,18 @@ class LinePainter extends CustomPainter {
       for (int i = 0; i < graphLineModel.pointData.length; i++) {
         int xIndex = xAxisList.map((e) => e.label).toList().indexOf(graphLineModel.pointData[i].label);
         final xPos = xIndex * dataPointSpacing;
-        final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
+        var yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
             ? 0.01
             : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
+
+        if (yPercentage >= 1.0) {
+          yPercentage = 1.0;
+        } else if (yPercentage <= 0.0) {
+          yPercentage = 0.01;
+        }
+
         final yPos = size.height * (1.0 - yPercentage);
+
         if (i == 0) {
           path.moveTo(xPos, yPos);
         } else {
@@ -436,15 +463,27 @@ class LinePainter extends CustomPainter {
       for (int i = 0; i < graphLineModel.pointData.length; i++) {
         int xIndex = xAxisList.map((e) => e.label).toList().indexOf(graphLineModel.pointData[i].label);
         final xPos = xIndex * dataPointSpacing;
-        final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
+        var yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
             ? 0.01
             : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
+
+        if (yPercentage >= 1.0) {
+          yPercentage = 1.0;
+        } else if (yPercentage <= 0.0) {
+          yPercentage = 0.01;
+        }
+
         final yPos = size.height * (1.0 - yPercentage);
+
         final circlePaint = Paint()
           ..color = graphLineModel.pointData[i].pointColor
           ..style = PaintingStyle.fill;
 
-        canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
+        canvas.drawCircle(
+          Offset(xPos, yPos),
+          graphLineModel.pointData[i].yValue <= 0 ? 0.0 : 4.0,
+          circlePaint,
+        );
       }
     }
   }
@@ -477,11 +516,23 @@ class PointPainter extends CustomPainter {
         final min = graphPointModel.pointData[i].label.split(":").last;
         final double totalMinute = double.parse(hour) * 60 + double.parse(min);
         final xPercentage = totalMinute / 1440.0;
-        final yPercentage = graphPointModel.pointData[i].yValue - yMin <= 0
+
+        if (graphPointModel.pointData[i].yValue <= 0) {
+          continue;
+        }
+
+        var yPercentage = graphPointModel.pointData[i].yValue - yMin <= 0
             ? 0.01
             : ((graphPointModel.pointData[i].yValue - yMin) / (yMax - yMin));
+        if (yPercentage >= 1.0) {
+          yPercentage = 1.0;
+        } else if (yPercentage <= 0.0) {
+          yPercentage = 0.01;
+        }
+
         final xPos = size.width * xPercentage;
         final yPos = size.height * (1.0 - yPercentage);
+
         final circlePaint = Paint()
           ..color = graphPointModel.pointData[i].pointColor
           ..style = PaintingStyle.fill;
@@ -493,9 +544,21 @@ class PointPainter extends CustomPainter {
       for (int i = 0; i < graphPointModel.pointData.length; i++) {
         int xIndex = xAxisList.map((e) => e.label).toList().indexOf(graphPointModel.pointData[i].label);
         final xPos = xIndex * dataPointSpacing;
-        final yPercentage = graphPointModel.pointData[i].yValue - yMin <= 0
+
+        if (graphPointModel.pointData[i].yValue <= 0) {
+          continue;
+        }
+
+        var yPercentage = graphPointModel.pointData[i].yValue - yMin <= 0
             ? 0.01
             : ((graphPointModel.pointData[i].yValue - yMin) / (yMax - yMin));
+
+        if (yPercentage >= 1.0) {
+          yPercentage = 1.0;
+        } else if (yPercentage <= 0.0) {
+          yPercentage = 0.01;
+        }
+
         final yPos = size.height * (1.0 - yPercentage);
         final circlePaint = Paint()
           ..color = graphPointModel.pointData[i].pointColor
@@ -504,7 +567,6 @@ class PointPainter extends CustomPainter {
         canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
       }
     }
-
   }
 
   @override
