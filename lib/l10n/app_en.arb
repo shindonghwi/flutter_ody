@@ -292,6 +292,10 @@
     "report_blood_pressure_graph_subtitle": "혈압 수치",
     "report_blood_pressure_graph_text1": "평균 혈압은",
     "report_blood_pressure_graph_text2": "입니다",
+    "report_heart_rate_subtitle": "일주일 맥박 수치",
+    "report_heart_rate_text1": "평균 맥박은",
+    "report_heart_rate_text2": "입니다",
+    "report_heart_rate_description": "정상 맥박범위는 성인 기준 70~75회/분 입니다",
 
     "popup_app_policy_title" : "사용 약관",
     "popup_app_policy_all_grant" : "모두 동의하기",
@@ -362,6 +366,7 @@
     "common_walk": "걸음",
     "common_week_pre": "이번주",
     "common_week_post": "지난주",
+    "common_count_per_minute": "회/분",
     "common_delete": "삭제"
 
 }

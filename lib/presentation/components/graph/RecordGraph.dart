@@ -10,6 +10,8 @@ import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 enum RecordGraphType { POINT, LINE }
 
+enum RecordXAxisType { DATE, YOIL, WEEK }
+
 class RecordGraph extends StatelessWidget {
   /// x축 리스트
   final List<AxisEmphasisModel> xAxisList;
@@ -28,6 +30,9 @@ class RecordGraph extends StatelessWidget {
 
   /// 그래프 타입
   final RecordGraphType graphType;
+
+  /// x축 타입
+  final RecordXAxisType xAxisType;
 
   /// 구분선 색상
   final Color dividerColor;
@@ -53,6 +58,7 @@ class RecordGraph extends StatelessWidget {
     required this.shadowAreaList,
     required this.symbolWidget,
     required this.graphType,
+    required this.xAxisType,
     required this.dividerColor,
     this.xAxisInnerHorizontalPadding = 0,
     this.yMin = 60,
@@ -68,6 +74,7 @@ class RecordGraph extends StatelessWidget {
     required this.xAxisInnerHorizontalPadding,
     required this.dividerColor,
     required this.graphPointModel,
+    this.xAxisType = RecordXAxisType.DATE,
   })  : graphType = RecordGraphType.POINT,
         yMin = 60,
         yMax = 160,
@@ -82,6 +89,7 @@ class RecordGraph extends StatelessWidget {
     required this.xAxisInnerHorizontalPadding,
     required this.dividerColor,
     required this.graphLineModelList,
+    this.xAxisType = RecordXAxisType.DATE,
   })  : graphType = RecordGraphType.LINE,
         yMin = 60,
         yMax = 160,
@@ -119,6 +127,7 @@ class RecordGraph extends StatelessWidget {
                         graphLineModelList: graphLineModelList,
                         xAxisInnerHorizontalPadding: xAxisInnerHorizontalPadding,
                         graphType: graphType,
+                        xAxisType: xAxisType,
                         yMin: yMin,
                         yMax: yMax,
                       ),
@@ -151,6 +160,7 @@ class _GraphContent extends HookWidget {
     required this.graphLineModelList,
     required this.xAxisInnerHorizontalPadding,
     required this.graphType,
+    required this.xAxisType,
     required this.yMin,
     required this.yMax,
   });
@@ -163,6 +173,7 @@ class _GraphContent extends HookWidget {
   final List<GraphLineModel> graphLineModelList;
   final double xAxisInnerHorizontalPadding;
   final RecordGraphType graphType;
+  final RecordXAxisType xAxisType;
   final double yMin;
   final double yMax;
 
@@ -248,7 +259,7 @@ class _GraphContent extends HookWidget {
                         final containerHeight = constraints.maxHeight - circleSize;
                         return CustomPaint(
                           size: Size(MediaQuery.of(context).size.width, containerHeight),
-                          painter: LinePainter(xAxisList, graphLineModel, yMin, yMax),
+                          painter: LinePainter(xAxisList, graphLineModel, xAxisType, yMin, yMax),
                           child: Container(),
                         );
                       },
@@ -346,12 +357,14 @@ class _XAxisContent extends HookWidget {
 class LinePainter extends CustomPainter {
   final List<AxisEmphasisModel> xAxisList;
   final GraphLineModel graphLineModel;
+  final RecordXAxisType xAxisType;
   final double yMin;
   final double yMax;
 
   LinePainter(
     this.xAxisList,
     this.graphLineModel,
+    this.xAxisType,
     this.yMin,
     this.yMax,
   );
@@ -365,42 +378,77 @@ class LinePainter extends CustomPainter {
 
     Path path = Path();
 
-    /// 선 그리기
-    for (int i = 0; i < graphLineModel.pointData.length; i++) {
-      final hour = graphLineModel.pointData[i].label.split(":").first;
-      final min = graphLineModel.pointData[i].label.split(":").last;
-      final double totalMinute = double.parse(hour) * 60 + double.parse(min);
-      final xPercentage = totalMinute / 1440.0;
-      final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
-          ? 0.01
-          : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
-      final xPos = size.width * xPercentage;
-      final yPos = size.height * (1.0 - yPercentage);
+    if (xAxisType == RecordXAxisType.DATE){
+      /// 선 그리기
+      for (int i = 0; i < graphLineModel.pointData.length; i++) {
+        final hour = graphLineModel.pointData[i].label.split(":").first;
+        final min = graphLineModel.pointData[i].label.split(":").last;
+        final double totalMinute = double.parse(hour) * 60 + double.parse(min);
+        final xPercentage = totalMinute / 1440.0;
+        final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
+            ? 0.01
+            : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
+        final xPos = size.width * xPercentage;
+        final yPos = size.height * (1.0 - yPercentage);
 
-      if (i == 0) {
-        path.moveTo(xPos, yPos);
-      } else {
-        path.lineTo(xPos, yPos);
+        if (i == 0) {
+          path.moveTo(xPos, yPos);
+        } else {
+          path.lineTo(xPos, yPos);
+        }
+      }
+      canvas.drawPath(path, linePaint);
+
+      /// 점 그리기
+      for (int i = 0; i < graphLineModel.pointData.length; i++) {
+        final hour = graphLineModel.pointData[i].label.split(":").first;
+        final min = graphLineModel.pointData[i].label.split(":").last;
+        final double totalMinute = double.parse(hour) * 60 + double.parse(min);
+        final xPercentage = totalMinute / 1440.0;
+        final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
+            ? 0.01
+            : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
+        final xPos = size.width * xPercentage;
+        final yPos = size.height * (1.0 - yPercentage);
+        final circlePaint = Paint()
+          ..color = graphLineModel.pointData[i].pointColor
+          ..style = PaintingStyle.fill;
+        canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
+      }
+    }else{
+      final dataPointSpacing = size.width / (xAxisList.length - 1);
+
+      for (int i = 0; i < graphLineModel.pointData.length; i++) {
+        int xIndex = xAxisList.map((e) => e.label).toList().indexOf(graphLineModel.pointData[i].label);
+        final xPos = xIndex * dataPointSpacing;
+        final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
+            ? 0.01
+            : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
+        final yPos = size.height * (1.0 - yPercentage);
+        if (i == 0) {
+          path.moveTo(xPos, yPos);
+        } else {
+          path.lineTo(xPos, yPos);
+        }
+      }
+      canvas.drawPath(path, linePaint);
+
+      for (int i = 0; i < graphLineModel.pointData.length; i++) {
+        int xIndex = xAxisList.map((e) => e.label).toList().indexOf(graphLineModel.pointData[i].label);
+        final xPos = xIndex * dataPointSpacing;
+        final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
+            ? 0.01
+            : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
+        final yPos = size.height * (1.0 - yPercentage);
+        final circlePaint = Paint()
+          ..color = graphLineModel.pointData[i].pointColor
+          ..style = PaintingStyle.fill;
+
+        canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
       }
     }
-    canvas.drawPath(path, linePaint);
 
-    /// 점 그리기
-    for (int i = 0; i < graphLineModel.pointData.length; i++) {
-      final hour = graphLineModel.pointData[i].label.split(":").first;
-      final min = graphLineModel.pointData[i].label.split(":").last;
-      final double totalMinute = double.parse(hour) * 60 + double.parse(min);
-      final xPercentage = totalMinute / 1440.0;
-      final yPercentage = graphLineModel.pointData[i].yValue - yMin <= 0
-          ? 0.01
-          : ((graphLineModel.pointData[i].yValue - yMin) / (yMax - yMin));
-      final xPos = size.width * xPercentage;
-      final yPos = size.height * (1.0 - yPercentage);
-      final circlePaint = Paint()
-        ..color = graphLineModel.pointData[i].pointColor
-        ..style = PaintingStyle.fill;
-      canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
-    }
+
   }
 
   @override

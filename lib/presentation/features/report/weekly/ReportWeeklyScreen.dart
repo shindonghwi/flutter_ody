@@ -9,6 +9,7 @@ import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodP
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressureAnalysis.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressureGraph.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportCalorie.dart';
+import 'package:ody_flutter_app/presentation/features/report/widget/ReportHeartRateGraph.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalk.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkCompare.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkingAverage.dart';
@@ -118,8 +119,10 @@ class ReportCardBloodPressure extends StatelessWidget {
           DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
           ReportBloodPressureAnalysis(),
           DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          // ReportBloodPressureGraph(),
-          // DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportBloodPressureGraph(),
+          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportHeartRateGraph(),
+          SizedBox(height: 40,)
         ],
       ),
     );

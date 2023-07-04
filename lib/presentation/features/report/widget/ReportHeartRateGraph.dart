@@ -12,8 +12,8 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
-class ReportBloodPressureGraph extends StatelessWidget {
-  const ReportBloodPressureGraph({Key? key}) : super(key: key);
+class ReportHeartRateGraph extends StatelessWidget {
+  const ReportHeartRateGraph({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +38,9 @@ class ReportBloodPressureGraph extends StatelessWidget {
 
     final shadowAreaList = [
       ShadowAreaModel(
-        min: 90,
-        max: 120,
-        color: getColorScheme(context).colorError.withOpacity(0.05),
-      ),
-      ShadowAreaModel(
-        min: 60,
-        max: 80,
-        color: getColorScheme(context).colorPrimaryFocus.withOpacity(0.05),
+        min: 70,
+        max: 75,
+        color: getColorScheme(context).secondary100.withOpacity(0.05),
       ),
     ];
 
@@ -54,109 +49,55 @@ class ReportBloodPressureGraph extends StatelessWidget {
         pointData: [
           GraphPointDataModel(
             label: "월",
-            yValue: 120,
+            yValue: 60,
             pointColor: DateChecker.isTodayCheckFromYoil("월")
-                ? getColorScheme(context).primary100
-                : getColorScheme(context).primary20,
+                ? getColorScheme(context).secondary100
+                : getColorScheme(context).secondary20,
           ),
           GraphPointDataModel(
             label: "화",
-            yValue: 130,
-            pointColor: DateChecker.isTodayCheckFromYoil("화")
-                ? getColorScheme(context).primary100
-                : getColorScheme(context).primary20,
-          ),
-          GraphPointDataModel(
-            label: "수",
-            yValue: 80,
-            pointColor: DateChecker.isTodayCheckFromYoil("수")
-                ? getColorScheme(context).primary100
-                : getColorScheme(context).primary20,
-          ),
-          GraphPointDataModel(
-            label: "목",
-            yValue: 110,
-            pointColor: DateChecker.isTodayCheckFromYoil("목")
-                ? getColorScheme(context).primary100
-                : getColorScheme(context).primary20,
-          ),
-          GraphPointDataModel(
-            label: "금",
-            yValue: 150,
-            pointColor: DateChecker.isTodayCheckFromYoil("금")
-                ? getColorScheme(context).primary100
-                : getColorScheme(context).primary20,
-          ),
-          GraphPointDataModel(
-            label: "토",
-            yValue: 130,
-            pointColor: DateChecker.isTodayCheckFromYoil("토")
-                ? getColorScheme(context).primary100
-                : getColorScheme(context).primary20,
-          ),
-          GraphPointDataModel(
-            label: "일",
-            yValue: 100,
-            pointColor: DateChecker.isTodayCheckFromYoil("일")
-                ? getColorScheme(context).primary100
-                : getColorScheme(context).primary20,
-          ),
-        ],
-        lineColor: getColorScheme(context).primary20,
-      ),
-      GraphLineModel(
-        pointData: [
-          GraphPointDataModel(
-            label: "월",
-            yValue: 80,
-            pointColor: DateChecker.isTodayCheckFromYoil("월")
-                ? getColorScheme(context).colorError
-                : getColorScheme(context).error20,
-          ),
-          GraphPointDataModel(
-            label: "화",
-            yValue: 90,
-            pointColor: DateChecker.isTodayCheckFromYoil("화")
-                ? getColorScheme(context).colorError
-                : getColorScheme(context).error20,
-          ),
-          GraphPointDataModel(
-            label: "수",
             yValue: 70,
+            pointColor: DateChecker.isTodayCheckFromYoil("화")
+                ? getColorScheme(context).secondary100
+                : getColorScheme(context).secondary20,
+          ),
+          GraphPointDataModel(
+            label: "수",
+            yValue: 90,
             pointColor: DateChecker.isTodayCheckFromYoil("수")
-                ? getColorScheme(context).colorError
-                : getColorScheme(context).error20,
+                ? getColorScheme(context).secondary100
+                : getColorScheme(context).secondary20,
           ),
           GraphPointDataModel(
             label: "목",
-            yValue: 100,
+            yValue: 140,
             pointColor: DateChecker.isTodayCheckFromYoil("목")
-                ? getColorScheme(context).colorError
-                : getColorScheme(context).error20,
+                ? getColorScheme(context).secondary100
+                : getColorScheme(context).secondary20,
           ),
           GraphPointDataModel(
             label: "금",
             yValue: 120,
             pointColor: DateChecker.isTodayCheckFromYoil("금")
-                ? getColorScheme(context).colorError
-                : getColorScheme(context).error20,
+                ? getColorScheme(context).secondary100
+                : getColorScheme(context).secondary20,
           ),
           GraphPointDataModel(
             label: "토",
-            yValue: 110,
+            yValue: 130,
             pointColor: DateChecker.isTodayCheckFromYoil("토")
-                ? getColorScheme(context).colorError
-                : getColorScheme(context).error20,
+                ? getColorScheme(context).secondary100
+                : getColorScheme(context).secondary20,
           ),
           GraphPointDataModel(
             label: "일",
-            yValue: 90,
+            yValue: 110,
             pointColor: DateChecker.isTodayCheckFromYoil("일")
-                ? getColorScheme(context).colorError
-                : getColorScheme(context).error20,
+                ? getColorScheme(context).secondary100
+                : getColorScheme(context).secondary20,
           ),
         ],
-        lineColor: getColorScheme(context).error20,
+        lineColor: getColorScheme(context).secondary20,
       ),
     ];
 
@@ -166,12 +107,12 @@ class ReportBloodPressureGraph extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           AnalysisItemTitle(
-            title: getAppLocalizations(context).report_blood_pressure_weekly_analysis_subtitle,
+            title: getAppLocalizations(context).report_heart_rate_subtitle,
             secondTitle: Triple(
-                getAppLocalizations(context).report_blood_pressure_graph_text1,
-                "${110} - ${100} ${getAppLocalizations(context).record_blood_pressure_input1_unit}",
-                getAppLocalizations(context).report_blood_pressure_graph_text2),
-            description: getAppLocalizations(context).report_blood_pressure_weekly_description,
+                getAppLocalizations(context).report_heart_rate_text1,
+                "${66} ${getAppLocalizations(context).common_count_per_minute}",
+                getAppLocalizations(context).report_heart_rate_text2),
+            description: getAppLocalizations(context).report_heart_rate_description,
           ),
           const SizedBox(
             height: 40,
@@ -186,7 +127,7 @@ class ReportBloodPressureGraph extends StatelessWidget {
                   xAxisList: sampleXAxisList,
                   yAxisList: sampleYAxisList,
                   shadowAreaList: shadowAreaList,
-                  symbolWidget: const _SymbolList(),
+                  symbolWidget: null,
                   xAxisInnerHorizontalPadding: 0,
                   dividerColor: getColorScheme(context).neutral50,
                   graphLineModelList: sampleGraphLineModelList,
@@ -197,32 +138,6 @@ class ReportBloodPressureGraph extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SymbolList extends HookWidget {
-  const _SymbolList({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        SymbolWidget(
-          label: getAppLocalizations(context).analysis_blood_pressure_figure_symbol_systolic,
-          color: getColorScheme(context).colorError,
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        SymbolWidget(
-          label: getAppLocalizations(context).analysis_blood_pressure_figure_symbol_diastolic,
-          color: getColorScheme(context).colorPrimaryFocus,
-        ),
-      ],
     );
   }
 }
