@@ -3,8 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportGlucoseModel.dart';
-import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWalkingModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportInfoModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWalkingModel.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/divider/DottedDivider.dart';
@@ -77,7 +77,7 @@ class ReportWeeklyScreen extends HookConsumerWidget {
                 children: [
                   ReportCardWalk(isWeekly: true, walking: uiState.value.walking),
                   const SizedBox(height: 24),
-                  ReportCardBloodPressure(bloodPressure: uiState.value.bloodPressure),
+                  ReportCardBloodPressure(isWeekly: true, bloodPressure: uiState.value.bloodPressure),
                   const SizedBox(height: 24),
                   ReportCardGlucose(glucose: uiState.value.glucose),
                 ],
@@ -109,13 +109,28 @@ class ReportCardWalk extends StatelessWidget {
       ),
       child: Column(
         children: [
-          ReportWalk(totalSteps: walking.totalSteps),
+          ReportWalk(
+            isWeekly: isWeekly,
+            totalSteps: walking.totalSteps,
+          ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportCalorie(totalCalories: walking.totalCalories),
+          ReportCalorie(
+            isWeekly: isWeekly,
+            totalCalories: walking.totalCalories,
+          ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportWalkingAverage(averageSteps: walking.averageSteps, days: walking.days),
+          ReportWalkingAverage(
+            isWeekly: isWeekly,
+            averageSteps: walking.averageSteps,
+            days: walking.days,
+            weeks: walking.weeks,
+          ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportWalkCompare(beforeSteps: walking.beforeSteps, totalSteps: walking.totalSteps),
+          ReportWalkCompare(
+            isWeekly: isWeekly,
+            beforeSteps: walking.beforeSteps,
+            totalSteps: walking.totalSteps,
+          ),
           const SizedBox(height: 36)
         ],
       ),
@@ -124,10 +139,12 @@ class ReportCardWalk extends StatelessWidget {
 }
 
 class ReportCardBloodPressure extends StatelessWidget {
+  final bool isWeekly;
   final ResponseBioReportBloodPressureModel bloodPressure;
 
   const ReportCardBloodPressure({
     Key? key,
+    required this.isWeekly,
     required this.bloodPressure,
   }) : super(key: key);
 
@@ -141,17 +158,28 @@ class ReportCardBloodPressure extends StatelessWidget {
       child: Column(
         children: [
           ReportBloodPressure(
+            isWeekly: isWeekly,
             totalCount: bloodPressure.totalCount,
             averageSystolic: bloodPressure.averageSystolic,
             averageDiastolic: bloodPressure.averageDiastolic,
             averageHeartRate: bloodPressure.averageHeartRate,
           ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportBloodPressureAnalysis(totalCount: bloodPressure.totalCount, states: bloodPressure.states),
+          ReportBloodPressureAnalysis(
+            isWeekly: isWeekly,
+            totalCount: bloodPressure.totalCount,
+            states: bloodPressure.states,
+          ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportBloodPressureGraph(days: bloodPressure.days),
+          ReportBloodPressureGraph(
+            isWeekly: isWeekly,
+            days: bloodPressure.days,
+          ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportHeartRateGraph(days: bloodPressure.days),
+          ReportHeartRateGraph(
+            isWeekly: isWeekly,
+            days: bloodPressure.days,
+          ),
           const SizedBox(height: 40)
         ],
       ),

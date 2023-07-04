@@ -4,13 +4,16 @@ import 'package:ody_flutter_app/presentation/components/progress/PainterLinearHo
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateParser.dart';
 import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportWalk extends HookWidget {
+  final bool isWeekly;
   final int totalSteps;
 
   const ReportWalk({
     Key? key,
+    required this.isWeekly,
     required this.totalSteps,
   }) : super(key: key);
 
@@ -19,6 +22,7 @@ class ReportWalk extends HookWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 43, 16, 0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,6 +42,15 @@ class ReportWalk extends HookWidget {
             ],
           ),
           const SizedBox(height: 32),
+          Text(
+            isWeekly
+                ? getAppLocalizations(context).report_walking_weekly_subtitle
+                : getAppLocalizations(context).report_walking_monthly_subtitle,
+            style: getTextTheme(context).b3sb.copyWith(
+                  color: getColorScheme(context).colorPrimaryFocus,
+                ),
+          ),
+          const SizedBox(height: 16),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -64,7 +77,7 @@ class ReportWalk extends HookWidget {
             height: 10,
             child: CustomPaint(
               painter: PainterLinearHorizontalProgress(
-                progress: 0.5,
+                progress: totalSteps / (isWeekly ? 70000 : DateParser.getLastDayFromCurrentMonth() * 10000),
                 defaultColor: getColorScheme(context).colorPrimaryDisable,
                 activeColor: getColorScheme(context).primary100,
                 radius: 100,
@@ -77,7 +90,9 @@ class ReportWalk extends HookWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              getAppLocalizations(context).report_walking_description(RegexUtil.commaNumber(280000)),
+              getAppLocalizations(context).report_walking_description(
+                RegexUtil.commaNumber(isWeekly ? 70000 : DateParser.getLastDayFromCurrentMonth() * 10000),
+              ),
               style: getTextTheme(context).c3m.copyWith(
                     color: getColorScheme(context).neutral60,
                   ),

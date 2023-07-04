@@ -15,10 +15,12 @@ import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class ReportHeartRateGraph extends StatelessWidget {
+  final bool isWeekly;
   final List<ResponseBioReportDaysModel>? days;
 
   const ReportHeartRateGraph({
     Key? key,
+    required this.isWeekly,
     required this.days,
   }) : super(key: key);
 

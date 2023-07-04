@@ -15,6 +15,9 @@ class PainterLinearHorizontalProgress extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+
+    var progressValue = progress;
+
     final progressBarRect = Rect.fromLTWH(0, 0, size.width, size.height);
 
     final defaultPaint = Paint()
@@ -33,7 +36,13 @@ class PainterLinearHorizontalProgress extends CustomPainter {
         ),
       );
 
-    final activeWidth = progress * size.width;
+    if (progressValue >= 1.0){
+      progressValue = 1.0;
+    }else if (progressValue <= 0.0){
+      progressValue = 0.0;
+    }
+
+    final activeWidth = progressValue * size.width;
     final activePath = Path()
       ..addRRect(
         RRect.fromRectAndCorners(

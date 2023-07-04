@@ -11,11 +11,13 @@ import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportBloodPressureAnalysis extends StatelessWidget {
+  final bool isWeekly;
   final int totalCount;
   final List<ResponseBioReportStatesModel>? states;
 
   const ReportBloodPressureAnalysis({
     Key? key,
+    required this.isWeekly,
     required this.totalCount,
     required this.states,
   }) : super(key: key);

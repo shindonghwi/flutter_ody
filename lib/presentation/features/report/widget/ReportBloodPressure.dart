@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportBloodPressure extends HookWidget {
+  final bool isWeekly;
   final int totalCount;
   final int averageSystolic;
   final int averageDiastolic;
@@ -15,6 +16,7 @@ class ReportBloodPressure extends HookWidget {
 
   const ReportBloodPressure({
     Key? key,
+    required this.isWeekly,
     required this.totalCount,
     required this.averageSystolic,
     required this.averageDiastolic,
@@ -46,13 +48,19 @@ class ReportBloodPressure extends HookWidget {
           ),
           const SizedBox(height: 32),
           AverageBloodPressure(
-            title: getAppLocalizations(context).report_blood_pressure_weekly_average_subtitle,
+            title: isWeekly
+                ? getAppLocalizations(context).report_blood_pressure_weekly_average_subtitle
+                : getAppLocalizations(context).report_blood_pressure_monthly_average_subtitle,
             secondTitle: Triple(
-              getAppLocalizations(context).report_blood_pressure_weekly_average_text1,
+              isWeekly
+                  ? getAppLocalizations(context).report_blood_pressure_weekly_average_text1
+                  : getAppLocalizations(context).report_blood_pressure_monthly_average_text1,
               getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(
                 RegexUtil.commaNumber(totalCount),
               ),
-              getAppLocalizations(context).report_blood_pressure_weekly_average_text2,
+              isWeekly
+                  ? getAppLocalizations(context).report_blood_pressure_weekly_average_text2
+                  : getAppLocalizations(context).report_blood_pressure_monthly_average_text2,
             ),
             description: getAppLocalizations(context).report_blood_pressure_weekly_description,
             averageHeartRate: averageHeartRate,

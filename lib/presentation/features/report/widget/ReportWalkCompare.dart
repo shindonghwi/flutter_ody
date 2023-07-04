@@ -4,15 +4,18 @@ import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisIt
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateParser.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportWalkCompare extends StatelessWidget {
+  final bool isWeekly;
   final int beforeSteps;
   final int totalSteps;
 
   const ReportWalkCompare({
     Key? key,
+    required this.isWeekly,
     required this.beforeSteps,
     required this.totalSteps,
   }) : super(key: key);
@@ -25,30 +28,40 @@ class ReportWalkCompare extends StatelessWidget {
       child: Column(
         children: [
           AnalysisItemTitle(
-            title: getAppLocalizations(context).report_weekly_pre_subtitle,
+            title: isWeekly
+                ? getAppLocalizations(context).report_weekly_pre_subtitle
+                : getAppLocalizations(context).report_monthly_pre_subtitle,
             secondTitle: Triple(
-              getAppLocalizations(context).report_weekly_pre_text1,
+              isWeekly
+                  ? getAppLocalizations(context).report_weekly_pre_text1
+                  : getAppLocalizations(context).report_monthly_pre_text1,
               "${RegexUtil.commaNumber((beforeSteps - totalSteps).abs())} ${getAppLocalizations(context).common_walk}",
-              getAppLocalizations(context).report_monthly_pre_walk_more,
+              totalSteps >= beforeSteps
+                  ? getAppLocalizations(context).report_monthly_pre_walk_more
+                  : getAppLocalizations(context).report_monthly_pre_walk_less,
             ),
             description: getAppLocalizations(context).report_pre_description,
           ),
           const SizedBox(height: 32),
           _CompareItem(
-              label: getAppLocalizations(context).common_week_pre,
-              progressColor: totalSteps > beforeSteps
-                  ? getColorScheme(context).primary100
-                  : getColorScheme(context).primary100.withOpacity(0.1),
-              walkCount: totalSteps,
-              percentage: totalSteps / 10000),
+            label:
+                isWeekly ? getAppLocalizations(context).common_week_cur : getAppLocalizations(context).common_month_cur,
+            progressColor: totalSteps > beforeSteps
+                ? getColorScheme(context).primary100
+                : getColorScheme(context).primary100.withOpacity(0.1),
+            walkCount: totalSteps,
+            percentage: totalSteps / (10000 * (isWeekly ? 7 : DateParser.getLastDayFromCurrentMonth())),
+          ),
           const SizedBox(height: 24),
           _CompareItem(
-              label: getAppLocalizations(context).common_week_post,
-              progressColor: beforeSteps >= totalSteps
-                  ? getColorScheme(context).primary100
-                  : getColorScheme(context).primary100.withOpacity(0.1),
-              walkCount: beforeSteps,
-              percentage: beforeSteps / 10000),
+            label:
+                isWeekly ? getAppLocalizations(context).common_week_pre : getAppLocalizations(context).common_month_pre,
+            progressColor: beforeSteps >= totalSteps
+                ? getColorScheme(context).primary100
+                : getColorScheme(context).primary100.withOpacity(0.1),
+            walkCount: beforeSteps,
+            percentage: totalSteps / (10000 * (isWeekly ? 7 : DateParser.getLastDayFromCurrentMonth())),
+          ),
         ],
       ),
     );

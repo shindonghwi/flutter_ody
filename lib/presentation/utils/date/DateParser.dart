@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
 
@@ -52,6 +53,20 @@ class DateParser {
     } else {
       return DateTime(year, month + 1, 0).day; // Get the number of days in the specified month
     }
+  }
+
+  static int getLastDayFromCurrentMonth() {
+    DateTime now = DateTime.now();
+    return getNumberOfDays(now.year, now.month);
+  }
+
+  static int getWeekNumberFromCurrentDay() {
+    DateTime now = DateTime.now();
+    int year = now.year;
+    int month = now.month;
+    int day = now.day;
+    DateTime targetDate = DateTime(year, month, day);
+    return ((targetDate.day - targetDate.weekday + 10) ~/ 7).toInt();
   }
 
 }

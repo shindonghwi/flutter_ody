@@ -4,14 +4,17 @@ import 'package:ody_flutter_app/presentation/features/main/home/widget/PainterCi
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateParser.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportCalorie extends StatelessWidget {
+  final bool isWeekly;
   final int totalCalories;
 
   const ReportCalorie({
     Key? key,
+    required this.isWeekly,
     required this.totalCalories,
   }) : super(key: key);
 
@@ -22,11 +25,17 @@ class ReportCalorie extends StatelessWidget {
       child: Column(
         children: [
           AnalysisItemTitle(
-            title: getAppLocalizations(context).report_weekly_calorie_subtitle,
+            title: isWeekly
+                ? getAppLocalizations(context).report_weekly_calorie_subtitle
+                : getAppLocalizations(context).report_monthly_calorie_subtitle,
             secondTitle: Triple(
-              getAppLocalizations(context).report_weekly_calorie_text1,
+              isWeekly
+                  ? getAppLocalizations(context).report_weekly_calorie_text1
+                  : getAppLocalizations(context).report_monthly_calorie_text1,
               "${RegexUtil.commaNumber(totalCalories)}kcal",
-              getAppLocalizations(context).report_weekly_calorie_text2,
+              isWeekly
+                  ? getAppLocalizations(context).report_weekly_calorie_text2
+                  : getAppLocalizations(context).report_monthly_calorie_text2,
             ),
             description: getAppLocalizations(context).report_calorie_description,
           ),
@@ -59,7 +68,7 @@ class ReportCalorie extends StatelessWidget {
                         height: 2,
                       ),
                       Text(
-                        getAppLocalizations(context).report_weekly_base_calorie_recommend,
+                        "${RegexUtil.commaNumber((2000 * (isWeekly ? 7 : DateParser.getLastDayFromCurrentMonth())))}kcal",
                         style: getTextTheme(context).c3m.copyWith(
                               color: getColorScheme(context).neutral60,
                             ),

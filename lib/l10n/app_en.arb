@@ -248,28 +248,14 @@
     "report_weekly_calorie_text1": "일주일 동안",
     "report_monthly_calorie_text1": "한 달 동안",
     "report_weekly_calorie_text2": "를 붙태웠어요",
-    "report_calorie_description": "하루 권장 칼로리 소비량은 20,000kcal입니다",
-    "report_weekly_base_calorie_recommend": "14,000kal",
-    "report_month_base_calorie_recommend": "56,000kal",
+    "report_monthly_calorie_text2": "를 붙태웠어요",
+    "report_calorie_description": "하루 권장 칼로리 소비량은 2,000kcal입니다",
     "report_weekly_average_subtitle": "일주일 평균",
     "report_monthly_average_subtitle": "한 달 평균",
     "report_walk_average_text1": "평균적으로",
     "report_walk_average_text2": "걸어요",
-    "report_walk_weekly_average_description": "{yoil}에 최대 {walk}걸음을 걸었어요",
-    "@report_walk_weekly_average_description":{
-        "placeholders": {
-            "yoil": {},
-            "walk": {}
-        }
-    },
-    "report_walk_monthly_average_description": "{week}주차 {yoil}에 최대 {walk}걸음을 걸었어요",
-    "@report_walk_monthly_average_description":{
-        "placeholders": {
-            "week": {},
-            "yoil": {},
-            "walk": {}
-        }
-    },
+    "report_walk_average_description": "하루 평균 10,000 걸음을 기준으로 측정했어요",
+
     "report_weekly_pre_subtitle": "지난주보다",
     "report_monthly_pre_subtitle": "지난 달보다",
     "report_weekly_pre_text1": "이번 주는",
@@ -283,6 +269,7 @@
     "report_blood_pressure_weekly_average_text1": "일주일 동안",
     "report_blood_pressure_monthly_average_text1": "한 달 동안",
     "report_blood_pressure_weekly_average_text2": "측정했어요",
+    "report_blood_pressure_monthly_average_text2": "측정했어요",
     "report_blood_pressure_weekly_description": "혈압 정상 범위는 수축기 90 - 120, 이완기 60 - 80mmHg 입니다\n맥박 정상 범위는 성인 기준 70~75 회/분 입니다",
     "report_blood_pressure_weekly_analysis_subtitle": "일주일 혈압 기록 분석",
     "report_blood_pressure_monthly_analysis_subtitle": "한 달 혈압 기록 분석",
@@ -379,8 +366,10 @@
     "common_count": "회",
     "common_edit": "편집",
     "common_walk": "걸음",
-    "common_week_pre": "이번주",
-    "common_week_post": "지난주",
+    "common_week_cur": "이번주",
+    "common_week_pre": "지난주",
+    "common_month_cur": "이번달",
+    "common_month_pre": "지난달",
     "common_count_per_minute": "회/분",
     "common_delete": "삭제"
 

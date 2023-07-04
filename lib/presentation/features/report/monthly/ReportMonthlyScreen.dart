@@ -61,9 +61,9 @@ class ReportMonthlyScreen extends HookConsumerWidget {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            // ReportCardWalk(isWeekly: false, walking: uiState.value.walking),
-            // const SizedBox(height: 24),
-            // ReportCardBloodPressure(bloodPressure: uiState.value.bloodPressure),
+            ReportCardWalk(isWeekly: false, walking: uiState.value.walking),
+            const SizedBox(height: 24),
+            ReportCardBloodPressure(isWeekly: false, bloodPressure: uiState.value.bloodPressure),
             // const SizedBox(height: 24),
             // ReportCardGlucose(glucose: uiState.value.glucose),
           ],
