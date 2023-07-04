@@ -33,4 +33,7 @@ abstract class RemoteBioRepository {
 
   /// 주간 보고서 정보 조회
   Future<ApiResponse<ResponseBioReportInfoModel>> getBioReportWeeklyInfo(int reportSeq);
+
+  /// 월간 보고서 정보 조회
+  Future<ApiResponse<ResponseBioReportInfoModel>> getBioReportMonthlyInfo(int reportSeq);
 }

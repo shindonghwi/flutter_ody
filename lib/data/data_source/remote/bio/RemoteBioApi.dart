@@ -198,4 +198,26 @@ class RemoteBioApi {
     }
   }
 
+  /// 월간 보고서 정보 조회
+  Future<ApiResponse<ResponseBioReportInfoModel>> getBioReportMonthlyInfo(
+      {required int reportSeq}) async {
+    final response = await Service.getApi(
+      type: ServiceType.Bio,
+      endPoint: 'reports/monthly/$reportSeq',
+    );
+
+    if (response.statusCode >= 500) {
+      return ApiResponse(
+        status: response.statusCode,
+        message: _getAppLocalization.get().message_server_error_5xx,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+            (json) => ResponseBioReportInfoModel.fromJson(json),
+      );
+    }
+  }
+
 }

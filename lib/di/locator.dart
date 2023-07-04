@@ -17,6 +17,7 @@ import 'package:ody_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseC
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioHistoryForDaysUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioHistoryMontlyUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioReportMonthlyInfoUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioReportMontlyUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioReportWeeklyInfoUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioReportWeeklyUseCase.dart';
@@ -67,11 +68,12 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PatchMeMedicineUseCase>(() => PatchMeMedicineUseCase());
   GetIt.instance.registerLazySingleton<DeleteMedicineUseCase>(() => DeleteMedicineUseCase());
 
-  GetIt.instance.registerLazySingleton<GetBioReportWeeklyInfoUseCase>(() => GetBioReportWeeklyInfoUseCase());
   GetIt.instance.registerLazySingleton<GetBioHistoryMontlyUseCase>(() => GetBioHistoryMontlyUseCase());
   GetIt.instance.registerLazySingleton<GetBioHistoryForDaysUseCase>(() => GetBioHistoryForDaysUseCase());
   GetIt.instance.registerLazySingleton<GetBioReportMonthlyUseCase>(() => GetBioReportMonthlyUseCase());
   GetIt.instance.registerLazySingleton<GetBioReportWeeklyUseCase>(() => GetBioReportWeeklyUseCase());
+  GetIt.instance.registerLazySingleton<GetBioReportMonthlyInfoUseCase>(() => GetBioReportMonthlyInfoUseCase());
+  GetIt.instance.registerLazySingleton<GetBioReportWeeklyInfoUseCase>(() => GetBioReportWeeklyInfoUseCase());
   GetIt.instance.registerLazySingleton<PostBioBloodPressureUseCase>(() => PostBioBloodPressureUseCase());
   GetIt.instance.registerLazySingleton<PostBioGlucoseUseCase>(() => PostBioGlucoseUseCase());
   GetIt.instance.registerLazySingleton<PostBioStepsUseCase>(() => PostBioStepsUseCase());

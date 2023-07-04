@@ -60,4 +60,10 @@ class RemoteBioRepositoryImpl implements RemoteBioRepository {
     RemoteBioApi remoteBioApi = GetIt.instance<RemoteBioApi>();
     return remoteBioApi.getBioReportWeeklyInfo(reportSeq: reportSeq);
   }
+
+  @override
+  Future<ApiResponse<ResponseBioReportInfoModel>> getBioReportMonthlyInfo(int reportSeq) {
+    RemoteBioApi remoteBioApi = GetIt.instance<RemoteBioApi>();
+    return remoteBioApi.getBioReportMonthlyInfo(reportSeq: reportSeq);
+  }
 }
