@@ -10,6 +10,7 @@ import 'package:ody_flutter_app/presentation/features/analysis/glucose/widget/Gl
 import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class AnalysisGlucoseScreen extends StatelessWidget {
   final List<ResponseBioGlucoseModel>? glucoseList;
@@ -71,7 +72,13 @@ class AnalysisGlucoseScreen extends StatelessWidget {
           child: Column(
             children: [
               AverageGlucose(
-                count: glucoseList?.length ?? 0,
+                title: getAppLocalizations(context).analysis_glucose_record_range,
+                secondTitle: Triple(
+                  getAppLocalizations(context).analysis_glucose_record_range_text1,
+                  getAppLocalizations(context).analysis_glucose_record_range_text_unit(glucoseList?.length ?? 0),
+                  getAppLocalizations(context).analysis_glucose_record_range_text2,
+                ),
+                description: getAppLocalizations(context).analysis_glucose_record_range_description,
                 averageFasting: (sumFasting / totalCount).round(),
                 averagePreprandial: (sumPreprandial / totalCount).round(),
                 averagePostprandial: (sumPostprandial / totalCount).round(),

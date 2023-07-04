@@ -6,7 +6,9 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class AverageGlucose extends StatelessWidget {
-  final int count;
+  final String title;
+  final Triple secondTitle;
+  final String description;
   final int averageFasting;
   final int averagePreprandial;
   final int averagePostprandial;
@@ -14,7 +16,9 @@ class AverageGlucose extends StatelessWidget {
 
   const AverageGlucose({
     super.key,
-    required this.count,
+    required this.title,
+    required this.secondTitle,
+    required this.description,
     required this.averageFasting,
     required this.averagePreprandial,
     required this.averagePostprandial,
@@ -50,13 +54,9 @@ class AverageGlucose extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AnalysisItemTitle(
-          title: getAppLocalizations(context).analysis_glucose_record_range,
-          secondTitle: Triple(
-            getAppLocalizations(context).analysis_glucose_record_range_text1,
-            getAppLocalizations(context).analysis_glucose_record_range_text_unit(count),
-            getAppLocalizations(context).analysis_glucose_record_range_text2,
-          ),
-          description: getAppLocalizations(context).analysis_glucose_record_range_description,
+          title: title,
+          secondTitle: secondTitle,
+          description: description,
         ),
         const SizedBox(
           height: 40,

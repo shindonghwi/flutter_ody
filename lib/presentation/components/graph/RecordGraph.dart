@@ -246,7 +246,7 @@ class _GraphContent extends HookWidget {
                     final containerHeight = constraints.maxHeight - circleSize;
                     return CustomPaint(
                       size: Size(MediaQuery.of(context).size.width, containerHeight),
-                      painter: PointPainter(xAxisList, graphPointModel, yMin, yMax),
+                      painter: PointPainter(xAxisList, graphPointModel, xAxisType, yMin, yMax),
                       child: Container(),
                     );
                   },
@@ -378,7 +378,7 @@ class LinePainter extends CustomPainter {
 
     Path path = Path();
 
-    if (xAxisType == RecordXAxisType.DATE){
+    if (xAxisType == RecordXAxisType.DATE) {
       /// 선 그리기
       for (int i = 0; i < graphLineModel.pointData.length; i++) {
         final hour = graphLineModel.pointData[i].label.split(":").first;
@@ -415,7 +415,7 @@ class LinePainter extends CustomPainter {
           ..style = PaintingStyle.fill;
         canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
       }
-    }else{
+    } else {
       final dataPointSpacing = size.width / (xAxisList.length - 1);
 
       for (int i = 0; i < graphLineModel.pointData.length; i++) {
@@ -447,8 +447,6 @@ class LinePainter extends CustomPainter {
         canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
       }
     }
-
-
   }
 
   @override
@@ -458,34 +456,55 @@ class LinePainter extends CustomPainter {
 class PointPainter extends CustomPainter {
   final List<AxisEmphasisModel> xAxisList;
   final GraphPointModel graphPointModel;
+  final RecordXAxisType xAxisType;
   final double yMin;
   final double yMax;
 
   PointPainter(
     this.xAxisList,
     this.graphPointModel,
+    this.xAxisType,
     this.yMin,
     this.yMax,
   );
 
   @override
   void paint(Canvas canvas, Size size) {
-    /// 점 그리기
-    for (int i = 0; i < graphPointModel.pointData.length; i++) {
-      final hour = graphPointModel.pointData[i].label.split(":").first;
-      final min = graphPointModel.pointData[i].label.split(":").last;
-      final double totalMinute = double.parse(hour) * 60 + double.parse(min);
-      final xPercentage = totalMinute / 1440.0;
-      final yPercentage = graphPointModel.pointData[i].yValue - yMin <= 0
-          ? 0.01
-          : ((graphPointModel.pointData[i].yValue - yMin) / (yMax - yMin));
-      final xPos = size.width * xPercentage;
-      final yPos = size.height * (1.0 - yPercentage);
-      final circlePaint = Paint()
-        ..color = graphPointModel.pointData[i].pointColor
-        ..style = PaintingStyle.fill;
-      canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
+    if (xAxisType == RecordXAxisType.DATE) {
+      /// 점 그리기
+      for (int i = 0; i < graphPointModel.pointData.length; i++) {
+        final hour = graphPointModel.pointData[i].label.split(":").first;
+        final min = graphPointModel.pointData[i].label.split(":").last;
+        final double totalMinute = double.parse(hour) * 60 + double.parse(min);
+        final xPercentage = totalMinute / 1440.0;
+        final yPercentage = graphPointModel.pointData[i].yValue - yMin <= 0
+            ? 0.01
+            : ((graphPointModel.pointData[i].yValue - yMin) / (yMax - yMin));
+        final xPos = size.width * xPercentage;
+        final yPos = size.height * (1.0 - yPercentage);
+        final circlePaint = Paint()
+          ..color = graphPointModel.pointData[i].pointColor
+          ..style = PaintingStyle.fill;
+        canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
+      }
+    } else {
+      final dataPointSpacing = size.width / (xAxisList.length - 1);
+
+      for (int i = 0; i < graphPointModel.pointData.length; i++) {
+        int xIndex = xAxisList.map((e) => e.label).toList().indexOf(graphPointModel.pointData[i].label);
+        final xPos = xIndex * dataPointSpacing;
+        final yPercentage = graphPointModel.pointData[i].yValue - yMin <= 0
+            ? 0.01
+            : ((graphPointModel.pointData[i].yValue - yMin) / (yMax - yMin));
+        final yPos = size.height * (1.0 - yPercentage);
+        final circlePaint = Paint()
+          ..color = graphPointModel.pointData[i].pointColor
+          ..style = PaintingStyle.fill;
+
+        canvas.drawCircle(Offset(xPos, yPos), 4.0, circlePaint);
+      }
     }
+
   }
 
   @override

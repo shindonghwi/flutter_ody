@@ -4,17 +4,26 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/divider/DottedDivider.dart';
+import 'package:ody_flutter_app/presentation/components/progress/PainterLinearHorizontalProgress.dart';
+import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisItemTitle.dart';
+import 'package:ody_flutter_app/presentation/features/record/glucose/widget/RecordGlucose.dart';
 import 'package:ody_flutter_app/presentation/features/report/weekly/provider/ReportWeeklyProvider.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressure.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressureAnalysis.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressureGraph.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportCalorie.dart';
+import 'package:ody_flutter_app/presentation/features/report/widget/ReportGlucose.dart';
+import 'package:ody_flutter_app/presentation/features/report/widget/ReportGlucoseAnalysis.dart';
+import 'package:ody_flutter_app/presentation/features/report/widget/ReportGlucoseGraph.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportHeartRateGraph.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalk.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkCompare.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkingAverage.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
+import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class ReportWeeklyScreen extends HookConsumerWidget {
@@ -68,6 +77,8 @@ class ReportWeeklyScreen extends HookConsumerWidget {
             ReportCardWalk(),
             SizedBox(height: 24,),
             ReportCardBloodPressure(),
+            SizedBox(height: 24,),
+            ReportCardGlucose(),
           ],
         ),
       ),
@@ -129,5 +140,28 @@ class ReportCardBloodPressure extends StatelessWidget {
   }
 }
 
+class ReportCardGlucose extends StatelessWidget {
+  const ReportCardGlucose({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: getColorScheme(context).colorUI02,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        children: const [
+          ReportGlucose(),
+          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportGlucoseAnalysis(),
+          DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
+          ReportGlucoseGraph(),
+          SizedBox(height: 40,)
+        ],
+      ),
+    );
+  }
+}
 
 

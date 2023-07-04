@@ -7,38 +7,37 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
-class ReportBloodPressureAnalysis extends StatelessWidget {
-  const ReportBloodPressureAnalysis({Key? key}) : super(key: key);
+class ReportGlucoseAnalysis extends StatelessWidget {
+  const ReportGlucoseAnalysis({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final List<Pair<String, int>> analysisItems = [
       Pair(
         getAppLocalizations(context).record_range_figure_normal,
-        22,
+        0,
       ),
       Pair(
         getAppLocalizations(context).record_range_figure_warning,
-        3,
+        13,
       ),
       Pair(
         getAppLocalizations(context).record_range_figure_danger,
-        5,
+        4,
       ),
     ];
 
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         children: [
           AnalysisItemTitle(
-            title: getAppLocalizations(context).report_blood_pressure_weekly_analysis_subtitle,
+            title: getAppLocalizations(context).report_glucose_weekly_analysis_subtitle,
             secondTitle: Triple(
-                getAppLocalizations(context).report_blood_pressure_weekly_analysis_text1,
-                getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(2),
-                getAppLocalizations(context).report_blood_pressure_weekly_analysis_text2),
-            description: getAppLocalizations(context).report_blood_pressure_analysis_description,
+                getAppLocalizations(context).report_glucose_monthly_analysis_text1,
+                getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(17),
+                getAppLocalizations(context).report_glucose_monthly_analysis_text2),
+            description: getAppLocalizations(context).report_glucose_monthly_analysis_description,
           ),
           const SizedBox(
             height: 40,
