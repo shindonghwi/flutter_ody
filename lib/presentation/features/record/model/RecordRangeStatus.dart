@@ -71,6 +71,7 @@ class RecordRangeStatusHelper {
   }
 
   static RecordRangeStatus getGlucoseRecordRangeStatusFromCode(String code) {
+    debugPrint("getGlucoseRecordRangeStatusFromCode: $code");
     return code.toLowerCase() == RecordRangeStatus.Normal.name.toString().toLowerCase()
         ? RecordRangeStatus.Normal
         : code.toLowerCase() == RecordRangeStatus.Warn.name.toString().toLowerCase()

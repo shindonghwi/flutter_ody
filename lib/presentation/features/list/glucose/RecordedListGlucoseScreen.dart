@@ -29,6 +29,7 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final uiState = ref.watch(forDaysBioInfoProvider);
+    final uiStateRead = ref.read(forDaysBioInfoProvider.notifier);
     final glucoseList = useState<List<ResponseBioGlucoseModel>>([]);
     DateTime date = ref.watch(calendarSelectDateProvider);
     final isToday = useState(false);
@@ -86,13 +87,22 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
               : Center(
                   child: EmptyView(
                     screen: RoutingScreen.RecordedListGlucose,
-                    onPressed: () {
-                      isToday.value
-                          ? Navigator.push(
-                              context,
-                              nextSlideScreen(RoutingScreen.RecordGlucose.route),
-                            )
-                          : Navigator.of(context).pop();
+                    onPressed: () async {
+                      if (isToday.value){
+                        ResponseBioGlucoseModel data = await Navigator.push(
+                          context,
+                          nextSlideScreen(RoutingScreen.RecordGlucose.route),
+                        );
+                        try {
+                          if (data.glucose != 0) {
+                            uiStateRead.addGlucoseBioInfo(data);
+                          }
+                        } catch (e) {
+                          debugPrint("bp update fail: ${e.toString()}");
+                        }
+                      }else{
+                        Navigator.of(context).pop();
+                      }
                     },
                   ),
                 ),

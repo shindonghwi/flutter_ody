@@ -29,6 +29,7 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final uiState = ref.watch(forDaysBioInfoProvider);
+    final uiStateRead = ref.read(forDaysBioInfoProvider.notifier);
     final bpList = useState<List<ResponseBioBloodPressureModel>>([]);
     DateTime date = ref.watch(calendarSelectDateProvider);
     final isToday = useState(false);
@@ -86,13 +87,22 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
               : Center(
                   child: EmptyView(
                     screen: RoutingScreen.RecordedListBloodPressure,
-                    onPressed: () {
-                      isToday.value
-                          ? Navigator.push(
-                              context,
-                              nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
-                            )
-                          : Navigator.of(context).pop();
+                    onPressed: () async {
+                      if (isToday.value){
+                        ResponseBioBloodPressureModel data = await Navigator.push(
+                          context,
+                          nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
+                        );
+                        try {
+                          if (data.diastolicBloodPressure != 0) {
+                            uiStateRead.addBpBioInfo(data);
+                          }
+                        } catch (e) {
+                          debugPrint("bp update fail: ${e.toString()}");
+                        }
+                      }else{
+                        Navigator.of(context).pop();
+                      }
                     },
                   ),
                 ),
