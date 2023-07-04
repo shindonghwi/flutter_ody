@@ -19,6 +19,7 @@ import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/notifications/NotificationsUtil.dart';
 
 class SplashScreen extends HookConsumerWidget {
   final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =
