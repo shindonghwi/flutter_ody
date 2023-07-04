@@ -7,6 +7,7 @@ import 'package:ody_flutter_app/presentation/components/graph/model/GraphPointMo
 import 'package:ody_flutter_app/presentation/components/graph/model/ShadowAreaModel.dart';
 import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisItemTitle.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateTransfer.dart';
@@ -14,7 +15,7 @@ import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class ReportHeartRateGraph extends StatelessWidget {
-  final List<ResponseBioReportDaysModel> days;
+  final List<ResponseBioReportDaysModel>? days;
 
   const ReportHeartRateGraph({
     Key? key,
@@ -49,22 +50,24 @@ class ReportHeartRateGraph extends StatelessWidget {
       ),
     ];
 
-    days.sort((a, b) {
+    days?.sort((a, b) {
       int indexA = DateTransfer.enYoilList.indexOf(a.day.toString());
       int indexB = DateTransfer.enYoilList.indexOf(b.day.toString());
       return indexA - indexB;
     });
 
     final heartRateList = days
-        .map((e) => Pair(
+        ?.map((e) => Pair(
               DateTransfer.convertShortYoilEnToKr(e.day.toString()),
               e.heartRate,
             ))
         .toList();
 
-    final graphLineModelList = [
-      GraphLineModel(
-        pointData: heartRateList.map((e) {
+    final List<GraphLineModel> graphLineModelList = [];
+
+    if (!CollectionUtil.isNullorEmpty(heartRateList)) {
+      graphLineModelList.add(GraphLineModel(
+        pointData: heartRateList!.map((e) {
           return GraphPointDataModel(
               label: e.first,
               yValue: (e.second ?? 0).toDouble(),
@@ -73,8 +76,8 @@ class ReportHeartRateGraph extends StatelessWidget {
                   : getColorScheme(context).secondary20);
         }).toList(),
         lineColor: getColorScheme(context).secondary20,
-      ),
-    ];
+      ));
+    }
 
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),

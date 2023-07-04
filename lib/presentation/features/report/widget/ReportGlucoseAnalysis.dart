@@ -12,7 +12,7 @@ import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportGlucoseAnalysis extends StatelessWidget {
   final int totalCount;
-  final List<ResponseBioReportStatesModel> states;
+  final List<ResponseBioReportStatesModel>? states;
 
   const ReportGlucoseAnalysis({
     Key? key,
@@ -24,12 +24,12 @@ class ReportGlucoseAnalysis extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final List<Triple> analysisItems =  [];
-    states.map((e) {
-      if (CollectionUtil.isEqualLowerCase(e.state, RecordRangeStatus.Alert.name)) {
+    states?.map((e) {
+      if (CollectionUtil.isEqualLowerCase(e.state.toString(), RecordRangeStatus.Alert.name)) {
         analysisItems.add(Triple(getAppLocalizations(context).record_range_figure_danger, e.count, e.state));
-      } else if (CollectionUtil.isEqualLowerCase(e.state, RecordRangeStatus.Normal.name)) {
+      } else if (CollectionUtil.isEqualLowerCase(e.state.toString(), RecordRangeStatus.Normal.name)) {
         analysisItems.add(Triple(getAppLocalizations(context).record_range_figure_normal, e.count, e.state));
-      } else if (CollectionUtil.isEqualLowerCase(e.state, RecordRangeStatus.Warn.name)) {
+      } else if (CollectionUtil.isEqualLowerCase(e.state.toString(), RecordRangeStatus.Warn.name)) {
         analysisItems.add(Triple(getAppLocalizations(context).record_range_figure_warning, e.count, e.state));
       }
     }).toList();

@@ -9,22 +9,26 @@ part of 'ResponseBioReportGlucoseModel.dart';
 ResponseBioReportGlucoseModel _$ResponseBioReportGlucoseModelFromJson(
         Map<String, dynamic> json) =>
     ResponseBioReportGlucoseModel(
-      totalCount: json['totalCount'] as int,
-      minFastingGlucose: json['minFastingGlucose'] as int,
-      maxFastingGlucose: json['maxFastingGlucose'] as int,
-      minPreprandialGlucose: json['minPreprandialGlucose'] as int,
-      maxPreprandialGlucose: json['maxPreprandialGlucose'] as int,
-      minPostprandialGlucose: json['minPostprandialGlucose'] as int,
-      maxPostprandialGlucose: json['maxPostprandialGlucose'] as int,
-      minPostExerciseGlucose: json['minPostExerciseGlucose'] as int,
-      maxPostExerciseGlucose: json['maxPostExerciseGlucose'] as int,
-      states: (json['states'] as List<dynamic>)
-          .map((e) =>
+      totalCount: json['totalCount'] as int? ?? 0,
+      minFastingGlucose: json['minFastingGlucose'] as int? ?? 0,
+      maxFastingGlucose: json['maxFastingGlucose'] as int? ?? 0,
+      minPreprandialGlucose: json['minPreprandialGlucose'] as int? ?? 0,
+      maxPreprandialGlucose: json['maxPreprandialGlucose'] as int? ?? 0,
+      minPostprandialGlucose: json['minPostprandialGlucose'] as int? ?? 0,
+      maxPostprandialGlucose: json['maxPostprandialGlucose'] as int? ?? 0,
+      minPostExerciseGlucose: json['minPostExerciseGlucose'] as int? ?? 0,
+      maxPostExerciseGlucose: json['maxPostExerciseGlucose'] as int? ?? 0,
+      states: (json['states'] as List<dynamic>?)
+          ?.map((e) =>
               ResponseBioReportStatesModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      days: (json['days'] as List<dynamic>)
-          .map((e) =>
+      days: (json['days'] as List<dynamic>?)
+          ?.map((e) =>
               ResponseBioReportDaysModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      weeks: (json['weeks'] as List<dynamic>?)
+          ?.map((e) =>
+              ResponseBioReportWeeksModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -42,4 +46,5 @@ Map<String, dynamic> _$ResponseBioReportGlucoseModelToJson(
       'maxPostExerciseGlucose': instance.maxPostExerciseGlucose,
       'states': instance.states,
       'days': instance.days,
+      'weeks': instance.weeks,
     };

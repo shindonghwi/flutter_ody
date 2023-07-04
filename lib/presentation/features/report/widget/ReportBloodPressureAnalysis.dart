@@ -12,7 +12,7 @@ import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportBloodPressureAnalysis extends StatelessWidget {
   final int totalCount;
-  final List<ResponseBioReportStatesModel> states;
+  final List<ResponseBioReportStatesModel>? states;
 
   const ReportBloodPressureAnalysis({
     Key? key,
@@ -23,12 +23,12 @@ class ReportBloodPressureAnalysis extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Triple> analysisItems = [];
-    states.map((e) {
-      if (CollectionUtil.isEqualLowerCase(e.state, RecordRangeStatus.HighRisk.name)) {
+    states?.map((e) {
+      if (CollectionUtil.isEqualLowerCase(e.state.toString(), RecordRangeStatus.HighRisk.name)) {
         analysisItems.add(Triple(getAppLocalizations(context).record_range_figure_danger, e.count, e.state));
-      } else if (CollectionUtil.isEqualLowerCase(e.state, RecordRangeStatus.Normal.name)) {
+      } else if (CollectionUtil.isEqualLowerCase(e.state.toString(), RecordRangeStatus.Normal.name)) {
         analysisItems.add(Triple(getAppLocalizations(context).record_range_figure_normal, e.count, e.state));
-      } else if (CollectionUtil.isEqualLowerCase(e.state, RecordRangeStatus.Risk.name)) {
+      } else if (CollectionUtil.isEqualLowerCase(e.state.toString(), RecordRangeStatus.Risk.name)) {
         analysisItems.add(Triple(getAppLocalizations(context).record_range_figure_warning, e.count, e.state));
       }
     }).toList();

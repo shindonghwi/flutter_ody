@@ -9,13 +9,17 @@ part of 'ResponseBioReportWalkingModel.dart';
 ResponseBioReportWalkingModel _$ResponseBioReportWalkingModelFromJson(
         Map<String, dynamic> json) =>
     ResponseBioReportWalkingModel(
-      totalSteps: json['totalSteps'] as int,
-      totalCalories: json['totalCalories'] as int,
-      beforeSteps: json['beforeSteps'] as int,
-      averageSteps: json['averageSteps'] as int,
-      days: (json['days'] as List<dynamic>)
-          .map((e) =>
+      totalSteps: json['totalSteps'] as int? ?? 0,
+      totalCalories: json['totalCalories'] as int? ?? 0,
+      beforeSteps: json['beforeSteps'] as int? ?? 0,
+      averageSteps: json['averageSteps'] as int? ?? 0,
+      days: (json['days'] as List<dynamic>?)
+          ?.map((e) =>
               ResponseBioReportDaysModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      weeks: (json['weeks'] as List<dynamic>?)
+          ?.map((e) =>
+              ResponseBioReportWeeksModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -27,4 +31,5 @@ Map<String, dynamic> _$ResponseBioReportWalkingModelToJson(
       'beforeSteps': instance.beforeSteps,
       'averageSteps': instance.averageSteps,
       'days': instance.days,
+      'weeks': instance.weeks,
     };

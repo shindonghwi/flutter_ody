@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
 import 'package:ody_flutter_app/data/models/ApiListResponse.dart';
@@ -10,6 +11,7 @@ import 'package:ody_flutter_app/data/models/bio/RequestBioStepsModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportListModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportInfoModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWeeksModel.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RemoteBioApi {
@@ -192,8 +194,10 @@ class RemoteBioApi {
       );
     } else {
       return ApiResponse.fromJson(
-        jsonDecode(response.body),
-            (json) => ResponseBioReportInfoModel.fromJson(json),
+        jsonDecode(response.body), (json) {
+          debugPrint('asdasd json: ${json == null ? 'null' : 'not null'}');
+        return ResponseBioReportInfoModel.fromJson(json);
+        },
       );
     }
   }

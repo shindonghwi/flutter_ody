@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/components/graph/widget/SymbolWidge
 import 'package:ody_flutter_app/presentation/features/analysis/widget/AnalysisItemTitle.dart';
 import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeStatus.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateTransfer.dart';
@@ -16,7 +17,7 @@ import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 class ReportGlucoseGraph extends StatelessWidget {
   final int minFastingGlucose;
   final int maxFastingGlucose;
-  final List<ResponseBioReportDaysModel> days;
+  final List<ResponseBioReportDaysModel>? days;
 
   const ReportGlucoseGraph({
     Key? key,
@@ -45,32 +46,34 @@ class ReportGlucoseGraph extends StatelessWidget {
       AxisEmphasisModel(label: "160", color: getColorScheme(context).neutral60),
     ].reversed.toList();
 
-    days.sort((a, b) {
+    days?.sort((a, b) {
       int indexA = DateTransfer.enYoilList.indexOf(a.day.toString());
       int indexB = DateTransfer.enYoilList.indexOf(b.day.toString());
       return indexA - indexB;
     });
 
     final glucoseList = days
-        .map((e) => Triple(
+        ?.map((e) => Triple(
               DateTransfer.convertShortYoilEnToKr(e.day.toString()),
               e.glucose,
               e.state,
             ))
         .toList();
 
-    final graphPointModelList = GraphPointModel(
-      pointData: glucoseList.map((e) {
-        return GraphPointDataModel(
-          label: e.first,
-          yValue: (e.second ?? 0).toDouble(),
-          pointColor: RecordRangeStatusHelper.getStatusTextColor(
-            context,
-            RecordRangeStatusHelper.getGlucoseRecordRangeStatusFromCode(e.third.toString()),
-          ),
-        );
-      }).toList(),
-    );
+    final graphPointModel = CollectionUtil.isNullorEmpty(glucoseList)
+        ? GraphPointModel(pointData: [])
+        : GraphPointModel(
+            pointData: glucoseList!.map((e) {
+              return GraphPointDataModel(
+                label: e.first,
+                yValue: (e.second ?? 0).toDouble(),
+                pointColor: RecordRangeStatusHelper.getStatusTextColor(
+                  context,
+                  RecordRangeStatusHelper.getGlucoseRecordRangeStatusFromCode(e.third.toString()),
+                ),
+              );
+            }).toList(),
+          );
 
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -101,7 +104,7 @@ class ReportGlucoseGraph extends StatelessWidget {
                   symbolWidget: const _SymbolList(),
                   xAxisInnerHorizontalPadding: 0,
                   dividerColor: getColorScheme(context).neutral50,
-                  graphPointModel: graphPointModelList,
+                  graphPointModel: graphPointModel,
                   xAxisType: RecordXAxisType.YOIL,
                 ),
               )

@@ -27,6 +27,7 @@ class ApiResponse<T> {
         data: fromJsonT(json['data']),
       );
     } catch (e) {
+      debugPrint('ApiResponse.fromJson: error : ${e.toString()}');
       debugPrint('ApiResponse.fromJson: ${ApiResponse(
         status: json!['status'] as int,
         message: json['message'] as String,

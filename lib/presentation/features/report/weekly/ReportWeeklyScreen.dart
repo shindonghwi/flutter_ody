@@ -75,7 +75,7 @@ class ReportWeeklyScreen extends HookConsumerWidget {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  ReportCardWalk(walking: uiState.value.walking),
+                  ReportCardWalk(isWeekly: true, walking: uiState.value.walking),
                   const SizedBox(height: 24),
                   ReportCardBloodPressure(bloodPressure: uiState.value.bloodPressure),
                   const SizedBox(height: 24),
@@ -91,10 +91,12 @@ class ReportWeeklyScreen extends HookConsumerWidget {
 }
 
 class ReportCardWalk extends StatelessWidget {
+  final bool isWeekly;
   final ResponseBioReportWalkingModel walking;
 
   const ReportCardWalk({
     Key? key,
+    required this.isWeekly,
     required this.walking,
   }) : super(key: key);
 

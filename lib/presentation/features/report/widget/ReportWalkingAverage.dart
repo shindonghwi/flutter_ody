@@ -12,7 +12,7 @@ import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportWalkingAverage extends StatelessWidget {
   final int averageSteps;
-  final List<ResponseBioReportDaysModel> days;
+  final List<ResponseBioReportDaysModel>? days;
 
   const ReportWalkingAverage({
     Key? key,
@@ -49,7 +49,7 @@ class ReportWalkingAverage extends StatelessWidget {
 }
 
 class _YoilGraph extends StatelessWidget {
-  final List<ResponseBioReportDaysModel> days;
+  final List<ResponseBioReportDaysModel>? days;
 
   const _YoilGraph({
     Key? key,
@@ -61,7 +61,7 @@ class _YoilGraph extends StatelessWidget {
 
     final yoilData = [];
 
-    for (var element in days) {
+    days?.forEach((element) {
       if (element.day == "Mon"){
         yoilData.add(Pair(getAppLocalizations(context).common_monday, element.steps ?? 0));
       }else if (element.day == "Tue") {
@@ -77,8 +77,7 @@ class _YoilGraph extends StatelessWidget {
       }else if (element.day == "Sun") {
         yoilData.add(Pair(getAppLocalizations(context).common_sunday, element.steps ?? 0));
       }
-    }
-
+    });
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 80),

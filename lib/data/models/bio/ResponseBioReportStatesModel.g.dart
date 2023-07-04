@@ -9,8 +9,8 @@ part of 'ResponseBioReportStatesModel.dart';
 ResponseBioReportStatesModel _$ResponseBioReportStatesModelFromJson(
         Map<String, dynamic> json) =>
     ResponseBioReportStatesModel(
-      state: json['state'] as String,
-      count: json['count'] as int,
+      state: json['state'] as String?,
+      count: json['count'] as int?,
     );
 
 Map<String, dynamic> _$ResponseBioReportStatesModelToJson(

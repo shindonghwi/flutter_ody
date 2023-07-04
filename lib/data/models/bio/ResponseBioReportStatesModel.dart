@@ -4,8 +4,8 @@ part 'ResponseBioReportStatesModel.g.dart';
 
 @JsonSerializable()
 class ResponseBioReportStatesModel {
-  final String state;
-  final int count;
+  final String? state;
+  final int? count;
 
   ResponseBioReportStatesModel({
     required this.state,

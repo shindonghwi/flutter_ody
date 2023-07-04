@@ -9,16 +9,20 @@ part of 'ResponseBioReportBloodPressureModel.dart';
 ResponseBioReportBloodPressureModel
     _$ResponseBioReportBloodPressureModelFromJson(Map<String, dynamic> json) =>
         ResponseBioReportBloodPressureModel(
-          totalCount: json['totalCount'] as int,
-          averageSystolic: json['averageSystolic'] as int,
-          averageDiastolic: json['averageDiastolic'] as int,
-          averageHeartRate: json['averageHeartRate'] as int,
-          states: (json['states'] as List<dynamic>)
-              .map((e) => ResponseBioReportStatesModel.fromJson(
+          totalCount: json['totalCount'] as int? ?? 0,
+          averageSystolic: json['averageSystolic'] as int? ?? 0,
+          averageDiastolic: json['averageDiastolic'] as int? ?? 0,
+          averageHeartRate: json['averageHeartRate'] as int? ?? 0,
+          states: (json['states'] as List<dynamic>?)
+              ?.map((e) => ResponseBioReportStatesModel.fromJson(
                   e as Map<String, dynamic>))
               .toList(),
-          days: (json['days'] as List<dynamic>)
-              .map((e) => ResponseBioReportDaysModel.fromJson(
+          days: (json['days'] as List<dynamic>?)
+              ?.map((e) => ResponseBioReportDaysModel.fromJson(
+                  e as Map<String, dynamic>))
+              .toList(),
+          weeks: (json['weeks'] as List<dynamic>?)
+              ?.map((e) => ResponseBioReportWeeksModel.fromJson(
                   e as Map<String, dynamic>))
               .toList(),
         );
@@ -32,4 +36,5 @@ Map<String, dynamic> _$ResponseBioReportBloodPressureModelToJson(
       'averageHeartRate': instance.averageHeartRate,
       'states': instance.states,
       'days': instance.days,
+      'weeks': instance.weeks,
     };
