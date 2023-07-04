@@ -79,7 +79,7 @@ class ReportWeeklyScreen extends HookConsumerWidget {
                   const SizedBox(height: 24),
                   ReportCardBloodPressure(isWeekly: true, bloodPressure: uiState.value.bloodPressure),
                   const SizedBox(height: 24),
-                  ReportCardGlucose(glucose: uiState.value.glucose),
+                  ReportCardGlucose(isWeekly: true, glucose: uiState.value.glucose),
                 ],
               ),
             )
@@ -173,12 +173,16 @@ class ReportCardBloodPressure extends StatelessWidget {
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
           ReportBloodPressureGraph(
             isWeekly: isWeekly,
+            averageSystolic: bloodPressure.averageSystolic,
+            averageDiastolic: bloodPressure.averageDiastolic,
             days: bloodPressure.days,
+            weeks: bloodPressure.weeks,
           ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
           ReportHeartRateGraph(
             isWeekly: isWeekly,
             days: bloodPressure.days,
+            weeks: bloodPressure.weeks,
           ),
           const SizedBox(height: 40)
         ],
@@ -188,11 +192,13 @@ class ReportCardBloodPressure extends StatelessWidget {
 }
 
 class ReportCardGlucose extends StatelessWidget {
+  final bool isWeekly;
   final ResponseBioReportGlucoseModel glucose;
 
   const ReportCardGlucose({
     Key? key,
     required this.glucose,
+    required this.isWeekly,
   }) : super(key: key);
 
   @override
@@ -205,6 +211,7 @@ class ReportCardGlucose extends StatelessWidget {
       child: Column(
         children: [
           ReportGlucose(
+            isWeekly: isWeekly,
             totalCount: glucose.totalCount,
             averageFasting: ((glucose.minFastingGlucose + glucose.maxFastingGlucose) / 2).round(),
             averagePreprandial: ((glucose.minPreprandialGlucose + glucose.maxPreprandialGlucose) / 2).round(),
@@ -212,12 +219,18 @@ class ReportCardGlucose extends StatelessWidget {
             averagePostExercise: ((glucose.minPostExerciseGlucose + glucose.maxPostExerciseGlucose) / 2).round(),
           ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
-          ReportGlucoseAnalysis(totalCount: glucose.totalCount, states: glucose.states),
+          ReportGlucoseAnalysis(
+            isWeekly: isWeekly,
+            totalCount: glucose.totalCount,
+            states: glucose.states,
+          ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
           ReportGlucoseGraph(
+            isWeekly: isWeekly,
             minFastingGlucose: glucose.minFastingGlucose,
             maxFastingGlucose: glucose.maxFastingGlucose,
             days: glucose.days,
+            weeks: glucose.weeks,
           ),
           const SizedBox(height: 40)
         ],

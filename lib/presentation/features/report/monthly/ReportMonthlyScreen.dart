@@ -64,8 +64,8 @@ class ReportMonthlyScreen extends HookConsumerWidget {
             ReportCardWalk(isWeekly: false, walking: uiState.value.walking),
             const SizedBox(height: 24),
             ReportCardBloodPressure(isWeekly: false, bloodPressure: uiState.value.bloodPressure),
-            // const SizedBox(height: 24),
-            // ReportCardGlucose(glucose: uiState.value.glucose),
+            const SizedBox(height: 24),
+            ReportCardGlucose(isWeekly: false, glucose: uiState.value.glucose),
           ],
         ),
       )

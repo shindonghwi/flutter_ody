@@ -41,12 +41,15 @@ class ReportBloodPressureAnalysis extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           AnalysisItemTitle(
-            title: getAppLocalizations(context).report_blood_pressure_weekly_analysis_subtitle,
+            title: isWeekly
+                ? getAppLocalizations(context).report_blood_pressure_weekly_analysis_subtitle
+                : getAppLocalizations(context).report_blood_pressure_monthly_analysis_subtitle,
             secondTitle: Triple(
-                getAppLocalizations(context).report_blood_pressure_weekly_analysis_text1,
-                getAppLocalizations(context)
-                    .analysis_blood_pressure_average_measure_text_unit(RegexUtil.commaNumber(totalCount)),
-                getAppLocalizations(context).report_blood_pressure_weekly_analysis_text2),
+                getAppLocalizations(context).report_blood_pressure_analysis_text1,
+                getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(
+                  RegexUtil.commaNumber(totalCount),
+                ),
+                getAppLocalizations(context).report_blood_pressure_analysis_text2),
             description: getAppLocalizations(context).report_blood_pressure_analysis_description,
           ),
           const SizedBox(

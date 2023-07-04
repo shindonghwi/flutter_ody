@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportGlucose extends HookWidget {
+  final bool isWeekly;
   final int totalCount;
   final int averageFasting;
   final int averagePreprandial;
@@ -16,6 +17,7 @@ class ReportGlucose extends HookWidget {
 
   const ReportGlucose({
     Key? key,
+    required this.isWeekly,
     required this.totalCount,
     required this.averageFasting,
     required this.averagePreprandial,
@@ -48,13 +50,15 @@ class ReportGlucose extends HookWidget {
           ),
           const SizedBox(height: 32),
           AverageGlucose(
-            title: getAppLocalizations(context).report_glucose_weekly_average_subtitle,
+            title: isWeekly
+                ? getAppLocalizations(context).report_glucose_weekly_average_subtitle
+                : getAppLocalizations(context).report_glucose_monthly_average_subtitle,
             secondTitle: Triple(
-              getAppLocalizations(context).report_glucose_weekly_average_text1,
+              getAppLocalizations(context).report_glucose_average_text1,
               getAppLocalizations(context).analysis_glucose_record_range_text_unit(RegexUtil.commaNumber(totalCount)),
-              getAppLocalizations(context).report_glucose_weekly_average_text2,
+              getAppLocalizations(context).report_glucose_average_text2,
             ),
-            description: getAppLocalizations(context).report_glucose_weekly_average_description,
+            description: getAppLocalizations(context).report_glucose_average_description,
             averageFasting: averageFasting,
             averagePreprandial: averagePreprandial,
             averagePostprandial: averagePostprandial,

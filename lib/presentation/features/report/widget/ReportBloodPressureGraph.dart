@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportDaysModel.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWeeksModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/RecordGraph.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/AxisEmphasisModel.dart';
 import 'package:ody_flutter_app/presentation/components/graph/model/GraphLineModel.dart';
@@ -12,30 +13,50 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateParser.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateTransfer.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 
 class ReportBloodPressureGraph extends StatelessWidget {
   final bool isWeekly;
+  final int averageSystolic;
+  final int averageDiastolic;
   final List<ResponseBioReportDaysModel>? days;
+  final List<ResponseBioReportWeeksModel>? weeks;
 
   const ReportBloodPressureGraph({
     Key? key,
     required this.isWeekly,
+    required this.averageSystolic,
+    required this.averageDiastolic,
     required this.days,
+    required this.weeks,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final xAxisList = DateTransfer.krYoilList.map((e) {
-      return AxisEmphasisModel(
-        label: e,
-        color: DateChecker.isTodayCheckFromKrYoil(e)
-            ? getColorScheme(context).primary100
-            : getColorScheme(context).neutral60,
-      );
-    }).toList();
+    final List<AxisEmphasisModel> xAxisList = [];
+
+    if (isWeekly) {
+      xAxisList.addAll(DateTransfer.krYoilList.map((e) {
+        return AxisEmphasisModel(
+          label: e,
+          color: DateChecker.isTodayCheckFromKrYoil(e)
+              ? getColorScheme(context).primary100
+              : getColorScheme(context).neutral60,
+        );
+      }).toList());
+    } else {
+      weeks?.forEach((element) {
+        xAxisList.add(AxisEmphasisModel(
+          label: element.numberOfWeeks.toString(),
+          color: DateParser.getWeekNumberFromCurrentDay().toString() == element.numberOfWeeks.toString()
+              ? getColorScheme(context).primary100
+              : getColorScheme(context).neutral60,
+        ));
+      });
+    }
 
     final sampleYAxisList = [
       AxisEmphasisModel(label: "60", color: getColorScheme(context).neutral60),
@@ -65,24 +86,42 @@ class ReportBloodPressureGraph extends StatelessWidget {
       return indexA - indexB;
     });
 
-    final systolicList = days
-        ?.map((e) => Pair(
-              DateTransfer.convertShortYoilEnToKr(e.day.toString()),
-              e.systolic,
-            ))
-        .toList();
-    final diastolicList = days
-        ?.map((e) => Pair(
-              DateTransfer.convertShortYoilEnToKr(e.day.toString()),
-              e.diastolic,
-            ))
-        .toList();
+    final List<Pair> systolicList = [];
+    final List<Pair> diastolicList = [];
+
+    if (isWeekly) {
+      days?.forEach((element) {
+        systolicList.add(Pair(
+          DateTransfer.convertShortYoilEnToKr(element.day.toString()),
+          element.systolic,
+        ));
+      });
+      days?.forEach((element) {
+        diastolicList.add(Pair(
+          DateTransfer.convertShortYoilEnToKr(element.day.toString()),
+          element.diastolic,
+        ));
+      });
+    } else {
+      weeks?.forEach((element) {
+        systolicList.add(Pair(
+          element.numberOfWeeks.toString(),
+          element.systolic,
+        ));
+      });
+      weeks?.forEach((element) {
+        diastolicList.add(Pair(
+          element.numberOfWeeks.toString(),
+          element.diastolic,
+        ));
+      });
+    }
 
     final List<GraphLineModel> graphLineModelList = [];
 
     if (!CollectionUtil.isNullorEmpty(systolicList)) {
       graphLineModelList.add(GraphLineModel(
-        pointData: systolicList!.map((e) {
+        pointData: systolicList.map((e) {
           return GraphPointDataModel(
               label: e.first,
               yValue: (e.second ?? 0).toDouble(),
@@ -95,7 +134,7 @@ class ReportBloodPressureGraph extends StatelessWidget {
     }
     if (!CollectionUtil.isNullorEmpty(diastolicList)) {
       graphLineModelList.add(GraphLineModel(
-        pointData: diastolicList!.map((e) {
+        pointData: diastolicList.map((e) {
           return GraphPointDataModel(
               label: e.first,
               yValue: (e.second ?? 0).toDouble(),
@@ -113,10 +152,12 @@ class ReportBloodPressureGraph extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           AnalysisItemTitle(
-            title: getAppLocalizations(context).report_blood_pressure_weekly_analysis_subtitle,
+            title: isWeekly
+                ? getAppLocalizations(context).report_blood_pressure_weekly_analysis_subtitle
+                : getAppLocalizations(context).report_blood_pressure_monthly_analysis_subtitle,
             secondTitle: Triple(
                 getAppLocalizations(context).report_blood_pressure_graph_text1,
-                "${110} - ${100} ${getAppLocalizations(context).record_blood_pressure_input1_unit}",
+                "$averageSystolic - $averageDiastolic ${getAppLocalizations(context).record_blood_pressure_input1_unit}",
                 getAppLocalizations(context).report_blood_pressure_graph_text2),
             description: getAppLocalizations(context).report_blood_pressure_weekly_description,
           ),
@@ -134,7 +175,7 @@ class ReportBloodPressureGraph extends StatelessWidget {
                   yAxisList: sampleYAxisList,
                   shadowAreaList: shadowAreaList,
                   symbolWidget: const _SymbolList(),
-                  xAxisInnerHorizontalPadding: 0,
+                  xAxisInnerHorizontalPadding: isWeekly ? 0 : 54,
                   dividerColor: getColorScheme(context).neutral50,
                   graphLineModelList: graphLineModelList,
                   xAxisType: RecordXAxisType.YOIL,

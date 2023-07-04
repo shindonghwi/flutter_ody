@@ -11,19 +11,20 @@ import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
 import 'package:ody_flutter_app/presentation/utils/regex/RegexUtil.dart';
 
 class ReportGlucoseAnalysis extends StatelessWidget {
+  final bool isWeekly;
   final int totalCount;
   final List<ResponseBioReportStatesModel>? states;
 
   const ReportGlucoseAnalysis({
     Key? key,
+    required this.isWeekly,
     required this.totalCount,
     required this.states,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    final List<Triple> analysisItems =  [];
+    final List<Triple> analysisItems = [];
     states?.map((e) {
       if (CollectionUtil.isEqualLowerCase(e.state.toString(), RecordRangeStatus.Alert.name)) {
         analysisItems.add(Triple(getAppLocalizations(context).record_range_figure_danger, e.count, e.state));
@@ -39,14 +40,16 @@ class ReportGlucoseAnalysis extends StatelessWidget {
       child: Column(
         children: [
           AnalysisItemTitle(
-            title: getAppLocalizations(context).report_glucose_weekly_analysis_subtitle,
+            title: isWeekly
+                ? getAppLocalizations(context).report_glucose_weekly_analysis_subtitle
+                : getAppLocalizations(context).report_glucose_monthly_analysis_subtitle,
             secondTitle: Triple(
-                getAppLocalizations(context).report_glucose_monthly_analysis_text1,
+                getAppLocalizations(context).report_glucose_analysis_text1,
                 getAppLocalizations(context).analysis_blood_pressure_average_measure_text_unit(
                   RegexUtil.commaNumber(totalCount),
                 ),
-                getAppLocalizations(context).report_glucose_monthly_analysis_text2),
-            description: getAppLocalizations(context).report_glucose_monthly_analysis_description,
+                getAppLocalizations(context).report_glucose_analysis_text2),
+            description: getAppLocalizations(context).report_glucose_analysis_description,
           ),
           const SizedBox(
             height: 40,
@@ -61,7 +64,7 @@ class ReportGlucoseAnalysis extends StatelessWidget {
                     return const SizedBox(height: 24); // Adjust the height as needed
                   },
                   itemBuilder: (BuildContext context, int index) {
-                    final item = analysisItems[index]!;
+                    final item = analysisItems[index];
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,7 +87,7 @@ class ReportGlucoseAnalysis extends StatelessWidget {
                             height: 16,
                             child: CustomPaint(
                               painter: PainterLinearHorizontalProgress(
-                                progress: item.second / 30,
+                                progress: item.second / totalCount,
                                 defaultColor: getColorScheme(context).colorPrimaryDisable.withOpacity(0.3),
                                 activeColor: index == 0
                                     ? getColorScheme(context).primary100
