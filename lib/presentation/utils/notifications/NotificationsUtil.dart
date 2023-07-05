@@ -49,13 +49,15 @@ class NotificationsUtil {
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
         payload: day.toString(),
-        matchDateTimeComponents: DateTimeComponents.time,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
       );
     }
   }
 
   static tz.TZDateTime _getNextScheduledDate(Day day, int hour, int minute) {
-    tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    debugPrint("day: ${day.value}");
+
+    final now = NotificationsUtil.getTzNow();
     tz.TZDateTime scheduledDate = tz.TZDateTime(
       tz.local,
       now.year,
@@ -65,9 +67,23 @@ class NotificationsUtil {
       minute,
     );
 
-    while (scheduledDate.weekday != day.value) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    int currentWeekday = now.weekday % 7; // Adjust to match the Day enum numbering scheme
+    int targetWeekday = (day.value + 6) % 7; // Adjust to match the Day enum numbering scheme
+    int daysToAdd = (targetWeekday - currentWeekday + 7) % 7;
+    if (daysToAdd <= 0 || (daysToAdd == 0 && scheduledDate.isBefore(now))) {
+      daysToAdd += 7;
     }
+    scheduledDate = scheduledDate.add(Duration(days: daysToAdd));
+
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 7)); // Add 7 days to schedule for the next week
+    }
+
+    if (scheduledDate.month < now.month) {
+      scheduledDate = scheduledDate.add(const Duration(days: 365)); // Add 365 days to schedule for the next year
+    }
+
+    debugPrint("scheduledDate: ${scheduledDate.year} ${scheduledDate.month} ${scheduledDate.day} ${scheduledDate.weekday}");
 
     return scheduledDate;
   }

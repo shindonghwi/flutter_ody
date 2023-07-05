@@ -141,7 +141,7 @@ class BottomSheetTimeSetting extends HookWidget {
             type: ButtonSizeType.Small,
             onPressed: () {
               callback.call(
-                currentHourValue.value + (isAm.value == 0 ? 0 : 12),
+                isAm.value == 0 ? currentHourValue.value : (24 - currentHourValue.value),
                 currentMinValue.value,
               );
               CommonBottomSheet.close(context);
