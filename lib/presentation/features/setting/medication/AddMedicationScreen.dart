@@ -15,7 +15,9 @@ import 'package:ody_flutter_app/presentation/features/setting/medication/widget/
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/permission/PermissionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AddMedicationScreen extends HookConsumerWidget {
   const AddMedicationScreen({Key? key}) : super(key: key);
@@ -54,7 +56,14 @@ class AddMedicationScreen extends HookConsumerWidget {
           child: FillButton(
             text: getAppLocalizations(context).common_complete,
             type: ButtonSizeType.Normal,
-            onPressed: () => uiStateRead.register(),
+            onPressed: () async {
+              final isGranted = await PermissionUtil.requestNotificationPermission();
+              if (isGranted) {
+                uiStateRead.register();
+              } else {
+                openAppSettings();
+              }
+            },
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
                 state: ButtonState.Activated,
