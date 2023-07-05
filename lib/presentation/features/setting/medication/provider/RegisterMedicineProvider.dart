@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ody_flutter_app/data/models/me/RequestMeMedicineModel.dart';
@@ -68,23 +67,54 @@ class RegisterMedicineNotifier extends StateNotifier<UIState<String>> {
   }
 
   /// 약 알림 등록
-  void registerMedicineNotification(){
+  void registerMedicineNotification() {
     List<Day> days = [];
 
     for (var element in data.days) {
-      final day = DateTransfer.convertShortYoilTypeToDayType(element);
-      if (day != null){
+      final day = DateTransfer.convertYoilTypeToDayType(element);
+      if (day != null) {
         days.add(day);
       }
     }
 
-    if (!CollectionUtil.isNullorEmpty(days)){
+    if (!CollectionUtil.isNullorEmpty(days)) {
       NotificationsUtil.registerNotification(
         type: NotificationType.ALARM,
         notificationId: responseData.medicineSeq!,
         hour: int.parse(data.time.split(":").first),
         minutes: int.parse(data.time.split(":").last),
         message: _getAppLocalization.get().notification_message_alarm(data.name),
+        scheduledDays: days,
+      );
+    }
+  }
+
+  /// 정보를 받아서 약 알림 등록
+  void registerMedicineNotificationFromInfo({
+    required List<YoilType?>? scheduledDays,
+    required int notificationId,
+    required int hour,
+    required int minutes,
+    required String name,
+  }) {
+    List<Day> days = [];
+
+    scheduledDays?.forEach((element) {
+      if (element != null){
+        final day = DateTransfer.convertYoilTypeToDayType(element);
+        if (day != null) {
+          days.add(day);
+        }
+      }
+    });
+
+    if (!CollectionUtil.isNullorEmpty(days)) {
+      NotificationsUtil.registerNotification(
+        type: NotificationType.ALARM,
+        notificationId: notificationId,
+        hour: hour,
+        minutes: minutes,
+        message: _getAppLocalization.get().notification_message_alarm(name),
         scheduledDays: days,
       );
     }

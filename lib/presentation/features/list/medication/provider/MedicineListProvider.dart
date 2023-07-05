@@ -7,6 +7,7 @@ import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeMedicineUseCase
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/notifications/NotificationsUtil.dart';
 import 'package:riverpod/riverpod.dart';
 
 enum MedicineActionType {
@@ -72,6 +73,7 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
       final res = await GetIt.instance.get<DeleteMedicineUseCase>().call(element.medicineSeq ?? -1);
       if (res.status == 200) {
         removeSuccessList.add(element);
+        NotificationsUtil.removeNotification(element.medicineSeq!);
       } else {
         removeFailList.add(element);
       }

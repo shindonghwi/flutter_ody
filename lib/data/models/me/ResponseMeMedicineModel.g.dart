@@ -9,11 +9,11 @@ part of 'ResponseMeMedicineModel.dart';
 ResponseMeMedicineModel _$ResponseMeMedicineModelFromJson(
         Map<String, dynamic> json) =>
     ResponseMeMedicineModel(
-      medicineSeq: json['medicineSeq'] as int?,
-      name: json['name'] as String?,
+      medicineSeq: json['medicineSeq'] as int? ?? -1,
+      name: json['name'] as String? ?? "",
       days: (json['days'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      time: json['time'] as String,
-      enabled: json['enabled'] as bool,
+      time: json['time'] as String? ?? "",
+      enabled: json['enabled'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$ResponseMeMedicineModelToJson(

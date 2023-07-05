@@ -4,18 +4,18 @@ part 'ResponseMeMedicineModel.g.dart';
 
 @JsonSerializable()
 class ResponseMeMedicineModel {
-  final int? medicineSeq;
-  final String? name;
+  int? medicineSeq;
+  final String name;
   final List<String>? days;
   final String time;
   final bool enabled;
 
   ResponseMeMedicineModel({
-    required this.medicineSeq,
-    required this.name,
-    required this.days,
-    required this.time,
-    required this.enabled,
+    this.medicineSeq = -1,
+    this.name = "",
+    this.days,
+    this.time = "",
+    this.enabled = false,
   });
 
   factory ResponseMeMedicineModel.fromJson(Map<String, dynamic> json) => _$ResponseMeMedicineModelFromJson(json);

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -24,6 +25,7 @@ class NotificationsUtil {
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     for (Day day in scheduledDays) {
+      debugPrint("registerNotification: $message $notificationId $day, $hour, $minutes");
       tz.TZDateTime scheduledDate = _getNextScheduledDate(day, hour, minutes);
 
       await flutterLocalNotificationsPlugin.zonedSchedule(
@@ -89,6 +91,7 @@ class NotificationsUtil {
   }
 
   static void removeNotification(int notificationId) {
+    debugPrint("removeNotification: $notificationId");
     FlutterLocalNotificationsPlugin().cancel(notificationId);
   }
 }
