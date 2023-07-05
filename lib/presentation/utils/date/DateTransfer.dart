@@ -1,9 +1,21 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
+import 'package:ody_flutter_app/domain/models/me/YoilType.dart';
 
 class DateTransfer {
 
   static final krYoilList = ["월", "화", "수", "목", "금", "토", "일"];
   static final enYoilList = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  static final Map<YoilType, Day> dayAbbreviations = {
+    YoilType.MONDAY : Day.monday,
+    YoilType.TUESDAY: Day.tuesday,
+    YoilType.WEDNESDAY: Day.wednesday,
+    YoilType.THURSDAY: Day.thursday,
+    YoilType.FRIDAY: Day.friday,
+    YoilType.SATURDAY: Day.saturday,
+    YoilType.SUNDAY: Day.sunday,
+  };
+
 
   /// 오전 06시 23분
   static String dateTimeToAmPmTime(DateTime time){
@@ -44,4 +56,31 @@ class DateTransfer {
   static String convertShortYoilEnToKr(String enYoil){
     return krYoilList[enYoilList.indexOf(enYoil)];
   }
+
+  /// YoilType -> Day Type
+  static Day? convertShortYoilTypeToDayType(YoilType type){
+    return dayAbbreviations[type];
+  }
+
+  static Day convertDateTimeToDay(DateTime dateTime) {
+    switch (dateTime.weekday) {
+      case DateTime.monday:
+        return Day.monday;
+      case DateTime.tuesday:
+        return Day.tuesday;
+      case DateTime.wednesday:
+        return Day.wednesday;
+      case DateTime.thursday:
+        return Day.thursday;
+      case DateTime.friday:
+        return Day.friday;
+      case DateTime.saturday:
+        return Day.saturday;
+      case DateTime.sunday:
+        return Day.sunday;
+      default:
+        throw ArgumentError('Invalid weekday');
+    }
+  }
+
 }

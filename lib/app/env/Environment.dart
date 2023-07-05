@@ -6,7 +6,6 @@ import 'package:ody_flutter_app/app/OrotApp.dart';
 import 'package:ody_flutter_app/di/locator.dart';
 import 'package:ody_flutter_app/presentation/utils/notifications/NotificationsUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/permission/PermissionUtil.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
 enum BuildType { dev, prod }
 
@@ -57,14 +56,10 @@ class Environment {
       iOS: initializationSettingsIOS,
     );
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
-    final now = NotificationsUtil.getTzNow();
-    NotificationsUtil.registerMessage(hour: now.hour, minutes: now.minute + 1, message: "hello world");
-
   }
 
   void run() async {
-    tz.initializeTimeZones();
+    NotificationsUtil.init();
 
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,

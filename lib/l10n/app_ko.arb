@@ -338,6 +338,12 @@
     "empty_button_record": "기록 시작하기",
     "empty_button_go_home": "홈으로 가기",
 
+    "notification_message_alarm": "\"{name}\" 약 복용시간이에요!",
+    "@notification_message_alarm":{
+        "placeholders": {
+            "name": {}
+        }
+    },
 
     "common_skip": "넘어가기",
     "common_next": "다음",

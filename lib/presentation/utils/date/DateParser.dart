@@ -5,7 +5,7 @@ import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
 class DateParser {
   static String getGlobalTimeDate(DateTime time) {
     String formattedDateTime = DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(time);
-    String timeZoneOffset = DateParser._getTimeZoneOffset(time);
+    String timeZoneOffset = _getTimeZoneOffset(time);
     String timeZoneName = Service.headers["Application-Time-Zone"].toString();
     String result = "$formattedDateTime$timeZoneOffset[$timeZoneName]";
     return result;
@@ -29,11 +29,11 @@ class DateParser {
   }
 
   static List<String> getTimeZoneIds(DateTime date) {
-    Set<String> timeZoneIds = Set<String>();
+    Set<String> timeZoneIds = <String>{};
     DateTime startDate = DateTime(date.year - 1);
     DateTime endDate = DateTime(date.year + 1);
 
-    for (DateTime d = startDate; d.isBefore(endDate); d = d.add(Duration(days: 1))) {
+    for (DateTime d = startDate; d.isBefore(endDate); d = d.add(const Duration(days: 1))) {
       timeZoneIds.add(d.timeZoneName);
     }
 

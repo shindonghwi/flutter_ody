@@ -29,9 +29,11 @@ class MedicineMainContent extends HookConsumerWidget {
                   nextSlideScreen(RoutingScreen.AddMedication.route),
                 );
 
-                if (data.medicineSeq != null) {
-                  alarmItemsRead.addMedicine(data);
-                }
+                try{
+                  if (data.medicineSeq != null) {
+                    alarmItemsRead.addMedicine(data);
+                  }
+                }catch(e){}
               },
             ),
           )
