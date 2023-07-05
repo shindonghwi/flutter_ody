@@ -140,8 +140,14 @@ class BottomSheetTimeSetting extends HookWidget {
             text: getAppLocalizations(context).bottom_sheet_setting_complete,
             type: ButtonSizeType.Small,
             onPressed: () {
+              int hour24 = currentHourValue.value;
+              if (isAm.value == 1 && currentHourValue.value < 12) {
+                hour24 += 12;
+              } else if (isAm.value == 0 && currentHourValue.value == 12) {
+                hour24 = 0;
+              }
               callback.call(
-                isAm.value == 0 ? currentHourValue.value : (24 - currentHourValue.value),
+                hour24,
                 currentMinValue.value,
               );
               CommonBottomSheet.close(context);

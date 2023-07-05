@@ -44,6 +44,7 @@ class NotificationsUtil {
           ),
           iOS: const DarwinNotificationDetails(
             badgeNumber: 1,
+            presentSound: true,
           ),
         ),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
@@ -13,6 +14,7 @@ class MedicineAppBar extends HookConsumerWidget with PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditMode = ref.watch(medicineScreenModeProvider);
     final isEditModeRead = ref.read(medicineScreenModeProvider.notifier);
+
     return IconTitleTextAppBar(
       leadingIcon: AppBarIcon(
         path: 'assets/imgs/icon_back.svg',

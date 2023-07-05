@@ -1,20 +1,34 @@
+import 'dart:io';
+
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionUtil {
   static Future<bool> requestNotificationPermission() async {
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
     late final Map<Permission, PermissionStatus> statusess;
+    if (Platform.isAndroid) {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
 
-    if (androidInfo.version.sdkInt >= 33) {
-      statusess = await [
-        Permission.notification,
-      ].request();
-    }else{
-      return Future(() => true);
+      if (androidInfo.version.sdkInt >= 33) {
+        statusess = await [
+          Permission.notification,
+        ].request();
+      } else {
+        return Future(() => true);
+      }
+      return _checkAllAccept(statusess);
+    } else {
+      final result = await FlutterLocalNotificationsPlugin()
+          .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+        alert: true,
+        badge: false,
+        sound: true,
+      );
+      return Future(() => result ?? false);
     }
-
-    return _checkAllAccept(statusess);
   }
 
   /// 전달 받은 파라미터를 모두 허용하였는지 체크
