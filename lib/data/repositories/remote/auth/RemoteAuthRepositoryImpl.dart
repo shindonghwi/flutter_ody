@@ -10,6 +10,12 @@ class RemoteAuthRepositoryImpl implements RemoteAuthRepository {
   RemoteAuthRepositoryImpl();
 
   @override
+  Future<ApiResponse<SocialLoginModel>> doAppleLogin() {
+    RemoteAuthApi remoteAuthApi = GetIt.instance<RemoteAuthApi>();
+    return remoteAuthApi.doAppleLogin();
+  }
+
+  @override
   Future<ApiResponse<SocialLoginModel>> doGoogleLogin() {
     RemoteAuthApi remoteAuthApi = GetIt.instance<RemoteAuthApi>();
     return remoteAuthApi.doGoogleLogin();
@@ -24,4 +30,5 @@ class RemoteAuthRepositoryImpl implements RemoteAuthRepository {
       requestSocialLoginModel: requestSocialLoginModel,
     );
   }
+
 }

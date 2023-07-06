@@ -5,6 +5,7 @@ import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeInfoModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseProfileModel.dart';
 import 'package:ody_flutter_app/domain/models/auth/LoginPlatform.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
@@ -20,6 +21,9 @@ final loginUiStateProvider =
 
 class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
   LoginUiStateNotifier() : super(Idle<String?>());
+
+  PostAppleSignInUseCase get _postAppleSignInUseCase =>
+      GetIt.instance<PostAppleSignInUseCase>();
 
   PostGoogleSignInUseCase get _postGoogleSignInUseCase =>
       GetIt.instance<PostGoogleSignInUseCase>();
@@ -101,7 +105,37 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
         state = Failure(_getAppLocalization.get().message_not_support_platform);
         break;
       case LoginPlatform.Apple:
-        state = Failure(_getAppLocalization.get().message_not_support_platform);
+        final appleLoginResult = await _postAppleSignInUseCase.call();
+        // 애플 로그인 성공
+        if (appleLoginResult.status == 200) {
+          final googleAccessToken = appleLoginResult.data?.accessToken;
+          final res = await postSocialLoginInUseCase.call(
+            platform: platform,
+            accessToken: googleAccessToken ?? "",
+            deviceToken: "",
+          );
+
+          if (res.status == 200) {
+            // 내 정보 요청
+            await setServiceHeader(res.data?.accessToken);
+            await getMeInfoUseCase.call().then((value) {
+              if (value.status == 200) {
+                if (value.data != null){
+                  meInfo = value.data;
+                }
+                currentProceedPage = getSignUpProceedPage(value.data?.profile);
+              }
+            });
+            // 로그인 성공
+            state = Success(res.data?.accessToken);
+          } else {
+            // 로그인 실패
+            state = Failure(res.message);
+          }
+        } else {
+          // 로그인 실패
+          state = Failure(appleLoginResult.message);
+        }
         break;
       default:
         state = Failure(_getAppLocalization.get().message_not_support_platform);
