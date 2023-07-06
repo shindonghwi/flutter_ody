@@ -128,6 +128,7 @@ class _ReportAlarmContainer extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final reportSwitchButton = useState(true);
     return Container(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -135,15 +136,13 @@ class _ReportAlarmContainer extends HookWidget {
         children: [
           AlarmSwitch(
             title: getAppLocalizations(context).setting_alarm_report,
-            isOn: true,
-            callback: (value) {},
+            isOn: reportSwitchButton.value,
+            callback: (value) => reportSwitchButton.value = value,
           ),
           const SizedBox(height: 8),
           Text(
             getAppLocalizations(context).setting_alarm_report_description,
-            style: getTextTheme(context)
-                .c2r
-                .copyWith(color: getColorScheme(context).neutral70, height: 1.33),
+            style: getTextTheme(context).c2r.copyWith(color: getColorScheme(context).neutral70, height: 1.33),
           )
         ],
       ),

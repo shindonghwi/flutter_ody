@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:ody_flutter_app/data/models/me/ResponsePreventiveModel.dart';
-import 'package:ody_flutter_app/data/models/me/ResponseSocialModel.dart';
 
 part 'ResponseProfileModel.g.dart';
 
@@ -11,7 +10,6 @@ class ResponseProfileModel {
   final int? height;
   final int? weight;
   final ResponsePreventiveModel? preventive;
-  final ResponseSocialModel? social;
 
   ResponseProfileModel({
     required this.gender,
@@ -19,7 +17,6 @@ class ResponseProfileModel {
     required this.height,
     required this.weight,
     required this.preventive,
-    required this.social,
   });
 
   factory ResponseProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -33,7 +30,6 @@ class ResponseProfileModel {
     final int? height,
     final int? weight,
     final ResponsePreventiveModel? preventive,
-    final ResponseSocialModel? social,
   }) {
     return ResponseProfileModel(
         gender: gender ?? this.gender,
@@ -41,7 +37,6 @@ class ResponseProfileModel {
         height: height ?? this.height,
         weight: weight ?? this.weight,
         preventive: preventive ?? this.preventive,
-        social: social ?? this.social
     );
   }
 }

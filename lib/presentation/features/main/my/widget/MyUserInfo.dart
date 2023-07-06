@@ -34,7 +34,7 @@ class MyUserInfo extends HookConsumerWidget {
               children: [
                 _nicknameAndSetting(context, meInfo.nick),
                 const SizedBox(height: 2),
-                _userEmail(context, meInfo.email, meInfo.profile.social?.type),
+                _userEmail(context, meInfo.email,),
               ],
             ),
           )
@@ -120,38 +120,20 @@ class MyUserInfo extends HookConsumerWidget {
     );
   }
 
-  /// 사용자 가입 소셜 및 이메일
-  Row _userEmail(BuildContext context, String email, String? type) {
-    final String? lowerCaseType = type?.toLowerCase();
-    String? socialIconPath;
-
-    if (LoginPlatform.Google.name.toLowerCase() == lowerCaseType) {
-      socialIconPath = "assets/imgs/icon_google.png";
-    } else if (LoginPlatform.Apple.name.toLowerCase() == lowerCaseType) {
-      socialIconPath = "assets/imgs/icon_apple.png";
-    } else if (LoginPlatform.Kakao.name.toLowerCase() == lowerCaseType) {
-      socialIconPath = "assets/imgs/icon_kakao.png";
-    }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        if (socialIconPath != null)
-          Image.asset(
-            socialIconPath,
-            width: 24,
-            height: 24,
-          ),
-        const SizedBox(width: 8),
-        Text(
+  /// 사용자 이메일
+  Widget _userEmail(BuildContext context, String email) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
           email,
           style: getTextTheme(context).c2r.copyWith(
-                color: getColorScheme(context).colorText,
-              ),
+            color: getColorScheme(context).colorText,
+          ),
           textAlign: TextAlign.center,
         ),
-      ],
+      ),
     );
   }
 }
