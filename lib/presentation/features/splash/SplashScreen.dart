@@ -7,7 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/app/OrotApp.dart';
 import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
-import 'package:ody_flutter_app/data/models/me/ResponseProfileModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeProfileModel.dart';
 import 'package:ody_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:ody_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:ody_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
@@ -95,7 +95,7 @@ class SplashScreen extends HookConsumerWidget {
   }
 
   /// 회원가입 완료 여부 체크
-  int getSignUpProceedPage(ResponseProfileModel? profile) {
+  int getSignUpProceedPage(ResponseMeProfileModel? profile) {
     if (profile == null) return 0;
 
     final profileData = profile.toJson();
@@ -168,7 +168,7 @@ class SplashScreen extends HookConsumerWidget {
                   }
                 });
               } else {
-                movePage(RoutingScreen.ReportWeekly);
+                movePage(RoutingScreen.SettingAlarm);
                 // movePage(RoutingScreen.Login);
               }
             }

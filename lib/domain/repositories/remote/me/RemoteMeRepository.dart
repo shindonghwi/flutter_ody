@@ -34,6 +34,16 @@ abstract class RemoteMeRepository {
   /// 예방 질병 수정
   Future<ApiResponse<void>> patchDiseases(List<DiseaseType> diseases);
 
+  /// 알림 설정 수정
+  Future<ApiResponse<void>> patchConfigNotification(
+    bool all,
+    bool medicine,
+    bool step,
+    bool bloodPressure,
+    bool glucose,
+    bool report,
+  );
+
   /// 약 등록
   Future<ApiResponse<ResponseMeMedicineModel>> postMedicine(RequestMeMedicineModel data);
 
@@ -45,5 +55,4 @@ abstract class RemoteMeRepository {
 
   /// 약 삭제
   Future<ApiResponse<void>> deleteMedicine(int medicineSeq);
-
 }

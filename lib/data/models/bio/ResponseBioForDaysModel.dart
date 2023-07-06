@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioStepModel.dart';
-import 'package:ody_flutter_app/data/models/me/ResponseProfileModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeProfileModel.dart';
 
 part 'ResponseBioForDaysModel.g.dart';
 

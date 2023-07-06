@@ -1,18 +1,13 @@
 import 'package:get_it/get_it.dart';
-import 'package:ody_flutter_app/data/data_source/remote/auth/RemoteAuthApi.dart';
 import 'package:ody_flutter_app/data/data_source/remote/me/RemoteMeApi.dart';
 import 'package:ody_flutter_app/data/models/ApiListResponse.dart';
 import 'package:ody_flutter_app/data/models/ApiResponse.dart';
-import 'package:ody_flutter_app/data/models/auth/RequestSocialLoginModel.dart';
-import 'package:ody_flutter_app/data/models/auth/ResponseSocialLoginModel.dart';
 import 'package:ody_flutter_app/data/models/me/RequestMeMedicineModel.dart';
 import 'package:ody_flutter_app/data/models/me/RequestMeMedicineUpdateModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeInfoModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
-import 'package:ody_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:ody_flutter_app/domain/models/me/DiseaseType.dart';
 import 'package:ody_flutter_app/domain/models/me/GenderType.dart';
-import 'package:ody_flutter_app/domain/repositories/remote/auth/RemoteAuthRepository.dart';
 import 'package:ody_flutter_app/domain/repositories/remote/me/RemoteMeRepository.dart';
 
 class RemoteMeRepositoryImpl implements RemoteMeRepository {
@@ -23,6 +18,7 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
     RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
     return remoteMeApi.getMe();
   }
+
   @override
   Future<ApiResponse<void>> postLeave(String reason) {
     RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
@@ -89,5 +85,16 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
     return remoteMeApi.deleteMedicine(medicineSeq: medicineSeq);
   }
 
-
+  @override
+  Future<ApiResponse<void>> patchConfigNotification(
+    bool all,
+    bool medicine,
+    bool step,
+    bool bloodPressure,
+    bool glucose,
+    bool report,
+  ) {
+    RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
+    return remoteMeApi.patchConfigNotification(all, medicine, step, bloodPressure, glucose, report);
+  }
 }

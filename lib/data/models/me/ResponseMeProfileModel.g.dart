@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ResponseProfileModel.dart';
+part of 'ResponseMeProfileModel.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ResponseProfileModel _$ResponseProfileModelFromJson(
+ResponseMeProfileModel _$ResponseMeProfileModelFromJson(
         Map<String, dynamic> json) =>
-    ResponseProfileModel(
+    ResponseMeProfileModel(
       gender: json['gender'] as String?,
       birthday: json['birthday'] as String?,
       height: json['height'] as int?,
       weight: json['weight'] as int?,
       preventive: json['preventive'] == null
           ? null
-          : ResponsePreventiveModel.fromJson(
+          : ResponseMePreventiveModel.fromJson(
               json['preventive'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ResponseProfileModelToJson(
-        ResponseProfileModel instance) =>
+Map<String, dynamic> _$ResponseMeProfileModelToJson(
+        ResponseMeProfileModel instance) =>
     <String, dynamic>{
       'gender': instance.gender,
       'birthday': instance.birthday,

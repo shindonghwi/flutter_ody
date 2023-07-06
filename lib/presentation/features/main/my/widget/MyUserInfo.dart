@@ -32,9 +32,9 @@ class MyUserInfo extends HookConsumerWidget {
             margin: const EdgeInsets.fromLTRB(18, 26, 18, 0),
             child: Column(
               children: [
-                _nicknameAndSetting(context, meInfo.nick),
+                _nicknameAndSetting(context, meInfo.nick.toString()),
                 const SizedBox(height: 2),
-                _userEmail(context, meInfo.email,),
+                _userEmail(context, meInfo.email.toString(),),
               ],
             ),
           )

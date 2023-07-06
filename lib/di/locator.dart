@@ -29,6 +29,7 @@ import 'package:ody_flutter_app/domain/usecases/remote/me/DeleteMedicineUseCase.
 import 'package:ody_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/GetMeMedicinesUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeBirthdayUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeConfigNotificationUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeDiseasesUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeGenderUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeHeightUseCase.dart';
@@ -69,6 +70,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PatchMeHeightUseCase>(() => PatchMeHeightUseCase());
   GetIt.instance.registerLazySingleton<PatchMeWeightUseCase>(() => PatchMeWeightUseCase());
   GetIt.instance.registerLazySingleton<PatchMeDiseasesUseCase>(() => PatchMeDiseasesUseCase());
+  GetIt.instance.registerLazySingleton<PatchMeConfigNotificationUseCase>(() => PatchMeConfigNotificationUseCase());
   GetIt.instance.registerLazySingleton<PatchMeMedicineUseCase>(() => PatchMeMedicineUseCase());
   GetIt.instance.registerLazySingleton<DeleteMedicineUseCase>(() => DeleteMedicineUseCase());
 

@@ -1,20 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ResponseDiseaseModel.dart';
+part of 'ResponseMeDiseaseModel.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ResponseDiseaseModel _$ResponseDiseaseModelFromJson(
+ResponseMeDiseaseModel _$ResponseMeDiseaseModelFromJson(
         Map<String, dynamic> json) =>
-    ResponseDiseaseModel(
+    ResponseMeDiseaseModel(
       name: json['name'] as String,
       code: json['code'] as String,
     );
 
-Map<String, dynamic> _$ResponseDiseaseModelToJson(
-        ResponseDiseaseModel instance) =>
+Map<String, dynamic> _$ResponseMeDiseaseModelToJson(
+        ResponseMeDiseaseModel instance) =>
     <String, dynamic>{
       'name': instance.name,
       'code': instance.code,

@@ -46,13 +46,13 @@ class EditMyInfoScreen extends HookConsumerWidget {
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_height,
-        meInfo?.profile.height ?? "",
+        meInfo?.profile!.height ?? "",
         () async {
           final String callbackHeight = await Navigator.push(
             context,
             nextSlideScreen(
               RoutingScreen.EditMyHeight.route,
-              parameter: meInfo?.profile.height?.toString() ?? "0",
+              parameter: meInfo?.profile!.height?.toString() ?? "0",
             ),
           );
           meInfoRead.updateMeInfoHeight(int.parse(callbackHeight));
@@ -60,13 +60,13 @@ class EditMyInfoScreen extends HookConsumerWidget {
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_weight,
-        meInfo?.profile.weight ?? "",
+        meInfo?.profile!.weight ?? "",
         () async {
           final String callbackWeight = await Navigator.push(
             context,
             nextSlideScreen(
               RoutingScreen.EditMyWeight.route,
-              parameter: meInfo?.profile.weight?.toString() ?? "0",
+              parameter: meInfo?.profile!.weight?.toString() ?? "0",
             ),
           );
           meInfoRead.updateMeInfoWeight(int.parse(callbackWeight));

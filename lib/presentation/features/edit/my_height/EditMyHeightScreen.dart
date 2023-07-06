@@ -103,7 +103,7 @@ class _HeightContent extends HookConsumerWidget {
             nextSlideScreen(RoutingScreen.Login.route),
           );
         } else {
-          callback.call(meInfo.profile.height.toString());
+          callback.call(meInfo.profile!.height.toString());
         }
       });
     }, []);

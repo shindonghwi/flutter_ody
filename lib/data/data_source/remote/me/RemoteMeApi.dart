@@ -202,6 +202,41 @@ class RemoteMeApi {
     }
   }
 
+  /// 알림 설정 수정
+  Future<ApiResponse<void>> patchConfigNotification(
+    bool all,
+    bool medicine,
+    bool step,
+    bool bloodPressure,
+    bool glucose,
+    bool report,
+  ) async {
+    final response = await Service.patchApi(
+        type: ServiceType.Me,
+        endPoint: 'config/notification',
+        jsonBody: Map.from({
+          "all": all,
+          "medicine": medicine,
+          "step": step,
+          "bloodPressure": bloodPressure,
+          "glucose": glucose,
+          "report": report,
+        }));
+
+    if (response.statusCode >= 500) {
+      return ApiResponse(
+        status: response.statusCode,
+        message: _getAppLocalization.get().message_server_error_5xx,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+        (json) => ResponseMeInfoModel.fromJson(json),
+      );
+    }
+  }
+
   /// 약 등록
   Future<ApiResponse<ResponseMeMedicineModel>> postMedicine({required RequestMeMedicineModel data}) async {
     final dayList = [];

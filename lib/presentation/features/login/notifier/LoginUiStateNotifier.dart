@@ -3,7 +3,7 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeInfoModel.dart';
-import 'package:ody_flutter_app/data/models/me/ResponseProfileModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeProfileModel.dart';
 import 'package:ody_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
@@ -52,7 +52,7 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
   }
 
   /// 회원가입 완료 여부 체크
-  int getSignUpProceedPage(ResponseProfileModel? profile) {
+  int getSignUpProceedPage(ResponseMeProfileModel? profile) {
     if (profile == null) return 0;
 
     final profileData = profile.toJson();

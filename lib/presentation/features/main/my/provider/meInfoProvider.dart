@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ody_flutter_app/app/OrotApp.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeInfoModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeNotificationModel.dart';
 import 'package:ody_flutter_app/presentation/features/cache/UserCache.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -28,14 +29,20 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
   }
 
   void updateMeInfoHeight(int height) {
-    ResponseMeInfoModel meInfo = state!.copyWith(profile: state!.profile.copyWith(height: height));
+    ResponseMeInfoModel meInfo = state!.copyWith(profile: state!.profile?.copyWith(height: height));
     debugPrint("updateMeInfoHeight : ${meInfo.toJson()}");
     state = meInfo;
   }
 
   void updateMeInfoWeight(int weight) {
-    ResponseMeInfoModel meInfo = state!.copyWith(profile: state!.profile.copyWith(weight: weight));
+    ResponseMeInfoModel meInfo = state!.copyWith(profile: state!.profile?.copyWith(weight: weight));
     debugPrint("updateMeInfoHeight : ${meInfo.toJson()}");
+    state = meInfo;
+  }
+
+  void updateMeConfigNotification(ResponseMeNotificationModel notification) {
+    ResponseMeInfoModel meInfo = state!.copyWith(config: state!.config?.copyWith(notification: notification));
+    debugPrint("updateMeConfigNotification : ${meInfo.config?.notification?.toJson()}");
     state = meInfo;
   }
 }

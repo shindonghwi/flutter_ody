@@ -101,7 +101,7 @@ class _WeightContent extends HookConsumerWidget {
             nextSlideScreen(RoutingScreen.Login.route),
           );
         } else {
-          callback.call(meInfo.profile.weight.toString());
+          callback.call(meInfo.profile!.weight.toString());
         }
       });
     }, []);

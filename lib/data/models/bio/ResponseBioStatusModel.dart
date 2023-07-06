@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:ody_flutter_app/data/models/me/ResponseProfileModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeProfileModel.dart';
 
 part 'ResponseBioStatusModel.g.dart';
 
