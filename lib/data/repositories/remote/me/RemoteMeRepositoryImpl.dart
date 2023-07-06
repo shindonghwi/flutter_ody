@@ -23,6 +23,11 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
     RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
     return remoteMeApi.getMe();
   }
+  @override
+  Future<ApiResponse<void>> postLeave(String reason) {
+    RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
+    return remoteMeApi.postLeave(reason);
+  }
 
   @override
   Future<ApiResponse<void>> patchGender(GenderType type) {

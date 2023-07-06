@@ -18,10 +18,35 @@ class RemoteMeApi {
 
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
+  /// 내 정보 요청
   Future<ApiResponse<ResponseMeInfoModel>> getMe() async {
     final response = await Service.getApi(
       type: ServiceType.Me,
       endPoint: null,
+    );
+
+    if (response.statusCode >= 500) {
+      return ApiResponse(
+        status: response.statusCode,
+        message: _getAppLocalization.get().message_server_error_5xx,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+        (json) => ResponseMeInfoModel.fromJson(json),
+      );
+    }
+  }
+
+  /// 회원 탈퇴
+  Future<ApiResponse<void>> postLeave(String reason) async {
+    final response = await Service.postApi(
+      type: ServiceType.Me,
+      endPoint: 'leave',
+      jsonBody: Map.from({
+        "reason": reason,
+      }),
     );
 
     if (response.statusCode >= 500) {
@@ -178,8 +203,7 @@ class RemoteMeApi {
   }
 
   /// 약 등록
-  Future<ApiResponse<ResponseMeMedicineModel>> postMedicine(
-      {required RequestMeMedicineModel data}) async {
+  Future<ApiResponse<ResponseMeMedicineModel>> postMedicine({required RequestMeMedicineModel data}) async {
     final dayList = [];
     for (var element in data.days) {
       dayList.add(YoilTypeHelper.fromString(element));
@@ -245,9 +269,7 @@ class RemoteMeApi {
 
     if (response.statusCode >= 500) {
       return ApiResponse(
-          status: response.statusCode,
-          message: _getAppLocalization.get().message_server_error_5xx,
-          data: null);
+          status: response.statusCode, message: _getAppLocalization.get().message_server_error_5xx, data: null);
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
@@ -268,9 +290,7 @@ class RemoteMeApi {
 
     if (response.statusCode >= 500) {
       return ApiResponse(
-          status: response.statusCode,
-          message: _getAppLocalization.get().message_server_error_5xx,
-          data: null);
+          status: response.statusCode, message: _getAppLocalization.get().message_server_error_5xx, data: null);
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),

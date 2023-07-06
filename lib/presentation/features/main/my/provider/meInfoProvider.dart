@@ -12,12 +12,11 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
   MeInfoNotifier() : super(null);
 
   void updateMeInfo(ResponseMeInfoModel? meInfo) {
-    state = meInfo;
-    userCache.setUserInfo(meInfo);
-
     if (meInfo == null) {
       firebaseAuth.signOut();
     }
+    state = meInfo;
+    userCache.setUserInfo(meInfo);
   }
 
   void updateMeInfoNick(String nick) {

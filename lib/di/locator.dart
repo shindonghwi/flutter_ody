@@ -35,6 +35,7 @@ import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeHeightUseCase.d
 import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeMedicineUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeNicknameUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeWeightUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/remote/me/PostMeLeaveUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/PostMeMedicineUseCase.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
@@ -60,6 +61,7 @@ void initServiceLocator() {
 
   GetIt.instance.registerLazySingleton<GetMeInfoUseCase>(() => GetMeInfoUseCase());
   GetIt.instance.registerLazySingleton<GetMeMedicinesUseCase>(() => GetMeMedicinesUseCase());
+  GetIt.instance.registerLazySingleton<PostMeLeaveUseCase>(() => PostMeLeaveUseCase());
   GetIt.instance.registerLazySingleton<PostMeMedicineUseCase>(() => PostMeMedicineUseCase());
   GetIt.instance.registerLazySingleton<PatchMeGenderUseCase>(() => PatchMeGenderUseCase());
   GetIt.instance.registerLazySingleton<PatchMeBirthdayUseCase>(() => PatchMeBirthdayUseCase());

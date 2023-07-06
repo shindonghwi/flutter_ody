@@ -8,17 +8,49 @@ import 'package:ody_flutter_app/presentation/components/button/fill/FillButton.d
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/components/textarea/BasicTextArea.dart';
+import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
+import 'package:ody_flutter_app/presentation/features/withdrawal/provider/RegisterMedicineProvider.dart';
+import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Pair.dart';
+import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
-class WithdrawalReasonScreen extends HookWidget {
+class WithdrawalReasonScreen extends HookConsumerWidget {
   const WithdrawalReasonScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final uiState = ref.watch(leaveProvider);
+    final uiStateRead = ref.read(leaveProvider.notifier);
+    final meInfoRead = ref.read(meInfoProvider.notifier);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        uiState.when(
+          success: (event) async {
+            meInfoRead.updateMeInfo(null);
+            uiStateRead.init();
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              RoutingScreen.Login.route,
+              (route) => false,
+            );
+          },
+          failure: (event) {
+            SnackBarUtil.show(context, event.errorMessage);
+          },
+        );
+      });
+    }, [uiState]);
+
+    final reasonText = useState('');
+
     final List<Pair<ValueNotifier<bool>, String>> reasonItems = [
       Pair(useState(false), getAppLocalizations(context).withdrawal_reason_1),
       Pair(useState(false), getAppLocalizations(context).withdrawal_reason_2),
@@ -41,20 +73,31 @@ class WithdrawalReasonScreen extends HookWidget {
         ),
         title: getAppLocalizations(context).withdrawal_title,
       ),
-      body: Container(
-        margin: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _description(context),
-            const SizedBox(height: 8),
-            _subDescription(context),
-            const SizedBox(height: 32),
-            _reaseons(context, reasonItems),
-            const Expanded(child: SizedBox()),
-            _withdrawalButton(context, isAnyReasonChecked)
-          ],
-        ),
+      body: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _description(context),
+                const SizedBox(height: 8),
+                _subDescription(context),
+                const SizedBox(height: 32),
+                _ReasonItems(
+                  reasonItems: reasonItems,
+                  callback: (value) => reasonText.value = value,
+                ),
+                const Expanded(child: SizedBox()),
+                _LeaveButton(
+                  isAnyReasonChecked: isAnyReasonChecked,
+                  reason: reasonText.value,
+                ),
+              ],
+            ),
+          ),
+          if (uiState is Loading) const CircleLoading(),
+        ],
       ),
     );
   }
@@ -77,65 +120,22 @@ class WithdrawalReasonScreen extends HookWidget {
           ),
     );
   }
+}
 
-  Container _reaseons(BuildContext context, List<Pair<ValueNotifier<bool>, String>> reasonItems) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      decoration: BoxDecoration(
-        color: getColorScheme(context).colorUI03,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: ListView.separated(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(0),
-        itemBuilder: (BuildContext context, int index) {
-          final item = reasonItems[index];
-          return Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () => item.first.value = !item.first.value,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/imgs/icon_check.svg",
-                      width: 24,
-                      height: 24,
-                      colorFilter: item.first.value
-                          ? ColorFilter.mode(
-                              getColorScheme(context).colorPrimaryFocus,
-                              BlendMode.srcIn,
-                            )
-                          : ColorFilter.mode(
-                              getColorScheme(context).neutral50,
-                              BlendMode.srcIn,
-                            ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      item.second,
-                      style: getTextTheme(context).c1r.copyWith(
-                            color: getColorScheme(context).colorText,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(height: 4);
-        },
-        itemCount: reasonItems.length,
-      ),
-    );
-  }
+class _LeaveButton extends HookConsumerWidget {
+  final bool Function() isAnyReasonChecked;
+  final String reason;
 
-  Align _withdrawalButton(BuildContext context, bool Function() isAnyReasonChecked) {
+  const _LeaveButton({
+    super.key,
+    required this.isAnyReasonChecked,
+    required this.reason,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final leaveRead = ref.read(leaveProvider.notifier);
+
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -144,19 +144,116 @@ class WithdrawalReasonScreen extends HookWidget {
         child: FillButton(
           text: getAppLocalizations(context).common_next,
           type: ButtonSizeType.Small,
-          onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              RoutingScreen.Main.route,
-              (route) => false,
-            );
-          },
+          onPressed: () => leaveRead.requestLeave(reason),
           buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
             (_) => ButtonNotifier(
               state: isAnyReasonChecked() ? ButtonState.Activated : ButtonState.Disabled,
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ReasonItems extends HookWidget {
+  final Function(String) callback;
+  final List<Pair<ValueNotifier<bool>, String>> reasonItems;
+
+  const _ReasonItems({
+    super.key,
+    required this.callback,
+    required this.reasonItems,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isShowEtcTextField = useState(false);
+    final memoText = useState('');
+    final fieldState = useState(TextFieldState.Complete);
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      decoration: BoxDecoration(
+        color: getColorScheme(context).colorUI03,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Column(
+        children: [
+          ListView.separated(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(0),
+            itemBuilder: (BuildContext context, int index) {
+              final item = reasonItems[index];
+              return Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    for (var element in reasonItems) {
+                      element.first.value = element == item;
+                    }
+                    isShowEtcTextField.value = item == reasonItems.last;
+                    callback.call(item.second);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/imgs/icon_check.svg",
+                          width: 24,
+                          height: 24,
+                          colorFilter: item.first.value
+                              ? ColorFilter.mode(
+                                  getColorScheme(context).colorPrimaryFocus,
+                                  BlendMode.srcIn,
+                                )
+                              : ColorFilter.mode(
+                                  getColorScheme(context).neutral50,
+                                  BlendMode.srcIn,
+                                ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          item.second,
+                          style: getTextTheme(context).c1r.copyWith(
+                                color: getColorScheme(context).colorText,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(height: 4);
+            },
+            itemCount: reasonItems.length,
+          ),
+          if (isShowEtcTextField.value)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(29, 10, 29, 0),
+              child: BasicTextArea(
+                maxLine: 3,
+                controller: useTextEditingController(text: memoText.value),
+                fieldState: fieldState.value,
+                onDoneAction: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  fieldState.value = TextFieldState.Complete;
+                },
+                limit: 200,
+                autoFocus: true,
+                showCounterText: false,
+                onChanged: (value) {
+                  memoText.value = value;
+                  callback.call(value);
+                },
+              ),
+            ),
+        ],
       ),
     );
   }

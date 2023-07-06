@@ -63,7 +63,6 @@ class SplashScreen extends HookConsumerWidget {
         }
       }
     }
-
     return null;
   }
 

@@ -5,8 +5,6 @@ class LocalAppApi {
   LocalAppApi();
 
   final String appUsePolicyKey = SharedKeyHelper.fromString(SharedKey.APP_USE_POLICY);
-  final String socialAccessToken =
-      SharedKeyHelper.fromString(SharedKey.SOCIAL_ACCESS_TOKEN);
 
   Future<bool> hasAgreedToPolicy() async {
     final prefs = await SharedPreferences.getInstance();

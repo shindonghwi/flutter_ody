@@ -13,6 +13,9 @@ abstract class RemoteMeRepository {
   /// 내 정보 요청
   Future<ApiResponse<ResponseMeInfoModel>> getMe();
 
+  /// 회원 탈퇴
+  Future<ApiResponse<void>> postLeave(String reason);
+
   /// 성별 수정
   Future<ApiResponse<void>> patchGender(GenderType type);
 
