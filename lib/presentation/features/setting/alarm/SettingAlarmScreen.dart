@@ -152,10 +152,10 @@ class _SubAlarmContainer extends HookConsumerWidget {
                   meInfoRead.updateMeConfigNotification(
                     ResponseMeNotificationModel(
                       all: alarmList.first,
-                      medicine: index == 1 ? value : alarmList[1],
-                      step: index == 2 ? value : alarmList[2],
-                      bloodPressure: index == 3 ? value : alarmList[3],
-                      glucose: index == 4 ? value : alarmList[4],
+                      medicine: index == 0 ? value : alarmList[1],
+                      step: index == 1 ? value : alarmList[2],
+                      bloodPressure: index == 2 ? value : alarmList[3],
+                      glucose: index == 3 ? value : alarmList[4],
                       report: alarmList.last,
                     ),
                   );
