@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:get_it/get_it.dart';
+import 'package:ody_flutter_app/data/data_source/remote/BaseApiUtil.dart';
 import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
 import 'package:ody_flutter_app/data/models/ApiListResponse.dart';
 import 'package:ody_flutter_app/data/models/ApiResponse.dart';
@@ -11,12 +11,9 @@ import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:ody_flutter_app/domain/models/me/DiseaseType.dart';
 import 'package:ody_flutter_app/domain/models/me/GenderType.dart';
 import 'package:ody_flutter_app/domain/models/me/YoilType.dart';
-import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class RemoteMeApi {
   RemoteMeApi();
-
-  AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
   /// 내 정보 요청
   Future<ApiResponse<ResponseMeInfoModel>> getMe() async {
@@ -25,10 +22,11 @@ class RemoteMeApi {
       endPoint: null,
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -49,10 +47,11 @@ class RemoteMeApi {
       }),
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -73,10 +72,11 @@ class RemoteMeApi {
       }),
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -96,10 +96,11 @@ class RemoteMeApi {
           "birthday": birthday,
         }));
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -119,10 +120,11 @@ class RemoteMeApi {
           "nick": nick,
         }));
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -142,10 +144,11 @@ class RemoteMeApi {
           "height": height,
         }));
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -165,10 +168,11 @@ class RemoteMeApi {
           "weight": weight,
         }));
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -188,10 +192,11 @@ class RemoteMeApi {
           "diseases": diseases.map((disease) => DiseaseTypeHelper.fromString(disease)).toList(),
         }));
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -223,10 +228,11 @@ class RemoteMeApi {
           "report": report,
         }));
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -254,10 +260,11 @@ class RemoteMeApi {
           "enabled": data.enabled,
         }));
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -275,18 +282,21 @@ class RemoteMeApi {
       endPoint: 'medicines',
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiListResponse(
-          status: response.statusCode,
-          message: _getAppLocalization.get().message_server_error_5xx,
-          list: null,
-          count: 0);
+        status: errorResponse.status,
+        message: errorResponse.message,
+        list: null,
+        count: 0,
+      );
     } else {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
         (json) {
           return List<ResponseMeMedicineModel>.from(
-              json.map((item) => ResponseMeMedicineModel.fromJson(item as Map<String, dynamic>)));
+            json.map((item) => ResponseMeMedicineModel.fromJson(item as Map<String, dynamic>)),
+          );
         },
       );
     }
@@ -302,9 +312,13 @@ class RemoteMeApi {
       jsonBody: data.toJson(),
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-          status: response.statusCode, message: _getAppLocalization.get().message_server_error_5xx, data: null);
+        status: errorResponse.status,
+        message: errorResponse.message,
+        data: null,
+      );
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
@@ -323,9 +337,13 @@ class RemoteMeApi {
       jsonBody: null,
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-          status: response.statusCode, message: _getAppLocalization.get().message_server_error_5xx, data: null);
+        status: errorResponse.status,
+        message: errorResponse.message,
+        data: null,
+      );
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),

@@ -19,7 +19,6 @@ import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/notifications/NotificationsUtil.dart';
 
 class SplashScreen extends HookConsumerWidget {
   final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =
@@ -139,6 +138,7 @@ class SplashScreen extends HookConsumerWidget {
             if (socialInfo == null) {
               movePage(RoutingScreen.Login);
             } else {
+
               final res = await _postSocialLoginInUseCase.call(
                 platform: socialInfo!.loginPlatform,
                 accessToken: socialInfo?.accessToken ?? "",
@@ -168,8 +168,7 @@ class SplashScreen extends HookConsumerWidget {
                   }
                 });
               } else {
-                movePage(RoutingScreen.SettingAlarm);
-                // movePage(RoutingScreen.Login);
+                movePage(RoutingScreen.Login);
               }
             }
           } else {

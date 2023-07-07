@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:get_it/get_it.dart';
+import 'package:ody_flutter_app/data/data_source/remote/BaseApiUtil.dart';
 import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
 import 'package:ody_flutter_app/data/models/ApiListResponse.dart';
 import 'package:ody_flutter_app/data/models/ApiResponse.dart';
@@ -9,15 +9,11 @@ import 'package:ody_flutter_app/data/models/bio/RequestBioBloodPressureModel.dar
 import 'package:ody_flutter_app/data/models/bio/RequestBioGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/RequestBioStepsModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
-import 'package:ody_flutter_app/data/models/bio/ResponseBioReportListModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportInfoModel.dart';
-import 'package:ody_flutter_app/data/models/bio/ResponseBioReportWeeksModel.dart';
-import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioReportListModel.dart';
 
 class RemoteBioApi {
   RemoteBioApi();
-
-  AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
   /// 혈압 등록 요청
   Future<ApiResponse<void>> postBloodPressure({required RequestBioBloodPressureModel data}) async {
@@ -27,10 +23,11 @@ class RemoteBioApi {
       jsonBody: data.toJson(),
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -49,10 +46,11 @@ class RemoteBioApi {
       jsonBody: data.toJson(),
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -71,10 +69,11 @@ class RemoteBioApi {
       jsonBody: data.toJson(),
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -92,12 +91,14 @@ class RemoteBioApi {
       endPoint: 'history/$year/$month',
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiListResponse(
-          status: response.statusCode,
-          message: _getAppLocalization.get().message_server_error_5xx,
-          list: null,
-          count: 0);
+        status: errorResponse.status,
+        message: errorResponse.message,
+        list: null,
+        count: 0,
+      );
     } else {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
@@ -116,10 +117,11 @@ class RemoteBioApi {
       endPoint: 'history/$year/$month/$day',
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
@@ -137,16 +139,18 @@ class RemoteBioApi {
       endPoint: 'reports/weekly',
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiListResponse(
-          status: response.statusCode,
-          message: _getAppLocalization.get().message_server_error_5xx,
-          list: null,
-          count: 0);
+        status: errorResponse.status,
+        message: errorResponse.message,
+        list: null,
+        count: 0,
+      );
     } else {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
-            (json) {
+        (json) {
           return List<ResponseBioReportListModel>.from(
               json.map((item) => ResponseBioReportListModel.fromJson(item as Map<String, dynamic>)));
         },
@@ -161,16 +165,18 @@ class RemoteBioApi {
       endPoint: 'reports/monthly',
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiListResponse(
-          status: response.statusCode,
-          message: _getAppLocalization.get().message_server_error_5xx,
-          list: null,
-          count: 0);
+        status: errorResponse.status,
+        message: errorResponse.message,
+        list: null,
+        count: 0,
+      );
     } else {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
-            (json) {
+        (json) {
           return List<ResponseBioReportListModel>.from(
               json.map((item) => ResponseBioReportListModel.fromJson(item as Map<String, dynamic>)));
         },
@@ -179,49 +185,49 @@ class RemoteBioApi {
   }
 
   /// 주간 보고서 정보 조회
-  Future<ApiResponse<ResponseBioReportInfoModel>> getBioReportWeeklyInfo(
-      {required int reportSeq}) async {
+  Future<ApiResponse<ResponseBioReportInfoModel>> getBioReportWeeklyInfo({required int reportSeq}) async {
     final response = await Service.getApi(
       type: ServiceType.Bio,
       endPoint: 'reports/weekly/$reportSeq',
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
       return ApiResponse.fromJson(
-        jsonDecode(response.body), (json) {
+        jsonDecode(response.body),
+        (json) {
           debugPrint('asdasd json: ${json == null ? 'null' : 'not null'}');
-        return ResponseBioReportInfoModel.fromJson(json);
+          return ResponseBioReportInfoModel.fromJson(json);
         },
       );
     }
   }
 
   /// 월간 보고서 정보 조회
-  Future<ApiResponse<ResponseBioReportInfoModel>> getBioReportMonthlyInfo(
-      {required int reportSeq}) async {
+  Future<ApiResponse<ResponseBioReportInfoModel>> getBioReportMonthlyInfo({required int reportSeq}) async {
     final response = await Service.getApi(
       type: ServiceType.Bio,
       endPoint: 'reports/monthly/$reportSeq',
     );
 
-    if (response.statusCode >= 500) {
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
       return ApiResponse(
-        status: response.statusCode,
-        message: _getAppLocalization.get().message_server_error_5xx,
+        status: errorResponse.status,
+        message: errorResponse.message,
         data: null,
       );
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-            (json) => ResponseBioReportInfoModel.fromJson(json),
+        (json) => ResponseBioReportInfoModel.fromJson(json),
       );
     }
   }
-
 }
