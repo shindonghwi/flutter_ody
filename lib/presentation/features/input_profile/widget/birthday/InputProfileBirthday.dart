@@ -9,6 +9,7 @@ import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.da
 import 'package:ody_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/textfield/InputProfileBirthdayTextFieldNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputBirthdayUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
@@ -17,7 +18,6 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/regex/DateFormatterKoreaBirthday.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class InputProfileBirthday extends HookConsumerWidget {
   final TextEditingController controller;
@@ -41,7 +41,7 @@ class InputProfileBirthday extends HookConsumerWidget {
             birthdayUiStateProvider.resetState();
           },
           failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
+            ToastUtil.errorToast(context, event.errorMessage);
           },
         );
       });
@@ -93,8 +93,7 @@ class _InputTextField extends HookConsumerWidget {
 
     onCheckButtonAction() {
       if (fieldStateRead.checkBirthday()) {
-        birthdayUiStateProvider
-            .patchBirthday(fieldStateRead.content.replaceAll("/", "-"));
+        birthdayUiStateProvider.patchBirthday(fieldStateRead.content.replaceAll("/", "-"));
       } else {
         final currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
@@ -125,8 +124,7 @@ class _InputTextField extends HookConsumerWidget {
         } else {
           fieldStateRead.change(
             fieldState: TextFieldState.Error,
-            helpMessage:
-                getAppLocalizations(context).input_profile_help_message_error_retry,
+            helpMessage: getAppLocalizations(context).input_profile_help_message_error_retry,
           );
         }
       },
@@ -152,8 +150,7 @@ class _NextButton extends HookConsumerWidget {
 
     onCheckButtonAction() {
       if (fieldStateRead.checkBirthday()) {
-        birthdayUiStateProvider
-            .patchBirthday(fieldStateRead.content.replaceAll("/", "-"));
+        birthdayUiStateProvider.patchBirthday(fieldStateRead.content.replaceAll("/", "-"));
       } else {
         final currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
@@ -174,9 +171,7 @@ class _NextButton extends HookConsumerWidget {
             onPressed: () => onCheckButtonAction.call(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
-                state: fieldState.fieldState == TextFieldState.Focus
-                    ? ButtonState.Activated
-                    : ButtonState.Disabled,
+                state: fieldState.fieldState == TextFieldState.Focus ? ButtonState.Activated : ButtonState.Disabled,
               ),
             ),
           ),

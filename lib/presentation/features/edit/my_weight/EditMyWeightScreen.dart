@@ -7,6 +7,7 @@ import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/edit/provider/PatchMeInfoUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
@@ -15,7 +16,6 @@ import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class EditMyWeightScreen extends HookConsumerWidget {
   final int weight;
@@ -39,7 +39,7 @@ class EditMyWeightScreen extends HookConsumerWidget {
             stateRead.init();
           },
           failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
+            ToastUtil.errorToast(context, event.errorMessage);
             stateRead.init();
           },
         );
@@ -53,9 +53,8 @@ class EditMyWeightScreen extends HookConsumerWidget {
           path: 'assets/imgs/icon_back.svg',
           onPressed: () => Navigator.of(context).pop(),
         ),
-        actionTextColor: weightData.value.isEmpty
-            ? getColorScheme(context).neutral50
-            : getColorScheme(context).neutral100,
+        actionTextColor:
+            weightData.value.isEmpty ? getColorScheme(context).neutral50 : getColorScheme(context).neutral100,
         actionIconEnable: weightData.value.isNotEmpty,
         actionText: getAppLocalizations(context).common_complete,
         actionTextCallback: () => stateRead.patchWeight(int.parse(weightData.value)),
@@ -105,7 +104,6 @@ class _WeightContent extends HookConsumerWidget {
         }
       });
     }, []);
-
 
     return Container(
       margin: const EdgeInsets.only(top: 32, left: 24, right: 24),

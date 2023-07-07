@@ -7,6 +7,7 @@ import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/edit/provider/PatchMeInfoUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
@@ -15,7 +16,6 @@ import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class EditMyHeightScreen extends HookConsumerWidget {
   final int height;
@@ -39,7 +39,7 @@ class EditMyHeightScreen extends HookConsumerWidget {
             stateRead.init();
           },
           failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
+            ToastUtil.errorToast(context, event.errorMessage);
             stateRead.init();
           },
         );
@@ -54,9 +54,8 @@ class EditMyHeightScreen extends HookConsumerWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         actionText: getAppLocalizations(context).common_complete,
-        actionTextColor: heightData.value.isEmpty
-            ? getColorScheme(context).neutral50
-            : getColorScheme(context).neutral100,
+        actionTextColor:
+            heightData.value.isEmpty ? getColorScheme(context).neutral50 : getColorScheme(context).neutral100,
         actionIconEnable: heightData.value.isNotEmpty,
         actionTextCallback: () {
           stateRead.patchHeight(int.parse(heightData.value));

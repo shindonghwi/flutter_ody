@@ -5,12 +5,12 @@ import 'package:ody_flutter_app/data/models/bio/ResponseBioReportInfoModel.dart'
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/report/monthly/provider/ReportMonthlyProvider.dart';
 import 'package:ody_flutter_app/presentation/features/report/weekly/ReportWeeklyScreen.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class ReportMonthlyScreen extends HookConsumerWidget {
   final int? reportSeq;
@@ -29,7 +29,7 @@ class ReportMonthlyScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           uiState.when(
-            failure: (event) => SnackBarUtil.show(context, event.errorMessage),
+            failure: (event) => ToastUtil.errorToast(context, event.errorMessage),
           );
         });
       }

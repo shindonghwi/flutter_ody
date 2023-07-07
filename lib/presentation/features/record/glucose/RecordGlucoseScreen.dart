@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/record/glucose/notifier/GlucoseRecorderNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/record/glucose/notifier/RecordGlucoseUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/record/glucose/widget/RecordGlucose.dart';
@@ -12,7 +13,6 @@ import 'package:ody_flutter_app/presentation/features/record/widget/RecordDateSe
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class RecordGlucoseScreen extends HookConsumerWidget {
   const RecordGlucoseScreen({Key? key}) : super(key: key);
@@ -28,16 +28,13 @@ class RecordGlucoseScreen extends HookConsumerWidget {
         await Future(() {
           uiState.when(
             success: (event) async {
-              SnackBarUtil.show(
-                context,
-                getAppLocalizations(context).message_record_complete_blood_pressure,
-              );
+              ToastUtil.defaultToast(context, getAppLocalizations(context).message_record_complete_blood_pressure);
               Navigator.of(context).pop(glucoseRecorderRead.getBioGlucoseModel());
               uiStateRead.init();
               glucoseRecorderRead.init();
             },
             failure: (event) {
-              SnackBarUtil.show(context, event.errorMessage);
+              ToastUtil.errorToast(context, event.errorMessage);
             },
           );
         });

@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/components/button/model/ButtonState
 import 'package:ody_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/textfield/InputProfileHeightTextFieldNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputHeightUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
@@ -15,7 +16,6 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/regex/TypeChecker.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class InputProfileHeight extends HookConsumerWidget {
   final TextEditingController controller;
@@ -39,7 +39,7 @@ class InputProfileHeight extends HookConsumerWidget {
             heightUiStateProvider.resetState();
           },
           failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
+            ToastUtil.errorToast(context, event.errorMessage);
           },
         );
       });
@@ -112,21 +112,18 @@ class _InputTextField extends HookConsumerWidget {
           if (num < minHeight || num > maxHeight) {
             fieldStateRead.change(
               fieldState: TextFieldState.Error,
-              helpMessage: getAppLocalizations(context)
-                  .input_profile_help_message_error_range(minHeight, maxHeight),
+              helpMessage: getAppLocalizations(context).input_profile_help_message_error_range(minHeight, maxHeight),
             );
           } else {
             fieldStateRead.change(
               fieldState: TextFieldState.Focus,
-              helpMessage:
-                  getAppLocalizations(context).input_profile_help_message_success,
+              helpMessage: getAppLocalizations(context).input_profile_help_message_success,
             );
           }
         } else if (value.isNotEmpty) {
           fieldStateRead.change(
             fieldState: TextFieldState.Error,
-            helpMessage:
-                getAppLocalizations(context).input_profile_help_message_error_retry,
+            helpMessage: getAppLocalizations(context).input_profile_help_message_error_retry,
           );
         }
       },
@@ -173,9 +170,7 @@ class _NextButton extends HookConsumerWidget {
             onPressed: () => onCheckButtonAction.call(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
-                state: fieldState.fieldState == TextFieldState.Focus
-                    ? ButtonState.Activated
-                    : ButtonState.Disabled,
+                state: fieldState.fieldState == TextFieldState.Focus ? ButtonState.Activated : ButtonState.Disabled,
               ),
             ),
           ),

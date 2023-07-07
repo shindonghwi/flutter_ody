@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/components/bottom_sheet/BottomSheet
 import 'package:ody_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/list/glucose/widget/RecordGlucoseBottomContent.dart';
 import 'package:ody_flutter_app/presentation/features/list/glucose/widget/RecordGlucoseItem.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
@@ -19,7 +20,6 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class RecordedListGlucoseScreen extends HookConsumerWidget {
   const RecordedListGlucoseScreen({
@@ -41,7 +41,7 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
             glucoseList.value = [...?event.value?.glucoses.reversed.toList()];
           },
           failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
+            ToastUtil.errorToast(context, event.errorMessage);
           },
         );
       });
@@ -88,7 +88,7 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
                   child: EmptyView(
                     screen: RoutingScreen.RecordedListGlucose,
                     onPressed: () async {
-                      if (isToday.value){
+                      if (isToday.value) {
                         ResponseBioGlucoseModel data = await Navigator.push(
                           context,
                           nextSlideScreen(RoutingScreen.RecordGlucose.route),
@@ -100,7 +100,7 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
                         } catch (e) {
                           debugPrint("bp update fail: ${e.toString()}");
                         }
-                      }else{
+                      } else {
                         Navigator.of(context).pop();
                       }
                     },

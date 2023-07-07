@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
-import 'package:ody_flutter_app/presentation/features/cache/UserCache.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/constant/constants.dart';
 import 'package:ody_flutter_app/presentation/features/login/notifier/LoginUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/login/widget/LoginContent.dart';
@@ -12,7 +12,6 @@ import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 /// @feature:  로그인 화면
 /// @author: 2023/03/29 6:59 PM donghwishin
@@ -37,7 +36,7 @@ class LoginScreen extends HookConsumerWidget {
         state.when(
           success: (event) async {
             loginRead.init();
-            if (loginRead.meInfo != null){
+            if (loginRead.meInfo != null) {
               meInfoRead.updateMeInfo(loginRead.meInfo!);
             }
             if (loginRead.currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
@@ -50,7 +49,7 @@ class LoginScreen extends HookConsumerWidget {
             }
           },
           failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
+            ToastUtil.errorToast(context, event.errorMessage);
           },
         );
       });

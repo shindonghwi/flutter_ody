@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/components/button/model/ButtonState
 import 'package:ody_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldModel.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/textfield/InputProfileWeightTextFieldNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputWeightUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
@@ -15,7 +16,6 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/regex/TypeChecker.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class InputProfileWeight extends HookConsumerWidget {
   final TextEditingController controller;
@@ -39,7 +39,7 @@ class InputProfileWeight extends HookConsumerWidget {
             weightUiStateProvider.resetState();
           },
           failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
+            ToastUtil.errorToast(context, event.errorMessage);
           },
         );
       });
@@ -112,13 +112,11 @@ class _InputTextField extends HookConsumerWidget {
           if (num < minWeight || num > maxWeight) {
             fieldStateRead.change(
                 fieldState: TextFieldState.Error,
-                helpMessage: getAppLocalizations(context)
-                    .input_profile_help_message_error_range(minWeight, maxWeight));
+                helpMessage: getAppLocalizations(context).input_profile_help_message_error_range(minWeight, maxWeight));
           } else {
             fieldStateRead.change(
                 fieldState: TextFieldState.Focus,
-                helpMessage:
-                    getAppLocalizations(context).input_profile_help_message_success);
+                helpMessage: getAppLocalizations(context).input_profile_help_message_success);
           }
         } else if (value.isNotEmpty) {
           fieldStateRead.change(fieldState: TextFieldState.Error);
@@ -165,8 +163,8 @@ class _NextButton extends HookConsumerWidget {
             Text(
               getAppLocalizations(context).input_profile_disease_next_last_message,
               style: getTextTheme(context).c1r.copyWith(
-                color: getColorScheme(context).neutral60,
-              ),
+                    color: getColorScheme(context).neutral60,
+                  ),
             ),
             const SizedBox(height: 24),
             Container(
@@ -177,10 +175,8 @@ class _NextButton extends HookConsumerWidget {
                 type: ButtonSizeType.Normal,
                 onPressed: () => onCheckButtonAction.call(),
                 buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-                      (_) => ButtonNotifier(
-                    state: fieldState.fieldState == TextFieldState.Focus
-                        ? ButtonState.Activated
-                        : ButtonState.Disabled,
+                  (_) => ButtonNotifier(
+                    state: fieldState.fieldState == TextFieldState.Focus ? ButtonState.Activated : ButtonState.Disabled,
                   ),
                 ),
               ),

@@ -7,6 +7,7 @@ import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotif
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputGenderUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/widget/gender/GenderSelector.dart';
@@ -14,7 +15,6 @@ import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class InputProfileGender extends HookConsumerWidget {
   const InputProfileGender({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class InputProfileGender extends HookConsumerWidget {
             stateProvider.resetState();
           },
           failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
+            ToastUtil.errorToast(context, event.errorMessage);
           },
         );
       });

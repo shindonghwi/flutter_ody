@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/components/bottom_sheet/BottomSheet
 import 'package:ody_flutter_app/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/widget/RecordBloodPressureBottomContent.dart';
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/widget/RecordBloodPressureItem.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
@@ -19,7 +20,6 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class RecordedListBloodPressureScreen extends HookConsumerWidget {
   const RecordedListBloodPressureScreen({
@@ -41,7 +41,7 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
             bpList.value = [...?event.value?.bloodPressures.reversed.toList()];
           },
           failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
+            ToastUtil.errorToast(context, event.errorMessage);
           },
         );
       });
@@ -88,7 +88,7 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                   child: EmptyView(
                     screen: RoutingScreen.RecordedListBloodPressure,
                     onPressed: () async {
-                      if (isToday.value){
+                      if (isToday.value) {
                         ResponseBioBloodPressureModel data = await Navigator.push(
                           context,
                           nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
@@ -100,15 +100,13 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                         } catch (e) {
                           debugPrint("bp update fail: ${e.toString()}");
                         }
-                      }else{
+                      } else {
                         Navigator.of(context).pop();
                       }
                     },
                   ),
                 ),
-          !CollectionUtil.isNullorEmpty(bpList.value)
-              ? const RecordBloodPressureBottomContent()
-              : const SizedBox(),
+          !CollectionUtil.isNullorEmpty(bpList.value) ? const RecordBloodPressureBottomContent() : const SizedBox(),
           if (uiState is Loading) const CircleLoading()
         ],
       ),

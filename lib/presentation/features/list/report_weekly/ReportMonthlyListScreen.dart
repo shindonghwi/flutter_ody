@@ -6,6 +6,7 @@ import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppB
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/list/report_weekly/provider/ReportMonthlyListProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
@@ -14,7 +15,6 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class ReportMonthlyListScreen extends HookConsumerWidget {
   const ReportMonthlyListScreen({Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class ReportMonthlyListScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           uiState.when(
-            failure: (event) => SnackBarUtil.show(context, event.errorMessage),
+            failure: (event) => ToastUtil.errorToast(context, event.errorMessage),
           );
         });
       }

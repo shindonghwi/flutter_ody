@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/list/medication/provider/MedicineCheckListProvider.dart';
 import 'package:ody_flutter_app/presentation/features/list/medication/provider/MedicineListProvider.dart';
 import 'package:ody_flutter_app/presentation/features/list/medication/provider/MedicineScreenModeProvider.dart';
@@ -13,7 +14,6 @@ import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class MedicationListScreen extends HookConsumerWidget {
   const MedicationListScreen({Key? key}) : super(key: key);
@@ -34,16 +34,17 @@ class MedicationListScreen extends HookConsumerWidget {
               currentMedicineState.value = event.value;
               isEditModeRead.changeMode(false);
               if (uiStateRead.actionType == MedicineActionType.ADD_ITEM) {
-                SnackBarUtil.show(context, getAppLocalizations(context).message_success_register);
+                ToastUtil.defaultToast(context, getAppLocalizations(context).message_success_register);
               } else if (uiStateRead.actionType == MedicineActionType.REMOVE_ITEM) {
                 checkListRead.clear();
-                SnackBarUtil.show(context, getAppLocalizations(context).message_success_remove);
+                ToastUtil.defaultToast(context, getAppLocalizations(context).message_success_remove);
               }
             },
-            failure: (event) => SnackBarUtil.show(context, event.errorMessage),
+            failure: (event) => ToastUtil.errorToast(context, event.errorMessage),
           );
         });
       }
+
       handleUiStateChange();
       return null;
     }, [uiState]);
@@ -66,9 +67,7 @@ class MedicationListScreen extends HookConsumerWidget {
                   : const SizedBox()
               : MedicineMainContent(items: currentMedicineState.value!),
           if (uiState is Success<List<ResponseMeMedicineModel>>)
-            !CollectionUtil.isNullorEmpty(uiState.value)
-                ? const MedicineBottomContent()
-                : const SizedBox(),
+            !CollectionUtil.isNullorEmpty(uiState.value) ? const MedicineBottomContent() : const SizedBox(),
           if (uiState is Loading) const CircleLoading(),
         ],
       ),

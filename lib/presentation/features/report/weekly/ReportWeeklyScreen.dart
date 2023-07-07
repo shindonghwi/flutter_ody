@@ -9,6 +9,7 @@ import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppB
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/divider/DottedDivider.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/report/weekly/provider/ReportWeeklyProvider.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressure.dart';
 import 'package:ody_flutter_app/presentation/features/report/widget/ReportBloodPressureAnalysis.dart';
@@ -24,7 +25,6 @@ import 'package:ody_flutter_app/presentation/features/report/widget/ReportWalkin
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class ReportWeeklyScreen extends HookConsumerWidget {
   final int? reportSeq;
@@ -43,7 +43,7 @@ class ReportWeeklyScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           uiState.when(
-            failure: (event) => SnackBarUtil.show(context, event.errorMessage),
+            failure: (event) => ToastUtil.errorToast(context, event.errorMessage),
           );
         });
       }
@@ -71,21 +71,21 @@ class ReportWeeklyScreen extends HookConsumerWidget {
       backgroundColor: getColorScheme(context).colorUI03,
       body: uiState is Success<ResponseBioReportInfoModel>
           ? SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  // ReportCardWalk(isWeekly: true, walking: uiState.value.walking),
-                  // const SizedBox(height: 24),
-                  ReportCardBloodPressure(isWeekly: true, bloodPressure: uiState.value.bloodPressure),
-                  const SizedBox(height: 24),
-                  ReportCardGlucose(isWeekly: true, glucose: uiState.value.glucose),
-                ],
-              ),
-            )
+        padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            // ReportCardWalk(isWeekly: true, walking: uiState.value.walking),
+            // const SizedBox(height: 24),
+            ReportCardBloodPressure(isWeekly: true, bloodPressure: uiState.value.bloodPressure),
+            const SizedBox(height: 24),
+            ReportCardGlucose(isWeekly: true, glucose: uiState.value.glucose),
+          ],
+        ),
+      )
           : uiState is Loading
-              ? const CircleLoading()
-              : const SizedBox(),
+          ? const CircleLoading()
+          : const SizedBox(),
     );
   }
 }

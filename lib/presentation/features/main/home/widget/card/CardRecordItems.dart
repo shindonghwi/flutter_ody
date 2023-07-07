@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioBloodPressureModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioStepModel.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/card/widget/CardBpItem.dart';
-import 'package:ody_flutter_app/presentation/features/main/home/widget/card/widget/CardEmotionItem.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/card/widget/CardGlucoseItem.dart';
-import 'package:ody_flutter_app/presentation/features/main/home/widget/card/widget/CardWalkItem.dart';
-import 'package:ody_flutter_app/presentation/features/main/provider/ForDaysBioInfoProvider.dart';
-import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
-import 'package:ody_flutter_app/presentation/navigation/Route.dart';
-import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
-import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class CardRecordItems extends HookConsumerWidget {
   final ResponseBioForDaysModel model;

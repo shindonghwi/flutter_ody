@@ -6,6 +6,7 @@ import 'package:ody_flutter_app/presentation/components/button/fill/FillButton.d
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/InputProfileDiseaseSelectNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputDiseaseUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/widget/disease/DiseaseSelector.dart';
@@ -14,7 +15,6 @@ import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 
 class InputProfileDisease extends HookConsumerWidget {
   const InputProfileDisease({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class InputProfileDisease extends HookConsumerWidget {
             stateProvider.resetState();
           },
           failure: (event) {
-            SnackBarUtil.show(context, event.errorMessage);
+            ToastUtil.errorToast(context, event.errorMessage);
           },
         );
       });
@@ -120,9 +120,7 @@ class _SkipButton extends HookConsumerWidget {
                 },
                 buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
                   (_) => ButtonNotifier(
-                    state: diseaseActiveStateList.isNotEmpty
-                        ? ButtonState.Activated
-                        : ButtonState.Disabled,
+                    state: diseaseActiveStateList.isNotEmpty ? ButtonState.Activated : ButtonState.Disabled,
                   ),
                 ),
               ),

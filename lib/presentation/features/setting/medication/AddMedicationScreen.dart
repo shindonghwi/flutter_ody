@@ -8,6 +8,7 @@ import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotif
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
+import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/setting/medication/provider/RegisterMedicineProvider.dart';
 import 'package:ody_flutter_app/presentation/features/setting/medication/widget/MedicationName.dart';
 import 'package:ody_flutter_app/presentation/features/setting/medication/widget/MedicationTime.dart';
@@ -16,7 +17,6 @@ import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/permission/PermissionUtil.dart';
-import 'package:ody_flutter_app/presentation/utils/snackbar/SnackBarUtil.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class AddMedicationScreen extends HookConsumerWidget {
@@ -34,7 +34,7 @@ class AddMedicationScreen extends HookConsumerWidget {
             Navigator.of(context).pop(uiStateRead.responseData);
             uiStateRead.init();
           },
-          failure: (event) => SnackBarUtil.show(context, event.errorMessage),
+          failure: (event) => ToastUtil.errorToast(context, event.errorMessage),
         );
       });
     }, [uiState]);
