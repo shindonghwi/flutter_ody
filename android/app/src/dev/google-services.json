@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "739051866939",
+    "project_id": "orotcode-ody-dev",
+    "storage_bucket": "orotcode-ody-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739051866939:android:bea59afbd28c3aac1d851e",
+        "android_client_info": {
+          "package_name": "com.orot.ody.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739051866939-vvhba8lbfu8vnvj0egp3ld6ijov2apcq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orot.ody.dev",
+            "certificate_hash": "8111eb6073f3d47bf42933a618a89b4bbf0887a0"
+          }
+        },
+        {
+          "client_id": "739051866939-4rdqh150ebrctreetipmq770eu2b75hl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUnmxMWLjfzRFVvHigr4y_vDvV0oEdXsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739051866939-4rdqh150ebrctreetipmq770eu2b75hl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "739051866939-7ii7c6od0j78mu7idigtm1e2tpjqlstg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.orot.ody.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
