@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioReportInfoModel.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/GetBioReportWeeklyInfoUseCase.dart';
@@ -12,6 +13,7 @@ class ReportWeeklyNotifier extends StateNotifier<UIState<ResponseBioReportInfoMo
   ReportWeeklyNotifier() : super(Idle());
 
   void requestWeeklyInfo(int? reportSeq) async {
+    debugPrint("requestWeeklyInfo");
     state = Loading();
     final res = await GetIt.instance.get<GetBioReportWeeklyInfoUseCase>().call(reportSeq ?? -1);
     if (res.status == 200) {

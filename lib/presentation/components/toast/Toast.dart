@@ -6,13 +6,17 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class ToastUtil {
   static void errorToast(BuildContext context, String message) async {
-    OverlayEntry overlay = OverlayEntry(builder: (_) => Toast(type: ToastType.Error, message: message));
-    Navigator.of(context).overlay!.insert(overlay);
+    if (message.isNotEmpty) {
+      OverlayEntry overlay = OverlayEntry(builder: (_) => Toast(type: ToastType.Error, message: message));
+      Navigator.of(context).overlay!.insert(overlay);
+    }
   }
 
   static void defaultToast(BuildContext context, String message) async {
-    OverlayEntry overlay = OverlayEntry(builder: (_) => Toast(type: ToastType.Default, message: message));
-    Navigator.of(context).overlay!.insert(overlay);
+    if (message.isNotEmpty) {
+      OverlayEntry overlay = OverlayEntry(builder: (_) => Toast(type: ToastType.Default, message: message));
+      Navigator.of(context).overlay!.insert(overlay);
+    }
   }
 }
 

@@ -19,7 +19,7 @@ class AlarmListNotifier extends StateNotifier<List<bool>> {
 
   void changeAll() async {
     state = [...List.generate(state.length, (index) => !state[0])];
-    // _requestNotificationInfo();
+    _requestNotificationInfo();
   }
 
   void changeIndex(int alarmIndex) async {
@@ -32,7 +32,7 @@ class AlarmListNotifier extends StateNotifier<List<bool>> {
         }
       })
     ];
-    // _requestNotificationInfo();
+    _requestNotificationInfo();
   }
 
   void _requestNotificationInfo() async {

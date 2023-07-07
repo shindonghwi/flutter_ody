@@ -43,6 +43,8 @@ class EmptyView extends HookConsumerWidget {
         return 'assets/imgs/icon_report.svg';
       } else if (screen == RoutingScreen.ReportMonthlyList) {
         return 'assets/imgs/icon_report.svg';
+      } else if (screen == RoutingScreen.ServerError) {
+        return 'assets/imgs/icon_server_error.svg';
       }
       return null;
     }
@@ -68,6 +70,8 @@ class EmptyView extends HookConsumerWidget {
         return getAppLocalizations(context).empty_report;
       } else if (screen == RoutingScreen.ReportMonthlyList) {
         return getAppLocalizations(context).empty_report;
+      } else if (screen == RoutingScreen.ServerError) {
+        return getAppLocalizations(context).empty_server_error;
       }
       return null;
     }
@@ -88,6 +92,8 @@ class EmptyView extends HookConsumerWidget {
       } else if (screen == RoutingScreen.ReportWeeklyList) {
         return null;
       } else if (screen == RoutingScreen.ReportMonthlyList) {
+        return null;
+      }else if (screen == RoutingScreen.ServerError) {
         return null;
       }
       return null;

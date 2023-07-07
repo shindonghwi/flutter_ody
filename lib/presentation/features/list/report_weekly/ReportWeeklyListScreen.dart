@@ -7,7 +7,6 @@ import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.
 import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
-import 'package:ody_flutter_app/presentation/features/list/report_monthly/provider/ReportWeeklyListProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
@@ -15,6 +14,8 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+
+import 'provider/ReportWeeklyListProvider.dart';
 
 class ReportWeeklyListScreen extends HookConsumerWidget {
   const ReportWeeklyListScreen({Key? key}) : super(key: key);
@@ -139,6 +140,13 @@ class ReportWeeklyListScreen extends HookConsumerWidget {
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ),
+          if (uiState is Failure)
+            Center(
+              child: EmptyView(
+                screen: RoutingScreen.ServerError,
+                onPressed: () {},
+              ),
+            ),
           if (uiState is Loading) const CircleLoading(),
         ],
       ),

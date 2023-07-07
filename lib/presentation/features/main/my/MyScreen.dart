@@ -20,7 +20,7 @@ class MyScreen extends StatelessWidget {
         child: Column(
           children: [
             const MyUserInfo(),
-            const AdBanner(),
+            // const AdBanner(),
             _divider(context),
             const MyReport(),
             _divider(context),

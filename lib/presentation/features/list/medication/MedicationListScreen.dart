@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
+import 'package:ody_flutter_app/presentation/components/empty/EmptyView.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/list/medication/provider/MedicineCheckListProvider.dart';
@@ -11,6 +12,7 @@ import 'package:ody_flutter_app/presentation/features/list/medication/widget/Med
 import 'package:ody_flutter_app/presentation/features/list/medication/widget/MedicineBottomContent.dart';
 import 'package:ody_flutter_app/presentation/features/list/medication/widget/MedicineMainContent.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
+import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
@@ -68,6 +70,13 @@ class MedicationListScreen extends HookConsumerWidget {
               : MedicineMainContent(items: currentMedicineState.value!),
           if (uiState is Success<List<ResponseMeMedicineModel>>)
             !CollectionUtil.isNullorEmpty(uiState.value) ? const MedicineBottomContent() : const SizedBox(),
+          if (uiState is Failure)
+            Center(
+              child: EmptyView(
+                screen: RoutingScreen.ServerError,
+                onPressed: () {},
+              ),
+            ),
           if (uiState is Loading) const CircleLoading(),
         ],
       ),

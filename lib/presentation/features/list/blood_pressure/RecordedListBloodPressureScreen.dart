@@ -72,41 +72,52 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
       backgroundColor: getColorScheme(context).colorUI03,
       body: Stack(
         children: [
-          !CollectionUtil.isNullorEmpty(bpList.value)
-              ? ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
-                  shrinkWrap: true,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 24); // Adjust the height as needed
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    return RecordBloodPressureItem(model: bpList.value[index]);
-                  },
-                  itemCount: bpList.value.length,
-                )
-              : Center(
-                  child: EmptyView(
-                    screen: RoutingScreen.RecordedListBloodPressure,
-                    onPressed: () async {
-                      if (isToday.value) {
-                        ResponseBioBloodPressureModel data = await Navigator.push(
-                          context,
-                          nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
-                        );
-                        try {
-                          if (data.diastolicBloodPressure != 0) {
-                            uiStateRead.addBpBioInfo(data);
-                          }
-                        } catch (e) {
-                          debugPrint("bp update fail: ${e.toString()}");
-                        }
-                      } else {
-                        Navigator.of(context).pop();
-                      }
+          if (uiState is Success)
+            !CollectionUtil.isNullorEmpty(bpList.value)
+                ? ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
+                    shrinkWrap: true,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(height: 24); // Adjust the height as needed
                     },
+                    itemBuilder: (BuildContext context, int index) {
+                      return RecordBloodPressureItem(model: bpList.value[index]);
+                    },
+                    itemCount: bpList.value.length,
+                  )
+                : Center(
+                    child: EmptyView(
+                      screen: uiState is Success ? RoutingScreen.ServerError : RoutingScreen.RecordBloodPressure,
+                      onPressed: () async {
+                        if (uiState is Failure) {
+                          if (isToday.value) {
+                            ResponseBioBloodPressureModel data = await Navigator.push(
+                              context,
+                              nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
+                            );
+                            try {
+                              if (data.diastolicBloodPressure != 0) {
+                                uiStateRead.addBpBioInfo(data);
+                              }
+                            } catch (e) {
+                              debugPrint("bp update fail: ${e.toString()}");
+                            }
+                          } else {
+                            Navigator.of(context).pop();
+                          }
+                        }
+                      },
+                    ),
                   ),
-                ),
-          !CollectionUtil.isNullorEmpty(bpList.value) ? const RecordBloodPressureBottomContent() : const SizedBox(),
+          if (uiState is Success)
+            !CollectionUtil.isNullorEmpty(bpList.value) ? const RecordBloodPressureBottomContent() : const SizedBox(),
+          if (uiState is Failure)
+            Center(
+              child: EmptyView(
+                screen: RoutingScreen.ServerError,
+                onPressed: () {},
+              ),
+            ),
           if (uiState is Loading) const CircleLoading()
         ],
       ),

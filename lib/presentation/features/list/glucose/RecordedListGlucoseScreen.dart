@@ -72,41 +72,50 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
       backgroundColor: getColorScheme(context).colorUI03,
       body: Stack(
         children: [
-          !CollectionUtil.isNullorEmpty(glucoseList.value)
-              ? ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
-                  shrinkWrap: true,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 24); // Adjust the height as needed
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    return RecordGlucoseItem(model: glucoseList.value[index]);
-                  },
-                  itemCount: glucoseList.value.length,
-                )
-              : Center(
-                  child: EmptyView(
-                    screen: RoutingScreen.RecordedListGlucose,
-                    onPressed: () async {
-                      if (isToday.value) {
-                        ResponseBioGlucoseModel data = await Navigator.push(
-                          context,
-                          nextSlideScreen(RoutingScreen.RecordGlucose.route),
-                        );
-                        try {
-                          if (data.glucose != 0) {
-                            uiStateRead.addGlucoseBioInfo(data);
-                          }
-                        } catch (e) {
-                          debugPrint("bp update fail: ${e.toString()}");
-                        }
-                      } else {
-                        Navigator.of(context).pop();
-                      }
+          if (uiState is Success)
+            !CollectionUtil.isNullorEmpty(glucoseList.value)
+                ? ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
+                    shrinkWrap: true,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(height: 24); // Adjust the height as needed
                     },
+                    itemBuilder: (BuildContext context, int index) {
+                      return RecordGlucoseItem(model: glucoseList.value[index]);
+                    },
+                    itemCount: glucoseList.value.length,
+                  )
+                : Center(
+                    child: EmptyView(
+                      screen: RoutingScreen.RecordedListGlucose,
+                      onPressed: () async {
+                        if (isToday.value) {
+                          ResponseBioGlucoseModel data = await Navigator.push(
+                            context,
+                            nextSlideScreen(RoutingScreen.RecordGlucose.route),
+                          );
+                          try {
+                            if (data.glucose != 0) {
+                              uiStateRead.addGlucoseBioInfo(data);
+                            }
+                          } catch (e) {
+                            debugPrint("bp update fail: ${e.toString()}");
+                          }
+                        } else {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                    ),
                   ),
-                ),
-          !CollectionUtil.isNullorEmpty(glucoseList.value) ? const RecordGlucoseBottomContent() : const SizedBox(),
+          if (uiState is Success)
+            !CollectionUtil.isNullorEmpty(glucoseList.value) ? const RecordGlucoseBottomContent() : const SizedBox(),
+          if (uiState is Failure)
+            Center(
+              child: EmptyView(
+                screen: RoutingScreen.ServerError,
+                onPressed: () {},
+              ),
+            ),
           if (uiState is Loading) const CircleLoading()
         ],
       ),

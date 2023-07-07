@@ -11,8 +11,8 @@ import 'package:ody_flutter_app/presentation/features/input_profile/InputProfile
 import 'package:ody_flutter_app/presentation/features/list/blood_pressure/RecordedListBloodPressureScreen.dart';
 import 'package:ody_flutter_app/presentation/features/list/glucose/RecordedListGlucoseScreen.dart';
 import 'package:ody_flutter_app/presentation/features/list/medication/MedicationListScreen.dart';
-import 'package:ody_flutter_app/presentation/features/list/report_monthly/ReportWeeklyListScreen.dart';
-import 'package:ody_flutter_app/presentation/features/list/report_weekly/ReportMonthlyListScreen.dart';
+import 'package:ody_flutter_app/presentation/features/list/report_monthly/ReportMonthlyListScreen.dart';
+import 'package:ody_flutter_app/presentation/features/list/report_weekly/ReportWeeklyListScreen.dart';
 import 'package:ody_flutter_app/presentation/features/login/LoginScreen.dart';
 import 'package:ody_flutter_app/presentation/features/main/MainScreen.dart';
 import 'package:ody_flutter_app/presentation/features/onboarding/OnBoardingScreen.dart';
@@ -66,7 +66,11 @@ enum RoutingScreen {
   SettingAlarm(route: "/setting/alarm"), // 알림 설정화면
   AddMedication(route: "/setting/add/medication"), // 약 알림 추가화면
   Withdrawal(route: "/withdrawal"), // 회원탈퇴
-  WithdrawalReason(route: "/withdrawal/reason"); // 회원탈퇴 사유
+  WithdrawalReason(route: "/withdrawal/reason"), // 회원탈퇴 사유
+
+
+  // 화면 이동 X
+  ServerError(route: "/error"); // 서버 에러 콘텐츠
 
   final String route;
 

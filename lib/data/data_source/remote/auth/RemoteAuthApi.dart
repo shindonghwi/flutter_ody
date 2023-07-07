@@ -80,10 +80,9 @@ class RemoteAuthApi {
           );
         }
       } catch (e) {
-        print("error: ${e.toString()}");
         return ApiResponse<SocialLoginModel>(
           status: 400,
-          message: "${e.toString()}",
+          message: "",
           data: null,
         );
       }
