@@ -6,9 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:ody_flutter_app/app/env/Environment.dart';
 import 'package:ody_flutter_app/firebase/FirebaseRemoteConfigService.dart';
 
+import '../../firebase_options.dart';
+
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    name: 'ody-product',
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await FirebaseRemoteConfigService().initialize();
 
   // 모든 오류 기록
