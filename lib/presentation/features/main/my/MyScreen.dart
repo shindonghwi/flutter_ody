@@ -21,6 +21,7 @@ class MyScreen extends StatelessWidget {
           children: [
             const MyUserInfo(),
             // const AdBanner(),
+            SizedBox(height: 24),
             _divider(context),
             const MyReport(),
             _divider(context),
