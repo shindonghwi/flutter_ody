@@ -93,7 +93,7 @@ class SettingEtc extends HookWidget {
           ),
           Row(
             children: [
-              if (currentVersion.value.compareTo(latestVersion) == 0)
+              if (currentVersion.value.compareTo(latestVersion) < 0)
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
