@@ -30,10 +30,10 @@ class LoginContent extends HookConsumerWidget {
     LoginUiStateNotifier uiStateProvider,
   ) {
     List<Pair?> socialItems = [
-      Pair('assets/imgs/image_kakao.png', () {
-        uiStateProvider.doLogin(LoginPlatform.Kakao);
-      }),
-      null,
+      // Pair('assets/imgs/image_kakao.png', () {
+      //   uiStateProvider.doLogin(LoginPlatform.Kakao);
+      // }),
+      // null,
       Pair('assets/imgs/image_google.png', () {
         uiStateProvider.doLogin(LoginPlatform.Google);
       }),

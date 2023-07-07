@@ -35,6 +35,10 @@ class RemoteAuthApi {
           ? "https://app-ody-dev.glitch.me/callbacks/sign_in_with_apple"
           : "https://app-ody.glitch.me/callbacks/sign_in_with_apple";
       final clientID = Environment.buildType == BuildType.dev ? "dev.ody.orot.com" : "ody.orot.com";
+
+      print("redirectURL: ${redirectURL}");
+      print("clientID: ${clientID}");
+
       final nonce = _sha256ofString(rawNonce);
       try {
         final appleIdCredential = await SignInWithApple.getAppleIDCredential(
@@ -76,9 +80,10 @@ class RemoteAuthApi {
           );
         }
       } catch (e) {
+        print("error: ${e.toString()}");
         return ApiResponse<SocialLoginModel>(
           status: 400,
-          message: "",
+          message: "${e.toString()}",
           data: null,
         );
       }

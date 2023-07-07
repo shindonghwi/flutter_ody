@@ -31,6 +31,8 @@ class LoginScreen extends HookConsumerWidget {
       );
     }
 
+    final sss = useState("");
+
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         state.when(
@@ -49,6 +51,7 @@ class LoginScreen extends HookConsumerWidget {
             }
           },
           failure: (event) {
+            sss.value = event.errorMessage;
             ToastUtil.errorToast(context, event.errorMessage);
           },
         );
@@ -67,6 +70,7 @@ class LoginScreen extends HookConsumerWidget {
             child: LoginContent(),
           ),
         ),
+        if (sss.value.isNotEmpty) Center(child: Text("${sss.value}")),
         if (state is Loading) const CircleLoading(),
       ],
     );

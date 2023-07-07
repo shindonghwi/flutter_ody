@@ -110,6 +110,7 @@ class _ToastState extends State<Toast> with SingleTickerProviderStateMixin {
                     if (widget.type == ToastType.Error)
                       Container(
                         margin: const EdgeInsets.only(right: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: SvgPicture.asset(
                           "assets/imgs/icon_information.svg",
                           width: 24,
