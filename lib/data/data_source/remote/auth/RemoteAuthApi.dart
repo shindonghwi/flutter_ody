@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ody_flutter_app/app/OrotApp.dart';
@@ -31,41 +30,49 @@ class RemoteAuthApi {
     var redirectURL = "https://app-ody-dev.glitch.me/callbacks/sign_in_with_apple";
     var clientID = "dev.ody.orot.com";
     final nonce = _sha256ofString(rawNonce);
-    final appleIdCredential = await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-      webAuthenticationOptions: WebAuthenticationOptions(
-        clientId: clientID,
-        redirectUri: Uri.parse(redirectURL),
-      ),
-      nonce: nonce,
-    );
-    final oAuthProvider = OAuthProvider('apple.com');
-    final credential = oAuthProvider.credential(
-      idToken: appleIdCredential.identityToken,
-      accessToken: appleIdCredential.authorizationCode,
-      rawNonce: rawNonce,
-    );
-
-    final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
-
-    final User? user = userCredential.user;
-
-    if (user != null) {
-      return ApiResponse<SocialLoginModel>(
-        status: 200,
-        message: _getAppLocalization.get().message_api_success,
-        data: SocialLoginModel(
-          LoginPlatform.Apple,
-          appleIdCredential.identityToken,
+    try {
+      final appleIdCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+        webAuthenticationOptions: WebAuthenticationOptions(
+          clientId: clientID,
+          redirectUri: Uri.parse(redirectURL),
         ),
+        nonce: nonce,
       );
-    } else {
+      final oAuthProvider = OAuthProvider('apple.com');
+      final credential = oAuthProvider.credential(
+        idToken: appleIdCredential.identityToken,
+        accessToken: appleIdCredential.authorizationCode,
+        rawNonce: rawNonce,
+      );
+
+      final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
+
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        return ApiResponse<SocialLoginModel>(
+          status: 200,
+          message: _getAppLocalization.get().message_api_success,
+          data: SocialLoginModel(
+            LoginPlatform.Apple,
+            appleIdCredential.identityToken,
+          ),
+        );
+      } else {
+        return ApiResponse<SocialLoginModel>(
+          status: 404,
+          message: _getAppLocalization.get().message_not_found_user,
+          data: null,
+        );
+      }
+    } catch (e) {
       return ApiResponse<SocialLoginModel>(
-        status: 404,
-        message: _getAppLocalization.get().message_not_found_user,
+        status: 400,
+        message: "",
         data: null,
       );
     }

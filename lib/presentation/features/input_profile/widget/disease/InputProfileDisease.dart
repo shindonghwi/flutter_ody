@@ -26,6 +26,7 @@ class InputProfileDisease extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        FocusScope.of(context).unfocus();
         state.when(
           success: (event) async {
             Navigator.pushReplacement(
@@ -45,11 +46,12 @@ class InputProfileDisease extends HookConsumerWidget {
       padding: const EdgeInsets.fromLTRB(35, 40, 35, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           _title(context),
           const SizedBox(height: 24),
           const DiseaseSelector(),
-          const _SkipButton()
+          const _SkipButton(),
         ],
       ),
     );

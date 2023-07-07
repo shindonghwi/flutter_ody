@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSize.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarPageNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/main/home/notifier/CalendarSelectDateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/home/widget/PainterCircleProgress.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -20,7 +21,7 @@ class CardTodayRecord extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    DateTime currentDateTime = ref.read(calendarPageProvider.notifier).getCurrentDateTime();
+    DateTime currentDateTime = ref.watch(calendarSelectDateProvider);
 
     bool isToday = DateChecker.isDateToday(currentDateTime);
 

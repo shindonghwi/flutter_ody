@@ -65,13 +65,13 @@ class SurveyPageView extends HookConsumerWidget {
           Expanded(
             child: PageView(
               controller: pageController,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               children: [
-                InputProfileGender(),
+                const InputProfileGender(),
                 InputProfileBirthday(controller: textEditingControllerList[0]),
                 InputProfileHeight(controller: textEditingControllerList[1]),
                 InputProfileWeight(controller: textEditingControllerList[2]),
-                InputProfileDisease(),
+                const InputProfileDisease(),
               ],
             ),
           ),

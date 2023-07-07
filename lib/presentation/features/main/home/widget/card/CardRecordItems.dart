@@ -39,12 +39,12 @@ class CardRecordItems extends HookConsumerWidget {
           ),
           Row(
             children: [
-              const Flexible(
-                fit: FlexFit.tight,
-                flex: 1,
-                child: CardWalkItem(),
-              ),
-              const SizedBox(width: 20),
+              // const Flexible(
+              //   fit: FlexFit.tight,
+              //   flex: 1,
+              //   child: CardWalkItem(),
+              // ),
+              // const SizedBox(width: 20),
               Flexible(
                 fit: FlexFit.tight,
                 flex: 1,
@@ -52,11 +52,7 @@ class CardRecordItems extends HookConsumerWidget {
                   bpDataList: bpDataList,
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
+              const SizedBox(width: 20),
               Flexible(
                 fit: FlexFit.tight,
                 flex: 1,
@@ -64,14 +60,26 @@ class CardRecordItems extends HookConsumerWidget {
                   glucoseDataList: glucoseDataList,
                 ),
               ),
-              const SizedBox(width: 20),
-              const Flexible(
-                fit: FlexFit.tight,
-                flex: 1,
-                child: CardEmotionItem(),
-              ),
             ],
-          )
+          ),
+          // const SizedBox(height: 16),
+          // Row(
+          //   children: [
+          //     Flexible(
+          //       fit: FlexFit.tight,
+          //       flex: 1,
+          //       child: CardGlucoseItem(
+          //         glucoseDataList: glucoseDataList,
+          //       ),
+          //     ),
+          //     const SizedBox(width: 20),
+          //     const Flexible(
+          //       fit: FlexFit.tight,
+          //       flex: 1,
+          //       child: CardEmotionItem(),
+          //     ),
+          //   ],
+          // )
         ],
       ),
     );
