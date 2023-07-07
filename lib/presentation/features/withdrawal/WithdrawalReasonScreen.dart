@@ -142,7 +142,7 @@ class _LeaveButton extends HookConsumerWidget {
         margin: const EdgeInsets.only(bottom: 24),
         width: double.infinity,
         child: FillButton(
-          text: getAppLocalizations(context).common_next,
+          text: getAppLocalizations(context).setting_sub_menu_etc_withdrawal,
           type: ButtonSizeType.Small,
           onPressed: () => leaveRead.requestLeave(reason),
           buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
