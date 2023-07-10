@@ -87,7 +87,7 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                   )
                 : Center(
                     child: EmptyView(
-                      screen: uiState is Success ? RoutingScreen.ServerError : RoutingScreen.RecordBloodPressure,
+                      screen: RoutingScreen.RecordBloodPressure,
                       onPressed: () async {
                         if (uiState is Failure) {
                           if (isToday.value) {

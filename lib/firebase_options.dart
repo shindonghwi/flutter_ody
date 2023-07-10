@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1043075265104',
     projectId: 'orotcode-ody',
     storageBucket: 'orotcode-ody.appspot.com',
-    androidClientId: '1043075265104-33ve1i6eut7isjnl8geel3qqrmr44nae.apps.googleusercontent.com',
+    androidClientId: '1043075265104-1t6ac85tt4lruc1di83asbujr4bl07eo.apps.googleusercontent.com',
     iosClientId: '1043075265104-65irrc3i3gnif14d69fd6el6avsso6km.apps.googleusercontent.com',
     iosBundleId: 'com.orot.ody',
   );
