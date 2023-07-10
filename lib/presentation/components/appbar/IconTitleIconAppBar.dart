@@ -5,7 +5,7 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
-class IconTitleIconAppBar extends StatelessWidget with PreferredSizeWidget {
+class IconTitleIconAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppBarIcon? leadingIcon;
   final String title;
   final bool isCenterTitle;

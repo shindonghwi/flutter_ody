@@ -21,7 +21,7 @@ import 'package:table_calendar/table_calendar.dart';
 /// @description{
 ///   날짜 선택, actions 아이콘
 /// }
-class HomeAppBar extends HookConsumerWidget with PreferredSizeWidget {
+class HomeAppBar extends HookConsumerWidget implements PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
 
   @override
