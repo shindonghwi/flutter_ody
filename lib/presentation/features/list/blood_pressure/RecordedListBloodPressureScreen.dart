@@ -86,29 +86,29 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                     itemCount: bpList.value.length,
                   )
                 : Center(
-                    child: EmptyView(
-                      screen: RoutingScreen.RecordBloodPressure,
-                      onPressed: () async {
-                        if (uiState is Failure) {
-                          if (isToday.value) {
-                            ResponseBioBloodPressureModel data = await Navigator.push(
-                              context,
-                              nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
-                            );
-                            try {
-                              if (data.diastolicBloodPressure != 0) {
-                                uiStateRead.addBpBioInfo(data);
-                              }
-                            } catch (e) {
-                              debugPrint("bp update fail: ${e.toString()}");
+                  child: EmptyView(
+                    screen: RoutingScreen.RecordedListBloodPressure,
+                    onPressed: () async {
+                      if (uiState is Failure) {
+                        if (isToday.value) {
+                          ResponseBioBloodPressureModel data = await Navigator.push(
+                            context,
+                            nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
+                          );
+                          try {
+                            if (data.diastolicBloodPressure != 0) {
+                              uiStateRead.addBpBioInfo(data);
                             }
-                          } else {
-                            Navigator.of(context).pop();
+                          } catch (e) {
+                            debugPrint("bp update fail: ${e.toString()}");
                           }
+                        } else {
+                          Navigator.of(context).pop();
                         }
-                      },
-                    ),
+                      }
+                    },
                   ),
+                ),
           if (uiState is Success)
             !CollectionUtil.isNullorEmpty(bpList.value) ? const RecordBloodPressureBottomContent() : const SizedBox(),
           if (uiState is Failure)
