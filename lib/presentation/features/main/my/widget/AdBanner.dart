@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ody_flutter_app/presentation/components/ad/PangleAdBanner.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
@@ -22,9 +23,7 @@ class AdBanner extends HookWidget {
           child: const SizedBox(
             width: double.infinity,
             height: 80,
-            child: Center(
-              child: Text("광고란"),
-            ),
+            child: PangleAdBanner(),
           ),
         ),
       ),
