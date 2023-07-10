@@ -86,10 +86,9 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                     itemCount: bpList.value.length,
                   )
                 : Center(
-                  child: EmptyView(
-                    screen: RoutingScreen.RecordedListBloodPressure,
-                    onPressed: () async {
-                      if (uiState is Failure) {
+                    child: EmptyView(
+                      screen: RoutingScreen.RecordedListBloodPressure,
+                      onPressed: () async {
                         if (isToday.value) {
                           ResponseBioBloodPressureModel data = await Navigator.push(
                             context,
@@ -105,10 +104,9 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                         } else {
                           Navigator.of(context).pop();
                         }
-                      }
-                    },
+                      },
+                    ),
                   ),
-                ),
           if (uiState is Success)
             !CollectionUtil.isNullorEmpty(bpList.value) ? const RecordBloodPressureBottomContent() : const SizedBox(),
           if (uiState is Failure)

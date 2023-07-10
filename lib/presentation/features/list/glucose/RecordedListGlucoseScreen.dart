@@ -99,7 +99,7 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
                               uiStateRead.addGlucoseBioInfo(data);
                             }
                           } catch (e) {
-                            debugPrint("bp update fail: ${e.toString()}");
+                            debugPrint("glucose update fail: ${e.toString()}");
                           }
                         } else {
                           Navigator.of(context).pop();
