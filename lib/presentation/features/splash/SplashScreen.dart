@@ -176,12 +176,13 @@ class SplashScreen extends HookConsumerWidget {
           }
         });
       });
+      return null;
     }, []);
 
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUIBackground,
       body: Center(
-        child: Image.asset("assets/imgs/logo_ody.png"),
+        child: Image.asset("assets/imgs/logo_splash.png"),
       ),
     );
   }
