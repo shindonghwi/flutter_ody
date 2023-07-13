@@ -108,10 +108,10 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
         final appleLoginResult = await _postAppleSignInUseCase.call();
         // 애플 로그인 성공
         if (appleLoginResult.status == 200) {
-          final googleAccessToken = appleLoginResult.data?.accessToken;
+          final appleAccessToken = appleLoginResult.data?.accessToken;
           final res = await postSocialLoginInUseCase.call(
             platform: platform,
-            accessToken: googleAccessToken ?? "",
+            accessToken: appleAccessToken ?? "",
             deviceToken: "",
           );
 

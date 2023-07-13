@@ -53,6 +53,7 @@ class LoginScreen extends HookConsumerWidget {
           },
         );
       });
+      return null;
     }, [state]);
 
     return Stack(
