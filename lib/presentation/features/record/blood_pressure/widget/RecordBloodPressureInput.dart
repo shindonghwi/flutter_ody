@@ -208,7 +208,7 @@ class _InputBloodHeartBeatTextField extends HookConsumerWidget {
                         parsedValue = int.tryParse(value);
                       }
                       bgRecorderRead.updateHeartRate(parsedValue ?? 0);
-                      if (value.length == 2) {
+                      if (value.length == 3) {
                         FocusScope.of(context).unfocus();
                       }
                     },

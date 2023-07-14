@@ -104,7 +104,6 @@ class _ToastState extends State<Toast> with SingleTickerProviderStateMixin {
       child: Align(
         alignment: Alignment.topCenter,
         child: Container(
-          color: Colors.red.withOpacity(0.3),
           margin: const EdgeInsets.only(top: 60.0),
           child: SlideTransition(
             position: _slideAnimation,

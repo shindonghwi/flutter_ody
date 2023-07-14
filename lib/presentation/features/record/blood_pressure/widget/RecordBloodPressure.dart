@@ -21,8 +21,8 @@ class RecordBloodPressure extends HookWidget {
         color: getColorScheme(context).white,
         borderRadius: BorderRadius.circular(5),
       ),
-      child: Column(
-        children: const [
+      child: const Column(
+        children: [
           RecordBloodPressureInput(),
           RecordBloodPressureRange(),
         ],
