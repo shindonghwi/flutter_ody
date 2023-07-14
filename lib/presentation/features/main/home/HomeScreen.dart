@@ -33,8 +33,6 @@ class HomeScreen extends HookConsumerWidget {
       return null;
     }, [uiState]);
 
-    debugPrint('HomeScreen build : ${uiState}');
-
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI03,
       body: SafeArea(

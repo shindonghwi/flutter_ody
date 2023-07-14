@@ -23,7 +23,6 @@ class CardBpItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint("CardBpItem build : ${bpDataList}");
     DateTime currentDateTime = ref.read(calendarPageProvider.notifier).getCurrentDateTime();
     bool isToday = false;
 
@@ -31,6 +30,7 @@ class CardBpItem extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         isToday = DateChecker.isDateToday(currentDateTime);
       });
+      return null;
     }, [currentDateTime]);
 
     return LayoutBuilder(
