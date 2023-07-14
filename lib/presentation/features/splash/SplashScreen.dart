@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/app/OrotApp.dart';
 import 'package:ody_flutter_app/data/data_source/remote/Service.dart';
@@ -29,8 +30,24 @@ class SplashScreen extends HookConsumerWidget {
   SplashScreen({super.key});
 
   Future<String?> getSocialAccessToken(String platform) async {
-    final user = FirebaseAuth.instance.currentUser;
-    return await user?.getIdTokenResult().then((value) => value.token);
+    final String platformName = platform.toLowerCase();
+    if (platformName.contains("google")) {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signInSilently();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        return googleAuth.idToken;
+      }
+    } else if (platformName.contains("kakao")) {
+      return null;
+    } else if (platformName.contains("apple")) {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final idTokenResult = await user.getIdTokenResult(true);
+        return idTokenResult.token;
+      }
+      return null;
+    }
+    return null;
   }
 
   /// 소셜 로그인 정보를 확인한다.
@@ -40,6 +57,7 @@ class SplashScreen extends HookConsumerWidget {
     if (user != null) {
       List<UserInfo>? providers = user.providerData;
       for (UserInfo provider in providers) {
+        debugPrint("provider.providerId : ${provider.providerId}");
         LoginPlatform platform = getLoginPlatform(provider.providerId);
         String? accessToken = await getSocialAccessToken(platform.name);
         if (accessToken != null) {
