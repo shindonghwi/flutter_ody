@@ -17,6 +17,7 @@ class CardRecordItems extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    debugPrint('CardRecordItems build ${model.bloodPressures}');
     final List<ResponseBioStepModel> stepDataList = model.steps;
     final List<ResponseBioBloodPressureModel> bpDataList = model.bloodPressures;
     final List<ResponseBioGlucoseModel> glucoseDataList = model.glucoses;

@@ -32,7 +32,7 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
     state = BpRecorderModel(time: state.time, systolic: state.systolic, diastolic: state.diastolic, hr: heartRate);
   }
 
-  ResponseBioBloodPressureModel getBioBpModel() {
+  ResponseBioBloodPressureModel? getBioBpModel() {
     return ResponseBioBloodPressureModel(
       systolicBloodPressure: state.systolic,
       diastolicBloodPressure: state.diastolic,

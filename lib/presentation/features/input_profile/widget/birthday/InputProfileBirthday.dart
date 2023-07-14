@@ -41,7 +41,7 @@ class InputProfileBirthday extends HookConsumerWidget {
             birthdayUiStateProvider.resetState();
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast( event.errorMessage);
           },
         );
       });

@@ -7,7 +7,7 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class PopupUtil {
   static void showAppPolicy({required bool backgroundTouchCloseFlag}) {
-    final context = OdyGlobalVariable.naviagatorState.currentContext as BuildContext;
+    final context = OdyGlobalVariable.navigatorKey.currentContext as BuildContext;
     Future.delayed(Duration.zero, () {
       showDialog(
         context: context,
@@ -39,7 +39,7 @@ class PopupUtil {
   }
 
   static void showLogout({required bool backgroundTouchCloseFlag}) {
-    final context = OdyGlobalVariable.naviagatorState.currentContext as BuildContext;
+    final context = OdyGlobalVariable.navigatorKey.currentContext as BuildContext;
     Future.delayed(Duration.zero, () {
       showDialog(
         context: context,
@@ -71,7 +71,7 @@ class PopupUtil {
   }
 
   static void close(){
-    final context = OdyGlobalVariable.naviagatorState.currentContext as BuildContext;
+    final context = OdyGlobalVariable.navigatorKey.currentContext as BuildContext;
     Navigator.pop(context);
   }
 }

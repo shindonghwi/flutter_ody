@@ -48,7 +48,7 @@ class AnalysisScreen extends HookConsumerWidget {
                 CollectionUtil.isNullorEmpty(bpList.value);
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast( event.errorMessage);
           },
         );
       });

@@ -85,7 +85,6 @@ flutter:
           weight: 900
 
 flutter_native_splash:
-  fullscreen: true
   image: assets/imgs/splash_light.png
   image_dark: assets/imgs/splash_dark.png
   color: "#FFFFFF"
@@ -93,7 +92,6 @@ flutter_native_splash:
 
   # Android 12 이상 버전에서 적용
   android_12:
-    fullscreen: true
     image: assets/imgs/splash_light.png
     image_dark: assets/imgs/splash_dark.png
     color: "#FFFFFF"

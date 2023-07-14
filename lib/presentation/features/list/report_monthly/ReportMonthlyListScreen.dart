@@ -29,7 +29,7 @@ class ReportMonthlyListScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           uiState.when(
-            failure: (event) => ToastUtil.errorToast(context, event.errorMessage),
+            failure: (event) => ToastUtil.errorToast( event.errorMessage),
           );
         });
       }

@@ -39,11 +39,12 @@ class EditMyHeightScreen extends HookConsumerWidget {
             stateRead.init();
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast(event.errorMessage);
             stateRead.init();
           },
         );
       });
+      return null;
     }, [state]);
 
     return Scaffold(

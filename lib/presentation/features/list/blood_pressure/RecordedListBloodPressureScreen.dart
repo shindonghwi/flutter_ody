@@ -38,19 +38,21 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
           success: (event) async {
-            bpList.value = [...?event.value?.bloodPressures.reversed.toList()];
+            bpList.value = [...?event.value?.bloodPressures.toList()];
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast(event.errorMessage);
           },
         );
       });
+      return null;
     }, [uiState]);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         isToday.value = DateChecker.isDateToday(date);
       });
+      return null;
     }, [date]);
 
     return Scaffold(
@@ -90,13 +92,13 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                       screen: RoutingScreen.RecordedListBloodPressure,
                       onPressed: () async {
                         if (isToday.value) {
-                          ResponseBioBloodPressureModel data = await Navigator.push(
+                          final data = await Navigator.push(
                             context,
                             nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
                           );
                           try {
-                            if (data.diastolicBloodPressure != 0) {
-                              uiStateRead.addBpBioInfo(data);
+                            if (data?.diastolicBloodPressure != 0) {
+                              uiStateRead.addBpBioInfo(data!);
                             }
                           } catch (e) {
                             debugPrint("bp update fail: ${e.toString()}");

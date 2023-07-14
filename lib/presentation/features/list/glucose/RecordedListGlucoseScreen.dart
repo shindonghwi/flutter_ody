@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:ody_flutter_app/data/models/bio/ResponseBioForDaysModel.dart';
 import 'package:ody_flutter_app/data/models/bio/ResponseBioGlucoseModel.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
@@ -38,19 +39,21 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
           success: (event) async {
-            glucoseList.value = [...?event.value?.glucoses.reversed.toList()];
+            glucoseList.value = [...?event.value?.glucoses.toList()];
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast( event.errorMessage);
           },
         );
       });
+      return null;
     }, [uiState]);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         isToday.value = DateChecker.isDateToday(date);
       });
+      return null;
     }, [date]);
 
     return Scaffold(
@@ -90,12 +93,12 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
                       screen: RoutingScreen.RecordedListGlucose,
                       onPressed: () async {
                         if (isToday.value) {
-                          ResponseBioGlucoseModel data = await Navigator.push(
+                          final data = await Navigator.push(
                             context,
                             nextSlideScreen(RoutingScreen.RecordGlucose.route),
                           );
                           try {
-                            if (data.glucose != 0) {
+                            if (data?.glucose != 0) {
                               uiStateRead.addGlucoseBioInfo(data);
                             }
                           } catch (e) {

@@ -43,7 +43,7 @@ class OrotApp extends StatelessWidget {
             initialRoute: RoutingScreen.Splash.route,
             routes: RoutingScreen.getAppRoutes(),
 
-            navigatorKey: OdyGlobalVariable.naviagatorState,
+            navigatorKey: OdyGlobalVariable.navigatorKey,
           );
         }
         return const Center(
@@ -55,5 +55,5 @@ class OrotApp extends StatelessWidget {
 }
 
 class OdyGlobalVariable {
-  static final GlobalKey<NavigatorState> naviagatorState = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 }

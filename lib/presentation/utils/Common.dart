@@ -29,7 +29,7 @@ class AppLocalization {
   AppLocalization();
 
   AppLocalizations get() {
-    final context = OdyGlobalVariable.naviagatorState.currentContext as BuildContext;
+    final context = OdyGlobalVariable.navigatorKey.currentContext as BuildContext;
     return getAppLocalizations(context);
   }
 }

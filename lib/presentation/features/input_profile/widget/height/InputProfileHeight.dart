@@ -39,7 +39,7 @@ class InputProfileHeight extends HookConsumerWidget {
             heightUiStateProvider.resetState();
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast( event.errorMessage);
           },
         );
       });

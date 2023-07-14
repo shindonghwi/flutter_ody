@@ -34,7 +34,7 @@ class WithdrawalReasonScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
           success: (event) async {
-            ToastUtil.defaultToast(context, getAppLocalizations(context).message_withdrawal_success);
+            ToastUtil.defaultToast(getAppLocalizations(context).message_withdrawal_success);
             meInfoRead.updateMeInfo(null);
             uiStateRead.init();
             Navigator.pushNamedAndRemoveUntil(
@@ -44,7 +44,7 @@ class WithdrawalReasonScreen extends HookConsumerWidget {
             );
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast( event.errorMessage);
           },
         );
       });

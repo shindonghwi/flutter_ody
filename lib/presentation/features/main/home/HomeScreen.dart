@@ -26,11 +26,14 @@ class HomeScreen extends HookConsumerWidget {
             currentState.value = event.value;
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast( event.errorMessage);
           },
         );
       });
+      return null;
     }, [uiState]);
+
+    debugPrint('HomeScreen build : ${uiState}');
 
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI03,
@@ -38,7 +41,7 @@ class HomeScreen extends HookConsumerWidget {
         child: Stack(
           children: [
             mainContent(
-              uiState is Success<ResponseBioForDaysModel>
+              uiState is Success<ResponseBioForDaysModel?>
                   ? uiState.value
                   : ResponseBioForDaysModel(steps: [], bloodPressures: [], glucoses: []),
             ),
@@ -49,14 +52,14 @@ class HomeScreen extends HookConsumerWidget {
     );
   }
 
-  Widget mainContent(ResponseBioForDaysModel model) {
+  Widget mainContent(ResponseBioForDaysModel? model) {
     return Container(
       margin: const EdgeInsets.only(left: 24, right: 24),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            CardTodayRecord(model: model),
+            CardTodayRecord(model: model!),
             CardRecordItems(model: model),
           ],
         ),

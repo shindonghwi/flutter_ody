@@ -79,7 +79,7 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
     debugPrint('update remindTime: ${state.remindTime}');
   }
 
-  ResponseBioGlucoseModel getBioGlucoseModel() {
+  ResponseBioGlucoseModel? getBioGlucoseModel() {
     return ResponseBioGlucoseModel(
       type: ResponseBioGlucoseTypeModel(
         code: state.measureType.name.toString(),
