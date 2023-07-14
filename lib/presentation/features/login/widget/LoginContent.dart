@@ -154,6 +154,8 @@ class LoginContent extends HookConsumerWidget {
           children: [
             Image.asset(
               'assets/imgs/logo_ody.png',
+              width: 97,
+              height: 57,
             ),
             Container(
               margin: const EdgeInsets.only(top: 24),
