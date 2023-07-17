@@ -43,6 +43,7 @@ class ReportWeeklyListScreen extends HookConsumerWidget {
         uiStateRead.init();
         uiStateRead.requestWeeklyList();
       });
+      return null;
     }, []);
 
     return Scaffold(

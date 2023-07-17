@@ -56,6 +56,7 @@ class MedicationListScreen extends HookConsumerWidget {
         uiStateRead.init();
         uiStateRead.requestMedicineList();
       });
+      return null;
     }, []);
 
     return Scaffold(

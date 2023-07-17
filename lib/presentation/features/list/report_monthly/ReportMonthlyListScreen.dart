@@ -43,6 +43,7 @@ class ReportMonthlyListScreen extends HookConsumerWidget {
         uiStateRead.init();
         uiStateRead.requestMonthlyList();
       });
+      return null;
     }, []);
 
     return Scaffold(
