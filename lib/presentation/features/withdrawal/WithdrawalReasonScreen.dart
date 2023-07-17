@@ -81,6 +81,7 @@ class WithdrawalReasonScreen extends HookConsumerWidget {
         children: [
           ListView(
             controller: controller,
+            reverse: true,
             shrinkWrap: true,
             children: [
               Container(
