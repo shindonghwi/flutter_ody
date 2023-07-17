@@ -38,6 +38,7 @@ class MedicationTime extends HookConsumerWidget {
 
     useEffect(() {
       uiStateRead.updateMedicineTime(timeData.second);
+      return null;
     },[]);
 
     return Container(
@@ -72,8 +73,8 @@ class MedicationTime extends HookConsumerWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: getColorScheme(context).neutral50,
-                    width: 1,
+                    color: getColorScheme(context).colorPrimaryFocus,
+                    width: 1.5,
                   ),
                 ),
                 child: Row(
@@ -83,7 +84,7 @@ class MedicationTime extends HookConsumerWidget {
                       width: 24,
                       height: 24,
                       colorFilter: ColorFilter.mode(
-                        getColorScheme(context).neutral50,
+                        getColorScheme(context).colorText,
                         BlendMode.srcIn,
                       ),
                     ),
@@ -93,7 +94,7 @@ class MedicationTime extends HookConsumerWidget {
                     Text(
                       medicationTime.value ?? getAppLocalizations(context).add_medication_time_text,
                       style: getTextTheme(context).l2m.copyWith(
-                            color: getColorScheme(context).neutral50,
+                            color: getColorScheme(context).colorText,
                           ),
                     )
                   ],
