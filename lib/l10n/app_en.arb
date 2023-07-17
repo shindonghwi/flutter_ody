@@ -91,7 +91,7 @@
     "record_blood_pressure_range_title": "혈압 범위",
 
     "record_glucose_input_title": "혈당",
-    "record_glucose_input_hint": "100",
+    "record_glucose_input_hint": "70 ~ 100",
     "record_glucose_input_state_empty": "공복",
     "record_glucose_input_state_before_meal": "식전",
     "record_glucose_input_state_after_meal": "식후",

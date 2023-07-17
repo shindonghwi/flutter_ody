@@ -7,7 +7,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ody_flutter_app/app/env/Environment.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/theme.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 final googleSignIn = Platform.isAndroid
     ? GoogleSignIn(
@@ -39,8 +41,16 @@ class OrotApp extends HookWidget {
             onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
 
             // 시스템 테마 설정 (라이트, 다크 모드)
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
+            theme: AppTheme.lightTheme.copyWith(
+              textSelectionTheme: TextSelectionThemeData(
+                cursorColor: getColorScheme(context).colorPrimaryFocus,
+              ),
+            ),
+            darkTheme: AppTheme.darkTheme.copyWith(
+              textSelectionTheme: TextSelectionThemeData(
+                cursorColor: getColorScheme(context).colorPrimaryFocus,
+              ),
+            ),
             themeMode: ThemeMode.system,
 
             // 앱 Localization ( 영어, 한국어 지원 )

@@ -20,8 +20,8 @@ class RecordGlucose extends HookWidget {
         color: getColorScheme(context).white,
         borderRadius: BorderRadius.circular(5),
       ),
-      child: Column(
-        children: const [
+      child: const Column(
+        children: [
           RecordGlucoseInput(),
           RecordGlucoseRange(),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,8 +9,6 @@ import 'package:ody_flutter_app/presentation/features/record/blood_pressure/noti
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-
-import '../../widget/RecordInputTextField.dart';
 
 class RecordBloodPressureInput extends HookWidget {
   const RecordBloodPressureInput({
@@ -97,19 +96,33 @@ class _InputBloodPressureTextField extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  width: 38,
-                  child: RecordInputTextField(
-                    hint: getAppLocalizations(context).record_blood_pressure_input1_hint1,
-                    textInputType: TextInputType.number,
+                IntrinsicWidth(
+                  child: TextField(
+                    autofocus: true,
                     textInputAction: TextInputAction.next,
-                    onNextAction: () => FocusScope.of(context).nextFocus(),
-                    onChanged: (value) {
-                      bgRecorderRead.updateSystolicBloodPressure(int.parse(value));
+                    keyboardType: TextInputType.number,
+                    style: getTextTheme(context).t2b.copyWith(
+                          color: getColorScheme(context).colorText,
+                        ),
+                    decoration: InputDecoration(
+                      hintText: getAppLocalizations(context).record_blood_pressure_input1_hint1,
+                      hintStyle: getTextTheme(context).t2b.copyWith(
+                            color: getColorScheme(context).neutral60,
+                          ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                      counterText: ''
+                    ),
+                    maxLines: 1,
+                    maxLength: 3,
+                    onEditingComplete: () => FocusScope.of(context).nextFocus(),
+                    onChanged: (String value) {
+                      bgRecorderRead.updateSystolicBloodPressure(int.tryParse(value) ?? 0);
                       if (value.length == 3) {
                         FocusScope.of(context).nextFocus();
                       }
                     },
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
                 ),
                 Padding(
@@ -121,22 +134,36 @@ class _InputBloodPressureTextField extends HookConsumerWidget {
                         ),
                   ),
                 ),
-                SizedBox(
-                  width: 38,
-                  child: RecordInputTextField(
-                    textInputType: TextInputType.number,
+                IntrinsicWidth(
+                  child: TextField(
+                    autofocus: true,
                     textInputAction: TextInputAction.next,
-                    hint: getAppLocalizations(context).record_blood_pressure_input1_hint2,
-                    onNextAction: () => FocusScope.of(context).nextFocus(),
-                    onChanged: (value) {
-                      bgRecorderRead.updateDiastolicBloodPressure(int.parse(value));
+                    keyboardType: TextInputType.number,
+                    style: getTextTheme(context).t2b.copyWith(
+                      color: getColorScheme(context).colorText,
+                    ),
+                    decoration: InputDecoration(
+                        hintText: getAppLocalizations(context).record_blood_pressure_input1_hint2,
+                        hintStyle: getTextTheme(context).t2b.copyWith(
+                          color: getColorScheme(context).neutral60,
+                        ),
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                        counterText: ''
+                    ),
+                    maxLines: 1,
+                    maxLength: 3,
+                    onEditingComplete: () => FocusScope.of(context).nextFocus(),
+                    onChanged: (String value) {
+                      bgRecorderRead.updateDiastolicBloodPressure(int.tryParse(value) ?? 0);
                       if (value.length == 3) {
                         FocusScope.of(context).nextFocus();
                       }
                     },
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
                 ),
-                const SizedBox(width: 9),
+                const SizedBox(width: 16),
               ],
             ),
           ),
@@ -188,21 +215,25 @@ class _InputBloodHeartBeatTextField extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  width: 70,
-                  height: double.infinity,
-                  child: RecordInputTextField(
-                    textInputType: TextInputType.number,
+                IntrinsicWidth(
+                  child: TextField(
+                    keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.done,
-                    hint: getAppLocalizations(context).record_blood_pressure_input2_hint,
-                    textStyle: getTextTheme(context).t3sb.copyWith(
+                    style: getTextTheme(context).t3sb.copyWith(
                           color: getColorScheme(context).colorText,
                         ),
-                    hintTextStyle: getTextTheme(context).t3sb.copyWith(
-                          color: getColorScheme(context).neutral60,
-                        ),
-                    onDoneAction: () => FocusScope.of(context).unfocus(),
-                    onChanged: (value) {
+                    decoration: InputDecoration(
+                        hintText: getAppLocalizations(context).record_blood_pressure_input2_hint,
+                        hintStyle: getTextTheme(context).t3sb.copyWith(
+                              color: getColorScheme(context).neutral60,
+                            ),
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                        counterText: ''),
+                    maxLines: 1,
+                    maxLength: 3,
+                    onEditingComplete: () => FocusScope.of(context).unfocus(),
+                    onChanged: (String value) {
                       int? parsedValue;
                       if (value.isNotEmpty) {
                         parsedValue = int.tryParse(value);
@@ -212,6 +243,7 @@ class _InputBloodHeartBeatTextField extends HookConsumerWidget {
                         FocusScope.of(context).unfocus();
                       }
                     },
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
                 ),
                 const SizedBox(width: 16),
