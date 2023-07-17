@@ -39,7 +39,7 @@ class ForDaysBioInfoNotifier extends StateNotifier<UIState<ResponseBioForDaysMod
     if (state is Success) {
       if (state is Success) {
         final currentData = (state as Success<ResponseBioForDaysModel?>).value;
-        final updatedList = CollectionUtil.isNullorEmpty(currentData?.glucoses) ? [glucoseData] : [glucoseData, ...?currentData?.glucoses];
+        final updatedList = CollectionUtil.isNullorEmpty(currentData?.glucoses) ? [glucoseData] : [...?currentData?.glucoses, glucoseData];
         state = Success(currentData?.copyWith(
           steps: currentData.steps,
           bloodPressures: currentData.bloodPressures,
@@ -54,7 +54,7 @@ class ForDaysBioInfoNotifier extends StateNotifier<UIState<ResponseBioForDaysMod
     if (state is Success) {
       if (state is Success) {
         final currentData = (state as Success<ResponseBioForDaysModel?>).value;
-        final updatedList = CollectionUtil.isNullorEmpty(currentData?.bloodPressures) ? [bpData] : [bpData, ...?currentData?.bloodPressures];
+        final updatedList = CollectionUtil.isNullorEmpty(currentData?.bloodPressures) ? [bpData] : [...?currentData?.bloodPressures, bpData];
         state = Success(currentData?.copyWith(
           steps: currentData.steps,
           bloodPressures: updatedList,

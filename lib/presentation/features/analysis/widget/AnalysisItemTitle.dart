@@ -25,52 +25,46 @@ class AnalysisItemTitle extends StatelessWidget {
         Text(
           title,
           style: getTextTheme(context).b3sb.copyWith(
-            color: getColorScheme(context).colorPrimaryFocus,
-          ),
+                color: getColorScheme(context).colorPrimaryFocus,
+              ),
         ),
         const SizedBox(
           height: 8,
         ),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: secondTitle.first,
+                  style: getTextTheme(context).t2b.copyWith(color: getColorScheme(context).colorText, height: 1.2),
+                ),
 
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              secondTitle.first,
-              style: getTextTheme(context).t2b.copyWith(
-                color: getColorScheme(context).colorText,
-                  height: 1.2
-              ),
-              overflow: TextOverflow.visible,
+                TextSpan(
+                  text: " ${secondTitle.second} ",
+                  style: getTextTheme(context).t2b.copyWith(color: getColorScheme(context).colorPrimaryFocus, height: 1.2),
+                ),
+
+                TextSpan(
+                  text: secondTitle.third,
+                  style: getTextTheme(context).t2b.copyWith(color: getColorScheme(context).colorText, height: 1.2),
+                ),
+
+              ],
             ),
-            Text(
-              " ${secondTitle.second} ",
-              style: getTextTheme(context).t2b.copyWith(
-                color: getColorScheme(context).colorPrimaryFocus,
-                height: 1.2
-              ),
-              overflow: TextOverflow.visible,
-            ),
-            Text(
-              secondTitle.third,
-              style: getTextTheme(context).t2b.copyWith(
-                color: getColorScheme(context).colorText,
-                  height: 1.2
-              ),
-              overflow: TextOverflow.visible,
-            ),
-          ],
+            overflow: TextOverflow.visible,
+          ),
         ),
-
         const SizedBox(
           height: 8,
         ),
         Text(
           description,
           style: getTextTheme(context).c2r.copyWith(
-            color: getColorScheme(context).neutral60,
-            height: 1.16,
-          ),
+                color: getColorScheme(context).neutral60,
+                height: 1.16,
+              ),
           overflow: TextOverflow.visible,
         ),
       ],

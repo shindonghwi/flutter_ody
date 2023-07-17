@@ -83,7 +83,7 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                       return const SizedBox(height: 24); // Adjust the height as needed
                     },
                     itemBuilder: (BuildContext context, int index) {
-                      return RecordBloodPressureItem(model: bpList.value[index]);
+                      return RecordBloodPressureItem(model: bpList.value.reversed.toList()[index]);
                     },
                     itemCount: bpList.value.length,
                   )

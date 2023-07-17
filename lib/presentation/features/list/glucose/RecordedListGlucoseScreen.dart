@@ -84,7 +84,7 @@ class RecordedListGlucoseScreen extends HookConsumerWidget {
                       return const SizedBox(height: 24); // Adjust the height as needed
                     },
                     itemBuilder: (BuildContext context, int index) {
-                      return RecordGlucoseItem(model: glucoseList.value[index]);
+                      return RecordGlucoseItem(model: glucoseList.value.reversed.toList()[index]);
                     },
                     itemCount: glucoseList.value.length,
                   )
