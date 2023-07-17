@@ -44,10 +44,11 @@ class WithdrawalReasonScreen extends HookConsumerWidget {
             );
           },
           failure: (event) {
-            ToastUtil.errorToast( event.errorMessage);
+            ToastUtil.errorToast(event.errorMessage);
           },
         );
       });
+      return null;
     }, [uiState]);
 
     final reasonText = useState('');
@@ -64,6 +65,8 @@ class WithdrawalReasonScreen extends HookConsumerWidget {
       return reasonItems.any((item) => item.first.value == true);
     }
 
+    final controller = useScrollController();
+
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI01,
       appBar: IconTitleIconAppBar(
@@ -76,25 +79,39 @@ class WithdrawalReasonScreen extends HookConsumerWidget {
       ),
       body: Stack(
         children: [
-          Container(
-            margin: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _description(context),
-                const SizedBox(height: 8),
-                _subDescription(context),
-                const SizedBox(height: 32),
-                _ReasonItems(
-                  reasonItems: reasonItems,
-                  callback: (value) => reasonText.value = value,
+          ListView(
+            controller: controller,
+            shrinkWrap: true,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _description(context),
+                    const SizedBox(height: 8),
+                    _subDescription(context),
+                    const SizedBox(height: 32),
+                    _ReasonItems(
+                      reasonItems: reasonItems,
+                      controller: controller,
+                      callback: (value) => reasonText.value = value,
+                    ),
+                    const SizedBox(height: 60),
+                  ],
                 ),
-                const Expanded(child: SizedBox()),
-                _LeaveButton(
-                  isAnyReasonChecked: isAnyReasonChecked,
-                  reason: reasonText.value,
-                ),
-              ],
+              )
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: _LeaveButton(
+                isAnyReasonChecked: isAnyReasonChecked,
+                reason: reasonText.value,
+              ),
             ),
           ),
           if (uiState is Loading) const CircleLoading(),
@@ -160,11 +177,13 @@ class _LeaveButton extends HookConsumerWidget {
 class _ReasonItems extends HookWidget {
   final Function(String) callback;
   final List<Pair<ValueNotifier<bool>, String>> reasonItems;
+  final ScrollController controller;
 
   const _ReasonItems({
     super.key,
     required this.callback,
     required this.reasonItems,
+    required this.controller,
   });
 
   @override
@@ -183,6 +202,7 @@ class _ReasonItems extends HookWidget {
       child: Column(
         children: [
           ListView.separated(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             padding: const EdgeInsets.all(0),
             itemBuilder: (BuildContext context, int index) {
@@ -195,6 +215,11 @@ class _ReasonItems extends HookWidget {
                       element.first.value = element == item;
                     }
                     isShowEtcTextField.value = item == reasonItems.last;
+
+                    if (isShowEtcTextField.value) {
+                      controller.jumpTo(controller.position.maxScrollExtent);
+                    }
+
                     callback.call(item.second);
                   },
                   child: Padding(
