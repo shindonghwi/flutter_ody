@@ -10,7 +10,6 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 enum InputFieldState { Default, Fill, Focus, Success, Error, Disable }
 
 class InputTextField extends HookWidget {
-  // final TextEditingController controller;
 
   final String initText;
   final String hint;
@@ -22,6 +21,7 @@ class InputTextField extends HookWidget {
   final bool autoFocus;
   final bool enabled;
   final bool showCounter;
+  final bool realTimeValidationCheck;
 
   final TextInputType textInputType;
   final TextInputAction textInputAction;
@@ -44,11 +44,11 @@ class InputTextField extends HookWidget {
     this.autoFocus = false,
     this.enabled = true,
     this.showCounter = true,
+    this.realTimeValidationCheck = true,
     this.textInputType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
     this.inputFormatters = const [],
     this.regList = const [],
-
     this.onChanged,
     this.onNextAction,
     this.onDoneAction,
@@ -73,6 +73,23 @@ class InputTextField extends HookWidget {
       return () => focusNode.removeListener(onFocusChanged);
     }, [focusNode]);
 
+    void checkRegExp() {
+      if (regList.isEmpty) {
+        currentType.value = InputFieldState.Success;
+      } else {
+        var isSuccess = false;
+        var result = contentValue.value.trim();
+        for (var element in regList) {
+          if (element.hasMatch(result)) {
+            isSuccess = true;
+            break;
+          }
+        }
+        isSuccess ? currentType.value = InputFieldState.Success : currentType.value = InputFieldState.Error;
+        debugPrint('checkRegExp: ${result} ${isSuccess}');
+      }
+    }
+
     return Column(
       children: [
         Container(
@@ -90,58 +107,51 @@ class InputTextField extends HookWidget {
             controller: controller
               ..selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)),
             style: getTextTheme(context).l2m.copyWith(
-              color: getColorScheme(context).colorText,
-            ),
+                  color: getColorScheme(context).colorText,
+                ),
             focusNode: focusNode,
             maxLines: maxLine,
             maxLength: limit,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: getTextTheme(context).l2m.copyWith(
-                color: getColorScheme(context).neutral50,
-              ),
+                    color: getColorScheme(context).neutral50,
+                  ),
               isCollapsed: true,
               suffixIcon: getSuffixIcon(context, currentType.value),
               suffixIconConstraints: const BoxConstraints(minHeight: 20, minWidth: 20),
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-
               border: InputBorder.none,
               counter: null,
               counterText: '',
             ),
             onChanged: (value) {
               contentValue.value = value;
-              currentType.value = initTextFieldType(focusNode, value);
+              // currentType.value = initTextFieldType(focusNode, value);
+              debugPrint("onChanged: $value");
+              if (realTimeValidationCheck) {
+                checkRegExp();
+              }
               onChanged?.call(value);
             },
             keyboardType: textInputType,
             textInputAction: textInputAction,
             inputFormatters: inputFormatters,
             onEditingComplete: () {
-              if (regList.isEmpty){
-                currentType.value = InputFieldState.Success;
-              }else{
-                var isSuccess = false;
-                var result = contentValue.value.trim();
-                for (var element in regList) {
-                  if (element.hasMatch(result)) {
-                    isSuccess = true;
-                    break;
-                  }
-                }
-                isSuccess ? currentType.value = InputFieldState.Success : currentType.value = InputFieldState.Error;
-                switch (textInputAction) {
-                  case TextInputAction.next:
-                    onNextAction?.call(result);
-                    break;
-                  case TextInputAction.done:
-                    onDoneAction?.call(result);
-                    break;
-                  default:
-                    break;
-                }
+              var result = contentValue.value.trim();
+              if (!realTimeValidationCheck) {
+                checkRegExp();
               }
-
+              switch (textInputAction) {
+                case TextInputAction.next:
+                  onNextAction?.call(result);
+                  break;
+                case TextInputAction.done:
+                  onDoneAction?.call(result);
+                  break;
+                default:
+                  break;
+              }
               focusNode.unfocus();
             },
           ),
@@ -155,15 +165,15 @@ class InputTextField extends HookWidget {
                 Text(
                   helpMessage,
                   style: getTextTheme(context).c2r.copyWith(
-                    color: getHelpMessageColor(context, currentType.value),
-                  ),
+                        color: getHelpMessageColor(context, currentType.value),
+                      ),
                 ),
               if (helpMessage.isNotEmpty && showCounter)
                 Text(
                   "${contentValue.value.length} / $limit",
                   style: getTextTheme(context).c1r.copyWith(
-                    color: getHelpMessageColor(context, currentType.value),
-                  ),
+                        color: getHelpMessageColor(context, currentType.value),
+                      ),
                 ),
             ],
           ),
