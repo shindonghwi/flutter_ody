@@ -26,17 +26,11 @@ class SurveyPageView extends HookConsumerWidget {
     var currentPageIndex = ref.watch(inputProfileCurrentPageIndexProvider);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
 
-    final textEditingControllerList = [
-      useTextEditingController(),
-      useTextEditingController(),
-      useTextEditingController(),
-    ];
-
     useEffect(() {
-      final VoidCallback listener = () {
+      listener() {
         ref.read(inputProfileCurrentPageIndexProvider.notifier).state =
             pageController.page!.round();
-      };
+      }
 
       setPageControllerAddListener(pageController, listener);
       return () => disposePageController(pageController, listener);
@@ -66,12 +60,12 @@ class SurveyPageView extends HookConsumerWidget {
             child: PageView(
               controller: pageController,
               physics: const NeverScrollableScrollPhysics(),
-              children: [
-                const InputProfileGender(),
-                InputProfileBirthday(controller: textEditingControllerList[0]),
-                InputProfileHeight(controller: textEditingControllerList[1]),
-                InputProfileWeight(controller: textEditingControllerList[2]),
-                const InputProfileDisease(),
+              children: const [
+                InputProfileGender(),
+                InputProfileBirthday(),
+                InputProfileHeight(),
+                InputProfileWeight(),
+                InputProfileDisease(),
               ],
             ),
           ),

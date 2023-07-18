@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
-import 'package:ody_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
+import 'package:ody_flutter_app/presentation/components/textfield/InputTextField.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/edit/provider/PatchMeInfoUiStateNotifier.dart';
@@ -30,6 +30,8 @@ class EditMyWeightScreen extends HookConsumerWidget {
     final state = ref.watch(patchMeInfoUiStateProvider);
     final stateRead = ref.read(patchMeInfoUiStateProvider.notifier);
     final weightData = useState(weight.toString());
+    final weightRegExp = RegExp(r'^(3[0-6]|[3-9]\d|1\d\d|200)$');
+    final iconEnable = weightData.value.isNotEmpty && weightRegExp.hasMatch(weightData.value);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -44,6 +46,7 @@ class EditMyWeightScreen extends HookConsumerWidget {
           },
         );
       });
+      return null;
     }, [state]);
 
     return Scaffold(
@@ -53,9 +56,8 @@ class EditMyWeightScreen extends HookConsumerWidget {
           path: 'assets/imgs/icon_back.svg',
           onPressed: () => Navigator.of(context).pop(),
         ),
-        actionTextColor:
-            weightData.value.isEmpty ? getColorScheme(context).neutral50 : getColorScheme(context).neutral100,
-        actionIconEnable: weightData.value.isNotEmpty,
+        actionTextColor: !iconEnable ? getColorScheme(context).neutral50 : getColorScheme(context).neutral100,
+        actionIconEnable: iconEnable,
         actionText: getAppLocalizations(context).common_complete,
         actionTextCallback: () => stateRead.patchWeight(int.parse(weightData.value)),
         title: getAppLocalizations(context).edit_my_weight_title,
@@ -89,8 +91,6 @@ class _WeightContent extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final meInfo = ref.watch(meInfoProvider);
-    final helpText = useState('');
-    final fieldState = useState(TextFieldState.Complete);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -103,6 +103,7 @@ class _WeightContent extends HookConsumerWidget {
           callback.call(meInfo.profile!.weight.toString());
         }
       });
+      return null;
     }, []);
 
     return Container(
@@ -117,18 +118,17 @@ class _WeightContent extends HookConsumerWidget {
                 ),
           ),
           const SizedBox(height: 16),
-          OutlineDefaultTextField(
-            controller: useTextEditingController(text: initWeight),
-            textInputType: TextInputType.datetime,
-            textInputAction: TextInputAction.done,
+          InputTextField(
+            initText: initWeight,
             autoFocus: true,
-            onChanged: (String value) => callback.call(value),
+            hint: getAppLocalizations(context).input_profile_weight_hint,
+            textInputAction: TextInputAction.done,
+            textInputType: TextInputType.number,
             limit: 3,
-            maxLine: 1,
-            helpText: helpText.value,
-            fieldState: fieldState.value,
+            onChanged: (String value) => callback.call(value),
+            regList: [RegExp(r'^(3[0-6]|[3-9]\d|1\d\d|200)$')],
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            onDoneAction: () => FocusManager.instance.primaryFocus?.unfocus(),
+            onDoneAction: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           )
         ],
       ),

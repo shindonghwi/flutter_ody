@@ -22,10 +22,14 @@ final inputBirthdayUiStateProvider =
 class InputBirthdayUiStateNotifier extends StateNotifier<UIState<String>> {
   InputBirthdayUiStateNotifier() : super(Idle<String>());
 
+  var birthday = "";
+
+  void updateBirthday(String value) => birthday = value;
+
   PatchMeBirthdayUseCase get _patchMeBirthdayUseCase =>
       GetIt.instance<PatchMeBirthdayUseCase>();
 
-  void patchBirthday(String birthday) {
+  void patchBirthday() {
     state = Loading();
     _patchMeBirthdayUseCase.call(birthday: birthday).then((value) {
       if (value.status == 200) {

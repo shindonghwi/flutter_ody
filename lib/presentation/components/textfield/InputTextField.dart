@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -28,12 +31,11 @@ class InputTextField extends HookWidget {
   final Function(String value)? onDoneAction;
   final Function(String value)? onChanged;
 
-  // final List<TextInputFormatter> inputFormatters;
+  final List<TextInputFormatter> inputFormatters;
   List<RegExp> regList;
 
   InputTextField({
     super.key,
-    // required this.controller,
     this.initText = '',
     this.hint = '',
     this.helpMessage = '',
@@ -44,7 +46,7 @@ class InputTextField extends HookWidget {
     this.showCounter = true,
     this.textInputType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
-    // this.inputFormatters = const [],
+    this.inputFormatters = const [],
     this.regList = const [],
 
     this.onChanged,
@@ -59,6 +61,17 @@ class InputTextField extends HookWidget {
 
     final contentValue = useState(initText);
     final controller = useTextEditingController(text: initText);
+
+    final isFocused = useState(false);
+    useEffect(() {
+      void onFocusChanged() => isFocused.value = focusNode.hasFocus;
+      focusNode.addListener(onFocusChanged);
+      if (autoFocus) {
+        Timer(const Duration(milliseconds: 300), () => focusNode.requestFocus());
+        currentType.value = InputFieldState.Focus;
+      }
+      return () => focusNode.removeListener(onFocusChanged);
+    }, [focusNode]);
 
     return Column(
       children: [
@@ -76,7 +89,9 @@ class InputTextField extends HookWidget {
             autofocus: autoFocus,
             controller: controller
               ..selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)),
-            style: getTextTheme(context).l2m,
+            style: getTextTheme(context).l2m.copyWith(
+              color: getColorScheme(context).colorText,
+            ),
             focusNode: focusNode,
             maxLines: maxLine,
             maxLength: limit,
@@ -101,26 +116,32 @@ class InputTextField extends HookWidget {
             },
             keyboardType: textInputType,
             textInputAction: textInputAction,
+            inputFormatters: inputFormatters,
             onEditingComplete: () {
-              var isSuccess = false;
-              var result = contentValue.value.trim();
-              for (var element in regList) {
-                if (element.hasMatch(result)) {
-                  isSuccess = true;
-                  break;
+              if (regList.isEmpty){
+                currentType.value = InputFieldState.Success;
+              }else{
+                var isSuccess = false;
+                var result = contentValue.value.trim();
+                for (var element in regList) {
+                  if (element.hasMatch(result)) {
+                    isSuccess = true;
+                    break;
+                  }
+                }
+                isSuccess ? currentType.value = InputFieldState.Success : currentType.value = InputFieldState.Error;
+                switch (textInputAction) {
+                  case TextInputAction.next:
+                    onNextAction?.call(result);
+                    break;
+                  case TextInputAction.done:
+                    onDoneAction?.call(result);
+                    break;
+                  default:
+                    break;
                 }
               }
-              isSuccess ? currentType.value = InputFieldState.Success : currentType.value = InputFieldState.Error;
-              switch (textInputAction) {
-                case TextInputAction.next:
-                  onNextAction?.call(result);
-                  break;
-                case TextInputAction.done:
-                  onDoneAction?.call(result);
-                  break;
-                default:
-                  break;
-              }
+
               focusNode.unfocus();
             },
           ),
