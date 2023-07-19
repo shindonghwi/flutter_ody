@@ -18,4 +18,6 @@ class DiseaseSelectNotifier extends StateNotifier<List<DiseaseType>> {
       state = [...state];
     }
   }
+
+  void clearData() => state = [DiseaseType.HealthCare];
 }

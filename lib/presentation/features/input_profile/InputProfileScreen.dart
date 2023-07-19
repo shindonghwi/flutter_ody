@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleIconAppBar.dart';
@@ -19,7 +23,11 @@ class InputProfileScreen extends HookConsumerWidget {
 
   bool onBackPressed(BuildContext context, PageController pageController) {
     if (pageController.page!.round() == 0) {
-      Navigator.of(context).pop();
+      if (Platform.isAndroid) {
+        SystemNavigator.pop(animated: true);
+      } else {
+        FlutterExitApp.exitApp(iosForceExit: true);
+      }
       return true;
     } else {
       pageController.previousPage(
@@ -47,6 +55,7 @@ class InputProfileScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         pageController.jumpToPage(initPageNumber);
       });
+      return null;
     }, []);
 
     return Scaffold(

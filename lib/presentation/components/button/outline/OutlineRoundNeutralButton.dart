@@ -29,7 +29,6 @@ class OutlineRoundNeutralButton extends HookConsumerWidget {
     final buttonState = ref.watch<ButtonState>(buttonProvider);
     final buttonRead = ref.read<ButtonNotifier>(buttonProvider.notifier);
     final buttonHeight = OutlineButtonSize.getButtonHeight(type);
-    final buttonPadding = OutlineButtonSize.getButtonPadding(type);
     final buttonStateSave = useState(buttonState);
 
     return Material(
@@ -57,6 +56,9 @@ class OutlineRoundNeutralButton extends HookConsumerWidget {
           buttonRead.changeState(ButtonState.Default);
         },
         child: Container(
+          constraints: const BoxConstraints(
+            minWidth: 150,
+          ),
           height: buttonHeight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),

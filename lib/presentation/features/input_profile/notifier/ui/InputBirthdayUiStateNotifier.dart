@@ -41,4 +41,6 @@ class InputBirthdayUiStateNotifier extends StateNotifier<UIState<String>> {
   }
 
   void resetState() => state = Idle();
+
+  void clearData() => birthday = "";
 }

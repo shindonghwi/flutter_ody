@@ -77,46 +77,48 @@ class WithdrawalReasonScreen extends HookConsumerWidget {
         ),
         title: getAppLocalizations(context).withdrawal_title,
       ),
-      body: Stack(
-        children: [
-          ListView(
-            controller: controller,
-            reverse: true,
-            shrinkWrap: true,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _description(context),
-                    const SizedBox(height: 8),
-                    _subDescription(context),
-                    const SizedBox(height: 32),
-                    _ReasonItems(
-                      reasonItems: reasonItems,
-                      controller: controller,
-                      callback: (value) => reasonText.value = value,
-                    ),
-                    const SizedBox(height: 60),
-                  ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            ListView(
+              controller: controller,
+              reverse: true,
+              shrinkWrap: true,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _description(context),
+                      const SizedBox(height: 8),
+                      _subDescription(context),
+                      const SizedBox(height: 32),
+                      _ReasonItems(
+                        reasonItems: reasonItems,
+                        controller: controller,
+                        callback: (value) => reasonText.value = value,
+                      ),
+                      const SizedBox(height: 60),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: _LeaveButton(
+                  isAnyReasonChecked: isAnyReasonChecked,
+                  reason: reasonText.value,
                 ),
-              )
-            ],
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: _LeaveButton(
-                isAnyReasonChecked: isAnyReasonChecked,
-                reason: reasonText.value,
               ),
             ),
-          ),
-          if (uiState is Loading) const CircleLoading(),
-        ],
+            if (uiState is Loading) const CircleLoading(),
+          ],
+        ),
       ),
     );
   }
@@ -162,7 +164,7 @@ class _LeaveButton extends HookConsumerWidget {
         width: double.infinity,
         child: FillButton(
           text: getAppLocalizations(context).setting_sub_menu_etc_withdrawal,
-          type: ButtonSizeType.Small,
+          type: ButtonSizeType.Normal,
           onPressed: () => leaveRead.requestLeave(reason),
           buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
             (_) => ButtonNotifier(

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
-import 'package:ody_flutter_app/presentation/components/button/model/FillButtonSize.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
+import 'package:ody_flutter_app/presentation/components/button/model/FillButtonSize.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/OutlineButtonSize.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -29,7 +29,6 @@ class OutlineBasicPrimaryButton extends HookConsumerWidget {
     final buttonState = ref.watch<ButtonState>(buttonProvider);
     final buttonRead = ref.read<ButtonNotifier>(buttonProvider.notifier);
     final buttonHeight = OutlineButtonSize.getButtonHeight(type);
-    final buttonPadding = OutlineButtonSize.getButtonPadding(type);
     final buttonStateSave = useState(buttonState);
 
     return Material(
@@ -57,6 +56,9 @@ class OutlineBasicPrimaryButton extends HookConsumerWidget {
           buttonRead.changeState(ButtonState.Default);
         },
         child: Container(
+          constraints: const BoxConstraints(
+            minWidth: 150,
+          ),
           height: buttonHeight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -66,17 +68,14 @@ class OutlineBasicPrimaryButton extends HookConsumerWidget {
             ),
             color: _getBackgroundColor(context, buttonState),
           ),
-          child: Padding(
-            padding: buttonPadding,
-            child: Center(
-              child: Text(
-                text,
-                style: getTextTheme(context).l1m.copyWith(
-                      color: _getTextColor(context, buttonState),
-                    ),
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-              ),
+          child: Center(
+            child: Text(
+              text,
+              style: getTextTheme(context).l1m.copyWith(
+                    color: _getTextColor(context, buttonState),
+                  ),
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
             ),
           ),
         ),

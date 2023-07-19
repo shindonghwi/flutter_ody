@@ -28,4 +28,6 @@ class InputWeightUiStateNotifier extends StateNotifier<UIState<String>> {
   }
 
   void resetState() => state = Idle();
+
+  void clearData() => weight = 0;
 }

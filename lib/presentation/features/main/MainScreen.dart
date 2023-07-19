@@ -25,8 +25,6 @@ class MainScreen extends HookConsumerWidget {
     final calendarPage = ref.watch(calendarPageProvider);
     final _currentIndex = ref.watch(mainTabIndexProvider);
 
-    debugPrint('MainScreen build: ${calendarPage}');
-
     List<Pair> _iconList = [
       Pair('assets/imgs/icon_record_1.svg', getAppLocalizations(context).main_tab_record),
       Pair('assets/imgs/icon_analyzing.svg', getAppLocalizations(context).main_tab_analysis),

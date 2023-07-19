@@ -90,6 +90,7 @@ class _InputTextField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final meInfoRead = ref.read(meInfoProvider.notifier);
     final birthdayRead = ref.read(inputBirthdayUiStateProvider.notifier);
 
     final currentYear = DateTime.now().year;
@@ -97,8 +98,27 @@ class _InputTextField extends HookConsumerWidget {
         currentYear.toString().substring(2) +
         r'))/(0[1-9]|1[0-2])/(0[1-9]|[12]\d|3[01])$');
 
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (birthdayRead.birthday.isNotEmpty) {
+          final birthday = birthdayRead.birthday.replaceAll("-", "/");
+          onChanged(pattern.hasMatch(birthday));
+          birthdayRead.updateBirthday(birthday.replaceAll("/", "-"));
+        }
+        if (meInfoRead.getMeProfile()?.birthday != null) {
+          final birthday = meInfoRead.getMeProfile()!.birthday!.replaceAll("-", "/");
+          onChanged(pattern.hasMatch(birthday));
+          birthdayRead.updateBirthday(birthday.replaceAll("/", "-"));
+        }
+      });
+      return null;
+    }, []);
+
     return InputTextField(
       autoFocus: true,
+      initText: birthdayRead.birthday.isNotEmpty
+          ? birthdayRead.birthday.replaceAll("-", "/")
+          : meInfoRead.getMeProfile()?.birthday?.replaceAll("-", "/") ?? "",
       hint: getAppLocalizations(context).input_profile_birthday_hint,
       textInputAction: TextInputAction.next,
       textInputType: TextInputType.number,

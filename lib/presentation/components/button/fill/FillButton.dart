@@ -29,7 +29,6 @@ class FillButton extends HookConsumerWidget {
     final buttonState = ref.watch<ButtonState>(buttonProvider);
     final buttonRead = ref.read<ButtonNotifier>(buttonProvider.notifier);
     final buttonHeight = FillButtonSize.getButtonHeight(type);
-    final buttonPadding = FillButtonSize.getButtonPadding(type);
 
     return Material(
       color: Colors.transparent,
@@ -54,6 +53,9 @@ class FillButton extends HookConsumerWidget {
           buttonRead.changeState(ButtonState.Default);
         },
         child: Container(
+          constraints: const BoxConstraints(
+            minWidth: 150,
+          ),
           height: buttonHeight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(borderRadius),
@@ -63,17 +65,14 @@ class FillButton extends HookConsumerWidget {
               width: 1.5,
             ),
           ),
-          child: Padding(
-            padding: buttonPadding,
-            child: Center(
-              child: Text(
-                text,
-                style: getTextTheme(context).l1b.copyWith(
-                      color: _getTextColor(context, buttonState),
-                    ),
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-              ),
+          child: Center(
+            child: Text(
+              text,
+              style: getTextTheme(context).l1b.copyWith(
+                    color: _getTextColor(context, buttonState),
+                  ),
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
             ),
           ),
         ),

@@ -6,17 +6,33 @@ import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotif
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonSizeType.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonState.dart';
 import 'package:ody_flutter_app/presentation/features/cache/UserCache.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/notifier/InputProfileDiseaseSelectNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputBirthdayUiStateNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputDiseaseUiStateNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputHeightUiStateNotifier.dart';
+import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputWeightUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
-class WelcomeScreen extends HookWidget {
+class WelcomeScreen extends HookConsumerWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref.read(inputBirthdayUiStateProvider.notifier).clearData();
+        ref.read(inputHeightUiStateProvider.notifier).clearData();
+        ref.read(inputWeightUiStateProvider.notifier).clearData();
+        ref.read(diseaseListStateProvider.notifier).clearData();
+      });
+      return null;
+    },[]);
+
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUI01,
       body: SafeArea(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ody_flutter_app/app/OrotApp.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeInfoModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeNotificationModel.dart';
+import 'package:ody_flutter_app/data/models/me/ResponseMeProfileModel.dart';
 import 'package:ody_flutter_app/presentation/features/cache/UserCache.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -18,6 +19,10 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
     }
     state = meInfo;
     userCache.setUserInfo(meInfo);
+  }
+
+  ResponseMeProfileModel? getMeProfile(){
+    return state?.profile;
   }
 
   void updateMeInfoNick(String nick) {

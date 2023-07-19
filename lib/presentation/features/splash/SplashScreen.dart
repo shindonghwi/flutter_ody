@@ -33,7 +33,7 @@ class SplashScreen extends HookConsumerWidget {
   Future<String?> getSocialAccessToken(String platform) async {
     final String platformName = platform.toLowerCase();
     if (platformName.contains("google")) {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signInSilently();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signInSilently();
       if (googleUser != null) {
         final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
         return googleAuth.idToken;
@@ -42,6 +42,7 @@ class SplashScreen extends HookConsumerWidget {
       return null;
     } else if (platformName.contains("apple")) {
       final user = FirebaseAuth.instance.currentUser;
+      debugPrint("user : $user");
       if (user != null) {
         final idTokenResult = await user.getIdTokenResult(true);
         return idTokenResult.token;

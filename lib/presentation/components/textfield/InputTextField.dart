@@ -58,10 +58,13 @@ class InputTextField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final initTextValue = initText.isNotEmpty ? "$initText$fixedContent" : initText;
+
     final focusNode = useFocusNode();
-    final currentType = useState(initTextFieldType(focusNode, "$initText$fixedContent"));
-    final contentValue = useState("$initText$fixedContent");
-    final controller = useTextEditingController(text: "$initText$fixedContent");
+    final currentType = useState(initTextFieldType(focusNode, initTextValue));
+    final contentValue = useState(initTextValue);
+    final controller = useTextEditingController(text: initTextValue);
 
     final isFocused = useState(false);
     useEffect(() {

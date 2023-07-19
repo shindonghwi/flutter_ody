@@ -29,7 +29,6 @@ class OutlineRoundPrimaryButton extends HookConsumerWidget {
     final buttonState = ref.watch<ButtonState>(buttonProvider);
     final buttonRead = ref.read<ButtonNotifier>(buttonProvider.notifier);
     final buttonHeight = OutlineButtonSize.getButtonHeight(type);
-    final buttonPadding = OutlineButtonSize.getButtonPadding(type);
     final buttonStateSave = useState(buttonState);
 
     return Material(
@@ -56,6 +55,9 @@ class OutlineRoundPrimaryButton extends HookConsumerWidget {
           buttonRead.changeState(ButtonState.Default);
         },
         child: Container(
+          constraints: const BoxConstraints(
+            minWidth: 150,
+          ),
           height: buttonHeight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
@@ -65,17 +67,14 @@ class OutlineRoundPrimaryButton extends HookConsumerWidget {
             ),
             color: _getBackgroundColor(context, buttonState),
           ),
-          child: Padding(
-            padding: buttonPadding,
-            child: Center(
-              child: Text(
-                text,
-                style: getTextTheme(context).l1m.copyWith(
-                      color: _getTextColor(context, buttonState),
-                    ),
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-              ),
+          child: Center(
+            child: Text(
+              text,
+              style: getTextTheme(context).l1m.copyWith(
+                    color: _getTextColor(context, buttonState),
+                  ),
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
             ),
           ),
         ),
