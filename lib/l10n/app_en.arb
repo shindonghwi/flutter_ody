@@ -41,6 +41,8 @@
             "maxValue": {}
         }
     },
+    "input_profile_message_success": "올바른 입력입니다 :)",
+    "input_profile_message_error": "다시 입력해주세요!",
 
     "welcome_title": "{nickname} 님\n회원가입을 축하합니다!",
     "@welcome_title":{

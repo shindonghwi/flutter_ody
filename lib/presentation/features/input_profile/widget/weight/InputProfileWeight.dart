@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/button/fill/FillButton.dart';
@@ -14,6 +15,7 @@ import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/regex/FixedInputFormatter.dart';
 
 class InputProfileWeight extends HookConsumerWidget {
   const InputProfileWeight({Key? key}) : super(key: key);
@@ -88,19 +90,27 @@ class _InputTextField extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final weightRead = ref.read(inputWeightUiStateProvider.notifier);
     final pattern = RegExp(r'^(3[0-6]|[3-9]\d|1\d\d|200)$'); // 30 <= x <= 200
+    const fixedContent = "kg";
 
     return InputTextField(
       autoFocus: true,
       hint: getAppLocalizations(context).input_profile_weight_hint,
       textInputAction: TextInputAction.next,
       textInputType: TextInputType.number,
-      limit: 3,
+      limit: 3 + fixedContent.length,
       onChanged: (String value) {
         onChanged(pattern.hasMatch(value));
         weightRead.updateWeight(int.tryParse(value) ?? 0);
       },
+      successMessage: getAppLocalizations(context).input_profile_message_success,
+      errorMessage: getAppLocalizations(context).input_profile_message_error,
+      fixedContent: fixedContent,
+      showCounter: true,
       regList: [pattern],
-      inputFormatters: [],
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        FixedInputFormatter(suffix: fixedContent),
+      ],
     );
   }
 }

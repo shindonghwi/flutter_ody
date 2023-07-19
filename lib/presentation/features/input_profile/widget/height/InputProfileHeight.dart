@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/button/fill/FillButton.dart';
@@ -14,6 +15,7 @@ import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/regex/FixedInputFormatter.dart';
 
 class InputProfileHeight extends HookConsumerWidget {
   const InputProfileHeight({Key? key}) : super(key: key);
@@ -88,19 +90,27 @@ class _InputTextField extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final heightRead = ref.read(inputHeightUiStateProvider.notifier);
     final pattern = RegExp(r'^(12[0-9]|1[3-9][0-9]|2[0-2][0-9]|230)$'); // 120 <= x <= 230
+    const fixedContent = "cm";
 
     return InputTextField(
       autoFocus: true,
       hint: getAppLocalizations(context).input_profile_height_hint,
       textInputAction: TextInputAction.next,
       textInputType: TextInputType.number,
-      limit: 3,
+      limit: 3 + fixedContent.length,
       onChanged: (String value) {
         onChanged(pattern.hasMatch(value));
         heightRead.updateHeight(int.tryParse(value) ?? 0);
       },
+      successMessage: getAppLocalizations(context).input_profile_message_success,
+      errorMessage: getAppLocalizations(context).input_profile_message_error,
+      fixedContent: fixedContent,
+      showCounter: true,
       regList: [pattern],
-      inputFormatters: [],
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        FixedInputFormatter(suffix: fixedContent),
+      ],
     );
   }
 }

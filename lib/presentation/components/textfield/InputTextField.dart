@@ -10,10 +10,11 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 enum InputFieldState { Default, Fill, Focus, Success, Error, Disable }
 
 class InputTextField extends HookWidget {
-
   final String initText;
   final String hint;
-  final String helpMessage;
+  final String successMessage;
+  final String errorMessage;
+  final String fixedContent;
 
   final int maxLine;
   final int limit;
@@ -26,19 +27,20 @@ class InputTextField extends HookWidget {
   final TextInputType textInputType;
   final TextInputAction textInputAction;
 
-  // final bool showCounterText;
   final Function(String value)? onNextAction;
   final Function(String value)? onDoneAction;
   final Function(String value)? onChanged;
 
-  final List<TextInputFormatter> inputFormatters;
-  List<RegExp> regList;
+  final List<TextInputFormatter>? inputFormatters;
+  final List<RegExp>? regList;
 
-  InputTextField({
+  const InputTextField({
     super.key,
     this.initText = '',
     this.hint = '',
-    this.helpMessage = '',
+    this.successMessage = '',
+    this.errorMessage = '',
+    this.fixedContent = '',
     this.maxLine = 1,
     this.limit = 10,
     this.autoFocus = false,
@@ -74,19 +76,18 @@ class InputTextField extends HookWidget {
     }, [focusNode]);
 
     void checkRegExp() {
-      if (regList.isEmpty) {
+      if (regList == null || regList!.isEmpty) {
         currentType.value = InputFieldState.Success;
       } else {
         var isSuccess = false;
-        var result = contentValue.value.trim();
-        for (var element in regList) {
+        var result = contentValue.value.replaceAll(fixedContent, "").trim();
+        for (var element in regList!) {
           if (element.hasMatch(result)) {
             isSuccess = true;
             break;
           }
         }
         isSuccess ? currentType.value = InputFieldState.Success : currentType.value = InputFieldState.Error;
-        debugPrint('checkRegExp: ${result} ${isSuccess}');
       }
     }
 
@@ -104,8 +105,7 @@ class InputTextField extends HookWidget {
           child: TextField(
             textAlignVertical: TextAlignVertical.center,
             autofocus: autoFocus,
-            controller: controller
-              ..selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)),
+            controller: controller,
             style: getTextTheme(context).l2m.copyWith(
                   color: getColorScheme(context).colorText,
                 ),
@@ -126,13 +126,12 @@ class InputTextField extends HookWidget {
               counterText: '',
             ),
             onChanged: (value) {
-              contentValue.value = value;
-              // currentType.value = initTextFieldType(focusNode, value);
-              debugPrint("onChanged: $value");
+              final newValue = value.replaceAll(fixedContent, "");
+              contentValue.value = newValue;
               if (realTimeValidationCheck) {
                 checkRegExp();
               }
-              onChanged?.call(value);
+              onChanged?.call(newValue);
             },
             keyboardType: textInputType,
             textInputAction: textInputAction,
@@ -156,28 +155,36 @@ class InputTextField extends HookWidget {
             },
           ),
         ),
-        Container(
-          margin: const EdgeInsets.fromLTRB(16, 8, 18, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              if (helpMessage.isNotEmpty)
-                Text(
-                  helpMessage,
-                  style: getTextTheme(context).c2r.copyWith(
-                        color: getHelpMessageColor(context, currentType.value),
-                      ),
-                ),
-              if (helpMessage.isNotEmpty && showCounter)
-                Text(
-                  "${contentValue.value.length} / $limit",
-                  style: getTextTheme(context).c1r.copyWith(
-                        color: getHelpMessageColor(context, currentType.value),
-                      ),
-                ),
-            ],
+        if (currentType.value == InputFieldState.Error || currentType.value == InputFieldState.Success)
+          Container(
+            margin: const EdgeInsets.fromLTRB(16, 8, 18, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (successMessage.isNotEmpty && currentType.value == InputFieldState.Success)
+                  Text(
+                    successMessage,
+                    style: getTextTheme(context).c2r.copyWith(
+                          color: getHelpMessageColor(context, currentType.value),
+                        ),
+                  ),
+                if (errorMessage.isNotEmpty && currentType.value == InputFieldState.Error)
+                  Text(
+                    errorMessage,
+                    style: getTextTheme(context).c2r.copyWith(
+                          color: getHelpMessageColor(context, currentType.value),
+                        ),
+                  ),
+                if ((successMessage.isNotEmpty || errorMessage.isNotEmpty) && showCounter)
+                  Text(
+                    "${contentValue.value.replaceAll(fixedContent, "").length} / ${limit - fixedContent.length}",
+                    style: getTextTheme(context).c1r.copyWith(
+                          color: getHelpMessageColor(context, currentType.value),
+                        ),
+                  ),
+              ],
+            ),
           ),
-        ),
       ],
     );
   }
