@@ -15,6 +15,7 @@ import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/regex/FixedInputFormatter.dart';
 
 class EditMyHeightScreen extends HookConsumerWidget {
   final int height;
@@ -92,6 +93,8 @@ class _HeightContent extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final meInfo = ref.watch(meInfoProvider);
+    final pattern = RegExp(r'^(12[0-9]|1[3-9][0-9]|2[0-2][0-9]|230)$'); // 120 <= x <= 230
+    const fixedContent = "cm";
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -120,17 +123,24 @@ class _HeightContent extends HookConsumerWidget {
           ),
           const SizedBox(height: 16),
           InputTextField(
-            initText: initHeight,
             autoFocus: true,
+            initText: initHeight,
             hint: getAppLocalizations(context).input_profile_height_hint,
             textInputAction: TextInputAction.done,
             textInputType: TextInputType.number,
-            limit: 3,
+            limit: 3 + fixedContent.length,
             onChanged: (String value) => callback.call(value),
-            regList: [RegExp(r'^(12[0-9]|1[3-9][0-9]|2[0-2][0-9]|230)$')],
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            successMessage: getAppLocalizations(context).input_profile_message_success,
+            errorMessage: getAppLocalizations(context).input_profile_message_error,
+            fixedContent: fixedContent,
+            showCounter: true,
             onDoneAction: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-          )
+            regList: [pattern],
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              FixedInputFormatter(suffix: fixedContent),
+            ],
+          ),
         ],
       ),
     );
