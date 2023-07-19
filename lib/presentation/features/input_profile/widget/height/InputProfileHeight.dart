@@ -11,6 +11,7 @@ import 'package:ody_flutter_app/presentation/components/textfield/InputTextField
 import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputHeightUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -26,6 +27,7 @@ class InputProfileHeight extends HookConsumerWidget {
 
     void onChanged(bool flag) => isButtonActive.value = flag;
 
+    final meInfoRead = ref.read(meInfoProvider.notifier);
     final uiState = ref.watch(inputHeightUiStateProvider);
     final uiStateRead = ref.read(inputHeightUiStateProvider.notifier);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
@@ -34,6 +36,7 @@ class InputProfileHeight extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
           success: (event) async {
+            meInfoRead.updateMeInfoHeight(uiStateRead.height);
             uiStateRead.resetState();
             pageController.nextPage(
               duration: const Duration(milliseconds: 300),

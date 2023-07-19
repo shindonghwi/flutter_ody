@@ -11,6 +11,7 @@ import 'package:ody_flutter_app/presentation/components/textfield/InputTextField
 import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputWeightUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -22,11 +23,11 @@ class InputProfileWeight extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final isButtonActive = useState<bool>(false);
 
     void onChanged(bool flag) => isButtonActive.value = flag;
 
+    final meInfoRead = ref.read(meInfoProvider.notifier);
     final uiState = ref.watch(inputWeightUiStateProvider);
     final uiStateRead = ref.read(inputWeightUiStateProvider.notifier);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
@@ -35,6 +36,7 @@ class InputProfileWeight extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
           success: (event) async {
+            meInfoRead.updateMeInfoWeight(uiStateRead.weight);
             uiStateRead.resetState();
             pageController.nextPage(
               duration: const Duration(milliseconds: 300),
@@ -81,6 +83,7 @@ class InputProfileWeight extends HookConsumerWidget {
 
 class _InputTextField extends HookConsumerWidget {
   final Function(bool flag) onChanged;
+
   const _InputTextField({
     super.key,
     required this.onChanged,
@@ -117,6 +120,7 @@ class _InputTextField extends HookConsumerWidget {
 
 class _NextButton extends HookConsumerWidget {
   final bool isButtonActive;
+
   const _NextButton({
     super.key,
     required this.isButtonActive,
@@ -137,7 +141,7 @@ class _NextButton extends HookConsumerWidget {
             type: ButtonSizeType.Normal,
             onPressed: () => weightRead.patchWeight(),
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-                  (_) => ButtonNotifier(
+              (_) => ButtonNotifier(
                 state: isButtonActive ? ButtonState.Activated : ButtonState.Disabled,
               ),
             ),

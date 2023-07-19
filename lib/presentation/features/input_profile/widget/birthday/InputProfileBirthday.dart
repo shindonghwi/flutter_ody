@@ -10,6 +10,7 @@ import 'package:ody_flutter_app/presentation/components/textfield/InputTextField
 import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/notifier/ui/InputBirthdayUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/input_profile/provider/InputProfilePageViewController.dart';
+import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -25,6 +26,7 @@ class InputProfileBirthday extends HookConsumerWidget {
 
     void onChanged(bool flag) => isButtonActive.value = flag;
 
+    final meInfoRead = ref.read(meInfoProvider.notifier);
     final uiState = ref.watch(inputBirthdayUiStateProvider);
     final uiStateRead = ref.watch(inputBirthdayUiStateProvider.notifier);
     final pageController = ref.read(inputProfilePageViewControllerProvider);
@@ -33,6 +35,7 @@ class InputProfileBirthday extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
           success: (event) async {
+            meInfoRead.updateMeInfoBirthday(uiStateRead.birthday);
             uiStateRead.resetState();
             pageController.nextPage(
               duration: const Duration(milliseconds: 300),
@@ -100,6 +103,8 @@ class _InputTextField extends HookConsumerWidget {
       textInputAction: TextInputAction.next,
       textInputType: TextInputType.number,
       limit: 10,
+      successMessage: getAppLocalizations(context).input_profile_message_success,
+      errorMessage: getAppLocalizations(context).input_profile_message_error,
       onChanged: (String value) {
         onChanged(pattern.hasMatch(value));
         birthdayRead.updateBirthday(value.replaceAll("/", "-"));
