@@ -10,17 +10,21 @@ class CommonBottomSheet {
   }) {
     showModalBottomSheet(
       context: context,
+      useSafeArea: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(borderRadius),
           topRight: Radius.circular(borderRadius),
         ),
       ),
+      isScrollControlled: true,
       builder: (BuildContext context) {
-        return BottomSheetWidget(
-          borderRadius: borderRadius,
-          backgroundColor: backgroundColor,
-          child: child,
+        return SafeArea(
+          child: BottomSheetWidget(
+            borderRadius: borderRadius,
+            backgroundColor: backgroundColor,
+            child: child,
+          ),
         );
       },
     ).then((value) {
@@ -57,7 +61,7 @@ class BottomSheetWidget extends StatelessWidget {
           topRight: Radius.circular(borderRadius),
         ),
       ),
-      child: SingleChildScrollView(child: child),
+      child: child,
     );
   }
 }

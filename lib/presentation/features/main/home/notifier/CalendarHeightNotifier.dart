@@ -7,7 +7,7 @@ import 'package:ody_flutter_app/presentation/features/main/home/model/CalendarSi
 // 캘린터 높이 프로바이더
 final calendarHeightProvider = StateNotifierProvider<CalendarHeightNotifier, double>(
       (_) {
-    final context = OdyGlobalVariable.naviagatorState.currentContext as BuildContext;
+    final context = OdyGlobalVariable.navigatorKey.currentContext as BuildContext;
     return CalendarHeightNotifier(CalendarSize.minHeight(context));
   },
 );

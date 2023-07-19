@@ -3,18 +3,20 @@ import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeWeightUseCase.d
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:riverpod/riverpod.dart';
 
-final inputWeightUiStateProvider =
-    StateNotifierProvider<InputWeightUiStateNotifier, UIState<String>>(
+final inputWeightUiStateProvider = StateNotifierProvider<InputWeightUiStateNotifier, UIState<String>>(
   (_) => InputWeightUiStateNotifier(),
 );
 
 class InputWeightUiStateNotifier extends StateNotifier<UIState<String>> {
   InputWeightUiStateNotifier() : super(Idle<String>());
 
-  PatchMeWeightUseCase get _patchMeWeightUseCase =>
-      GetIt.instance<PatchMeWeightUseCase>();
+  var weight = 0;
 
-  void patchWeight(int weight) {
+  void updateWeight(int value) => weight = value;
+
+  PatchMeWeightUseCase get _patchMeWeightUseCase => GetIt.instance<PatchMeWeightUseCase>();
+
+  void patchWeight() {
     state = Loading();
     _patchMeWeightUseCase.call(weight: weight).then((value) {
       if (value.status == 200) {

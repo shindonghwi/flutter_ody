@@ -7,7 +7,7 @@ import 'package:ody_flutter_app/presentation/features/list/medication/provider/M
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
-class MedicineAppBar extends HookConsumerWidget with PreferredSizeWidget {
+class MedicineAppBar extends HookConsumerWidget implements PreferredSizeWidget {
   const MedicineAppBar({Key? key}) : super(key: key);
 
   @override

@@ -27,7 +27,7 @@ class MedicationYoil extends HookConsumerWidget {
     final uiStateRead = ref.read(registerMedicineProvider.notifier);
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(35, 24, 35, 0),
+      padding: const EdgeInsets.symmetric(horizontal: 35),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -21,11 +21,9 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class SplashScreen extends HookConsumerWidget {
-  final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase =
-      GetIt.instance<GetAppPolicyCheckUseCase>();
+  final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase = GetIt.instance<GetAppPolicyCheckUseCase>();
 
-  final PostSocialLoginInUseCase _postSocialLoginInUseCase =
-      GetIt.instance<PostSocialLoginInUseCase>();
+  final PostSocialLoginInUseCase _postSocialLoginInUseCase = GetIt.instance<PostSocialLoginInUseCase>();
 
   GetMeInfoUseCase get getMeInfoUseCase => GetIt.instance<GetMeInfoUseCase>();
 
@@ -42,6 +40,11 @@ class SplashScreen extends HookConsumerWidget {
     } else if (platformName.contains("kakao")) {
       return null;
     } else if (platformName.contains("apple")) {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final idTokenResult = await user.getIdTokenResult(true);
+        return idTokenResult.token;
+      }
       return null;
     }
     return null;
@@ -54,9 +57,9 @@ class SplashScreen extends HookConsumerWidget {
     if (user != null) {
       List<UserInfo>? providers = user.providerData;
       for (UserInfo provider in providers) {
+        debugPrint("provider.providerId : ${provider.providerId}");
         LoginPlatform platform = getLoginPlatform(provider.providerId);
         String? accessToken = await getSocialAccessToken(platform.name);
-        debugPrint("accessToken: $accessToken");
         if (accessToken != null) {
           return SocialLoginModel(platform, accessToken);
         }
@@ -113,7 +116,7 @@ class SplashScreen extends HookConsumerWidget {
     final currentContext = context;
 
     movePage(RoutingScreen screen, {int initPageNumber = 0}) async {
-      Future.delayed(const Duration(milliseconds: 700),  () async {
+      Future.delayed(const Duration(milliseconds: 700), () async {
         Navigator.pushReplacement(
           currentContext,
           nextSlideScreen(screen.route, parameter: initPageNumber),
@@ -138,7 +141,6 @@ class SplashScreen extends HookConsumerWidget {
             if (socialInfo == null) {
               movePage(RoutingScreen.Login);
             } else {
-
               final res = await _postSocialLoginInUseCase.call(
                 platform: socialInfo!.loginPlatform,
                 accessToken: socialInfo?.accessToken ?? "",
@@ -149,8 +151,7 @@ class SplashScreen extends HookConsumerWidget {
                 await setServiceHeader(res.data?.accessToken);
                 await getMeInfoUseCase.call().then((value) {
                   if (value.status == 200) {
-
-                    if (value.data != null){
+                    if (value.data != null) {
                       meInfoRead.updateMeInfo(value.data!);
                     }
 
@@ -176,12 +177,13 @@ class SplashScreen extends HookConsumerWidget {
           }
         });
       });
+      return null;
     }, []);
 
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUIBackground,
       body: Center(
-        child: Image.asset("assets/imgs/logo_ody.png"),
+        child: Image.asset("assets/imgs/logo_splash.png"),
       ),
     );
   }

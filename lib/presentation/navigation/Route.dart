@@ -110,7 +110,6 @@ enum RoutingScreen {
   }
 
   static getScreen(String route, {dynamic parameter}) {
-    debugPrint("getScreen : parameter: $parameter");
     switch (route) {
       case "/splash":
         return SplashScreen();

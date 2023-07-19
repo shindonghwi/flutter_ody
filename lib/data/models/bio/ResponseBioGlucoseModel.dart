@@ -10,12 +10,14 @@ class ResponseBioGlucoseModel {
   final ResponseBioGlucoseTypeModel type;
   final int glucose;
   final ResponseBioStatusModel status;
+  final String? memo;
   final String createdAt;
 
   ResponseBioGlucoseModel({
     required this.type,
     required this.glucose,
     required this.status,
+    required this.memo,
     required this.createdAt,
   });
 

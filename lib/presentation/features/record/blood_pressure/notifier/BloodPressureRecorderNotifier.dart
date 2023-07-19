@@ -32,7 +32,7 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
     state = BpRecorderModel(time: state.time, systolic: state.systolic, diastolic: state.diastolic, hr: heartRate);
   }
 
-  ResponseBioBloodPressureModel getBioBpModel() {
+  ResponseBioBloodPressureModel? getBioBpModel() {
     return ResponseBioBloodPressureModel(
       systolicBloodPressure: state.systolic,
       diastolicBloodPressure: state.diastolic,
@@ -61,9 +61,8 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
   int checkBpLevel() {
     final int systolic = state.systolic;
     final int diastolic = state.diastolic;
-    final int hr = state.hr;
 
-    if (systolic == 0 || diastolic == 0 || hr == 0) {
+    if (systolic == 0 || diastolic == 0) {
       return 0;
     }
 
@@ -86,8 +85,7 @@ class BloodPressureRecorderNotifier extends StateNotifier<BpRecorderModel> {
   RecordRangeStatus checkBpStatus() {
     final int systolic = state.systolic;
     final int diastolic = state.diastolic;
-    final int hr = state.hr;
-    if (systolic == 0 || diastolic == 0 || hr == 0) {
+    if (systolic == 0 || diastolic == 0) {
       bpStatus = RecordRangeStatus.None;
     }
 

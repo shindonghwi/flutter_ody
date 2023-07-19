@@ -29,7 +29,7 @@ class ReportMonthlyScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           uiState.when(
-            failure: (event) => ToastUtil.errorToast(context, event.errorMessage),
+            failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
       }
@@ -57,21 +57,21 @@ class ReportMonthlyScreen extends HookConsumerWidget {
       backgroundColor: getColorScheme(context).colorUI03,
       body: uiState is Success<ResponseBioReportInfoModel>
           ? SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            // ReportCardWalk(isWeekly: false, walking: uiState.value.walking),
-            // const SizedBox(height: 24),
-            ReportCardBloodPressure(isWeekly: false, bloodPressure: uiState.value.bloodPressure),
-            const SizedBox(height: 24),
-            ReportCardGlucose(isWeekly: false, glucose: uiState.value.glucose),
-          ],
-        ),
-      )
+              padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  // ReportCardWalk(isWeekly: false, walking: uiState.value.walking),
+                  // const SizedBox(height: 24),
+                  ReportCardBloodPressure(isWeekly: false, bloodPressure: uiState.value.bloodPressure),
+                  const SizedBox(height: 24),
+                  ReportCardGlucose(isWeekly: false, glucose: uiState.value.glucose),
+                ],
+              ),
+            )
           : uiState is Loading
-          ? const CircleLoading()
-          : const SizedBox(),
+              ? const CircleLoading()
+              : const SizedBox(),
     );
   }
 }

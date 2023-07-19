@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
-import 'package:ody_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
+import 'package:ody_flutter_app/presentation/components/textfield/InputTextField.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/edit/provider/PatchMeInfoUiStateNotifier.dart';
@@ -30,6 +29,8 @@ class EditMyNicknameScreen extends HookConsumerWidget {
     final state = ref.watch(patchMeInfoUiStateProvider);
     final stateRead = ref.read(patchMeInfoUiStateProvider.notifier);
     final nickData = useState(nick.toString());
+    final nickRegExp = RegExp(r'^[a-zA-Z0-9가-힣_]+$');
+    final iconEnable = nickData.value.isNotEmpty && nickRegExp.hasMatch(nickData.value);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -39,11 +40,12 @@ class EditMyNicknameScreen extends HookConsumerWidget {
             stateRead.init();
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast(event.errorMessage);
             stateRead.init();
           },
         );
       });
+      return null;
     }, [state]);
 
     return Scaffold(
@@ -53,9 +55,8 @@ class EditMyNicknameScreen extends HookConsumerWidget {
           path: 'assets/imgs/icon_back.svg',
           onPressed: () => Navigator.of(context).pop(),
         ),
-        actionTextColor:
-            nickData.value.isEmpty ? getColorScheme(context).neutral50 : getColorScheme(context).neutral100,
-        actionIconEnable: nickData.value.isNotEmpty,
+        actionTextColor: !iconEnable ? getColorScheme(context).neutral50 : getColorScheme(context).neutral100,
+        actionIconEnable: iconEnable,
         actionText: getAppLocalizations(context).common_complete,
         actionTextCallback: () => stateRead.patchNickname(nickData.value),
         title: getAppLocalizations(context).edit_my_nickname_title,
@@ -103,6 +104,7 @@ class _NickContent extends HookConsumerWidget {
           callback.call(meInfo.nick.toString());
         }
       });
+      return null;
     }, []);
 
     return Container(
@@ -117,20 +119,16 @@ class _NickContent extends HookConsumerWidget {
                 ),
           ),
           const SizedBox(height: 16),
-          OutlineDefaultTextField(
-            controller: useTextEditingController(text: initNick),
-            textInputType: TextInputType.text,
-            textInputAction: TextInputAction.done,
+          InputTextField(
+            initText: initNick,
             autoFocus: true,
-            onChanged: (String value) => callback.call(value),
+            textInputAction: TextInputAction.done,
+            textInputType: TextInputType.text,
             limit: 15,
-            maxLine: 1,
-            helpText: helpText.value,
-            fieldState: fieldState.value,
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp(r'[^ㄱ-ㅎ가-힣a-zA-Z0-9_]+')),
-            ],
-            onDoneAction: () => FocusManager.instance.primaryFocus?.unfocus(),
+            onChanged: (String value) => callback.call(value),
+            regList: [RegExp(r'^[a-zA-Z0-9가-힣_]+$')],
+            inputFormatters: [],
+            onDoneAction: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           )
         ],
       ),

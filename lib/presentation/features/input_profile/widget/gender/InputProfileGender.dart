@@ -36,10 +36,11 @@ class InputProfileGender extends HookConsumerWidget {
             stateProvider.resetState();
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast(event.errorMessage);
           },
         );
       });
+      return null;
     }, [state]);
 
     final isSelectedMan = useState(true);

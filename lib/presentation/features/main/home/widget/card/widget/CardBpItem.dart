@@ -30,6 +30,7 @@ class CardBpItem extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         isToday = DateChecker.isDateToday(currentDateTime);
       });
+      return null;
     }, [currentDateTime]);
 
     return LayoutBuilder(

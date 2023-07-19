@@ -9,7 +9,7 @@ import 'package:ody_flutter_app/presentation/features/record/model/RecordRangeSt
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
-class RecordBloodPressureAppBar extends HookConsumerWidget with PreferredSizeWidget {
+class RecordBloodPressureAppBar extends HookConsumerWidget implements PreferredSizeWidget {
   const RecordBloodPressureAppBar({Key? key}) : super(key: key);
 
   @override

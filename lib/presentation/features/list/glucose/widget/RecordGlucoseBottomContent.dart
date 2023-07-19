@@ -61,12 +61,12 @@ class _FloatingButton extends HookConsumerWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(100),
           onTap: () async {
-            ResponseBioGlucoseModel data = await Navigator.push(
+            final data = await Navigator.push(
               context,
               nextSlideScreen(RoutingScreen.RecordGlucose.route),
             );
             try {
-              if (data.glucose != 0) {
+              if (data?.glucose != 0) {
                 uiStateRead.addGlucoseBioInfo(data);
               }
             } catch (e) {

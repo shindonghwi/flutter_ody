@@ -28,13 +28,13 @@ class RecordGlucoseScreen extends HookConsumerWidget {
         await Future(() {
           uiState.when(
             success: (event) async {
-              ToastUtil.defaultToast(context, getAppLocalizations(context).message_record_complete_blood_pressure);
+              ToastUtil.defaultToast(getAppLocalizations(context).message_record_complete_blood_pressure);
               Navigator.of(context).pop(glucoseRecorderRead.getBioGlucoseModel());
               uiStateRead.init();
               glucoseRecorderRead.init();
             },
             failure: (event) {
-              ToastUtil.errorToast(context, event.errorMessage);
+              ToastUtil.errorToast( event.errorMessage);
             },
           );
         });
@@ -48,6 +48,7 @@ class RecordGlucoseScreen extends HookConsumerWidget {
         uiStateRead.init();
         glucoseRecorderRead.init();
       });
+      return null;
     }, []);
 
     return Stack(
@@ -55,10 +56,10 @@ class RecordGlucoseScreen extends HookConsumerWidget {
         Scaffold(
           backgroundColor: getColorScheme(context).colorUI03,
           appBar: const RecordGlucoseAppBar(),
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+          body: const SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
-              children: const [
+              children: [
                 RecordDateSelector(type: RecordType.Glucose),
                 RecordGlucose(),
                 RecordGlucoseMemo(),

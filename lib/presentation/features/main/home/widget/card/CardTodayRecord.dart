@@ -57,7 +57,7 @@ class CardTodayRecord extends HookConsumerWidget {
 
   int getCompleteCount(ResponseBioForDaysModel model) {
     int completeCount = 0;
-    completeCount += model.steps.isNotEmpty ? 1 : 0;
+    // completeCount += model.steps.isNotEmpty ? 1 : 0;
     completeCount += model.bloodPressures.isNotEmpty ? 1 : 0;
     completeCount += model.glucoses.isNotEmpty ? 1 : 0;
     return completeCount;
@@ -69,9 +69,9 @@ class CardTodayRecord extends HookConsumerWidget {
       switch (completeCount) {
         case 0:
           return getAppLocalizations(context).home_today_record_comment_start;
+        // case 1:
+        //   return getAppLocalizations(context).home_today_record_comment_fighting;
         case 1:
-          return getAppLocalizations(context).home_today_record_comment_fighting;
-        case 2:
           return getAppLocalizations(context).home_today_record_comment_progress;
         default:
           return getAppLocalizations(context).home_today_record_comment_complete;
@@ -106,7 +106,7 @@ class CardTodayRecord extends HookConsumerWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: "$completeCount / 3",
+                text: "$completeCount / 2",
                 style: getTextTheme(context).b2b.copyWith(
                       color: getColorScheme(context).white,
                     ),
@@ -142,12 +142,12 @@ class CardTodayRecord extends HookConsumerWidget {
         percentage = 0.0;
         break;
       case 1:
-        percentage = 0.3;
+        percentage = 0.5;
         break;
+      // case 2:
+      //   percentage = 0.7;
+      //   break;
       case 2:
-        percentage = 0.7;
-        break;
-      case 3:
         percentage = 1.0;
         break;
     }

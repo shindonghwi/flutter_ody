@@ -14,6 +14,7 @@ ResponseBioGlucoseModel _$ResponseBioGlucoseModelFromJson(
       glucose: json['glucose'] as int,
       status: ResponseBioStatusModel.fromJson(
           json['status'] as Map<String, dynamic>),
+      memo: json['memo'] as String?,
       createdAt: json['createdAt'] as String,
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$ResponseBioGlucoseModelToJson(
       'type': instance.type,
       'glucose': instance.glucose,
       'status': instance.status,
+      'memo': instance.memo,
       'createdAt': instance.createdAt,
     };

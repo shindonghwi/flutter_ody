@@ -19,11 +19,11 @@ enum MedicineActionType {
 }
 
 final medicineListProvider =
-    StateNotifierProvider<MedicineListNotifier, UIState<List<ResponseMeMedicineModel>?>>(
+    StateNotifierProvider<MedicineListNotifier, UIState<List<ResponseMeMedicineModel>>>(
   (_) => MedicineListNotifier(),
 );
 
-class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicineModel>?>> {
+class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicineModel>>> {
   MedicineListNotifier() : super(Idle());
 
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
@@ -35,17 +35,17 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
     state = Loading();
     final res = await GetIt.instance.get<GetMeMedicinesUseCase>().call();
     if (res.status == 200) {
-      _updateMedicineList(res.list);
+      _updateMedicineList(res.list ?? []);
     } else {
       state = Failure(res.message);
     }
   }
 
-  void _updateMedicineList(List<ResponseMeMedicineModel>? data) {
+  void _updateMedicineList(List<ResponseMeMedicineModel> data) {
     if (!CollectionUtil.isNullorEmpty(data)) {
       state = Success(data);
     } else {
-      state = Success(null);
+      state = Success([]);
     }
   }
 

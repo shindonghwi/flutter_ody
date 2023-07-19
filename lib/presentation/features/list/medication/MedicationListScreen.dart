@@ -36,13 +36,13 @@ class MedicationListScreen extends HookConsumerWidget {
               currentMedicineState.value = event.value;
               isEditModeRead.changeMode(false);
               if (uiStateRead.actionType == MedicineActionType.ADD_ITEM) {
-                ToastUtil.defaultToast(context, getAppLocalizations(context).message_success_register);
+                ToastUtil.defaultToast(getAppLocalizations(context).message_success_register);
               } else if (uiStateRead.actionType == MedicineActionType.REMOVE_ITEM) {
                 checkListRead.clear();
-                ToastUtil.defaultToast(context, getAppLocalizations(context).message_success_remove);
+                ToastUtil.defaultToast(getAppLocalizations(context).message_success_remove);
               }
             },
-            failure: (event) => ToastUtil.errorToast(context, event.errorMessage),
+            failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
       }
@@ -56,6 +56,7 @@ class MedicationListScreen extends HookConsumerWidget {
         uiStateRead.init();
         uiStateRead.requestMedicineList();
       });
+      return null;
     }, []);
 
     return Scaffold(

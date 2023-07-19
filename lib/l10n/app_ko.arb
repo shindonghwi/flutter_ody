@@ -41,6 +41,8 @@
             "maxValue": {}
         }
     },
+    "input_profile_message_success": "올바른 입력입니다 :)",
+    "input_profile_message_error": "다시 입력해주세요!",
 
     "welcome_title": "{nickname} 님\n회원가입을 축하합니다!",
     "@welcome_title":{
@@ -91,7 +93,7 @@
     "record_blood_pressure_range_title": "혈압 범위",
 
     "record_glucose_input_title": "혈당",
-    "record_glucose_input_hint": "100",
+    "record_glucose_input_hint": "70 ~ 100",
     "record_glucose_input_state_empty": "공복",
     "record_glucose_input_state_before_meal": "식전",
     "record_glucose_input_state_after_meal": "식후",
@@ -330,6 +332,7 @@
     "message_record_complete_glucose": "혈당이 기록되었습니다",
     "message_withdrawal_success": "회원탈퇴가 완료되었습니다\n다음에 또 다시 방문해주세요 :)",
     "message_network_required": "네트워크 연결이 불안정합니다",
+    "message_clipboard_copy": "복사되었습니다",
 
     "empty_record": "아직 작성한 기록이 없어요\n기록을 통해 건강한 생활을 시작해보아요 :)",
     "empty_record_pre_disable": "기록한 내역이 없어요\n전날의 기록은 기록할 수 없습니다 :(",

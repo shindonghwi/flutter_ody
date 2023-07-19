@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,8 +14,6 @@ import 'package:ody_flutter_app/presentation/features/record/glucose/notifier/Gl
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
-
-import '../../widget/RecordInputTextField.dart';
 
 class RecordGlucoseInput extends HookWidget {
   const RecordGlucoseInput({
@@ -143,20 +142,27 @@ class _InputGlucoseTextField extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  width: 70,
-                  child: RecordInputTextField(
-                    textInputType: TextInputType.number,
+                IntrinsicWidth(
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.done,
-                    hint: getAppLocalizations(context).record_glucose_input_hint,
-                    textStyle: getTextTheme(context).t3sb.copyWith(
-                          color: getColorScheme(context).colorText,
-                        ),
-                    hintTextStyle: getTextTheme(context).t3sb.copyWith(
+                    style: getTextTheme(context).t2b.copyWith(
+                      color: getColorScheme(context).colorText,
+                    ),
+                    decoration: InputDecoration(
+                        hintText: getAppLocalizations(context).record_glucose_input_hint,
+                        hintStyle: getTextTheme(context).t2b.copyWith(
                           color: getColorScheme(context).neutral60,
                         ),
-                    onDoneAction: () => FocusScope.of(context).unfocus(),
-                    onChanged: (value) {
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                        counterText: ''
+                    ),
+                    maxLines: 1,
+                    maxLength: 3,
+                    onEditingComplete: () => FocusScope.of(context).unfocus(),
+                    onChanged: (String value) {
                       int? parsedValue;
                       if (value.isNotEmpty) {
                         parsedValue = int.tryParse(value);
@@ -167,6 +173,7 @@ class _InputGlucoseTextField extends HookConsumerWidget {
                         FocusScope.of(context).unfocus();
                       }
                     },
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
                 ),
                 const SizedBox(width: 22),

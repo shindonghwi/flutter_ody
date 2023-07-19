@@ -38,19 +38,21 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         uiState.when(
           success: (event) async {
-            bpList.value = [...?event.value?.bloodPressures.reversed.toList()];
+            bpList.value = [...?event.value?.bloodPressures.toList()];
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast(event.errorMessage);
           },
         );
       });
+      return null;
     }, [uiState]);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         isToday.value = DateChecker.isDateToday(date);
       });
+      return null;
     }, [date]);
 
     return Scaffold(
@@ -81,30 +83,28 @@ class RecordedListBloodPressureScreen extends HookConsumerWidget {
                       return const SizedBox(height: 24); // Adjust the height as needed
                     },
                     itemBuilder: (BuildContext context, int index) {
-                      return RecordBloodPressureItem(model: bpList.value[index]);
+                      return RecordBloodPressureItem(model: bpList.value.reversed.toList()[index]);
                     },
                     itemCount: bpList.value.length,
                   )
                 : Center(
                     child: EmptyView(
-                      screen: uiState is Success ? RoutingScreen.ServerError : RoutingScreen.RecordBloodPressure,
+                      screen: RoutingScreen.RecordedListBloodPressure,
                       onPressed: () async {
-                        if (uiState is Failure) {
-                          if (isToday.value) {
-                            ResponseBioBloodPressureModel data = await Navigator.push(
-                              context,
-                              nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
-                            );
-                            try {
-                              if (data.diastolicBloodPressure != 0) {
-                                uiStateRead.addBpBioInfo(data);
-                              }
-                            } catch (e) {
-                              debugPrint("bp update fail: ${e.toString()}");
+                        if (isToday.value) {
+                          final data = await Navigator.push(
+                            context,
+                            nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
+                          );
+                          try {
+                            if (data?.diastolicBloodPressure != 0) {
+                              uiStateRead.addBpBioInfo(data!);
                             }
-                          } else {
-                            Navigator.of(context).pop();
+                          } catch (e) {
+                            debugPrint("bp update fail: ${e.toString()}");
                           }
+                        } else {
+                          Navigator.of(context).pop();
                         }
                       },
                     ),

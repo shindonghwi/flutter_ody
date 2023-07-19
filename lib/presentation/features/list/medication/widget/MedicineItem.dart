@@ -113,7 +113,7 @@ class MedicineItem extends HookConsumerWidget {
                         ),
                       ),
                     Text(
-                      medicineName.toString(),
+                      medicineName.length >= 9 ? '${medicineName.substring(0, 8)}...' : medicineName,
                       style: getTextTheme(context).t2b.copyWith(
                             color: !isEditMode
                                 ? switchState.value

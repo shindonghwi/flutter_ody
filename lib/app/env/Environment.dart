@@ -27,7 +27,7 @@ class Environment {
   static BuildType get buildType => _instance._buildType;
 
   static String get apiUrl =>
-      _instance._buildType == BuildType.dev ? 'https://dev-appapi.ody.life' : 'https://dev-appapi.ody.life'; // api 주소
+      _instance._buildType == BuildType.dev ? 'https://dev-appapi.ody.life' : 'https://appapi.ody.life'; // api 주소
 
   static String get apiVersion => _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
 
@@ -38,7 +38,7 @@ class Environment {
 
   bool get isDebuggable => _buildType == BuildType.dev;
 
-  Future<void> setLocalNotification() async {
+  static Future<void> setLocalNotification() async {
     await PermissionUtil.requestNotificationPermission();
 
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -69,8 +69,6 @@ class Environment {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
-
-    await setLocalNotification();
 
     initServiceLocator();
 

@@ -27,6 +27,7 @@ class EditMyInfoScreen extends HookConsumerWidget {
           nextSlideScreen(RoutingScreen.Login.route),
         );
       }
+      return null;
     }, []);
 
     final itemList = [

@@ -26,7 +26,11 @@ class InputHeightUiStateNotifier extends StateNotifier<UIState<String>> {
   PatchMeHeightUseCase get _patchMeHeightUseCase =>
       GetIt.instance<PatchMeHeightUseCase>();
 
-  void patchHeight(int height) {
+  var height = 0;
+
+  void updateHeight(int value) => height = value;
+
+  void patchHeight() {
     state = Loading();
     _patchMeHeightUseCase.call(height: height).then((value) {
       if (value.status == 200) {

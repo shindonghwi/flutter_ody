@@ -27,19 +27,20 @@ class RecordBloodPressureScreen extends HookConsumerWidget {
         bpRecorderRead.init();
         uiStateRead.init();
       });
+      return null;
     }, []);
 
     useEffect(() {
       void handleUiStateChange() async {
         uiState.when(
           success: (event) async {
-            ToastUtil.defaultToast(context, getAppLocalizations(context).message_record_complete_blood_pressure);
+            ToastUtil.defaultToast(getAppLocalizations(context).message_record_complete_blood_pressure);
             Navigator.of(context).pop(bpRecorderRead.getBioBpModel());
             uiStateRead.init();
             bpRecorderRead.init();
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast(event.errorMessage);
           },
         );
       }
@@ -55,10 +56,10 @@ class RecordBloodPressureScreen extends HookConsumerWidget {
         Scaffold(
           backgroundColor: getColorScheme(context).colorUI03,
           appBar: const RecordBloodPressureAppBar(),
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+          body: const SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
-              children: const [
+              children: [
                 RecordDateSelector(
                   type: RecordType.BloodPressure,
                 ),

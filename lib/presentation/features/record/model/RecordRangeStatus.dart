@@ -123,34 +123,34 @@ class RecordRangeStatusHelper {
     if (type == RecordType.Walk) {
       switch (status) {
         case RecordRangeStatus.None:
-          return "assets/imgs/image_walking_disable.png";
+          return "assets/imgs/character_walking_disabled.png";
         default:
-          return "assets/imgs/image_walking_active.png";
+          return "assets/imgs/character_walking_active.png";
       }
     } else if (type == RecordType.BloodPressure) {
       switch (status) {
         case RecordRangeStatus.Normal:
-          return "assets/imgs/image_bp_normal.png";
+          return "assets/imgs/character_bp_normal.png";
         case RecordRangeStatus.Risk:
-          return "assets/imgs/image_bp_warning.png";
+          return "assets/imgs/character_bp_warning.png";
         case RecordRangeStatus.HighRisk:
-          return "assets/imgs/image_bp_risk.png";
+          return "assets/imgs/character_bp_dangerous.png";
         default:
-          return "assets/imgs/image_bp_disabled.png";
+          return "assets/imgs/character_bp_disabled.png";
       }
     } else if (type == RecordType.Glucose) {
       switch (status) {
         case RecordRangeStatus.Normal:
-          return "assets/imgs/image_glucose_normal.png";
+          return "assets/imgs/character_bs_normal.png";
         case RecordRangeStatus.Warn:
-          return "assets/imgs/image_glucose_warning.png";
+          return "assets/imgs/character_bs_warning.png";
         case RecordRangeStatus.Alert:
-          return "assets/imgs/image_glucose_risk.png";
+          return "assets/imgs/character_bs_dangerous.png";
         default:
-          return "assets/imgs/image_glucose_disabled.png";
+          return "assets/imgs/character_bs_disabled.png";
       }
     } else {
-      return "assets/imgs/image_emotion_disabled.png";
+      return "assets/imgs/character_emotion_disabled.png";
     }
   }
 }

@@ -34,9 +34,10 @@ class AddMedicationScreen extends HookConsumerWidget {
             Navigator.of(context).pop(uiStateRead.responseData);
             uiStateRead.init();
           },
-          failure: (event) => ToastUtil.errorToast(context, event.errorMessage),
+          failure: (event) => ToastUtil.errorToast(event.errorMessage),
         );
       });
+      return null;
     }, [uiState]);
 
     return Scaffold(

@@ -29,7 +29,7 @@ class ReportWeeklyListScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           uiState.when(
-            failure: (event) => ToastUtil.errorToast(context, event.errorMessage),
+            failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
       }
@@ -43,6 +43,7 @@ class ReportWeeklyListScreen extends HookConsumerWidget {
         uiStateRead.init();
         uiStateRead.requestWeeklyList();
       });
+      return null;
     }, []);
 
     return Scaffold(

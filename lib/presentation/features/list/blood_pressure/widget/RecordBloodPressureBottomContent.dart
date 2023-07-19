@@ -61,13 +61,13 @@ class _FloatingButton extends HookConsumerWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(100),
           onTap: () async {
-            ResponseBioBloodPressureModel data = await Navigator.push(
+            final data = await Navigator.push(
               context,
               nextSlideScreen(RoutingScreen.RecordBloodPressure.route),
             );
             try {
-              if (data.diastolicBloodPressure != 0) {
-                uiStateRead.addBpBioInfo(data);
+              if (data?.diastolicBloodPressure != 0) {
+                uiStateRead.addBpBioInfo(data!);
               }
             } catch (e) {
               debugPrint("bp update fail: ${e.toString()}");

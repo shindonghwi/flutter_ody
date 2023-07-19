@@ -48,10 +48,11 @@ class AnalysisScreen extends HookConsumerWidget {
                 CollectionUtil.isNullorEmpty(bpList.value);
           },
           failure: (event) {
-            ToastUtil.errorToast(context, event.errorMessage);
+            ToastUtil.errorToast(event.errorMessage);
           },
         );
       });
+      return null;
     }, [uiState]);
 
     return Scaffold(
@@ -218,7 +219,10 @@ class _BpList extends StatelessWidget {
                         Text(
                           item.status.name,
                           style: getTextTheme(context).c1b.copyWith(
-                                color: getColorScheme(context).colorError,
+                                color: RecordRangeStatusHelper.getStatusTextColor(
+                                  context,
+                                  RecordRangeStatusHelper.getBPRecordRangeStatusFromCode(item.status.code),
+                                ),
                               ),
                         ),
                         Text(

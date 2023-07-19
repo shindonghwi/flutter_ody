@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ody_flutter_app/presentation/components/textfield/OutlineDefaultTextField.dart';
-import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
+import 'package:ody_flutter_app/presentation/components/textfield/InputTextField.dart';
 import 'package:ody_flutter_app/presentation/features/setting/medication/provider/RegisterMedicineProvider.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
@@ -16,8 +14,6 @@ class MedicationName extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final helpText = useState('');
-    final fieldState = useState(TextFieldState.Default);
     final medicationName = useState('');
 
     final uiStateRead = ref.read(registerMedicineProvider.notifier);
@@ -50,24 +46,16 @@ class MedicationName extends HookConsumerWidget {
           const SizedBox(
             height: 16,
           ),
-          OutlineDefaultTextField(
-            controller: useTextEditingController(text: ''),
-            hint: getAppLocalizations(context).add_medication_name_input_hint,
-            textInputType: TextInputType.text,
-            textInputAction: TextInputAction.done,
+          InputTextField(
             autoFocus: true,
+            hint: getAppLocalizations(context).add_medication_name_input_hint,
+            textInputAction: TextInputAction.done,
+            textInputType: TextInputType.text,
+            limit: 15,
             onChanged: (String value) {
               medicationName.value = value;
               uiStateRead.updateMedicineName(medicationName.value);
             },
-            limit: 20,
-            maxLine: 1,
-            helpText: helpText.value,
-            fieldState: fieldState.value,
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp(r'[^ㄱ-ㅎ가-힣a-zA-Z0-9_]+')),
-            ],
-            onDoneAction: () => FocusManager.instance.primaryFocus?.unfocus(),
           )
         ],
       ),
