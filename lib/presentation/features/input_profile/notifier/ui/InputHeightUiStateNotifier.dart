@@ -42,4 +42,6 @@ class InputHeightUiStateNotifier extends StateNotifier<UIState<String>> {
   }
 
   void resetState() => state = Idle();
+
+  void clearData() => height = 0;
 }

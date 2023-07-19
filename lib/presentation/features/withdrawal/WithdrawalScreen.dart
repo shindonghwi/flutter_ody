@@ -48,45 +48,46 @@ class WithdrawalScreen extends HookWidget {
         ),
         title: getAppLocalizations(context).withdrawal_title,
       ),
-      body: Container(
-        margin: const EdgeInsets.fromLTRB(24, 24, 24, 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _title(context),
-            _policy(context, policyItems),
-            _agreeCheckBox(isChecked, context, (isChecked) {
-              buttonState.value = isChecked ? ButtonState.Activated : ButtonState.Disabled;
-              debugPrint(buttonState.value.toString());
-            }),
-            const Expanded(
-              child: SizedBox(),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 24),
-                width: double.infinity,
-                child: FillButton(
-                  text: getAppLocalizations(context).common_next,
-                  type: ButtonSizeType.Small,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      nextSlideScreen(RoutingScreen.WithdrawalReason.route),
-                    );
-                  },
-                  buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
-                    (_) => ButtonNotifier(
-                      state: buttonState.value == ButtonState.Activated
-                          ? ButtonState.Activated
-                          : ButtonState.Disabled,
+      body: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _title(context),
+              _policy(context, policyItems),
+              _agreeCheckBox(isChecked, context, (isChecked) {
+                buttonState.value = isChecked ? ButtonState.Activated : ButtonState.Disabled;
+                debugPrint(buttonState.value.toString());
+              }),
+              const Expanded(
+                child: SizedBox(),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: double.infinity,
+                  child: FillButton(
+                    text: getAppLocalizations(context).common_next,
+                    type: ButtonSizeType.Normal,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        nextSlideScreen(RoutingScreen.WithdrawalReason.route),
+                      );
+                    },
+                    buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
+                      (_) => ButtonNotifier(
+                        state: buttonState.value == ButtonState.Activated
+                            ? ButtonState.Activated
+                            : ButtonState.Disabled,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
