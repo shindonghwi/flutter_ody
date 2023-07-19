@@ -22,7 +22,7 @@ class GenderSelector extends StatelessWidget {
           child: OutlineRoundPrimaryButton(
             text: getAppLocalizations(context).common_man,
             onPressed: () => isSelectedMan.value = !isSelectedMan.value,
-            type: ButtonSizeType.Small,
+            type: ButtonSizeType.Normal,
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
                 state: isSelectedMan.value ? ButtonState.Activated : ButtonState.Default,
@@ -37,7 +37,7 @@ class GenderSelector extends StatelessWidget {
           child: OutlineRoundPrimaryButton(
             text: getAppLocalizations(context).common_woman,
             onPressed: () => isSelectedMan.value = !isSelectedMan.value,
-            type: ButtonSizeType.Small,
+            type: ButtonSizeType.Normal,
             buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
               (_) => ButtonNotifier(
                 state: !isSelectedMan.value ? ButtonState.Activated : ButtonState.Default,

@@ -91,12 +91,34 @@ class _InputTextField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final meInfoRead = ref.read(meInfoProvider.notifier);
     final weightRead = ref.read(inputWeightUiStateProvider.notifier);
     final pattern = RegExp(r'^(3[0-6]|[3-9]\d|1\d\d|200)$'); // 30 <= x <= 200
     const fixedContent = "kg";
 
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (weightRead.weight != 0) {
+          final weight = weightRead.weight.toString();
+          onChanged(pattern.hasMatch(weight.toString()));
+          weightRead.updateWeight(int.tryParse(weight) ?? 0);
+        }
+        if (meInfoRead.getMeProfile()?.birthday != null) {
+          final weight = meInfoRead.getMeProfile()!.weight.toString();
+          onChanged(pattern.hasMatch(weight));
+          weightRead.updateWeight(int.tryParse(weight) ?? 0);
+        }
+      });
+      return null;
+    }, []);
+
     return InputTextField(
       autoFocus: true,
+      initText: weightRead.weight != 0
+          ? weightRead.weight.toString()
+          : meInfoRead.getMeProfile()!.weight == 0
+          ? ""
+          : meInfoRead.getMeProfile()!.weight.toString(),
       hint: getAppLocalizations(context).input_profile_weight_hint,
       textInputAction: TextInputAction.next,
       textInputType: TextInputType.number,

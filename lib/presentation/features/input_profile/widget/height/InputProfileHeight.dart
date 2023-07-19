@@ -91,12 +91,34 @@ class _InputTextField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final meInfoRead = ref.read(meInfoProvider.notifier);
     final heightRead = ref.read(inputHeightUiStateProvider.notifier);
     final pattern = RegExp(r'^(12[0-9]|1[3-9][0-9]|2[0-2][0-9]|230)$'); // 120 <= x <= 230
     const fixedContent = "cm";
 
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (heightRead.height != 0) {
+          final height = heightRead.height.toString();
+          onChanged(pattern.hasMatch(height.toString()));
+          heightRead.updateHeight(int.tryParse(height) ?? 0);
+        }
+        if (meInfoRead.getMeProfile()?.birthday != null) {
+          final height = meInfoRead.getMeProfile()!.height.toString();
+          onChanged(pattern.hasMatch(height));
+          heightRead.updateHeight(int.tryParse(height) ?? 0);
+        }
+      });
+      return null;
+    }, []);
+
     return InputTextField(
       autoFocus: true,
+      initText: heightRead.height != 0
+          ? heightRead.height.toString()
+          : meInfoRead.getMeProfile()!.height == 0
+              ? ""
+              : meInfoRead.getMeProfile()!.height.toString(),
       hint: getAppLocalizations(context).input_profile_height_hint,
       textInputAction: TextInputAction.next,
       textInputType: TextInputType.number,

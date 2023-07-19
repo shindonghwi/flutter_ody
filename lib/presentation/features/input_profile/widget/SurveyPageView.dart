@@ -15,7 +15,7 @@ class SurveyPageView extends HookConsumerWidget {
   final int totalPageCount;
   final Function onBackPressed;
 
-  SurveyPageView({
+  const SurveyPageView({
     Key? key,
     required this.totalPageCount,
     required this.onBackPressed,
@@ -47,7 +47,7 @@ class SurveyPageView extends HookConsumerWidget {
               begin: 0,
               end: (currentPageIndex + 1) / totalPageCount,
             ),
-            builder: (context, value, _) => Container(
+            builder: (context, value, _) => SizedBox(
               height: 6,
               child: LinearProgressIndicator(
                 value: value,
