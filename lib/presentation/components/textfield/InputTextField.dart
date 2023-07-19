@@ -118,7 +118,7 @@ class InputTextField extends HookWidget {
                     color: getColorScheme(context).neutral50,
                   ),
               isCollapsed: true,
-              suffixIcon: getSuffixIcon(context, currentType.value),
+              suffixIcon: getSuffixIcon(context, currentType.value, contentValue.value),
               suffixIconConstraints: const BoxConstraints(minHeight: 20, minWidth: 20),
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               border: InputBorder.none,
@@ -240,33 +240,29 @@ class InputTextField extends HookWidget {
     }
   }
 
-  Widget getSuffixIcon(BuildContext context, InputFieldState state) {
-    var icon;
-    switch (state) {
-      case InputFieldState.Success:
-        icon = Image.asset(
-          "assets/imgs/icon_small_check.png",
-          width: 20,
-          height: 20,
-        );
-        break;
-      case InputFieldState.Error:
-        icon = Image.asset(
-          "assets/imgs/icon_small_error.png",
-          width: 20,
-          height: 20,
-        );
-        break;
-      default:
-        return const SizedBox(
-          width: 20,
-          height: 20,
-        );
-    }
+  Widget getSuffixIcon(BuildContext context, InputFieldState state, String content) {
+    if (content.isNotEmpty) {
+      var iconPath = "";
 
-    return Container(
-      margin: const EdgeInsets.only(right: 16),
-      child: icon,
+      if (state == InputFieldState.Success) {
+        iconPath = "assets/imgs/icon_small_check.png";
+      } else if (state == InputFieldState.Error) {
+        iconPath = "assets/imgs/icon_small_error.png";
+      }
+      if (iconPath.isNotEmpty){
+        return Container(
+          margin: const EdgeInsets.only(right: 16),
+          child: Image.asset(
+            iconPath,
+            width: 20,
+            height: 20,
+          ),
+        );
+      }
+    }
+    return const SizedBox(
+      width: 20,
+      height: 20,
     );
   }
 }

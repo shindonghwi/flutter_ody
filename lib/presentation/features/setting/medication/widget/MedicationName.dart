@@ -56,9 +56,6 @@ class MedicationName extends HookConsumerWidget {
               medicationName.value = value;
               uiStateRead.updateMedicineName(medicationName.value);
             },
-            regList: [
-              RegExp(r'^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]+$'),
-            ],
           )
         ],
       ),
