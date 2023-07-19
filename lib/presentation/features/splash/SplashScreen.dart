@@ -13,6 +13,7 @@ import 'package:ody_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:ody_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
+import 'package:ody_flutter_app/firebase/FirebaseRemoteConfigService.dart';
 import 'package:ody_flutter_app/presentation/features/constant/constants.dart';
 import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
@@ -126,6 +127,7 @@ class SplashScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await FirebaseRemoteConfigService().initialize();
         final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
         final languageCode = WidgetsBinding.instance.window.locale.languageCode;
         final countryCode = WidgetsBinding.instance.window.locale.countryCode.toString();

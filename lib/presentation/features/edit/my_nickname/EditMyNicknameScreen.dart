@@ -90,8 +90,6 @@ class _NickContent extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final meInfo = ref.watch(meInfoProvider);
-    final helpText = useState('');
-    final fieldState = useState(TextFieldState.Complete);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {

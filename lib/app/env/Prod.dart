@@ -14,7 +14,6 @@ main() async {
     name: 'ody-product',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseRemoteConfigService().initialize();
 
   // 모든 오류 기록
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;

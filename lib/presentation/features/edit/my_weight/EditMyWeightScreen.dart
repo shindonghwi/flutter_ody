@@ -6,7 +6,6 @@ import 'package:ody_flutter_app/presentation/components/appbar/IconTitleTextAppB
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
 import 'package:ody_flutter_app/presentation/components/loading/CircleLoading.dart';
 import 'package:ody_flutter_app/presentation/components/textfield/InputTextField.dart';
-import 'package:ody_flutter_app/presentation/components/textfield/model/TextFieldState.dart';
 import 'package:ody_flutter_app/presentation/components/toast/Toast.dart';
 import 'package:ody_flutter_app/presentation/features/edit/provider/PatchMeInfoUiStateNotifier.dart';
 import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
@@ -16,6 +15,7 @@ import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/regex/FixedInputFormatter.dart';
 
 class EditMyWeightScreen extends HookConsumerWidget {
   final int weight;
@@ -91,6 +91,8 @@ class _WeightContent extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final meInfo = ref.watch(meInfoProvider);
+    final pattern = RegExp(r'^(3[0-6]|[3-9]\d|1\d\d|200)$'); // 30 <= x <= 200
+    const fixedContent = "kg";
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -119,17 +121,24 @@ class _WeightContent extends HookConsumerWidget {
           ),
           const SizedBox(height: 16),
           InputTextField(
-            initText: initWeight,
             autoFocus: true,
+            initText: initWeight,
             hint: getAppLocalizations(context).input_profile_weight_hint,
-            textInputAction: TextInputAction.done,
+            textInputAction: TextInputAction.next,
             textInputType: TextInputType.number,
-            limit: 3,
+            limit: 3 + fixedContent.length,
             onChanged: (String value) => callback.call(value),
-            regList: [RegExp(r'^(3[0-6]|[3-9]\d|1\d\d|200)$')],
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             onDoneAction: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-          )
+            successMessage: getAppLocalizations(context).input_profile_message_success,
+            errorMessage: getAppLocalizations(context).input_profile_message_error,
+            fixedContent: fixedContent,
+            showCounter: true,
+            regList: [pattern],
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              FixedInputFormatter(suffix: fixedContent),
+            ],
+          ),
         ],
       ),
     );
