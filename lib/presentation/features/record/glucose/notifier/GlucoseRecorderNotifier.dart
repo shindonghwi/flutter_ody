@@ -90,6 +90,7 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
         code: glucoseStatus.name.toString(),
         name: RecordRangeStatusHelper.fromString(glucoseStatus),
       ),
+      memo: state.memo ?? "",
       createdAt: "${DateTime.now().hour}:${DateTime.now().minute}",
     );
   }
