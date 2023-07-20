@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/IconTitleTextAppBar.dart';
 import 'package:ody_flutter_app/presentation/components/appbar/model/AppBarIcon.dart';
-import 'package:ody_flutter_app/presentation/features/edit/my_nickname/EditMyNicknameScreen.dart';
 import 'package:ody_flutter_app/presentation/features/main/my/provider/meInfoProvider.dart';
 import 'package:ody_flutter_app/presentation/navigation/PageMoveUtil.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
@@ -47,7 +46,7 @@ class EditMyInfoScreen extends HookConsumerWidget {
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_height,
-        meInfo?.profile!.height ?? "",
+        (meInfo?.profile!.height == null || meInfo?.profile!.height == 0) ? "" : "${meInfo?.profile!.height} cm",
         () async {
           final String callbackHeight = await Navigator.push(
             context,
@@ -61,7 +60,7 @@ class EditMyInfoScreen extends HookConsumerWidget {
       ),
       Triple(
         getAppLocalizations(context).edit_my_info_title_weight,
-        meInfo?.profile!.weight ?? "",
+        (meInfo?.profile!.weight == null || meInfo?.profile!.weight == 0) ? "" : "${meInfo?.profile!.weight} kg",
         () async {
           final String callbackWeight = await Navigator.push(
             context,

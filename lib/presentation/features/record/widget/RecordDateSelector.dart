@@ -60,7 +60,7 @@ class RecordDateSelector extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+            padding: const EdgeInsets.only(left: 24.0, top: 12, bottom: 12),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -86,7 +86,7 @@ class RecordDateSelector extends HookConsumerWidget {
             child: InkWell(
               onTap: () => showTimeSelectPicker(),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+                padding: const EdgeInsets.only(right: 24.0, top: 12, bottom: 12),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

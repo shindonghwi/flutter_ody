@@ -60,15 +60,15 @@ class PageViewWithIndicator extends HookConsumerWidget {
   List<OnBoardingPageItem> setPages() {
     return [
       OnBoardingPageItem(
-        imagePath: "assets/imgs/onboarding_1.png",
+        imagePath: "assets/imgs/image_onboarding_1.png",
         title: getAppLocalizations(useContext()).onboarding_page1_title,
       ),
       OnBoardingPageItem(
-        imagePath: "assets/imgs/onboarding_2.png",
+        imagePath: "assets/imgs/image_onboarding_2.png",
         title: getAppLocalizations(useContext()).onboarding_page2_title,
       ),
       OnBoardingPageItem(
-        imagePath: "assets/imgs/onboarding_3.png",
+        imagePath: "assets/imgs/image_onboarding_3.png",
         title: getAppLocalizations(useContext()).onboarding_page3_title,
       ),
     ];
