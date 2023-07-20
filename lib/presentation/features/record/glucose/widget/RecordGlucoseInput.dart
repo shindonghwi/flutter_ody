@@ -144,7 +144,6 @@ class _InputGlucoseTextField extends HookConsumerWidget {
               children: [
                 IntrinsicWidth(
                   child: TextField(
-                    textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.done,
                     style: getTextTheme(context).t2b.copyWith(

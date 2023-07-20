@@ -15,6 +15,7 @@ class NotificationsUtil {
     return tz.TZDateTime.now(tz.local);
   }
 
+  /// 알림 반복 등록
   static void registerNotification({
     required NotificationType type,
     required List<Day> scheduledDays,
@@ -54,6 +55,52 @@ class NotificationsUtil {
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
       );
     }
+  }
+
+  /// 오늘만 알림 등록
+  static void registerOnlyTodayNotification({
+    required NotificationType type,
+    required int notificationId,
+    required int hour,
+    required int minutes,
+    required message,
+  }) async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+    final now = NotificationsUtil.getTzNow();
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minutes,
+    );
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      notificationId,
+      _getNotificationTitle(type),
+      message,
+      scheduledDate,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          _getNotificationChannel(type).hashCode.toString(),
+          _getNotificationChannel(type),
+          importance: Importance.max,
+          priority: Priority.high,
+          ongoing: false,
+          styleInformation: BigTextStyleInformation(message),
+        ),
+        iOS: const DarwinNotificationDetails(
+          badgeNumber: 1,
+          presentSound: true,
+        ),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      payload: "$hour:$minutes".toString(),
+      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+    );
   }
 
   static tz.TZDateTime _getNextScheduledDate(Day day, int hour, int minute) {

@@ -186,7 +186,11 @@ class SplashScreen extends HookConsumerWidget {
     return Scaffold(
       backgroundColor: getColorScheme(context).colorUIBackground,
       body: Center(
-        child: Image.asset("assets/imgs/logo_splash.png"),
+        child: Image.asset(
+          "assets/imgs/logo_splash.png",
+          width: 55,
+          height: 66,
+        ),
       ),
     );
   }

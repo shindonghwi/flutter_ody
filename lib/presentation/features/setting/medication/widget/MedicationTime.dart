@@ -73,7 +73,7 @@ class MedicationTime extends HookConsumerWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: getColorScheme(context).colorPrimaryFocus,
+                    color: getColorScheme(context).neutral50,
                     width: 1.5,
                   ),
                 ),

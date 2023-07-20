@@ -14,8 +14,6 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/date/DateChecker.dart';
-import 'package:ody_flutter_app/presentation/utils/date/DateParser.dart';
-import 'package:ody_flutter_app/presentation/utils/date/DateTransfer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarContentView extends HookConsumerWidget {
@@ -58,6 +56,7 @@ class CalendarContentView extends HookConsumerWidget {
           calendarPage.day,
         );
       });
+      return null;
     }, [calendarPage]);
 
     final _firstDay = DateTime.now().subtract(

@@ -58,12 +58,14 @@ class RecordGlucoseScreen extends HookConsumerWidget {
           appBar: const RecordGlucoseAppBar(),
           body: const SingleChildScrollView(
             physics: BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                RecordDateSelector(type: RecordType.Glucose),
-                RecordGlucose(),
-                RecordGlucoseMemo(),
-              ],
+            child: SafeArea(
+              child: Column(
+                children: [
+                  RecordDateSelector(type: RecordType.Glucose),
+                  RecordGlucose(),
+                  RecordGlucoseMemo(),
+                ],
+              ),
             ),
           ),
         ),

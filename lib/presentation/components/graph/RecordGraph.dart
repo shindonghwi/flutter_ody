@@ -111,12 +111,12 @@ class RecordGraph extends StatelessWidget {
                   children: [
                     Flexible(
                       flex: 1,
-                      fit: FlexFit.loose,
+                      fit: FlexFit.tight,
                       child: _YAxisContent(yAxisList: yAxisList),
                     ),
-                    const SizedBox(width: 24),
+                    const SizedBox(width: 22),
                     Flexible(
-                      flex: 16,
+                      flex: 10,
                       fit: FlexFit.tight,
                       child: _GraphContent(
                         xAxisList: xAxisList,

@@ -57,7 +57,6 @@ class GlucoseRecorderNotifier extends StateNotifier<GlucoseRecorderModel> {
         glucose: state.glucose,
         memo: memo,
         remindTime: state.remindTime);
-    debugPrint('update memo: ${state.memo}');
   }
 
   void updateRemindTime(int time) {

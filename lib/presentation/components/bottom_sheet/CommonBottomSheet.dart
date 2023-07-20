@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:ody_flutter_app/presentation/ui/colors.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
 class CommonBottomSheet {
   static showBottomSheet(
     BuildContext context, {
     double borderRadius = 20.0,
+    Color safeAreaColor = Colors.white,
     Color backgroundColor = Colors.white,
     required Widget child,
     Function? closeAction,
@@ -19,11 +22,20 @@ class CommonBottomSheet {
       ),
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return SafeArea(
-          child: BottomSheetWidget(
-            borderRadius: borderRadius,
-            backgroundColor: backgroundColor,
-            child: child,
+        return Container(
+          decoration: BoxDecoration(
+            color: safeAreaColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(borderRadius),
+              topRight: Radius.circular(borderRadius),
+            ),
+          ),
+          child: SafeArea(
+            child: BottomSheetWidget(
+              borderRadius: borderRadius,
+              backgroundColor: backgroundColor,
+              child: child,
+            ),
           ),
         );
       },
