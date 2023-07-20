@@ -24,7 +24,7 @@ class RecordGlucoseMemo extends HookWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 22, left: 15, right: 15),
+      margin: const EdgeInsets.only(top: 16, left: 15, right: 15, bottom: 15),
       padding: const EdgeInsets.only(left: 24, top: 27, bottom: 21, right: 24),
       decoration: BoxDecoration(
         color: getColorScheme(context).white,

@@ -15,7 +15,7 @@ class RecordBloodPressure extends HookWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 10, left: 15, right: 15),
+      margin: const EdgeInsets.only(top: 16, left: 15, right: 15),
       padding: const EdgeInsets.only(left: 20, top: 22, bottom: 18, right: 13),
       decoration: BoxDecoration(
         color: getColorScheme(context).white,

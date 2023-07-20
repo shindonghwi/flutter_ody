@@ -54,7 +54,7 @@ class RecordDateSelector extends HookConsumerWidget {
         color: getColorScheme(context).white,
         borderRadius: BorderRadius.circular(5),
       ),
-      margin: const EdgeInsets.only(top: 10, left: 15, right: 15),
+      margin: const EdgeInsets.only(top: 16, left: 15, right: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
