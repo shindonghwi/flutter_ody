@@ -1,20 +1,21 @@
 import 'package:get_it/get_it.dart';
 import 'package:ody_flutter_app/domain/models/bio/GlucoseMesaureType.dart';
-import 'package:ody_flutter_app/domain/usecases/remote/bio/PostBioBloodPressureUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/bio/PostBioGlucoseUseCase.dart';
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
+import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/notifications/NotificationsUtil.dart';
 import 'package:riverpod/riverpod.dart';
 
-final recordGlucoseUiStateProvider =
-    StateNotifierProvider<RecordGlucoseUiStateNotifier, UIState<String?>>(
+final recordGlucoseUiStateProvider = StateNotifierProvider<RecordGlucoseUiStateNotifier, UIState<String?>>(
   (_) => RecordGlucoseUiStateNotifier(),
 );
 
 class RecordGlucoseUiStateNotifier extends StateNotifier<UIState<String?>> {
   RecordGlucoseUiStateNotifier() : super(Idle<String?>());
 
-  PostBioGlucoseUseCase get _postBioGlucoseUseCase =>
-      GetIt.instance<PostBioGlucoseUseCase>();
+  static AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
+
+  PostBioGlucoseUseCase get _postBioGlucoseUseCase => GetIt.instance<PostBioGlucoseUseCase>();
 
   void postGlucose({
     required DateTime time,
@@ -36,6 +37,7 @@ class RecordGlucoseUiStateNotifier extends StateNotifier<UIState<String?>> {
     if (res.status == 200) {
       // 혈압 등록 성공
       state = Success(null);
+      registerMedicineNotification(remindTime, memo ?? "");
     } else {
       // 혈압 등록 실패
       state = Failure(res.message);
@@ -44,4 +46,16 @@ class RecordGlucoseUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   void init() => state = Idle();
 
+  /// 약 리마인더 등록
+  void registerMedicineNotification(int? remind, String memo) {
+    if (remind == null || remind == 0) return;
+    var now = DateTime.now().add(Duration(minutes: remind));
+    NotificationsUtil.registerOnlyTodayNotification(
+      type: NotificationType.ALARM,
+      notificationId: now.hashCode,
+      hour: now.hour,
+      minutes: now.minute,
+      message: _getAppLocalization.get().notification_message_glucose_remind_alarm(memo),
+    );
+  }
 }

@@ -135,6 +135,8 @@ class RecordGlucoseItem extends HookWidget {
                   model.memo.toString(),
                   style: getTextTheme(context).c2r.copyWith(
                         color: getColorScheme(context).neutral70,
+                        overflow: TextOverflow.visible,
+                        height: 1.44,
                       ),
                 )
             ],
