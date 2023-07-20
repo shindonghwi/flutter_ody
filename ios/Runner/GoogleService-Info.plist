@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>739051866939-7ii7c6od0j78mu7idigtm1e2tpjqlstg.apps.googleusercontent.com</string>
+	<string>1043075265104-65irrc3i3gnif14d69fd6el6avsso6km.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.739051866939-7ii7c6od0j78mu7idigtm1e2tpjqlstg</string>
+	<string>com.googleusercontent.apps.1043075265104-65irrc3i3gnif14d69fd6el6avsso6km</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>739051866939-vvhba8lbfu8vnvj0egp3ld6ijov2apcq.apps.googleusercontent.com</string>
+	<string>1043075265104-1t6ac85tt4lruc1di83asbujr4bl07eo.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC_tLq2Zrpy59N3pTpkDhONvGi5NTBGY0w</string>
+	<string>AIzaSyCWinpwWkKIRid2ARYOcRrpyv0gekdIL-A</string>
 	<key>GCM_SENDER_ID</key>
-	<string>739051866939</string>
+	<string>1043075265104</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.orot.ody.dev</string>
+	<string>com.orot.ody</string>
 	<key>PROJECT_ID</key>
-	<string>orotcode-ody-dev</string>
+	<string>orotcode-ody</string>
 	<key>STORAGE_BUCKET</key>
-	<string>orotcode-ody-dev.appspot.com</string>
+	<string>orotcode-ody.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:739051866939:ios:f311bbe2eecda8881d851e</string>
+	<string>1:1043075265104:ios:5f201c12607adeb17c9755</string>
 </dict>
 </plist>

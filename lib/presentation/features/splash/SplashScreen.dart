@@ -31,25 +31,28 @@ class SplashScreen extends HookConsumerWidget {
   SplashScreen({super.key});
 
   Future<String?> getSocialAccessToken(String platform) async {
-    final String platformName = platform.toLowerCase();
-    if (platformName.contains("google")) {
-      final GoogleSignInAccount? googleUser = await googleSignIn.signInSilently();
-      if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-        return googleAuth.idToken;
+    try {
+      final String platformName = platform.toLowerCase();
+      if (platformName.contains("google")) {
+        final GoogleSignInAccount? googleUser = await googleSignIn.signInSilently();
+        if (googleUser != null) {
+          final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+          return googleAuth.idToken;
+        }
+      } else if (platformName.contains("kakao")) {
+        return null;
+      } else if (platformName.contains("apple")) {
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          final idTokenResult = await user.getIdTokenResult(true);
+          return idTokenResult.token;
+        }
+        return null;
       }
-    } else if (platformName.contains("kakao")) {
       return null;
-    } else if (platformName.contains("apple")) {
-      final user = FirebaseAuth.instance.currentUser;
-      debugPrint("user : $user");
-      if (user != null) {
-        final idTokenResult = await user.getIdTokenResult(true);
-        return idTokenResult.token;
-      }
+    } catch (e) {
       return null;
     }
-    return null;
   }
 
   /// 소셜 로그인 정보를 확인한다.
