@@ -54,11 +54,7 @@ class LoginContent extends HookConsumerWidget {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          _snsLoginTitle(context),
-          _socialIcons(socialItems),
-          _termText(termList, context)
-        ],
+        children: [_snsLoginTitle(context), _socialIcons(socialItems), _termText(termList, context)],
       ),
     );
   }
@@ -74,10 +70,8 @@ class LoginContent extends HookConsumerWidget {
           return TextSpan(
             text: term,
             style: getTextTheme(context).c3m.copyWith(
-                  color: index % 2 != 0
-                      ? getColorScheme(context).neutral80
-                      : getColorScheme(context).neutral60,
-                  height: 1.1,
+                  color: index % 2 != 0 ? getColorScheme(context).neutral80 : getColorScheme(context).neutral60,
+                  height: 1.2,
                 ),
           );
         }).toList()),
@@ -108,6 +102,8 @@ class LoginContent extends HookConsumerWidget {
                   padding: const EdgeInsets.all(2.0),
                   child: Image.asset(
                     e.first,
+                    width: 64,
+                    height: 64,
                   ),
                 ),
               ),
