@@ -24,6 +24,7 @@ class LeaveNotifier extends StateNotifier<UIState<String>> {
     final res = await GetIt.instance.get<PostMeLeaveUseCase>().call(reason: reason);
     if (res.status == 200) {
       state = Success("");
+      NotificationsUtil.removeAll();
     } else {
       state = Failure(res.message);
     }

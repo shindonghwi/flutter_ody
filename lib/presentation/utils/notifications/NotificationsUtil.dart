@@ -163,6 +163,10 @@ class NotificationsUtil {
     debugPrint("removeNotification: $notificationId");
     FlutterLocalNotificationsPlugin().cancel(notificationId);
   }
+
+  static void removeAll() {
+    FlutterLocalNotificationsPlugin().cancelAll();
+  }
 }
 
 enum NotificationType { MEDICATION, REPORT, GLUCOSE_REMIND }
