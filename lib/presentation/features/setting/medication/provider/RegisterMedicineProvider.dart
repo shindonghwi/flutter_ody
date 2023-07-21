@@ -79,7 +79,7 @@ class RegisterMedicineNotifier extends StateNotifier<UIState<String>> {
 
     if (!CollectionUtil.isNullorEmpty(days)) {
       NotificationsUtil.registerNotification(
-        type: NotificationType.ALARM,
+        type: NotificationType.MEDICATION,
         notificationId: responseData.medicineSeq!,
         hour: int.parse(data.time.split(":").first),
         minutes: int.parse(data.time.split(":").last),
@@ -110,7 +110,7 @@ class RegisterMedicineNotifier extends StateNotifier<UIState<String>> {
 
     if (!CollectionUtil.isNullorEmpty(days)) {
       NotificationsUtil.registerNotification(
-        type: NotificationType.ALARM,
+        type: NotificationType.MEDICATION,
         notificationId: notificationId,
         hour: hour,
         minutes: minutes,

@@ -166,7 +166,6 @@
     "withdrawal_policy_2_medium": " ‘개인 정보 보호 정책'에 따라 60일간 보관 되며, 경과일 후에는 완전히 삭제되어",
     "withdrawal_policy_2_end": " 복구할 수 없습니다.",
     "withdrawal_policy_agree": "안내사항 확인 후 탈퇴에 동의합니다.",
-    "withdrawal_do": "탈퇴하기",
 
     "withdrawal_reason_description": "오디를 탈퇴하게 된 이유가 있으신가요?\n탈퇴사유를 알려주시면 의견을 적극 반영하겠습니다",
     "withdrawal_reason_sub_description": "중복 선택이 가능합니다",
@@ -351,12 +350,16 @@
         }
     },
 
-    "notification_message_glucose_remind_alarm": "혈당을 다시 기록 할 시간이에요!\n{memo}",
+    "notification_message_glucose_remind_alarm": "혈당을 다시 기록 할 시간이에요!\n메모: {memo}",
     "@notification_message_glucose_remind_alarm":{
         "placeholders": {
             "memo": {}
         }
     },
+
+    "notification_title_medication": "약 알림",
+    "notification_title_report": "보고서 알림",
+    "notification_title_glucose_remind": "혈당 알림",
 
     "common_skip": "넘어가기",
     "common_next": "다음",

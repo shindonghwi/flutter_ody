@@ -74,6 +74,7 @@ class MedicineItem extends HookConsumerWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: isEditMode ? () => checkListRead.click(data) : null,
+        borderRadius: BorderRadius.circular(15),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
@@ -105,7 +106,7 @@ class MedicineItem extends HookConsumerWidget {
                         margin: const EdgeInsets.only(right: 16),
                         child: BasicBorderCheckBox(
                           isChecked: checkList.contains(data),
-                          size: CheckBoxSize.Small,
+                          size: CheckBoxSize.Normal,
                           type: CheckBoxType.Circle,
                           onChange: (bool value) {
                             checkListRead.click(data);
@@ -184,7 +185,7 @@ class MedicineItem extends HookConsumerWidget {
                                     registerMedicationRead.registerMedicineNotificationFromInfo(
                                       scheduledDays: data.days?.map((e) => DateTransfer.convertShortEnYoilToYoilType(e)).toList(),
                                       notificationId: data.medicineSeq!,
-                                      name: data.name!,
+                                      name: data.name,
                                       hour: hour24,
                                       minutes: minute,
                                     );
