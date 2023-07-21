@@ -185,6 +185,7 @@ class WithdrawalScreen extends HookWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
+          borderRadius: BorderRadius.circular(5),
           onTap: () {
             _isChecked.value = !_isChecked.value;
             callback.call(_isChecked.value);

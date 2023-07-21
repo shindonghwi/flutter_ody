@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ody_flutter_app/app/OrotApp.dart';
 import 'package:ody_flutter_app/domain/usecases/local/app/GetAppPolicyUpdateUseCase.dart';
 import 'package:ody_flutter_app/presentation/components/button/fill/FillButton.dart';
 import 'package:ody_flutter_app/presentation/components/button/model/ButtonNotifier.dart';
@@ -19,6 +18,7 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/typography.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 import 'package:ody_flutter_app/presentation/utils/dto/Triple.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PopUpAppPolicy extends HookWidget {
   const PopUpAppPolicy({Key? key}) : super(key: key);
@@ -29,8 +29,7 @@ class PopUpAppPolicy extends HookWidget {
     return WillPopScope(
       onWillPop: () async {
         final now = DateTime.now();
-        if (lastPressedAt == null ||
-            now.difference(lastPressedAt!) > const Duration(seconds: 2)) {
+        if (lastPressedAt == null || now.difference(lastPressedAt!) > const Duration(seconds: 2)) {
           lastPressedAt = now;
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -54,7 +53,7 @@ class PopUpAppPolicy extends HookWidget {
             _divider(context),
             const SizedBox(height: 16),
             const _PolicyItems(),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             ContinueButton()
           ],
         ),
@@ -96,8 +95,8 @@ class _PolicyAllCheck extends HookConsumerWidget {
         child: Row(
           children: [
             SizedBox(
-              width: 36,
-              height: 36,
+              width: 18,
+              height: 18,
               child: BasicBorderCheckBox(
                 isChecked: policyItemsRead.isAllAccepted(),
                 size: CheckBoxSize.Normal,
@@ -105,7 +104,7 @@ class _PolicyAllCheck extends HookConsumerWidget {
                 onChange: (bool value) => policyItemsRead.allChange(),
               ),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: 12),
             Text(
               getAppLocalizations(context).popup_app_policy_all_grant,
               style: getTextTheme(context).b2b.copyWith(
@@ -129,82 +128,98 @@ class _PolicyItems extends HookConsumerWidget {
       Triple(
         getAppLocalizations(context).popup_app_policy_age_14,
         true,
-        "https://www.naver.com",
+        "https://www.ody.life/youth-policy/index.html",
       ),
       Triple(
         getAppLocalizations(context).popup_app_policy_service,
         true,
-        "https://www.naver.com",
+        "https://www.ody.life/service/index.html",
       ),
       Triple(
         getAppLocalizations(context).popup_app_policy_individual,
         true,
-        "https://www.naver.com",
+        "https://www.ody.life/personal/index.html",
       ),
     ];
     final policyItemsState = ref.watch<List<bool>>(termsAppPolicyProvider);
     final policyItemsRead = ref.read(termsAppPolicyProvider.notifier);
 
     return Column(
-      children: policyItems.asMap().entries.map((entry) {
-        int index = entry.key;
-        Triple item = entry.value;
-
-        return Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () => policyItemsRead.change(index),
-            borderRadius: BorderRadius.circular(4),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: BasicBorderCheckBox(
-                    isChecked: policyItemsState[index],
-                    size: CheckBoxSize.Small,
-                    type: CheckBoxType.Rectangle,
-                    onChange: (bool value) => policyItemsRead.change(index),
-                  ),
-                ),
-                Text(
-                  item.first,
-                  style: getTextTheme(context).b3r.copyWith(
-                        color: getColorScheme(context).colorText,
-                        height: 1,
+        children: policyItems.asMap().entries.map((entry) {
+      final index = entry.key;
+      final item = entry.value;
+      return Row(
+        children: [
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => policyItemsRead.change(index),
+              borderRadius: BorderRadius.circular(4),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: BasicBorderCheckBox(
+                        isChecked: policyItemsState[index],
+                        size: CheckBoxSize.Small,
+                        type: CheckBoxType.Rectangle,
+                        onChange: (bool value) => policyItemsRead.change(index),
                       ),
+                    ),
+                    const SizedBox(
+                      width: 14,
+                    ),
+                    Text(
+                      item.first,
+                      style: getTextTheme(context).b3r.copyWith(
+                            color: getColorScheme(context).colorText,
+                            height: 1,
+                          ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      "[${item.second ? getAppLocalizations(context).common_required : getAppLocalizations(context).common_select}]",
+                      style: getTextTheme(context).b3r.copyWith(
+                            color: getColorScheme(context).primary100,
+                            height: 1,
+                          ),
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  "[${item.second ? getAppLocalizations(context).common_required : getAppLocalizations(context).common_select}]",
-                  style: getTextTheme(context).b3r.copyWith(
-                        color: getColorScheme(context).primary100,
-                        height: 1,
-                      ),
-                ),
-                SvgPicture.asset(
+              ),
+            ),
+          ),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => launchUrl(Uri.parse(item.third)),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 2, bottom: 2, right: 8),
+                child: SvgPicture.asset(
                   "assets/imgs/icon_next_1_small.svg",
                   colorFilter: ColorFilter.mode(
                     getColorScheme(context).colorText,
                     BlendMode.srcIn,
                   ),
-                )
-              ],
+                ),
+              ),
             ),
           ),
-        );
-      }).toList(),
-    );
+        ],
+      );
+    }).toList());
   }
 }
 
 class ContinueButton extends HookConsumerWidget {
   ContinueButton({Key? key}) : super(key: key);
-  final GetAppPolicyUpdateUseCase _getAppPolicyUpdateUseCase =
-      GetIt.instance<GetAppPolicyUpdateUseCase>();
+  final GetAppPolicyUpdateUseCase _getAppPolicyUpdateUseCase = GetIt.instance<GetAppPolicyUpdateUseCase>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -220,9 +235,7 @@ class ContinueButton extends HookConsumerWidget {
       },
       buttonProvider: StateNotifierProvider<ButtonNotifier, ButtonState>(
         (_) => ButtonNotifier(
-          state: policyItemsRead.isAllAccepted()
-              ? ButtonState.Activated
-              : ButtonState.Disabled,
+          state: policyItemsRead.isAllAccepted() ? ButtonState.Activated : ButtonState.Disabled,
         ),
       ),
     );
