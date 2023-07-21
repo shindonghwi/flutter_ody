@@ -139,18 +139,22 @@ class NotificationsUtil {
 
   static String _getNotificationTitle(NotificationType type) {
     switch (type) {
-      case NotificationType.ALARM:
+      case NotificationType.MEDICATION:
         return "약 알림";
       case NotificationType.REPORT:
+        return "보고서 알림";
+      case NotificationType.GLUCOSE_REMIND:
         return "보고서 알림";
     }
   }
 
   static String _getNotificationChannel(NotificationType type) {
     switch (type) {
-      case NotificationType.ALARM:
+      case NotificationType.MEDICATION:
         return "약 알림";
       case NotificationType.REPORT:
+        return "보고서 알림";
+      case NotificationType.GLUCOSE_REMIND:
         return "보고서 알림";
     }
   }
@@ -161,4 +165,4 @@ class NotificationsUtil {
   }
 }
 
-enum NotificationType { ALARM, REPORT }
+enum NotificationType { MEDICATION, REPORT, GLUCOSE_REMIND }

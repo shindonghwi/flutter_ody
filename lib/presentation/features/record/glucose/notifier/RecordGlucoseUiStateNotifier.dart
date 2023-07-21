@@ -46,12 +46,12 @@ class RecordGlucoseUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   void init() => state = Idle();
 
-  /// 약 리마인더 등록
+  /// 혈당 리마인더 등록
   void registerMedicineNotification(int? remind, String memo) {
     if (remind == null || remind == 0) return;
     var now = DateTime.now().add(Duration(minutes: remind));
     NotificationsUtil.registerOnlyTodayNotification(
-      type: NotificationType.ALARM,
+      type: NotificationType.GLUCOSE_REMIND,
       notificationId: now.hashCode,
       hour: now.hour,
       minutes: now.minute,
