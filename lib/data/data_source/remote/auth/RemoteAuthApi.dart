@@ -97,48 +97,57 @@ class RemoteAuthApi {
 
   Future<ApiResponse<SocialLoginModel>> doGoogleLogin() async {
     if (await Service.isNetworkAvailable()) {
-      // 구글 로그인 후 유저정보를 받아온다.
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      try{
+        // 구글 로그인 후 유저정보를 받아온다.
+        final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-      if (googleUser == null) {
-        return ApiResponse<SocialLoginModel>(
-          status: 404,
-          message: _getAppLocalization.get().message_not_found_user,
-          data: null,
-        );
-      } else {
-        // Google Auth Provider 를 통해 Credential 정보를 받아온다.
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-        final OAuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-
-        // 위에서 가져온 Credential 정보로 Firebase에 사용자 인증을한다.
-        final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
-        final User? user = userCredential.user;
-
-        if (user != null) {
-          return await googleUser.authentication.then(
-            (value) {
-              return ApiResponse<SocialLoginModel>(
-                status: 200,
-                message: _getAppLocalization.get().message_api_success,
-                data: SocialLoginModel(
-                  LoginPlatform.Google,
-                  value.idToken,
-                ),
-              );
-            },
-          );
-        } else {
+        if (googleUser == null) {
           return ApiResponse<SocialLoginModel>(
             status: 404,
             message: _getAppLocalization.get().message_not_found_user,
             data: null,
           );
+        } else {
+          // Google Auth Provider 를 통해 Credential 정보를 받아온다.
+          final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+          final OAuthCredential credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          );
+
+          // 위에서 가져온 Credential 정보로 Firebase에 사용자 인증을한다.
+          final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
+          final User? user = userCredential.user;
+
+          if (user != null) {
+            return await googleUser.authentication.then(
+                  (value) {
+                return ApiResponse<SocialLoginModel>(
+                  status: 200,
+                  message: _getAppLocalization.get().message_api_success,
+                  data: SocialLoginModel(
+                    LoginPlatform.Google,
+                    value.idToken,
+                  ),
+                );
+              },
+            );
+          } else {
+            return ApiResponse<SocialLoginModel>(
+              status: 404,
+              message: _getAppLocalization.get().message_not_found_user,
+              data: null,
+            );
+          }
         }
+      }catch(e){
+        return ApiResponse<SocialLoginModel>(
+          status: 500,
+          message: _getAppLocalization.get().message_temp_login_fail,
+          data: null,
+        );
       }
+
     } else {
       return ApiResponse<SocialLoginModel>(
         status: 406,

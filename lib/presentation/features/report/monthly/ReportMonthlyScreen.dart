@@ -43,6 +43,7 @@ class ReportMonthlyScreen extends HookConsumerWidget {
         uiStateRead.init();
         uiStateRead.requestMonthlyInfo(reportSeq);
       });
+      return null;
     }, []);
 
     return Scaffold(
@@ -55,7 +56,7 @@ class ReportMonthlyScreen extends HookConsumerWidget {
         title: getAppLocalizations(context).my_item_subtitle_monthly_report,
       ),
       backgroundColor: getColorScheme(context).colorUI03,
-      body: uiState is Success<ResponseBioReportInfoModel>
+      body: uiState is Success<ResponseBioReportInfoModel?>
           ? SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
               physics: const BouncingScrollPhysics(),
@@ -63,9 +64,9 @@ class ReportMonthlyScreen extends HookConsumerWidget {
                 children: [
                   // ReportCardWalk(isWeekly: false, walking: uiState.value.walking),
                   // const SizedBox(height: 24),
-                  ReportCardBloodPressure(isWeekly: false, bloodPressure: uiState.value.bloodPressure),
+                  ReportCardBloodPressure(isWeekly: false, bloodPressure: uiState.value?.bloodPressure),
                   const SizedBox(height: 24),
-                  ReportCardGlucose(isWeekly: false, glucose: uiState.value.glucose),
+                  ReportCardGlucose(isWeekly: false, glucose: uiState.value?.glucose),
                 ],
               ),
             )

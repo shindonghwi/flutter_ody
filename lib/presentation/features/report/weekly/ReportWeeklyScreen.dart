@@ -43,7 +43,7 @@ class ReportWeeklyScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           uiState.when(
-            failure: (event) => ToastUtil.errorToast( event.errorMessage),
+            failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
       }
@@ -57,6 +57,7 @@ class ReportWeeklyScreen extends HookConsumerWidget {
         uiStateRead.init();
         uiStateRead.requestWeeklyInfo(reportSeq);
       });
+      return null;
     }, []);
 
     return Scaffold(
@@ -69,23 +70,23 @@ class ReportWeeklyScreen extends HookConsumerWidget {
         title: getAppLocalizations(context).my_item_subtitle_weekly_report,
       ),
       backgroundColor: getColorScheme(context).colorUI03,
-      body: uiState is Success<ResponseBioReportInfoModel>
+      body: uiState is Success<ResponseBioReportInfoModel?>
           ? SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            // ReportCardWalk(isWeekly: true, walking: uiState.value.walking),
-            // const SizedBox(height: 24),
-            ReportCardBloodPressure(isWeekly: true, bloodPressure: uiState.value.bloodPressure),
-            const SizedBox(height: 24),
-            ReportCardGlucose(isWeekly: true, glucose: uiState.value.glucose),
-          ],
-        ),
-      )
+              padding: const EdgeInsets.fromLTRB(15, 24, 15, 64),
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  // ReportCardWalk(isWeekly: true, walking: uiState.value.walking),
+                  // const SizedBox(height: 24),
+                  ReportCardBloodPressure(isWeekly: true, bloodPressure: uiState.value?.bloodPressure),
+                  const SizedBox(height: 24),
+                  ReportCardGlucose(isWeekly: true, glucose: uiState.value?.glucose),
+                ],
+              ),
+            )
           : uiState is Loading
-          ? const CircleLoading()
-          : const SizedBox(),
+              ? const CircleLoading()
+              : const SizedBox(),
     );
   }
 }
@@ -140,7 +141,7 @@ class ReportCardWalk extends StatelessWidget {
 
 class ReportCardBloodPressure extends StatelessWidget {
   final bool isWeekly;
-  final ResponseBioReportBloodPressureModel bloodPressure;
+  final ResponseBioReportBloodPressureModel? bloodPressure;
 
   const ReportCardBloodPressure({
     Key? key,
@@ -159,30 +160,30 @@ class ReportCardBloodPressure extends StatelessWidget {
         children: [
           ReportBloodPressure(
             isWeekly: isWeekly,
-            totalCount: bloodPressure.totalCount,
-            averageSystolic: bloodPressure.averageSystolic,
-            averageDiastolic: bloodPressure.averageDiastolic,
-            averageHeartRate: bloodPressure.averageHeartRate,
+            totalCount: bloodPressure?.totalCount ?? 0,
+            averageSystolic: bloodPressure?.averageSystolic ?? 0,
+            averageDiastolic: bloodPressure?.averageDiastolic ?? 0,
+            averageHeartRate: bloodPressure?.averageHeartRate ?? 0,
           ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
           ReportBloodPressureAnalysis(
             isWeekly: isWeekly,
-            totalCount: bloodPressure.totalCount,
-            states: bloodPressure.states,
+            totalCount: bloodPressure?.totalCount ?? 0,
+            states: bloodPressure?.states,
           ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
           ReportBloodPressureGraph(
             isWeekly: isWeekly,
-            averageSystolic: bloodPressure.averageSystolic,
-            averageDiastolic: bloodPressure.averageDiastolic,
-            days: bloodPressure.days,
-            weeks: bloodPressure.weeks,
+            averageSystolic: bloodPressure?.averageSystolic ?? 0,
+            averageDiastolic: bloodPressure?.averageDiastolic ?? 0,
+            days: bloodPressure?.days ?? [],
+            weeks: bloodPressure?.weeks ?? [],
           ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
           ReportHeartRateGraph(
             isWeekly: isWeekly,
-            days: bloodPressure.days,
-            weeks: bloodPressure.weeks,
+            days: bloodPressure?.days ?? [],
+            weeks: bloodPressure?.weeks ?? [],
           ),
           const SizedBox(height: 40)
         ],
@@ -193,7 +194,7 @@ class ReportCardBloodPressure extends StatelessWidget {
 
 class ReportCardGlucose extends StatelessWidget {
   final bool isWeekly;
-  final ResponseBioReportGlucoseModel glucose;
+  final ResponseBioReportGlucoseModel? glucose;
 
   const ReportCardGlucose({
     Key? key,
@@ -212,25 +213,28 @@ class ReportCardGlucose extends StatelessWidget {
         children: [
           ReportGlucose(
             isWeekly: isWeekly,
-            totalCount: glucose.totalCount,
-            averageFasting: ((glucose.minFastingGlucose + glucose.maxFastingGlucose) / 2).round(),
-            averagePreprandial: ((glucose.minPreprandialGlucose + glucose.maxPreprandialGlucose) / 2).round(),
-            averagePostprandial: ((glucose.minPostprandialGlucose + glucose.maxPostprandialGlucose) / 2).round(),
-            averagePostExercise: ((glucose.minPostExerciseGlucose + glucose.maxPostExerciseGlucose) / 2).round(),
+            totalCount: glucose?.totalCount ?? 0,
+            averageFasting: (((glucose?.minFastingGlucose ?? 0) + (glucose?.maxFastingGlucose ?? 0)) / 2).round(),
+            averagePreprandial:
+                (((glucose?.minPreprandialGlucose ?? 0) + (glucose?.maxPreprandialGlucose ?? 0)) / 2).round(),
+            averagePostprandial:
+                (((glucose?.minPostprandialGlucose ?? 0) + (glucose?.maxPostprandialGlucose ?? 0)) / 2).round(),
+            averagePostExercise:
+                (((glucose?.minPostExerciseGlucose ?? 0) + (glucose?.maxPostExerciseGlucose ?? 0)) / 2).round(),
           ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
           ReportGlucoseAnalysis(
             isWeekly: isWeekly,
-            totalCount: glucose.totalCount,
-            states: glucose.states,
+            totalCount: glucose?.totalCount ?? 0,
+            states: glucose?.states ?? [],
           ),
           const DottedDivider(margin: EdgeInsets.symmetric(vertical: 40, horizontal: 12)),
           ReportGlucoseGraph(
             isWeekly: isWeekly,
-            minFastingGlucose: glucose.minFastingGlucose,
-            maxFastingGlucose: glucose.maxFastingGlucose,
-            days: glucose.days,
-            weeks: glucose.weeks,
+            minFastingGlucose: glucose?.minFastingGlucose ?? 0,
+            maxFastingGlucose: glucose?.maxFastingGlucose ?? 0,
+            days: glucose?.days ?? [],
+            weeks: glucose?.weeks ?? [],
           ),
           const SizedBox(height: 40)
         ],
