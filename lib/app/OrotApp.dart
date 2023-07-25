@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ody_flutter_app/app/env/Environment.dart';
+import 'package:ody_flutter_app/firebase/FirebaseCloudMessage.dart';
 import 'package:ody_flutter_app/presentation/navigation/Route.dart';
 import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/theme.dart';
@@ -29,6 +30,7 @@ class OrotApp extends HookWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await Environment.setLocalNotification();
+        await FirebaseCloudMessage.initFCM();
       });
       return null;
     }, []);

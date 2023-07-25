@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
-import 'package:ody_flutter_app/presentation/utils/permission/PermissionUtil.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -37,8 +35,9 @@ class NotificationsUtil {
         scheduledDate,
         NotificationDetails(
           android: AndroidNotificationDetails(
-            _getNotificationChannel(type).hashCode.toString(),
-            _getNotificationChannel(type),
+            getNotificationChannel(type).hashCode.toString(),
+            getNotificationChannel(type),
+            channelDescription: getNotificationChannel(type),
             importance: Importance.max,
             priority: Priority.high,
             ongoing: false,
@@ -77,6 +76,8 @@ class NotificationsUtil {
       minutes,
     );
 
+    debugPrint("registerOnlyTodayNotification: $message $notificationId $hour, $minutes ${scheduledDate}");
+
     await flutterLocalNotificationsPlugin.zonedSchedule(
       notificationId,
       _getNotificationTitle(type),
@@ -84,8 +85,9 @@ class NotificationsUtil {
       scheduledDate,
       NotificationDetails(
         android: AndroidNotificationDetails(
-          _getNotificationChannel(type).hashCode.toString(),
-          _getNotificationChannel(type),
+          getNotificationChannel(type).hashCode.toString(),
+          getNotificationChannel(type),
+          channelDescription: getNotificationChannel(type),
           importance: Importance.max,
           priority: Priority.high,
           ongoing: false,
@@ -132,7 +134,8 @@ class NotificationsUtil {
       scheduledDate = scheduledDate.add(const Duration(days: 365)); // Add 365 days to schedule for the next year
     }
 
-    debugPrint("scheduledDate: ${scheduledDate.year} ${scheduledDate.month} ${scheduledDate.day} ${scheduledDate.weekday}");
+    debugPrint(
+        "scheduledDate: ${scheduledDate.year} ${scheduledDate.month} ${scheduledDate.day} ${scheduledDate.weekday}");
 
     return scheduledDate;
   }
@@ -144,18 +147,18 @@ class NotificationsUtil {
       case NotificationType.REPORT:
         return "보고서 알림";
       case NotificationType.GLUCOSE_REMIND:
-        return "보고서 알림";
+        return "혈당 알림";
     }
   }
 
-  static String _getNotificationChannel(NotificationType type) {
+  static String getNotificationChannel(NotificationType type) {
     switch (type) {
       case NotificationType.MEDICATION:
         return "약 알림";
       case NotificationType.REPORT:
         return "보고서 알림";
       case NotificationType.GLUCOSE_REMIND:
-        return "보고서 알림";
+        return "혈당 알림";
     }
   }
 
