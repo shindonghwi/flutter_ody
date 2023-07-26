@@ -29,26 +29,28 @@ class MedicineMainContent extends HookConsumerWidget {
                   nextSlideScreen(RoutingScreen.AddMedication.route),
                 );
 
-                try{
+                try {
                   if (data.medicineSeq != null) {
                     alarmItemsRead.addMedicine(data);
                   }
-                }catch(e){}
+                } catch (e) {
+                  print(e);
+                }
               },
             ),
           )
         : Container(
-          padding: const EdgeInsets.all(24),
-          child: ListView.separated(
-            shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(height: 16); // Adjust the height as needed
-            },
-            itemBuilder: (BuildContext context, int index) {
-              return MedicineItem(data: items[index]);
-            },
-            itemCount: items.length,
-          ),
-        );
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 90),
+            child: ListView.separated(
+              shrinkWrap: true,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 16); // Adjust the height as needed
+              },
+              itemBuilder: (BuildContext context, int index) {
+                return MedicineItem(data: items[index]);
+              },
+              itemCount: items.length,
+            ),
+          );
   }
 }

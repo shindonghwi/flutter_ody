@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ody_flutter_app/firebase/FirebaseCloudMessage.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionUtil {
@@ -18,8 +19,9 @@ class PermissionUtil {
         return Future(() => true);
       }
       return _checkAllAccept(statusess);
-    } else {
-      final result = await FlutterLocalNotificationsPlugin()
+    }
+    else {
+      final result = await flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
           IOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(

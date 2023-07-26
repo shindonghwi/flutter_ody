@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:ody_flutter_app/domain/models/me/YoilType.dart';
 
 class DateTransfer {
-  static final krYoilList = ["월", "화", "수", "목", "금", "토", "일"];
-  static final enYoilList = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  static final krYoilList = [ "일", "월", "화", "수", "목", "금", "토",];
+  static final enYoilList = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", ];
 
   /// 오전 06시 23분
   static String dateTimeToAmPmTime(DateTime time) {
@@ -49,13 +49,13 @@ class DateTransfer {
   /// Mon -> Day Type
   static Day? convertShortEnYoilToDayType(String enYoil) {
     final Map<String, Day> dayAbbreviations = {
+      'Sun': Day.sunday,
       'Mon': Day.monday,
       'Tue': Day.tuesday,
       'Wed': Day.wednesday,
       'Thu': Day.thursday,
       'Fri': Day.friday,
       'Sat': Day.saturday,
-      'Sun': Day.sunday,
     };
     return dayAbbreviations[enYoil];
   }
@@ -63,13 +63,13 @@ class DateTransfer {
   /// Mon -> Day Type
   static YoilType? convertShortEnYoilToYoilType(String enYoil) {
     final Map<String, YoilType> dayAbbreviations = {
+      'Sun': YoilType.SUNDAY,
       'Mon': YoilType.MONDAY,
       'Tue': YoilType.TUESDAY,
       'Wed': YoilType.WEDNESDAY,
       'Thu': YoilType.THURSDAY,
       'Fri': YoilType.FRIDAY,
       'Sat': YoilType.SATURDAY,
-      'Sun': YoilType.SUNDAY,
     };
     return dayAbbreviations[enYoil];
   }
@@ -77,13 +77,13 @@ class DateTransfer {
   /// YoilType -> Day Type
   static Day? convertYoilTypeToDayType(YoilType type) {
     final Map<YoilType, Day> dayAbbreviations = {
+      YoilType.SUNDAY: Day.sunday,
       YoilType.MONDAY: Day.monday,
       YoilType.TUESDAY: Day.tuesday,
       YoilType.WEDNESDAY: Day.wednesday,
       YoilType.THURSDAY: Day.thursday,
       YoilType.FRIDAY: Day.friday,
       YoilType.SATURDAY: Day.saturday,
-      YoilType.SUNDAY: Day.sunday,
     };
     return dayAbbreviations[type];
   }

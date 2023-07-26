@@ -60,6 +60,7 @@ class MedicationTime extends HookConsumerWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(8),
               onTap: () {
+                FocusScope.of(context).unfocus();
                 CommonBottomSheet.showBottomSheet(context, child: BottomSheetTimeSetting(
                   callback: (hour, minute) {
                     final timeData = getTimeText(hour, minute);

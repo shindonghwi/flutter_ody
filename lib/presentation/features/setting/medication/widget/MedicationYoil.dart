@@ -14,13 +14,13 @@ class MedicationYoil extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Pair<YoilType, String>> yoilList = [
+      Pair(YoilType.SUNDAY, getAppLocalizations(context).common_sunday),
       Pair(YoilType.MONDAY, getAppLocalizations(context).common_monday),
       Pair(YoilType.TUESDAY, getAppLocalizations(context).common_tuesday),
       Pair(YoilType.WEDNESDAY, getAppLocalizations(context).common_wednesday),
       Pair(YoilType.THURSDAY, getAppLocalizations(context).common_thursday),
       Pair(YoilType.FRIDAY, getAppLocalizations(context).common_friday),
       Pair(YoilType.SATURDAY, getAppLocalizations(context).common_saturday),
-      Pair(YoilType.SUNDAY, getAppLocalizations(context).common_sunday),
     ];
 
     final selectedYoilList = useState<List<YoilType>>([]);
