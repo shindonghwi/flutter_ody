@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ody_flutter_app/presentation/utils/notifications/NotificationsUtil.dart';
 
+final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
 class FirebaseCloudMessage {
   static FirebaseMessaging? fbMsg;
 
@@ -60,7 +62,7 @@ class FirebaseCloudMessage {
 
   static void registerMessage(RemoteMessage message) {
     if (message.notification != null) {
-      FlutterLocalNotificationsPlugin().show(
+      flutterLocalNotificationsPlugin.show(
         message.hashCode,
         NotificationsUtil.getNotificationChannel(NotificationType.REPORT),
         message.notification?.body,

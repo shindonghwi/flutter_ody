@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ody_flutter_app/app/OrotApp.dart';
 import 'package:ody_flutter_app/di/locator.dart';
+import 'package:ody_flutter_app/firebase/FirebaseCloudMessage.dart';
 import 'package:ody_flutter_app/presentation/utils/notifications/NotificationsUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/permission/PermissionUtil.dart';
 
@@ -40,8 +41,6 @@ class Environment {
 
   static Future<void> setLocalNotification() async {
     await PermissionUtil.requestNotificationPermission();
-
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings(
       '@mipmap/ic_launcher',

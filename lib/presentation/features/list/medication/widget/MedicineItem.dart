@@ -2,12 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ody_flutter_app/data/models/me/RequestMeMedicineUpdateModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeMedicineModel.dart';
 import 'package:ody_flutter_app/domain/models/me/YoilType.dart';
-import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeMedicineUseCase.dart';
 import 'package:ody_flutter_app/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:ody_flutter_app/presentation/components/checkbox/model/CheckBoxSize.dart';
 import 'package:ody_flutter_app/presentation/components/checkbox/model/CheckBoxType.dart';
@@ -183,14 +180,23 @@ class MedicineItem extends HookConsumerWidget {
                                   switchState.value = value;
                                   if (value) {
                                     registerMedicationRead.registerMedicineNotificationFromInfo(
-                                      scheduledDays: data.days?.map((e) => DateTransfer.convertShortEnYoilToYoilType(e)).toList(),
+                                      scheduledDays:
+                                          data.days?.map((e) => DateTransfer.convertShortEnYoilToYoilType(e)).toList(),
                                       notificationId: data.medicineSeq!,
                                       name: data.name,
                                       hour: hour24,
                                       minutes: minute,
                                     );
                                   } else {
-                                    NotificationsUtil.removeNotification(data.medicineSeq!);
+                                    data.days?.forEach((day) {
+                                      final yoil = DateTransfer.convertShortEnYoilToYoilType(day);
+                                      if (yoil == null) return;
+                                      NotificationsUtil.removeNotification(
+                                        data.medicineSeq!,
+                                        DateTransfer.convertYoilTypeToDayType(yoil),
+                                        getAppLocalizations(context).notification_message_alarm(data.name.toString()),
+                                      );
+                                    });
                                   }
                                 }
                               },

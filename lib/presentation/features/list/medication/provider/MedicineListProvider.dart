@@ -7,6 +7,7 @@ import 'package:ody_flutter_app/domain/usecases/remote/me/PatchMeMedicineUseCase
 import 'package:ody_flutter_app/presentation/models/UiState.dart';
 import 'package:ody_flutter_app/presentation/utils/CollectionUtil.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
+import 'package:ody_flutter_app/presentation/utils/date/DateTransfer.dart';
 import 'package:ody_flutter_app/presentation/utils/notifications/NotificationsUtil.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -18,8 +19,7 @@ enum MedicineActionType {
   NONE,
 }
 
-final medicineListProvider =
-    StateNotifierProvider<MedicineListNotifier, UIState<List<ResponseMeMedicineModel>>>(
+final medicineListProvider = StateNotifierProvider<MedicineListNotifier, UIState<List<ResponseMeMedicineModel>>>(
   (_) => MedicineListNotifier(),
 );
 
@@ -35,7 +35,7 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
     state = Loading();
     final res = await GetIt.instance.get<GetMeMedicinesUseCase>().call();
     if (res.status == 200) {
-      _updateMedicineList(res.list ?? []);
+      _updateMedicineList(res.list?.reversed.toList() ?? []);
     } else {
       state = Failure(res.message);
     }
@@ -54,8 +54,7 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
     actionType = MedicineActionType.ADD_ITEM;
     if (state is Success) {
       final currentList = (state as Success<List<ResponseMeMedicineModel>>).value;
-      final updatedList =
-          CollectionUtil.isNullorEmpty(currentList) ? [data] : [data, ...currentList];
+      final updatedList = CollectionUtil.isNullorEmpty(currentList) ? [data] : [...currentList, data];
       state = Success(updatedList);
     }
   }
@@ -73,7 +72,15 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
       final res = await GetIt.instance.get<DeleteMedicineUseCase>().call(element.medicineSeq ?? -1);
       if (res.status == 200) {
         removeSuccessList.add(element);
-        NotificationsUtil.removeNotification(element.medicineSeq!);
+        element.days?.forEach((day) {
+          final yoil = DateTransfer.convertShortEnYoilToYoilType(day);
+          if (yoil == null) return;
+          NotificationsUtil.removeNotification(
+            element.medicineSeq!,
+            DateTransfer.convertYoilTypeToDayType(yoil),
+            _getAppLocalization.get().notification_message_alarm(element.name.toString()),
+          );
+        });
       } else {
         removeFailList.add(element);
       }
@@ -86,8 +93,7 @@ class MedicineListNotifier extends StateNotifier<UIState<List<ResponseMeMedicine
 
     if (removeFailList.isNotEmpty) {
       final removeFailMedicineNameList = removeFailList.map((e) => e.name).join(", ");
-      state =
-          Failure("$removeFailMedicineNameList ${_getAppLocalization.get().message_delete_fail}");
+      state = Failure("$removeFailMedicineNameList ${_getAppLocalization.get().message_delete_fail}");
     }
   }
 
