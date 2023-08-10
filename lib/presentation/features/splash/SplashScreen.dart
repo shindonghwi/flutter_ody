@@ -11,6 +11,8 @@ import 'package:ody_flutter_app/data/models/me/ResponseMeProfileModel.dart';
 import 'package:ody_flutter_app/domain/models/auth/LoginPlatform.dart';
 import 'package:ody_flutter_app/domain/models/auth/SocialLoginModel.dart';
 import 'package:ody_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/local/app/GetLoginAccessTokenUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/local/app/PostLoginAccessTokenUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:ody_flutter_app/firebase/FirebaseRemoteConfigService.dart';
@@ -24,69 +26,71 @@ import 'package:ody_flutter_app/presentation/utils/Common.dart';
 class SplashScreen extends HookConsumerWidget {
   final GetAppPolicyCheckUseCase _getAppPolicyCheckUseCase = GetIt.instance<GetAppPolicyCheckUseCase>();
 
-  final PostSocialLoginInUseCase _postSocialLoginInUseCase = GetIt.instance<PostSocialLoginInUseCase>();
+  // final PostSocialLoginInUseCase _postSocialLoginInUseCase = GetIt.instance<PostSocialLoginInUseCase>();
+
+  final GetLoginAccessTokenUseCase _getLoginAccessTokenUseCase = GetIt.instance<GetLoginAccessTokenUseCase>();
 
   GetMeInfoUseCase get getMeInfoUseCase => GetIt.instance<GetMeInfoUseCase>();
 
   SplashScreen({super.key});
 
-  Future<String?> getSocialAccessToken(String platform) async {
-    try {
-      final String platformName = platform.toLowerCase();
-      if (platformName.contains("google")) {
-        final GoogleSignInAccount? googleUser = await googleSignIn.signInSilently();
-        if (googleUser != null) {
-          final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-          return googleAuth.idToken;
-        }
-      } else if (platformName.contains("kakao")) {
-        return null;
-      } else if (platformName.contains("apple")) {
-        final user = FirebaseAuth.instance.currentUser;
-        if (user != null) {
-          final idTokenResult = await user.getIdTokenResult(true);
-          return idTokenResult.token;
-        }
-        return null;
-      }
-      return null;
-    } catch (e) {
-      return null;
-    }
-  }
+  // Future<String?> getSocialAccessToken(String platform) async {
+  //   try {
+  //     final String platformName = platform.toLowerCase();
+  //     if (platformName.contains("google")) {
+  //       final GoogleSignInAccount? googleUser = await googleSignIn.signInSilently();
+  //       if (googleUser != null) {
+  //         final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  //         return googleAuth.idToken;
+  //       }
+  //     } else if (platformName.contains("kakao")) {
+  //       return null;
+  //     } else if (platformName.contains("apple")) {
+  //       final user = FirebaseAuth.instance.currentUser;
+  //       if (user != null) {
+  //         final idTokenResult = await user.getIdTokenResult(true);
+  //         return idTokenResult.token;
+  //       }
+  //       return null;
+  //     }
+  //     return null;
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
 
-  /// 소셜 로그인 정보를 확인한다.
-  Future<SocialLoginModel?> checkFirebaseUserSocialInfo() async {
-    User? user = firebaseAuth.currentUser;
+  // /// 소셜 로그인 정보를 확인한다.
+  // Future<SocialLoginModel?> checkFirebaseUserSocialInfo() async {
+  //   User? user = firebaseAuth.currentUser;
+  //
+  //   if (user != null) {
+  //     List<UserInfo>? providers = user.providerData;
+  //     for (UserInfo provider in providers) {
+  //       debugPrint("provider.providerId : ${provider.providerId}");
+  //       LoginPlatform platform = getLoginPlatform(provider.providerId);
+  //       String? accessToken = await getSocialAccessToken(platform.name);
+  //       if (accessToken != null) {
+  //         return SocialLoginModel(platform, accessToken);
+  //       }
+  //     }
+  //   }
+  //   return null;
+  // }
 
-    if (user != null) {
-      List<UserInfo>? providers = user.providerData;
-      for (UserInfo provider in providers) {
-        debugPrint("provider.providerId : ${provider.providerId}");
-        LoginPlatform platform = getLoginPlatform(provider.providerId);
-        String? accessToken = await getSocialAccessToken(platform.name);
-        if (accessToken != null) {
-          return SocialLoginModel(platform, accessToken);
-        }
-      }
-    }
-    return null;
-  }
-
-  /// 로그인 플랫폼을 구분한다.
-  LoginPlatform getLoginPlatform(String platform) {
-    final String platformName = platform.toLowerCase();
-
-    if (platformName.contains("google")) {
-      return LoginPlatform.Google;
-    } else if (platformName.contains("kakao")) {
-      return LoginPlatform.Kakao;
-    } else if (platformName.contains("apple")) {
-      return LoginPlatform.Apple;
-    } else {
-      return LoginPlatform.None;
-    }
-  }
+  // /// 로그인 플랫폼을 구분한다.
+  // LoginPlatform getLoginPlatform(String platform) {
+  //   final String platformName = platform.toLowerCase();
+  //
+  //   if (platformName.contains("google")) {
+  //     return LoginPlatform.Google;
+  //   } else if (platformName.contains("kakao")) {
+  //     return LoginPlatform.Kakao;
+  //   } else if (platformName.contains("apple")) {
+  //     return LoginPlatform.Apple;
+  //   } else {
+  //     return LoginPlatform.None;
+  //   }
+  // }
 
   setServiceHeader(String? token) async {
     final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
@@ -116,7 +120,6 @@ class SplashScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    SocialLoginModel? socialInfo;
     final meInfoRead = ref.read(meInfoProvider.notifier);
     final currentContext = context;
 
@@ -143,40 +146,31 @@ class SplashScreen extends HookConsumerWidget {
 
         _getAppPolicyCheckUseCase.call().then((granted) async {
           if (granted) {
-            socialInfo = await checkFirebaseUserSocialInfo();
-            if (socialInfo == null) {
+            final localAccessToken = await _getLoginAccessTokenUseCase.call();
+
+            if (localAccessToken.isEmpty){
               movePage(RoutingScreen.Login);
-            } else {
-              final res = await _postSocialLoginInUseCase.call(
-                platform: socialInfo!.loginPlatform,
-                accessToken: socialInfo?.accessToken ?? "",
-              );
-
-              if (res.status == 200) {
-                // 내 정보 요청
-                await setServiceHeader(res.data?.accessToken);
-                await getMeInfoUseCase.call().then((value) {
-                  if (value.status == 200) {
-                    if (value.data != null) {
-                      meInfoRead.updateMeInfo(value.data!);
-                    }
-
-                    final currentProceedPage = getSignUpProceedPage(value.data?.profile);
-                    if (currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
-                      movePage(RoutingScreen.Main);
-                    } else {
-                      movePage(
-                        RoutingScreen.InputProfile,
-                        initPageNumber: currentProceedPage,
-                      );
-                    }
-                  } else {
-                    movePage(RoutingScreen.Login);
+            }else{
+              await setServiceHeader(localAccessToken);
+              await getMeInfoUseCase.call().then((value) {
+                if (value.status == 200) {
+                  if (value.data != null) {
+                    meInfoRead.updateMeInfo(value.data!);
                   }
-                });
-              } else {
-                movePage(RoutingScreen.Login);
-              }
+
+                  final currentProceedPage = getSignUpProceedPage(value.data?.profile);
+                  if (currentProceedPage == SIGN_UP_PROCEED_COMPLETE) {
+                    movePage(RoutingScreen.Main);
+                  } else {
+                    movePage(
+                      RoutingScreen.InputProfile,
+                      initPageNumber: currentProceedPage,
+                    );
+                  }
+                } else {
+                  movePage(RoutingScreen.Login);
+                }
+              });
             }
           } else {
             movePage(RoutingScreen.OnBoarding);

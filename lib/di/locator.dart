@@ -13,6 +13,8 @@ import 'package:ody_flutter_app/domain/repositories/remote/bio/RemoteBioReposito
 import 'package:ody_flutter_app/domain/repositories/remote/me/RemoteMeRepository.dart';
 import 'package:ody_flutter_app/domain/usecases/local/app/GetAppPolicyCheckUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/local/app/GetAppPolicyUpdateUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/local/app/GetLoginAccessTokenUseCase.dart';
+import 'package:ody_flutter_app/domain/usecases/local/app/PostLoginAccessTokenUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:ody_flutter_app/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
@@ -55,6 +57,8 @@ void initServiceLocator() {
   //app
   GetIt.instance.registerLazySingleton<GetAppPolicyCheckUseCase>(() => GetAppPolicyCheckUseCase());
   GetIt.instance.registerLazySingleton<GetAppPolicyUpdateUseCase>(() => GetAppPolicyUpdateUseCase());
+  GetIt.instance.registerLazySingleton<GetLoginAccessTokenUseCase>(() => GetLoginAccessTokenUseCase());
+  GetIt.instance.registerLazySingleton<PostLoginAccessTokenUseCase>(() => PostLoginAccessTokenUseCase());
 
   GetIt.instance.registerLazySingleton<PostAppleSignInUseCase>(() => PostAppleSignInUseCase());
   GetIt.instance.registerLazySingleton<PostGoogleSignInUseCase>(() => PostGoogleSignInUseCase());
