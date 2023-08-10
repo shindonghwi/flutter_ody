@@ -36,9 +36,12 @@ class NotificationsUtil {
       priority: Priority.high,
       ongoing: false,
       styleInformation: BigTextStyleInformation(message),
+      groupKey: channelId,
+      setAsGroupSummary: true,
     );
 
-    const ios = DarwinNotificationDetails(
+    final ios = DarwinNotificationDetails(
+      threadIdentifier: channelId,
       badgeNumber: 1,
       presentSound: true,
     );
