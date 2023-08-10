@@ -12,14 +12,6 @@ import 'package:ody_flutter_app/presentation/ui/colors.dart';
 import 'package:ody_flutter_app/presentation/ui/theme.dart';
 import 'package:ody_flutter_app/presentation/utils/Common.dart';
 
-final googleSignIn = Platform.isAndroid
-    ? GoogleSignIn(
-        scopes: ['email', 'profile'],
-      )
-    : GoogleSignIn(
-        scopes: ['email', 'profile'],
-      );
-
 final firebaseAuth = FirebaseAuth.instance;
 
 class OrotApp extends HookWidget {

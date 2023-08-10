@@ -16,4 +16,16 @@ class LocalAppRepositoryImpl implements LocalAppRepository {
     LocalAppApi localAppApi = GetIt.instance<LocalAppApi>();
     return localAppApi.setHasAgreedToPolicy(true);
   }
+
+  @override
+  Future<String> getLoginAccessToken() {
+    LocalAppApi localAppApi = GetIt.instance<LocalAppApi>();
+    return localAppApi.getLoginAccessToken();
+  }
+
+  @override
+  Future<void> setLoginAccessToken(String token) {
+    LocalAppApi localAppApi = GetIt.instance<LocalAppApi>();
+    return localAppApi.setLoginAccessToken(token);
+  }
 }

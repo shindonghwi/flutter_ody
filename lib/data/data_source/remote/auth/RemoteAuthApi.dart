@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ody_flutter_app/app/OrotApp.dart';
@@ -96,10 +98,16 @@ class RemoteAuthApi {
   }
 
   Future<ApiResponse<SocialLoginModel>> doGoogleLogin() async {
+
+    void printWrapped(String text) {
+      final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+      pattern.allMatches(text).forEach((match) => print(match.group(0)));
+    }
+
     if (await Service.isNetworkAvailable()) {
       try{
         // 구글 로그인 후 유저정보를 받아온다.
-        final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
         if (googleUser == null) {
           return ApiResponse<SocialLoginModel>(
@@ -114,6 +122,9 @@ class RemoteAuthApi {
             accessToken: googleAuth.accessToken,
             idToken: googleAuth.idToken,
           );
+
+          debugPrint("accessToken: ${googleAuth.accessToken}");
+          debugPrint("idToken: ${googleAuth.idToken}");
 
           // 위에서 가져온 Credential 정보로 Firebase에 사용자 인증을한다.
           final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
