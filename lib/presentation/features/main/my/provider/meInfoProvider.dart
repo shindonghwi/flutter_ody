@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ody_flutter_app/app/OrotApp.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeInfoModel.dart';
 import 'package:ody_flutter_app/data/models/me/ResponseMeNotificationModel.dart';
@@ -13,9 +15,10 @@ final meInfoProvider = StateNotifierProvider<MeInfoNotifier, ResponseMeInfoModel
 class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
   MeInfoNotifier() : super(null);
 
-  void updateMeInfo(ResponseMeInfoModel? meInfo) {
+  void updateMeInfo(ResponseMeInfoModel? meInfo) async {
     if (meInfo == null) {
-      firebaseAuth.signOut();
+      GoogleSignIn().disconnect();
+      FirebaseAuth.instance.signOut();
     }
     state = meInfo;
     userCache.setUserInfo(meInfo);
