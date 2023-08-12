@@ -103,11 +103,14 @@ class RemoteAuthApi {
       final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
       pattern.allMatches(text).forEach((match) => print(match.group(0)));
     }
+    printWrapped("doGoogleLogin: start");
 
     if (await Service.isNetworkAvailable()) {
       try{
+        printWrapped("doGoogleLogin: asdsaddsadsdsa");
         // 구글 로그인 후 유저정보를 받아온다.
         final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+        printWrapped("doGoogleLogin googleUser: ${googleUser}");
 
         if (googleUser == null) {
           return ApiResponse<SocialLoginModel>(
@@ -123,12 +126,17 @@ class RemoteAuthApi {
             idToken: googleAuth.idToken,
           );
 
-          debugPrint("accessToken: ${googleAuth.accessToken}");
-          debugPrint("idToken: ${googleAuth.idToken}");
+
+          printWrapped("doGoogleLogin accessToken: ${googleAuth.accessToken}");
+          printWrapped("doGoogleLogin idToken: ${googleAuth.idToken}");
 
           // 위에서 가져온 Credential 정보로 Firebase에 사용자 인증을한다.
           final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
           final User? user = userCredential.user;
+
+          printWrapped("doGoogleLogin userCredential: ${userCredential}");
+          printWrapped("doGoogleLogin user: ${user}");
+
 
           if (user != null) {
             return await googleUser.authentication.then(
@@ -152,6 +160,7 @@ class RemoteAuthApi {
           }
         }
       }catch(e){
+        printWrapped("doGoogleLogin: 500 :${_getAppLocalization.get().message_temp_login_fail} ${e.toString()}");
         return ApiResponse<SocialLoginModel>(
           status: 500,
           message: _getAppLocalization.get().message_temp_login_fail,
@@ -160,6 +169,7 @@ class RemoteAuthApi {
       }
 
     } else {
+      printWrapped("doGoogleLogin: 406 :${_getAppLocalization.get().message_network_required} ${e}");
       return ApiResponse<SocialLoginModel>(
         status: 406,
         message: _getAppLocalization.get().message_network_required,

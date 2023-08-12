@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "1043075265104-r4q8nn6qd5dmn8l89a6jm8rt8goq62b9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orot.ody",
+            "certificate_hash": "017c4a85522481dfdf08d518690d13f1886a39c7"
+          }
+        },
+        {
           "client_id": "1043075265104-g4l4urlkisvvgldmtub0mhdgr7flm684.apps.googleusercontent.com",
           "client_type": 3
         }
